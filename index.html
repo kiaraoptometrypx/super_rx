@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ultimate Calculator</title>
+<style>
+  body { font-family: 'Manrope', sans-serif; padding:20px; background:#f5f5f5; }
+  table { border-collapse: collapse; width: 100%; max-width:700px; margin-top:20px; }
+  th, td { border: 1px solid #aaa; padding: 8px 12px; text-align:center; }
+  th { background:#eee; }
+  input { width:70px; text-align:center; }
+</style>
+</head>
+<body>
+
+<h2>Superposition Refraction</h2>
+
+<table>
+  
+<tr><th colspan="4">Current RX</th></tr>
+
+<!-- OD -->
+
+<tr>
+  <td>Right</td>
+  <td>Sph : <input type="number" step="0.25" id="od_origS"></td>
+  <td>Cyl : <input type="number" step="0.25" id="od_origC"></td>
+  <td>Axis : <input type="number" step="2.5" min="0" max="180" id="od_origA"></td>
+</tr>
+<tr>
+  <td>Left</td>
+  <td>Sph : <input type="number" step="0.25" id="os_origS"></td>
+  <td>Cyl : <input type="number" step="0.25" id="os_origC"></td>
+  <td>Axis : <input type="number" step="2.5" min="0" max="180" id="os_origA"></td>
+</tr>
+<tr><td colspan="5" style="border:none"></td></tr>
+
+<!-- Manual Subjective Refraction -->
+<tr>
+<th colspan="4">Subjective Refraction</th>
+<tr>
+  <td>Right</td>
+  <td>Sph : <input type="number" step="0.25" id="od_finalS"></td>
+  <td>Cyl : <input type="number" step="0.25" id="od_finalC"></td>
+  <td>Axis : <input type="number" step="2.5" min="0" max="180" id="od_finalA"></td>
+</tr>
+<tr>
+  <td>Left</td>
+  <td>Sph : <input type="number" step="0.25" id="os_finalS"></td>
+  <td>Cyl : <input type="number" step="0.25" id="os_finalC"></td>
+  <td>Axis : <input type="number" step="2.5" min="0" max="180" id="os_finalA"></td>
+</tr>
+<tr>
+  <td>R Dx</td>
+  <td id="od_roundS"></td>
+  <td id="od_roundC"></td>
+  <td id="od_roundA"></td>
+</tr>
+
+<tr>
+  <td>L Dx</td>
+  <td id="os_roundS"></td>
+  <td id="os_roundC"></td>
+  <td id="os_roundA"></td>
+</tr>
+<tr>
+  <td>Bino Dx</td>
+  <td id="diffCrossS"></td>
+  <td id="diffCrossC"></td>
+  <td id="diffCrossA"></td>
+</tr>
+
+
+<tr><td colspan="5" style="border:none"></td></tr>
+
+
+<tr style="display:none">
+  <td colspan="2">Crossed OD</td>
+  <td id="od_crossS"></td>
+  <td id="od_crossC"></td>
+  <td id="od_crossA"></td>
+</tr>
+<tr style="display:none">
+  <td colspan="2">Crossed OS</td>
+  <td id="os_crossS"></td>
+  <td id="os_crossC"></td>
+  <td id="os_crossA"></td>
+</tr>
+
+<!-- Vector Refraction -->
+<tr>
+  <th colspan="4">Vector Refraction</th></tr>
+<tr>
+<tr>
+  <td>Right</td>
+  <td>Sph : <span id="od_vcFinalS">-</span></td>
+  <td>Cyl : <span id="od_vcFinalC">-</span></td>
+  <td>Axis : <span id="od_vcFinalA">-</span></td>
+</tr>
+
+<tr>
+  <td>Left</td>
+  <td>Sph : <span id="os_vcFinalS">-</span></td>
+  <td>Cyl : <span id="os_vcFinalC">-</span></td>
+  <td>Axis : <span id="os_vcFinalA">-</span></td>
+</tr>
+
+
+
+
+<tr>
+  <td>R Dx</td>
+  <td><input type="number" step="0.25" id="vc_odS"></td>
+  <td><input type="number" step="0.25" id="vc_odC"></td>
+  <td><input type="number" step="2.5" min="0" max="180" id="vc_odA"></td>
+</tr>
+<tr>
+  <td>L Dx</td>
+  <td><input type="number" step="0.25" id="vc_osS"></td>
+  <td><input type="number" step="0.25" id="vc_osC"></td>
+  <td><input type="number" step="2.5" min="0" max="180" id="vc_osA"></td>
+</tr>
+<tr>
+  <td>Bino Dx</td>
+  <td id="vc_crossS">-</td>
+  <td id="vc_crossC">-</td>
+  <td id="vc_crossA">-</td>
+</tr>
+
+<tr><td colspan="5" style="border:none"></td></tr>
+<tr>
+<td colspan="4">Gaze Angle from Center <input type="range" id="gazeAngle" step="5" value="35" min="10" max="50" oninput="this.nextElementSibling.value = this.value">
+  <output>35</output>
+</td>
+  </tr>
+<tr>
+<td>Subjective RX</td>
+
+</td>
+  <td>Horizontal <br><span id="prismH"></span></td>
+  <td>Vertical<br><span id="prismV"></span></td>
+  <td>Diagonal<br><span id="prismD"></span></td>
+</tr>
+<td>Vector Rx</td>
+  <td>Horizontal<br><span id="prismH_vc"></span></td>
+  <td>Vertical<br><span id="prismV_vc"></span></td>
+  <td>Diagonal<br><span id="prismD_vc"></span></td>
+</tr>
+created by Jay Lee, optometrist & founder of Kiara Optometry 2025
+
+<tr><td colspan="5" style="border:none"></td></tr>
+
+  <!-- Inputs for prism -->
+
+
+  <tr style="display:none">
+    <td colspan="1">Vertex Distance (mm)</td>
+<td><input type="number" id="vertexDist" step="2" value="12" min="5" max="20"></td><td></td><td></td>
+  </tr>
+
+
+
+</table>
+
+
+<script>
+/* ===== Utilities ===== */
+function deg2rad(d){ return d * Math.PI / 180; }
+function rad2deg(r){ return r * 180 / Math.PI; }
+
+function normalizeMinus(lens){
+  let S = Number(lens.S), C = Number(lens.C), A = Number(lens.A);
+  if (isNaN(S)) S = 0; if (isNaN(C)) C = 0; if (isNaN(A)) A = 0;
+  if (C > 0){ S += C; C = -C; A = (A + 90) % 180; }
+  A = ((A % 180) + 180) % 180;
+  return { S: +S, C: +C, A: Math.round(A) % 180 };
+}
+function toFixed2Num(v){ return +Number(v).toFixed(2); }
+function minusToPlus(lens){
+  const m = normalizeMinus(lens);
+  return { S: toFixed2Num(m.S + m.C), C: toFixed2Num(-m.C), A: Math.round((m.A + 90) % 180) };
+}
+function roundQuarter(v){
+  if(isNaN(v)) return "-";
+  const r = Math.round(v / 0.25) * 0.25;
+  return (r > 0 ? "+" : "") + r.toFixed(2);
+}
+function calcDecentration(angleDeg, vertexMM){ return (vertexMM / 10) * Math.tan(angleDeg * Math.PI/180); }
+
+/* ===== Vector & lens math (unchanged) ===== */
+function calcBackwardsLens(orig, final){
+  const rx1 = normalizeMinus(orig), rxF = normalizeMinus(final);
+  const M1 = rx1.S + rx1.C/2;
+  const J01 = -rx1.C/2 * Math.cos(2 * deg2rad(rx1.A));
+  const J451 = -rx1.C/2 * Math.sin(2 * deg2rad(rx1.A));
+  const MF = rxF.S + rxF.C/2;
+  const J0F = -rxF.C/2 * Math.cos(2 * deg2rad(rxF.A));
+  const J45F = -rxF.C/2 * Math.sin(2 * deg2rad(rxF.A));
+  const Mx = MF - M1;
+  const J0x = J0F - J01;
+  const J45x = J45F - J451;
+  const Cx = -2 * Math.sqrt(J0x*J0x + J45x*J45x);
+  const Sx = Mx - Cx/2;
+  let Ax = 0.5 * rad2deg(Math.atan2(J45x, J0x)); if (Ax < 0) Ax += 180;
+  return { S: toFixed2Num(Sx), C: toFixed2Num(Cx), A: Math.round(Ax) % 180 };
+}
+function pickClosestSphere(candidates){
+  const normalized = candidates.map(c => normalizeMinus(c));
+  let best = normalized[0];
+  for(const c of normalized){ if(Math.abs(c.S) < Math.abs(best.S)) best = c; }
+  best.S = toFixed2Num(best.S); best.C = toFixed2Num(best.C); best.A = Math.round(best.A) % 180;
+  return best;
+}
+function bestSingleLens(lens){
+  const form1 = { S: lens.S, C: lens.C, A: lens.A };
+  const form2 = { S: lens.S + lens.C, C: -lens.C, A: (lens.A + 90) % 180 };
+  return pickClosestSphere([form1, form2]);
+}
+function chooseBestDiff(diff1, diff2){
+  const forms = l => [{S:l.S,C:l.C,A:l.A},{S:l.S+l.C,C:-l.C,A:(l.A+90)%180}];
+  return pickClosestSphere([...forms(diff1), ...forms(diff2)]);
+}
+function reverseVectorChange(orig, vector){
+  const rxOrig = normalizeMinus(orig), rxVec = normalizeMinus(vector);
+  const M1 = rxOrig.S + rxOrig.C/2;
+  const J01 = -rxOrig.C/2 * Math.cos(2*deg2rad(rxOrig.A));
+  const J451 = -rxOrig.C/2 * Math.sin(2*deg2rad(rxOrig.A));
+  const Mx = rxVec.S + rxVec.C/2;
+  const J0x = -rxVec.C/2 * Math.cos(2*deg2rad(rxVec.A));
+  const J45x = -rxVec.C/2 * Math.sin(2*deg2rad(rxVec.A));
+  const MF = M1 + Mx;
+  const J0F = J01 + J0x;
+  const J45F = J451 + J45x;
+  const CF = -2 * Math.sqrt(J0F*J0F + J45F*J45F);
+  const SF = MF - CF/2;
+  let AF = 0.5 * rad2deg(Math.atan2(J45F, J0F)); if (AF < 0) AF += 180;
+  return bestSingleLens({ S: toFixed2Num(SF), C: toFixed2Num(CF), A: Math.round(AF) % 180 });
+}
+
+/* ===== Prism color helper, type-specific ===== */
+function colorPrism(el, value, type){
+  if(!el) return;
+  const absVal = Math.abs(Number(value) || 0);
+  if(type === "H") el.style.color = absVal < 0.5 ? "green" : absVal < 1 ? "orange" : "red";
+  else if(type === "V") el.style.color = absVal < 0.125 ? "green" : absVal < 0.25 ? "orange" : "red";
+  else if(type === "D") el.style.color = absVal < 0.375 ? "green" : absVal < 0.75 ? "orange" : "red";
+}
+
+/* ===== Main update function (integrated, robust) ===== */
+function updateCrossedLens(){
+  // read inputs (safe fallback 0)
+  const odOrig = { S:+document.getElementById('od_origS')?.value || 0, C:+document.getElementById('od_origC')?.value || 0, A:+document.getElementById('od_origA')?.value || 0 };
+  const odFinal = { S:+document.getElementById('od_finalS')?.value || 0, C:+document.getElementById('od_finalC')?.value || 0, A:+document.getElementById('od_finalA')?.value || 0 };
+  const osOrig = { S:+document.getElementById('os_origS')?.value || 0, C:+document.getElementById('os_origC')?.value || 0, A:+document.getElementById('os_origA')?.value || 0 };
+  const osFinal = { S:+document.getElementById('os_finalS')?.value || 0, C:+document.getElementById('os_finalC')?.value || 0, A:+document.getElementById('os_finalA')?.value || 0 };
+
+  // cross calculations (same as before)
+  const odCross = bestSingleLens(calcBackwardsLens(odOrig, odFinal));
+  const odPlus = minusToPlus(odCross);
+  const osCross = bestSingleLens(calcBackwardsLens(osOrig, osFinal));
+  const osPlus = minusToPlus(osCross);
+
+  // safe element writes (only if elements exist)
+  const setIf = (id, val)=> { const el = document.getElementById(id); if(el) el.textContent = val; };
+  setIf('od_crossS', odCross.S);
+  setIf('od_crossC', odCross.C);
+  setIf('od_crossA', odCross.A);
+  setIf('od_roundS', roundQuarter(odPlus.S));
+  setIf('od_roundC', roundQuarter(odPlus.C));
+  setIf('od_roundA', odPlus.A);
+
+  setIf('os_crossS', osCross.S);
+  setIf('os_crossC', osCross.C);
+  setIf('os_crossA', osCross.A);
+  setIf('os_roundS', roundQuarter(osPlus.S));
+  setIf('os_roundC', roundQuarter(osPlus.C));
+  setIf('os_roundA', osPlus.A);
+
+  const bestDiff = chooseBestDiff(calcBackwardsLens(osCross, odCross), calcBackwardsLens(odCross, osCross));
+  const bestDiffPlus = minusToPlus(bestDiff);
+
+  setIf('diffCrossS', roundQuarter(bestDiffPlus.S));
+  setIf('diffCrossC', roundQuarter(bestDiffPlus.C));
+  setIf('diffCrossA', bestDiffPlus.A);
+
+  // decentration (used by prism calculation)
+  const gaze = +document.getElementById("gazeAngle")?.value || 30;
+  const vertex = +document.getElementById("vertexDist")?.value || 12;
+  const dec = calcDecentration(gaze, vertex);
+
+  // prism from bestDiff vector
+  const A_rad = deg2rad(bestDiff.A);
+  const M = bestDiff.S + bestDiff.C/2;
+  const J0 = -bestDiff.C/2 * Math.cos(2 * A_rad);
+  const J45 = -bestDiff.C/2 * Math.sin(2 * A_rad);
+
+  const prismH = Math.abs((M + J0) * dec);
+  const prismV = Math.abs((M - J0) * dec);
+  const prism45 = Math.abs((M - J45) * dec);
+  const prism135 = Math.abs((M + J45) * dec);
+  const prismD = Math.max(prism45, prism135);
+
+  // write and color main prism outputs
+  const elH = document.getElementById("prismH");
+  const elV = document.getElementById("prismV");
+  const elD = document.getElementById("prismD");
+  if(elH){ elH.textContent = prismH.toFixed(2); colorPrism(elH, prismH, "H"); }
+  if(elV){ elV.textContent = prismV.toFixed(2); colorPrism(elV, prismV, "V"); }
+  if(elD){ elD.textContent = prismD.toFixed(2); colorPrism(elD, prismD, "D"); }
+
+  // VC prism section (if vc_cross elements exist we parse them safely)
+  const vc_crossS_text = document.getElementById("vc_crossS")?.textContent;
+  const vc_crossC_text = document.getElementById("vc_crossC")?.textContent;
+  const vc_crossA_text = document.getElementById("vc_crossA")?.textContent;
+  // parseFloat returns NaN for "-", fallback to 0
+  const vcS = Number.parseFloat(vc_crossS_text) || 0;
+  const vcC = Number.parseFloat(vc_crossC_text) || 0;
+  const vcA = Number.parseFloat(vc_crossA_text) || 0;
+  const A_vc_rad = deg2rad(vcA);
+  const M_vc = vcS + vcC/2;
+  const J0_vc = -vcC/2 * Math.cos(2 * A_vc_rad);
+  const J45_vc = -vcC/2 * Math.sin(2 * A_vc_rad);
+  const prismH_vc = Math.abs((M_vc + J0_vc) * dec);
+  const prismV_vc = Math.abs((M_vc - J0_vc) * dec);
+  const prism45_vc = Math.abs((M_vc - J45_vc) * dec);
+  const prism135_vc = Math.abs((M_vc + J45_vc) * dec);
+  const prismD_vc = Math.max(prism45_vc, prism135_vc);
+
+  const elH_vc = document.getElementById("prismH_vc");
+  const elV_vc = document.getElementById("prismV_vc");
+  const elD_vc = document.getElementById("prismD_vc");
+  if(elH_vc){ elH_vc.textContent = prismH_vc.toFixed(2); colorPrism(elH_vc, prismH_vc, "H"); }
+  if(elV_vc){ elV_vc.textContent = prismV_vc.toFixed(2); colorPrism(elV_vc, prismV_vc, "V"); }
+  if(elD_vc){ elD_vc.textContent = prismD_vc.toFixed(2); colorPrism(elD_vc, prismD_vc, "D"); }
+}
+
+/* ===== Reverse vector -> final (keeps existing behavior) ===== */
+function updateFinalFromVector(){
+  const origOD = { S:+document.getElementById('od_origS')?.value || 0, C:+document.getElementById('od_origC')?.value || 0, A:+document.getElementById('od_origA')?.value || 0 };
+  const origOS = { S:+document.getElementById('os_origS')?.value || 0, C:+document.getElementById('os_origC')?.value || 0, A:+document.getElementById('os_origA')?.value || 0 };
+  const vcOD = { S:+document.getElementById('vc_odS')?.value || 0, C:+document.getElementById('vc_odC')?.value || 0, A:+document.getElementById('vc_odA')?.value || 0 };
+  const vcOS = { S:+document.getElementById('vc_osS')?.value || 0, C:+document.getElementById('vc_osC')?.value || 0, A:+document.getElementById('vc_osA')?.value || 0 };
+
+  const finalOD = reverseVectorChange(origOD, vcOD);
+  const finalOS = reverseVectorChange(origOS, vcOS);
+
+  const setIf = (id, val)=> { const el = document.getElementById(id); if(el) el.textContent = val; };
+  setIf('od_vcFinalS', roundQuarter(finalOD.S));
+  setIf('od_vcFinalC', roundQuarter(finalOD.C));
+  setIf('od_vcFinalA', finalOD.A);
+
+  setIf('os_vcFinalS', roundQuarter(finalOS.S));
+  setIf('os_vcFinalC', roundQuarter(finalOS.C));
+  setIf('os_vcFinalA', finalOS.A);
+
+  const bestVCCross = chooseBestDiff(calcBackwardsLens(vcOS, vcOD), calcBackwardsLens(vcOD, vcOS));
+  const bestVCCrossPlus = minusToPlus(bestVCCross);
+  setIf('vc_crossS', roundQuarter(bestVCCrossPlus.S));
+  setIf('vc_crossC', roundQuarter(bestVCCrossPlus.C));
+  setIf('vc_crossA', bestVCCrossPlus.A);
+
+  updateCrossedLens();
+}
+
+/* ===== Listeners attach after DOM ready ===== */
+window.addEventListener("DOMContentLoaded", ()=>{
+  // attach vector listeners (if elements exist)
+  ['vc_odS','vc_odC','vc_odA','vc_osS','vc_osC','vc_osA'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('input', updateFinalFromVector);
+  });
+
+  // input list for general updates
+  document.querySelectorAll("input").forEach(i=>{
+    i.addEventListener('input', updateCrossedLens);
+    // keep sphere/cyl input coloring (existing behavior)
+    const id = i.id;
+    const colorInputs = ['od_origS','od_origC','os_origS','os_origC','od_finalS','od_finalC','os_finalS','os_finalC','vc_odS','vc_odC','vc_osS','vc_osC'];
+    if(colorInputs.includes(id)){
+      const colorUpdate = ()=> {
+        const val = parseFloat(i.value);
+        if (!isNaN(val)) i.style.color = (val > 0 ? "green" : (val < 0 ? "red" : "black"));
+        else i.style.color = "black";
+      };
+      i.addEventListener('input', colorUpdate);
+      i.addEventListener('blur', ()=>{ const val = parseFloat(i.value); if(!isNaN(val)) i.value = (Math.round(val / 0.25) * 0.25).toFixed(2); colorUpdate(); });
+      colorUpdate();
+    }
+  });
+
+  // initial run
+  updateCrossedLens();
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
