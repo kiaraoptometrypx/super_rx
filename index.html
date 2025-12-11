@@ -86,11 +86,10 @@ th.blue, td.blue {
 
 
 <tr><th class="red" colspan="4"></th></tr>
-<tr><td colspan="5" style="border:none"></td></tr>
+<tr><td colspan="4" style="border:none"></td></tr>
 
 <!-- Manual Subjective Refraction -->
-<tr>
-<th class="blue" colspan="4">Subjective Refraction</th>
+<tr><th class="blue" colspan="4">Subjective Refraction<div style="margin-top:5px"><button style="background-color:#F2FFFA; border-radius:10px; height:35px; width:250px" id="toggleMask1">Hide/Show Subjective RX</button></div></th></tr>
 
 <tr class="mask1">
   <td>R Dx</td>
@@ -105,7 +104,7 @@ th.blue, td.blue {
   <td id="os_roundC"></td>
   <td id="os_roundA"></td>
 </tr>
-<tr class="mask1">
+<tr style="display:none" class="mask1">
   <td>Bino Dx</td>
   <td id="diffCrossS"></td>
   <td id="diffCrossC"></td>
@@ -114,6 +113,18 @@ th.blue, td.blue {
 
 
 
+<tr class="mask1">
+  <td>Right</td>
+  <td>Sph : <input type="number" step="0.25" id="od_finalS"></td>
+  <td>Cyl : <input type="number" step="0.25" id="od_finalC"></td>
+  <td>Axis : <input type="number" step="5" min="0" max="180" id="od_finalA"></td>
+</tr>
+<tr class="mask1">
+  <td>Left</td>
+  <td>Sph : <input type="number" step="0.25" id="os_finalS"></td>
+  <td>Cyl : <input type="number" step="0.25" id="os_finalC"></td>
+  <td>Axis : <input type="number" step="5" min="0" max="180" id="os_finalA"></td>
+</tr>
 
 <tr style="display:none">
   <td colspan="2">Crossed OD</td>
@@ -126,19 +137,6 @@ th.blue, td.blue {
   <td id="os_crossS"></td>
   <td id="os_crossC"></td>
   <td id="os_crossA"></td>
-</tr>
-<th colspan="4"></th>
-<tr class="mask1">
-  <td>Right</td>
-  <td>Sph : <input type="number" step="0.25" id="od_finalS"></td>
-  <td>Cyl : <input type="number" step="0.25" id="od_finalC"></td>
-  <td>Axis : <input type="number" step="5" min="0" max="180" id="od_finalA"></td>
-</tr>
-<tr class="mask1">
-  <td>Left</td>
-  <td>Sph : <input type="number" step="0.25" id="os_finalS"></td>
-  <td>Cyl : <input type="number" step="0.25" id="os_finalC"></td>
-  <td>Axis : <input type="number" step="5" min="0" max="180" id="os_finalA"></td>
 </tr>
 
 
@@ -154,36 +152,40 @@ th.blue, td.blue {
 <tr>
   <th class="yellow" colspan="4">Vector Refraction</th></tr>
 <tr>
-  <td>FC DC Bal R<br><button onclick="copyVD_OD()" style="width:80px; height:30px">Export</button></td>
+  <td>FC DC Bal R<br><div style="margin-top:5px"><button onclick="copyVD_OD()" style="border-radius:10px; width:100px; height:35px">Export</button></div></td>
   <td>
-    Sph : <input type="number" step="0.25" id="vd_odS"><br>
-    <span id="vd_out_odS">-</span>
+     Sph : <input type="number" step="0.25" id="vd_odS"><br>
+    <div style="margin-top:10px"><span id="vd_out_odS">-</span></div>
   </td>
   <td>
     Cyl : <input type="number" step="0.25" id="vd_odC"><br>
-    <span id="vd_out_odC">-</span>
+    <div style="margin-top:10px"><span id="vd_out_odC">-</span></div>
   </td>
   <td>
     Axis : <input type="number" step="5" min="0" max="180" id="vd_odA"><br>
-    <span id="vd_out_odA">-</span>
+    <div style="margin-top:10px"><span id="vd_out_odA">-</span></div>
   </td>
 </tr>
 
 <tr>
-  <td>FC DC Bal L<br><button onclick="copyVD_OS()" style="width:80px; height:30px">Export</button>
-</td>
+  <td>FC DC Bal L<br>
+    <div style="margin-top:5px">
+      <button onclick="copyVD_OS()" style="border-radius:10px; width:100px; height:35px">Export</button>
+    </div>
+  </td>
   <td>
     Sph : <input type="number" step="0.25" id="vd_osS"><br>
-    <span id="vd_out_osS">-</span>
+    <div style="margin-top:10px"><span id="vd_out_osS">-</span></div>
   </td>
   <td>
     Cyl : <input type="number" step="0.25" id="vd_osC"><br>
-    <span id="vd_out_osC">-</span>
+    <div style="margin-top:10px"><span id="vd_out_osC">-</span></div>
   </td>
   <td>
     Axis : <input type="number" step="5" min="0" max="180" id="vd_osA"><br>
-    <span id="vd_out_osA">-</span>
+    <div style="margin-top:10px"><span id="vd_out_osA">-</span></div>
   </td>
+
 </tr>
 <tr>
   <td>R Dx</td>
@@ -197,21 +199,23 @@ th.blue, td.blue {
   <td><input type="number" step="0.25" id="vc_osC"></td>
   <td><input type="number" step="5" min="0" max="180" id="vc_osA"></td>
 </tr>
-<tr>
+<tr style="display:none">
   <td>Bino Dx</td>
   <td id="vc_crossS">-</td>
   <td id="vc_crossC">-</td>
   <td id="vc_crossA">-</td>
 </tr>
-<tr><th colspan="4"></th>
-<tr>
+<tr style="display:none">
+<th colspan="4"></th>
+</tr>
+<tr style="display:none">
   <td>Right</td>
   <td>Sph : <span id="od_vcFinalS">0.00</span></td>
   <td>Cyl : <span id="od_vcFinalC">0.00</span></td>
   <td>Axis : <span id="od_vcFinalA">-</span></td>
 </tr>
 
-<tr>
+<tr style="display:none">
   <td>Left</td>
   <td>Sph : <span id="os_vcFinalS">0.00</span></td>
   <td>Cyl : <span id="os_vcFinalC">0.00</span></td>
@@ -231,6 +235,7 @@ th.blue, td.blue {
 
 <tr><td colspan="4" style="border:none"></td></tr>
 <tr><th colspan="4">Summary</th></tr>
+
 <tr>
   <td colspan="4">
     Gaze Angle from Center: 
@@ -245,15 +250,25 @@ th.blue, td.blue {
   </td>
 </tr>
 
-</td>
-  </tr>
+
 <tr>
   <td class="red">Current Rx</td>
   <td colspan="3" class="red">
+
     R: <span id="od_origCombined" style="margin-right: 100px;">OD -</span>
     L: <span id="os_origCombined">OS -</span>
   </td>
 </tr>
+<tr>
+  <td class="red">Add <input style="width:55px" type="number" step="0.25" min="0" max="5" id="nearAdd" placeholder="">
+</td>
+  <td class="red" colspan="3">
+
+    R: <span id="od_nearCombined" style="margin-right: 100px;">0.00 / 0.00 x 0</span>
+    L: <span id="os_nearCombined">0.00 / 0.00 x 0</span>
+  </td>
+</tr>
+
 <tr>
   <td class="red">Current Prism</td>
   <td class="red" colspan="3">
@@ -268,6 +283,13 @@ th.blue, td.blue {
   <td class="blue" colspan="3">
     R : <span id="od_finalCombined" style="margin-right: 100px;">OD -</span>
     L : <span id="os_finalCombined">OS -</span>
+  </td>
+</tr>
+<tr class="mask1">
+  <td class="blue">Add <input style="width:55px" type="number" step="0.25" min="0" max="5" id="nearAddFinal" placeholder=""></td>
+  <td class="blue" colspan="3">
+    R: <span id="od_finalNearCombined" style="margin-right: 100px;">0.00 / 0.00 × 0</span>
+    L: <span id="os_finalNearCombined">0.00 / 0.00 × 0</span>
   </td>
 </tr>
 
@@ -287,6 +309,13 @@ th.blue, td.blue {
     L : <span id="os_vcCombined">OS -</span>
   </td>
 </tr>
+<tr>
+  <td class="yellow">Add <input style="width:55px" type="number" step="0.25" min="0" max="5" id="nearAddVector" placeholder=""></td>
+  <td class="yellow" colspan="3">
+    R: <span id="od_vcNearCombined" style="margin-right: 100px;">0.00 / 0.00 x 0</span>
+    L: <span id="os_vcNearCombined">0.00 / 0.00 x 0</span>
+  </td>
+</tr>
 
 <tr>
   <td class="yellow">Prism Changes</td>
@@ -296,6 +325,12 @@ th.blue, td.blue {
     D : <span id="prismD_vc">-</span>
   </td>
 </tr>
+<tr><td colspan="4"><span style="display:block;">
+  <span style="color:green;">Green = Tolerable</span>,
+  <span style="color:purple;">Purple = Borderline</span>,
+  <span style="color:red;">Red = Risky</span>
+</span>
+</td></tr>
 
 
 
@@ -305,10 +340,8 @@ th.blue, td.blue {
 
 
 </table>
-<div style="height:20px"></div>
 
 
-<button style="background-color:#F2FFFA; border-radius:10px; height:50px; width:125px" id="toggleMask1">Hide/Show<br>Subjective RX</button>
 
 
 <div style="height:350px"></div>
@@ -319,6 +352,133 @@ th.blue, td.blue {
 
 
 <script>
+window.addEventListener("DOMContentLoaded", () => {
+  const addInput = document.getElementById("nearAddFinal");
+
+  function updateFinalNearRx() {
+    const add = parseFloat(addInput.value) || 0;
+
+    // Get subjective Rx values
+    const odS = parseFloat(document.getElementById("od_finalS").value) || 0;
+    const odC = parseFloat(document.getElementById("od_finalC").value) || 0;
+    const odA = parseInt(document.getElementById("od_finalA").value) || 0;
+
+    const osS = parseFloat(document.getElementById("os_finalS").value) || 0;
+    const osC = parseFloat(document.getElementById("os_finalC").value) || 0;
+    const osA = parseInt(document.getElementById("os_finalA").value) || 0;
+
+    // Near sphere = subjective Sph + Add
+    let odNearS = odS + add;
+    let osNearS = osS + add;
+
+    // Format with plus sign if positive
+    odNearS = (odNearS > 0 ? "+" : "") + odNearS.toFixed(2);
+    osNearS = (osNearS > 0 ? "+" : "") + osNearS.toFixed(2);
+
+    // Update spans
+    document.getElementById("od_finalNearCombined").textContent = `${odNearS} / ${odC.toFixed(2)} × ${odA}`;
+    document.getElementById("os_finalNearCombined").textContent = `${osNearS} / ${osC.toFixed(2)} × ${osA}`;
+  }
+
+  // Update whenever Add changes
+  addInput.addEventListener("input", updateFinalNearRx);
+
+  // Update live whenever subjective Rx changes
+  ["od_finalS","od_finalC","od_finalA","os_finalS","os_finalC","os_finalA"].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.addEventListener("input", updateFinalNearRx);
+  });
+
+  // Initial update
+  updateFinalNearRx();
+});
+
+
+window.addEventListener("DOMContentLoaded", () => {
+  const addInput = document.getElementById("nearAdd");
+
+  function updateNearRx() {
+    const add = parseFloat(addInput.value) || 0;
+
+    // Get distance Rx values
+    const odS = parseFloat(document.getElementById("od_origS").value) || 0;
+    const odC = parseFloat(document.getElementById("od_origC").value) || 0;
+    const odA = parseInt(document.getElementById("od_origA").value) || 0;
+
+    const osS = parseFloat(document.getElementById("os_origS").value) || 0;
+    const osC = parseFloat(document.getElementById("os_origC").value) || 0;
+    const osA = parseInt(document.getElementById("os_origA").value) || 0;
+
+    // Near sphere = distance Sph + Add
+    let odNearS = odS + add;
+    let osNearS = osS + add;
+
+    // Format sphere with plus sign if positive
+    odNearS = (odNearS > 0 ? "+" : "") + odNearS.toFixed(2);
+    osNearS = (osNearS > 0 ? "+" : "") + osNearS.toFixed(2);
+
+    // Update spans
+    document.getElementById("od_nearCombined").textContent = `${odNearS} / ${odC.toFixed(2)} × ${odA}`;
+    document.getElementById("os_nearCombined").textContent = `${osNearS} / ${osC.toFixed(2)} × ${osA}`;
+  }
+
+  // Update whenever Add changes
+  addInput.addEventListener("input", updateNearRx);
+
+  // Update whenever distance Rx changes
+  ["od_origS","od_origC","od_origA","os_origS","os_origC","os_origA"].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.addEventListener("input", updateNearRx);
+  });
+});
+
+
+window.addEventListener("DOMContentLoaded", () => {
+  const addInput = document.getElementById("nearAddVector");
+
+  function updateVcNearRx() {
+    const add = parseFloat(addInput.value) || 0;
+
+    // Get far vector Rx values
+    const odS = parseFloat(document.getElementById("od_vcFinalS").textContent) || 0;
+    const odC = parseFloat(document.getElementById("od_vcFinalC").textContent) || 0;
+    const odA = parseInt(document.getElementById("od_vcFinalA").textContent) || 0;
+
+    const osS = parseFloat(document.getElementById("os_vcFinalS").textContent) || 0;
+    const osC = parseFloat(document.getElementById("os_vcFinalC").textContent) || 0;
+    const osA = parseInt(document.getElementById("os_vcFinalA").textContent) || 0;
+
+    // Near sphere = far Sph + Add
+    let odNearS = odS + add;
+    let osNearS = osS + add;
+
+    // Format with plus sign if positive
+    odNearS = (odNearS > 0 ? "+" : "") + odNearS.toFixed(2);
+    osNearS = (osNearS > 0 ? "+" : "") + osNearS.toFixed(2);
+
+    // Update spans
+    document.getElementById("od_vcNearCombined").textContent = `${odNearS} / ${odC.toFixed(2)} × ${odA}`;
+    document.getElementById("os_vcNearCombined").textContent = `${osNearS} / ${osC.toFixed(2)} × ${osA}`;
+  }
+
+  // Update on Add input change
+  addInput.addEventListener("input", updateVcNearRx);
+
+  // Live update when far vector Rx changes
+  ["od_vcFinalS","od_vcFinalC","od_vcFinalA","os_vcFinalS","os_vcFinalC","os_vcFinalA"].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) {
+      // Observe textContent changes for live update
+      const observer = new MutationObserver(updateVcNearRx);
+      observer.observe(el, { characterData: true, childList: true, subtree: true });
+    }
+  });
+
+  // Initial update
+  updateVcNearRx();
+});
+
+
 
 
 
@@ -438,14 +598,50 @@ function reverseVectorChange(orig, vector){
   return bestSingleLens({ S: toFixed2Num(SF), C: toFixed2Num(CF), A: Math.round(AF) % 180 });
 }
 
-/* ===== Prism color helper, type-specific ===== */
+/* ===== Prism color helper, type-specific (percentage-based) ===== */
 function colorPrism(el, value, type){
   if(!el) return;
-  const absVal = Math.abs(Number(value) || 0);
-  if(type === "H") el.style.color = absVal < 0.5 ? "green" : absVal < 1 ? "orange" : "red";
-  else if(type === "V") el.style.color = absVal < 0.125 ? "green" : absVal < 0.25 ? "orange" : "red";
-  else if(type === "D") el.style.color = absVal < 0.375 ? "green" : absVal < 0.75 ? "orange" : "red";
+
+// thresholds for percentage (adjustable)
+const thresholds = {
+  H: [0.3, 0.5],
+  V: [0.1, 0.2],
+  D: [0.15, 0.3]
+};
+
+// get original prism value
+let origId;
+if(type === "H") origId = "origCrossS";
+else if(type === "V") origId = "origCrossC";
+else if(type === "D") origId = "origCrossA";
+
+const origText = document.getElementById(origId)?.textContent || "0";
+const origVal = Number(origText) || 0;
+const newVal  = Number(value) || 0;
+
+// ===== SPECIAL ZERO RULE =====
+if (origVal === 0) {
+  if (newVal === 0) {
+    el.style.color = "green";  // 0 ÷ 0
+    return;
+  } else {
+    el.style.color = "red";    // anything ÷ 0
+    return;
+  }
 }
+
+// ===== STANDARD PERCENTAGE LOGIC =====
+let pct = Math.abs(newVal) / Math.abs(origVal);
+
+// force >100% to red
+if (pct > 1) pct = 999;
+
+// assign color
+if (pct <= thresholds[type][0]) el.style.color = "green";
+else if (pct <= thresholds[type][1]) el.style.color = "purple";
+else el.style.color = "red";
+}
+
 
 /* ===== Main update function (integrated, robust) ===== */
 function updateCrossedLens(){
@@ -573,6 +769,8 @@ window.addEventListener("DOMContentLoaded", ()=>{
     if(el) el.addEventListener('input', updateFinalFromVector);
   });
 
+
+
   // input list for general updates
   document.querySelectorAll("input").forEach(i=>{
     i.addEventListener('input', updateCrossedLens);
@@ -580,6 +778,10 @@ window.addEventListener("DOMContentLoaded", ()=>{
     const id = i.id;
     const colorInputs = ['od_origS','od_origC','os_origS','os_origC','od_finalS','od_finalC','os_finalS','os_finalC','vc_odS','vc_odC','vc_osS','vc_osC',      'vd_odS','vd_odC','vd_osS','vd_osC'   // added vector defect
 ];
+
+
+
+
     if(colorInputs.includes(id)){
       const colorUpdate = ()=> {
         const val = parseFloat(i.value);
@@ -833,6 +1035,13 @@ updateOriginalPrism();
 </script>
 
 <script>
+// turn opacity ON immediately at page load
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll(".mask1").forEach(row => row.classList.add("hidden-row"));
+  document.querySelectorAll(".mask2").forEach(row => row.classList.add("hidden-row"));
+});
+
+// your buttons now toggle correctly
 document.getElementById("toggleMask1").addEventListener("click", function() {
   document.querySelectorAll(".mask1").forEach(row => {
     row.classList.toggle("hidden-row");
@@ -844,6 +1053,7 @@ document.getElementById("toggleMask2").addEventListener("click", function() {
     row.classList.toggle("hidden-row");
   });
 });
+
 
 </script>
 
