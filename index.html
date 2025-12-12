@@ -18,14 +18,38 @@ th.blue, td.blue {
   color: black;
 }
 
+/* Column 1: width 25% */
+td:nth-child(1),
+th:nth-child(1) {
+  width: 22%;
+}
+
+/* Column 2: width 25% + remove RIGHT border */
+td:nth-child(2),
+th:nth-child(2) {
+  width: 26%;
+}
+
+/* Column 3: width 25% + remove LEFT & RIGHT borders */
+td:nth-child(3),
+th:nth-child(3) {
+  width: 26%;
+}
+
+/* Column 4: width 25% + remove LEFT border */
+td:nth-child(4),
+th:nth-child(4) {
+  width: 26%;
+}
+
+
 .hidden-row {
-  opacity: 0.1;       /* semi-transparent */
+  opacity: 0.05;       /* semi-transparent */
   pointer-events: none; /* optional: disable interactions */
 }
 
   body {
     font-family: 'Manrope', sans-serif;
-    padding: 20px;
     background: #f5f5f5;
     display: flex;
     flex-direction: column;
@@ -35,9 +59,12 @@ th.blue, td.blue {
   table {
     border-collapse: collapse;
     width: 100%;
-    max-width: 700px;
+    max-width: 550px;
+    min-width: 550px;
     margin-top: 20px;
     text-align: center;
+    margin-right: 20px;
+    margin-left: 20px;
   }
 
   th, td {
@@ -58,11 +85,14 @@ th.blue, td.blue {
     border: 1px solid lightgrey;
     border-radius:6px;
   }
+body, table, th, td, input, button {
+  font-size: 11px;
+}
 </style>
 
 </head>
 <body>
-
+<div>
 <h2>Superposition Refraction</h2>
 
 <table>
@@ -86,64 +116,9 @@ th.blue, td.blue {
 
 
 <tr><th class="red" colspan="4"></th></tr>
-<tr><td colspan="4" style="border:none"></td></tr>
 
-<!-- Manual Subjective Refraction -->
-<tr><th class="blue" colspan="4">Subjective Refraction<div style="margin-top:5px"><button style="background-color:#F2FFFA; border-radius:10px; height:35px; width:250px" id="toggleMask1">Hide/Show Subjective RX</button></div></th></tr>
-
-<tr class="mask1">
-  <td>R Dx</td>
-  <td id="od_roundS"></td>
-  <td id="od_roundC"></td>
-  <td id="od_roundA"></td>
-</tr>
-
-<tr class="mask1">
-  <td>L Dx</td>
-  <td id="os_roundS"></td>
-  <td id="os_roundC"></td>
-  <td id="os_roundA"></td>
-</tr>
-<tr style="display:none" class="mask1">
-  <td>Bino Dx</td>
-  <td id="diffCrossS"></td>
-  <td id="diffCrossC"></td>
-  <td id="diffCrossA"></td>
-</tr>
-
-
-
-<tr class="mask1">
-  <td>Right</td>
-  <td>Sph : <input type="number" step="0.25" id="od_finalS"></td>
-  <td>Cyl : <input type="number" step="0.25" id="od_finalC"></td>
-  <td>Axis : <input type="number" step="5" min="0" max="180" id="od_finalA"></td>
-</tr>
-<tr class="mask1">
-  <td>Left</td>
-  <td>Sph : <input type="number" step="0.25" id="os_finalS"></td>
-  <td>Cyl : <input type="number" step="0.25" id="os_finalC"></td>
-  <td>Axis : <input type="number" step="5" min="0" max="180" id="os_finalA"></td>
-</tr>
-
-<tr style="display:none">
-  <td colspan="2">Crossed OD</td>
-  <td id="od_crossS"></td>
-  <td id="od_crossC"></td>
-  <td id="od_crossA"></td>
-</tr>
-<tr style="display:none">
-  <td colspan="2">Crossed OS</td>
-  <td id="os_crossS"></td>
-  <td id="os_crossC"></td>
-  <td id="os_crossA"></td>
-</tr>
-
-
-<th class="blue" colspan="4"></th>
-<tr><td colspan="4" style="border:none"></td></tr>
-
-
+</table>
+<table>
 
 
 
@@ -152,7 +127,7 @@ th.blue, td.blue {
 <tr>
   <th class="yellow" colspan="4">Vector Refraction</th></tr>
 <tr>
-  <td>FC DC Bal R<br><div style="margin-top:5px"><button onclick="copyVD_OD()" style="border-radius:10px; width:100px; height:35px">Export</button></div></td>
+  <td>FC DC Bal R<br><div style="margin-top:5px"><button onclick="copyVD_OD()" style="border-radius:10px; width:70px; height:25px">Export</button></div></td>
   <td>
      Sph : <input type="number" step="0.25" id="vd_odS"><br>
     <div style="margin-top:10px"><span id="vd_out_odS">-</span></div>
@@ -170,7 +145,7 @@ th.blue, td.blue {
 <tr>
   <td>FC DC Bal L<br>
     <div style="margin-top:5px">
-      <button onclick="copyVD_OS()" style="border-radius:10px; width:100px; height:35px">Export</button>
+      <button onclick="copyVD_OS()" style="border-radius:10px; width:70px; height:25px">Export</button>
     </div>
   </td>
   <td>
@@ -226,28 +201,125 @@ th.blue, td.blue {
 
 <tr><th class="yellow" colspan="4"></th>
 
+</table>
+<table>
+
+<!-- Manual Subjective Refraction -->
+<tr><th class="blue" colspan="4">
+
+Manual Refraction
+<button style="margin-left:20px; background-color:#F2FFFA; border-radius:10px; height:25px; width:150px" id="toggleMask1">Hide/Show Manual</button>
+
+</th></tr>
+
+<tr class="mask1">
+  <td>R Dx</td>
+  <td id="od_roundS"></td>
+  <td id="od_roundC"></td>
+  <td id="od_roundA"></td>
+</tr>
+
+<tr class="mask1">
+  <td>L Dx</td>
+  <td id="os_roundS"></td>
+  <td id="os_roundC"></td>
+  <td id="os_roundA"></td>
+</tr>
+<tr style="display:none" class="mask1">
+  <td>Bino Dx</td>
+  <td id="diffCrossS"></td>
+  <td id="diffCrossC"></td>
+  <td id="diffCrossA"></td>
+</tr>
 
 
 
+<tr class="mask1">
+  <td>Right</td>
+  <td>Sph : <input type="number" step="0.25" id="od_finalS"></td>
+  <td>Cyl : <input type="number" step="0.25" id="od_finalC"></td>
+  <td>Axis : <input type="number" step="5" min="0" max="180" id="od_finalA"></td>
+</tr>
+<tr class="mask1">
+  <td>Left</td>
+  <td>Sph : <input type="number" step="0.25" id="os_finalS"></td>
+  <td>Cyl : <input type="number" step="0.25" id="os_finalC"></td>
+  <td>Axis : <input type="number" step="5" min="0" max="180" id="os_finalA"></td>
+</tr>
+
+<tr style="display:none">
+  <td colspan="2">Crossed OD</td>
+  <td id="od_crossS"></td>
+  <td id="od_crossC"></td>
+  <td id="od_crossA"></td>
+</tr>
+<tr style="display:none">
+  <td colspan="2">Crossed OS</td>
+  <td id="os_crossS"></td>
+  <td id="os_crossC"></td>
+  <td id="os_crossA"></td>
+</tr>
+
+
+<th class="blue" colspan="4"></th>
+
+</table>
+
+
+</div>
+
+<div style="height:-20px"></div>
 
 
 
+<div id="captureTarget">
 
-<tr><td colspan="4" style="border:none"></td></tr>
-<tr><th colspan="4">Summary</th></tr>
+<table>
 
-<tr>
-  <td colspan="4">
-    Gaze Angle from Center: 
+<tr style="border:none;">
+  <td style="border:none;"></td>
+  <td style="border:none;"></td>
+  <td style="border:none;"></td>
+  <td style="border:none;"></td>
+</tr>
+
+<tr class="mask3" style="border:none;"> 
+  <td colspan="4" style="border:none;">
+    Gaze Angle: 
     <input type="range" id="gazeAngle" step="5" value="35" min="10" max="50" oninput="this.nextElementSibling.value = this.value">
     <output>35</output>
 
-    <span style="display:inline-block; width:40px;"></span> <!-- gap -->
+    <span style="display:inline-block; width:65px;"></span> <!-- gap -->
 
-    Vertex Distance (mm): 
+    BVD (mm): 
     <input type="range" id="vertexDist" step="1" value="14" min="10" max="20" oninput="this.nextElementSibling.value = this.value">
     <output>14</output>
   </td>
+</tr>
+
+
+<tr><th colspan="4" >Summary <button style="margin-left:20px; border-radius:10px; height:25px; width:170px" id="toggleMask3">Hide/Show Gaze/BVD</button>
+</th></tr>
+<tr>
+<td colspan="2" style="border-right:none;">Name : <input type="text" id="customerName" style="width:65%; height:20px"></td>
+<td colspan="2" style="border-left:none;">Whatsapp : <input type="text" id="customerWhatsapp" style="width:65%; height:20px"></td>
+
+</tr>
+<tr>
+
+<td colspan="3" style="border-right:none; vertical-align:middle;">
+  Notes :
+  <textarea id="notes" style="width:79%; border:1px solid lightgrey; height:40px; vertical-align:middle;"></textarea>
+</td>
+
+
+<td style="border-left:none" colspan="1">
+<button style="border-radius:10px; height:25px; width:100px" id="sendWhatsappBtn">Send WA</button>
+
+<br><br>
+
+<button style="border-radius:10px; height:25px; width:100px"  onclick="capturePart()">Save JPG</button>
+</td>
 </tr>
 
 
@@ -259,90 +331,122 @@ th.blue, td.blue {
     L: <span id="os_origCombined">OS -</span>
   </td>
 </tr>
-<tr>
-  <td class="red">Add <input style="width:55px" type="number" step="0.25" min="0" max="5" id="nearAdd" placeholder="">
-</td>
-  <td class="red" colspan="3">
-
-    R: <span id="od_nearCombined" style="margin-right: 100px;">0.00 / 0.00 x 0</span>
-    L: <span id="os_nearCombined">0.00 / 0.00 x 0</span>
-  </td>
-</tr>
 
 <tr>
-  <td class="red">Current Prism</td>
+  <td class="red">Current Gaze</td>
   <td class="red" colspan="3">
-    H : <span id="origCrossS" style="margin-right: 50px;">-</span>
-    V : <span id="origCrossC" style="margin-right: 50px;">-</span>
-    D : <span id="origCrossA">-</span>
-  </td>
-</tr>
-
-<tr class="mask1">
-  <td class="blue">Subjective Rx</td>
-  <td class="blue" colspan="3">
-    R : <span id="od_finalCombined" style="margin-right: 100px;">OD -</span>
-    L : <span id="os_finalCombined">OS -</span>
-  </td>
-</tr>
-<tr class="mask1">
-  <td class="blue">Add <input style="width:55px" type="number" step="0.25" min="0" max="5" id="nearAddFinal" placeholder=""></td>
-  <td class="blue" colspan="3">
-    R: <span id="od_finalNearCombined" style="margin-right: 100px;">0.00 / 0.00 × 0</span>
-    L: <span id="os_finalNearCombined">0.00 / 0.00 × 0</span>
-  </td>
-</tr>
-
-<tr class="mask1">
-  <td class="blue">Prism Changes</td>
-  <td class="blue" colspan="3">
-    H : <span id="prismH" style="margin-right: 50px;">-</span>
-    V : <span id="prismV" style="margin-right: 50px;">-</span>
-    D : <span id="prismD">-</span>
+    Horizontal : <span id="origCrossS" style="margin-right: 50px;">-</span>
+    Vertical : <span id="origCrossC" style="margin-right: 50px;">-</span>
+    Diagonal : <span id="origCrossA">-</span>
   </td>
 </tr>
 
 <tr>
   <td class="yellow">Vector Rx</td>
   <td class="yellow" colspan="3">
-    R : <span id="od_vcCombined" style="margin-right: 100px;">OD -</span>
-    L : <span id="os_vcCombined">OS -</span>
+    R : <span id="od_vcCombined" style="margin-right: 100px;">-</span>
+    L : <span id="os_vcCombined">-</span>
   </td>
 </tr>
 <tr>
-  <td class="yellow">Add <input style="width:55px" type="number" step="0.25" min="0" max="5" id="nearAddVector" placeholder=""></td>
-  <td class="yellow" colspan="3">
-    R: <span id="od_vcNearCombined" style="margin-right: 100px;">0.00 / 0.00 x 0</span>
-    L: <span id="os_vcNearCombined">0.00 / 0.00 x 0</span>
+  <td class="yellow">FC DC Bal</td>
+  <td colspan="3" class="yellow">
+    R : <span id="vd_odSummary" style="margin-right: 60px;">-</span>
+    L : <span id="vd_osSummary">-</span>
+  </td>
+</tr>
+<tr>
+  <td class="yellow">RX Changes</td>
+  <td colspan="3" class="yellow">
+    R: <span id="vc_odSummary" style="margin-right: 100px;">-</span>
+    L: <span id="vc_osSummary">-</span>
   </td>
 </tr>
 
+
 <tr>
-  <td class="yellow">Prism Changes</td>
+  <td class="yellow">Gaze Changes</td>
   <td class="yellow" colspan="3">
-    H : <span id="prismH_vc" style="margin-right: 50px;">-</span>
-    V : <span id="prismV_vc" style="margin-right: 50px;">-</span>
-    D : <span id="prismD_vc">-</span>
+    Horizontal : <span id="prismH_vc" style="margin-right: 50px;">-</span>
+    Vertical : <span id="prismV_vc" style="margin-right: 50px;">-</span>
+    Diagonal : <span id="prismD_vc">-</span>
   </td>
 </tr>
-<tr><td colspan="4"><span style="display:block;">
+
+
+
+
+<tr class="mask1">
+  <td class="blue">Manual Rx</td>
+  <td class="blue" colspan="3">
+    R : <span id="od_finalCombined" style="margin-right: 100px;">OD -</span>
+    L : <span id="os_finalCombined">OS -</span>
+  </td>
+</tr>
+
+<tr class="mask1">
+  <td class="blue">Gaze Changes</td>
+  <td class="blue" colspan="3">
+    Horizontal : <span id="prismH" style="margin-right: 50px;">-</span>
+    Vertical : <span id="prismV" style="margin-right: 50px;">-</span>
+    Diagonal : <span id="prismD">-</span>
+  </td>
+</tr>
+
+
+
+
+
+
+<tr><td colspan="4"><span style="display:block;"> Gaze Adaptability  
   <span style="color:green;">Green = Tolerable</span>,
   <span style="color:purple;">Purple = Borderline</span>,
   <span style="color:red;">Red = Risky</span>
 </span>
 </td></tr>
+<tr><td colspan="4">
+<button style="margin-left:20px; background-color:#F2FFFA; border-radius:10px; height:25px; width:150px" id="toggleMask1_copy">Hide/Show Manual</button>
+</td></tr>
+
+
+<tr style="height:25px"></tr>
+<tr><th colspan="4">Near Vision <button style="margin-left:20px; border-radius:10px; height:25px; width:120px" id="toggleMask2">Hide/Show Add</button></th></tr>
 
 
 
+<tr class="mask2">
+  <td class="red">Current </td>
+  <td class="red" colspan="3"><input style="margin-right:30px; width:55px" type="number" step="0.25" min="0" max="5" id="nearAdd" placeholder="">
+
+    R: <span id="od_nearCombined" style="margin-right: 50px;">0.00 / 0.00 x 0</span>
+    L: <span id="os_nearCombined">0.00 / 0.00 x 0</span>
+  </td>
+</tr>
+
+<tr class="mask2">
+  <td class="yellow">Vector</td>
+  <td class="yellow" colspan="3"><input style="margin-right:30px; width:55px" type="number" step="0.25" min="0" max="5" id="nearAddVector" placeholder="">
+    R: <span id="od_vcNearCombined" style="margin-right: 50px;">0.00 / 0.00 x 0</span>
+    L: <span id="os_vcNearCombined">0.00 / 0.00 x 0</span>
+  </td>
+</tr>
+
+<tr class="mask2">
+  <td class="blue">Manual</td>
+  <td class="blue" colspan="3"><input style="margin-right:30px; width:55px" type="number" step="0.25" min="0" max="5" id="nearAddFinal" placeholder="">
+    R: <span id="od_finalNearCombined" style="margin-right: 50px;">0.00 / 0.00 × 0</span>
+    L: <span id="os_finalNearCombined">0.00 / 0.00 × 0</span>
+  </td>
+</tr>
 
 <tr><th colspan="4"></th></tr>
 
 
 
 </table>
-
-
-
+<div style="margin-top:10px; margin-left:20px">End of Results</div>
+<div style="height:30px"></div>
+</div>
 
 <div style="height:350px"></div>
 
@@ -351,7 +455,10 @@ th.blue, td.blue {
 
 
 
-<script>
+<SCRIPT>
+
+
+
 window.addEventListener("DOMContentLoaded", () => {
   const addInput = document.getElementById("nearAddFinal");
 
@@ -818,7 +925,56 @@ function copyVD_OS() {
 </script>
 
 
+<script>
+// Format sphere/cylinder: add + for positive, 2 decimals
+function fmtPlus(v){
+  const n = Number(v);
+  if(isNaN(n)) return "-";
+  return (n > 0 ? "+" : "") + n.toFixed(2);
+}
 
+// Format axis: just round and wrap 0-179, no + sign
+function fmtAxis(a){
+  const n = Number(a);
+  if(isNaN(n)) return "-";
+  return Math.round(n) % 180;
+}
+
+function updateVDVCSummary() {
+  const vdOD = "DC " + fmtPlus(document.getElementById("vd_odS").value) + 
+               " ; FC " + fmtPlus(document.getElementById("vd_odC").value) + 
+               " × " + fmtAxis(document.getElementById("vd_odA").value);
+
+  const vdOS = "DC " + fmtPlus(document.getElementById("vd_osS").value) + 
+               " ; FC " + fmtPlus(document.getElementById("vd_osC").value) + 
+               " × " + fmtAxis(document.getElementById("vd_osA").value);
+
+  const vcOD = fmtPlus(document.getElementById("vc_odS").value) + 
+               " / " + fmtPlus(document.getElementById("vc_odC").value) + 
+               " × " + fmtAxis(document.getElementById("vc_odA").value);
+
+  const vcOS = fmtPlus(document.getElementById("vc_osS").value) + 
+               " / " + fmtPlus(document.getElementById("vc_osC").value) + 
+               " × " + fmtAxis(document.getElementById("vc_osA").value);
+
+  document.getElementById("vd_odSummary").textContent = vdOD;
+  document.getElementById("vd_osSummary").textContent = vdOS;
+  document.getElementById("vc_odSummary").textContent = vcOD;
+  document.getElementById("vc_osSummary").textContent = vcOS;
+}
+
+// Attach to inputs
+["vd_odS","vd_odC","vd_odA","vd_osS","vd_osC","vd_osA",
+ "vc_odS","vc_odC","vc_odA","vc_osS","vc_osC","vc_osA"]
+.forEach(id => {
+  const el = document.getElementById(id);
+  if(el) el.addEventListener("input", updateVDVCSummary);
+});
+
+// Initial update
+updateVDVCSummary();
+
+</script>
 
 
 
@@ -1039,14 +1195,11 @@ updateOriginalPrism();
 document.addEventListener("DOMContentLoaded", function() {
   document.querySelectorAll(".mask1").forEach(row => row.classList.add("hidden-row"));
   document.querySelectorAll(".mask2").forEach(row => row.classList.add("hidden-row"));
+  document.querySelectorAll(".mask3").forEach(row => row.classList.add("hidden-row"));
+
 });
 
-// your buttons now toggle correctly
-document.getElementById("toggleMask1").addEventListener("click", function() {
-  document.querySelectorAll(".mask1").forEach(row => {
-    row.classList.toggle("hidden-row");
-  });
-});
+
 
 document.getElementById("toggleMask2").addEventListener("click", function() {
   document.querySelectorAll(".mask2").forEach(row => {
@@ -1055,10 +1208,75 @@ document.getElementById("toggleMask2").addEventListener("click", function() {
 });
 
 
+document.getElementById("toggleMask3").addEventListener("click", function() {
+  document.querySelectorAll(".mask3").forEach(row => {
+    row.classList.toggle("hidden-row");
+  });
+});
+
+</script>
+<script>
+function toggleManualMask1() {
+  document.querySelectorAll(".mask1").forEach(row => row.classList.toggle("hidden-row"));
+}
+
+// Attach the same function to both buttons
+document.getElementById("toggleMask1").addEventListener("click", toggleManualMask1);
+document.getElementById("toggleMask1_copy").addEventListener("click", toggleManualMask1);
 </script>
 
+<script>
+function sendWhatsapp() {
+  const number = document.getElementById("customerWhatsapp").value.trim().replace(/\D/g,'');
+  const name = document.getElementById("customerName").value.trim();
+  const notes = document.getElementById("notes").value.trim();
 
+  if(!number) return;
 
+  const msg = `Greetings ${name} from Kiara Optometry! ${notes}`;
+  window.open(`https://wa.me/${number}?text=${encodeURIComponent(msg)}`, "_blank");
+}
+
+document.getElementById("sendWhatsappBtn").addEventListener("click", sendWhatsapp);
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<script>
+function capturePart() {
+  const target = document.getElementById("captureTarget");
+
+  html2canvas(target).then(fullCanvas => {
+
+    // crop 70px from the top
+    const cropY = 70;
+    const w = fullCanvas.width;
+    const h = fullCanvas.height - cropY;
+
+    const cropped = document.createElement("canvas");
+    cropped.width = w;
+    cropped.height = h;
+
+    const ctx = cropped.getContext("2d");
+    ctx.drawImage(fullCanvas, 0, cropY, w, h, 0, 0, w, h);
+
+// save JPG with customer name and current date
+const link = document.createElement("a");
+const name = document.getElementById("customerName")?.value || "Unnamed";
+const now = new Date();
+const day = String(now.getDate()).padStart(2, '0');
+const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const month = monthNames[now.getMonth()]; // 0-indexed
+const year = now.getFullYear();
+
+const today = `${day}-${month}-${year}`; // e.g., 12-Dec-2025
+link.download = `${name}_${today}.jpg`;
+link.href = cropped.toDataURL("image/jpeg", 0.9);
+link.click();
+
+  });
+}
+</script>
 
 
 </body>
