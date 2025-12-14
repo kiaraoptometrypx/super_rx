@@ -245,13 +245,13 @@ Manual Refraction
   <td>Ax : <input type="number" step="5" min="0" max="180" id="os_finalA"></td>
 </tr>
 
-<tr class="mask1">
+<tr style="display:none" class="mask1">
   <td colspan="1">Crossed OD</td>
   <td id="od_crossS"></td>
   <td id="od_crossC"></td>
   <td id="od_crossA"></td>
 </tr>
-<tr class="mask1">
+<tr style="display:none" class="mask1">
   <td colspan="1">Crossed OS</td>
   <td id="os_crossS"></td>
   <td id="os_crossC"></td>
@@ -383,6 +383,14 @@ Manual Refraction
 </tr>
 
 <tr class="mask1">
+  <td class="blue">RX Changes</td>
+  <td colspan="3" class="blue">
+    R: <span id="od_roundCombinedDisplay" style="margin-right: 100px;">-</span>
+    L: <span id="os_roundCombinedDisplay">-</span>
+  </td>
+</tr>
+
+<tr class="mask1">
   <td class="blue">Gaze Changes</td>
   <td class="blue" colspan="3">
     Horizontal : <span id="prismH" style="margin-right: 50px;">-</span>
@@ -390,8 +398,6 @@ Manual Refraction
     Diagonal : <span id="prismD">-</span>
   </td>
 </tr>
-
-
 
 
 
@@ -1035,6 +1041,40 @@ updateVDVCSummary();
 
     if(typeof updateFinalFromVector === "function") updateFinalFromVector();
   };
+
+// === Combined display updater for round IDs ===
+function updateCombinedRound(){
+  const odS = document.getElementById("od_roundS")?.textContent || "-";
+  const odC = document.getElementById("od_roundC")?.textContent || "-";
+  const odA = document.getElementById("od_roundA")?.textContent || "-";
+
+  const osS = document.getElementById("os_roundS")?.textContent || "-";
+  const osC = document.getElementById("os_roundC")?.textContent || "-";
+  const osA = document.getElementById("os_roundA")?.textContent || "-";
+
+  const odEl = document.getElementById("od_roundCombinedDisplay");
+  const osEl = document.getElementById("os_roundCombinedDisplay");
+
+  if (odEl) odEl.textContent = `${odS} / ${odC} × ${odA}`;
+  if (osEl) osEl.textContent = `${osS} / ${osC} × ${osA}`;
+}
+
+// Observe changes in the round td elements
+["od_roundS","od_roundC","od_roundA","os_roundS","os_roundC","os_roundA"].forEach(id=>{
+  const el = document.getElementById(id);
+  if(!el) return;
+  const mo = new MutationObserver(updateCombinedRound);
+  mo.observe(el, { childList: true, characterData: true, subtree: true });
+});
+
+// Initial run
+updateCombinedRound();
+
+
+
+
+
+
 
   // === Combined display updaters ===
   function updateCombinedVC(){
