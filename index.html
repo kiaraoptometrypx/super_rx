@@ -127,6 +127,22 @@ body, table, th, td, input, button {
 <tr>
   <th class="yellow" colspan="4">Vector Refraction</th></tr>
 <tr>
+  <td>FC DC Bal BE<br><div style="margin-top:5px"><button onclick="copyVD_OU_to_ODOS()" style="border-radius:10px; width:70px; height:25px">Export</button></div></td>
+  <td>
+     Sph : <input type="number" step="0.25" id="vd_ouS"><br>
+    <div style="margin-top:10px"><span id="vd_out_ouS">-</span></div>
+  </td>
+  <td>
+    Cyl : <input type="number" step="0.25" id="vd_ouC"><br>
+    <div style="margin-top:10px"><span id="vd_out_ouC">-</span></div>
+  </td>
+  <td>
+    Ax : <input type="number" step="5" min="0" max="180" id="vd_ouA"><br>
+    <div style="margin-top:10px"><span id="vd_out_ouA">-</span></div>
+  </td>
+</tr>
+
+<tr>
   <td>FC DC Bal R<br><div style="margin-top:5px"><button onclick="copyVD_OD()" style="border-radius:10px; width:70px; height:25px">Export</button></div></td>
   <td>
      Sph : <input type="number" step="0.25" id="vd_odS"><br>
@@ -197,7 +213,10 @@ body, table, th, td, input, button {
 
 
 
-<tr><th class="yellow" colspan="4"></th>
+<tr><th class="yellow" colspan="4">Status : <select id="statusVector" style="font-size:11px; border-radius:6px; height:20px; margin-left:10px">
+  <option value="notdone">Not Done</option>
+  <option value="done">Done</option>
+</select></th>
 
 </table>
 <table>
@@ -259,7 +278,10 @@ Manual Refraction
 </tr>
 
 
-<th class="blue" colspan="4"></th>
+<th class="blue" colspan="4">Status : <select id="statusManual" style="font-size:11px; border-radius:6px; height:20px; margin-left:10px">
+  <option value="notdone">Not Done</option>
+  <option value="done">Done</option>
+</select></th>
 
 </table>
 
@@ -290,7 +312,7 @@ Manual Refraction
     <span style="display:inline-block; width:65px;"></span> <!-- gap -->
 
     BVD (mm): 
-    <input type="range" id="vertexDist" step="1" value="14" min="10" max="20" oninput="this.nextElementSibling.value = this.value">
+    <input type="range" id="vertexDist" step="1" value="12" min="1" max="20" oninput="this.nextElementSibling.value = this.value">
     <output>14</output>
   </td>
 </tr>
@@ -349,7 +371,8 @@ Manual Refraction
 <tr>
   <td class="yellow">FC DC Bal</td>
   <td colspan="3" class="yellow">
-    R : <span id="vd_odSummary" style="margin-right: 60px;">-</span>
+   BE : <span id="vd_ouSummary">-</span><br><br>
+    R : <span id="vd_odSummary" style="margin-right: 30px;">-</span>
     L : <span id="vd_osSummary">-</span>
   </td>
 </tr>
@@ -448,11 +471,148 @@ Manual Refraction
 
 
 </table>
-<div style="margin-top:10px; margin-left:20px">End of Results</div>
-<div style="height:30px"></div>
+<div style="margin-top:10px; margin-left:20px">
+<div>End of Results</div></div>
+<div style="height:10px"></div>
+
 </div>
 
+
+<div style="text-align:left; margin-top:10px;">
+  <div style="height:10px"></div>
+  <div>
+    <button style="width:150px; height:25px" onclick="exportInputs()">Export Inputs</button>
+    <textarea id="rxExportBox" style="width:95%;height:150px;margin-top:10px;"></textarea>
+  </div>
+  <div style="height:30px"></div>
+</div>
+
+
 <div style="height:350px"></div>
+
+
+<script>
+// Export inputs as CSV and open Gmail
+function exportInputs() {
+  const out = ["RX_EXPORT_INPUTS_V1"];
+
+  // inputs
+  document.querySelectorAll("input[id]").forEach(el => {
+    out.push(`${el.id}=${el.value}`);
+  });
+
+  // statuses (selects)
+  ["statusVector", "statusManual"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) out.push(`${id}=${el.options[el.selectedIndex].text}`);
+  });
+
+
+  // CSV-style text
+  const csvText = out.join(", ");
+  document.getElementById("rxExportBox").value = csvText;
+
+  // Separator
+  const separator = "--------------------------";
+
+  // Human-readable summary EXACTLY as you specified
+  const summaryText = 
+`CURRENT:
+RX R/L:     ${document.getElementById("od_origCombined")?.textContent || "-"}     //     ${document.getElementById("os_origCombined")?.textContent || "-"}  
+Gaze Imbalance:     Horizontal: ${document.getElementById("origCrossS")?.textContent || "-"}     //     Vertical: ${document.getElementById("origCrossC")?.textContent || "-"}     //     Diagonal: ${document.getElementById("origCrossA")?.textContent || "-"}  
+ADD:     ${document.getElementById("nearAdd")?.value || "0.00"} 
+
+VECTOR (${document.getElementById("statusVector")?.options[document.getElementById("statusVector").selectedIndex]?.text || "-"}):
+RX R/L:     ${document.getElementById("od_vcCombined")?.textContent || "-"}     //     ${document.getElementById("os_vcCombined")?.textContent || "-"}  
+Gaze Imbalance:     Horizontal: ${document.getElementById("prismH_vc")?.textContent || "-"}     //     Vertical  ${document.getElementById("prismV_vc")?.textContent || "-"}     //     Diagonal: ${document.getElementById("prismD_vc")?.textContent || "-"}  
+ADD:     ${document.getElementById("nearAddVector")?.value || "0.00"}   
+FC DC Bal Both Eye:     ${document.getElementById("vd_ouSummary")?.textContent || "-"}  
+FC DC BAL R/L:     ${document.getElementById("vd_odSummary")?.textContent || "-"}     //     ${document.getElementById("vd_osSummary")?.textContent || "-"}  
+RX Changes R/L:          ${document.getElementById("vc_odSummary")?.textContent || "-"}     //     ${document.getElementById("vc_osSummary")?.textContent || "-"}  
+
+MANUAL (${document.getElementById("statusManual")?.options[document.getElementById("statusManual").selectedIndex]?.text || "-"}):
+RX R/L:     ${document.getElementById("od_finalCombined")?.textContent || "-"}     //     ${document.getElementById("os_finalCombined")?.textContent || "-"}  
+Gaze Imbalance:     Horizontal: ${document.getElementById("prismH")?.textContent || "-"}     //     Vertical: ${document.getElementById("prismV")?.textContent || "-"}     //     Diagonal: ${document.getElementById("prismD")?.textContent || "-"}  
+ADD:     ${document.getElementById("nearAddFinal")?.value || "0.00"}
+RX Changes R/L:     R: ${document.getElementById("od_roundCombinedDisplay")?.textContent || "-"}     //     ${document.getElementById("os_roundCombinedDisplay")?.textContent || "-"}  
+`;
+
+  // Combine CSV + separator + summary
+  const emailBody = csvText + "\n\n" + separator + "\n\n" + summaryText;
+
+  // Prepare Gmail
+  const customerNameInput = document.getElementById("customerName");
+  const whatsappNumberInput = document.getElementById("whatsappNumber");
+  const customerName = customerNameInput?.value.trim() || "Unnamed";
+  const whatsappNumber = whatsappNumberInput?.value.trim() || "";
+
+  const recipient = "kiara.optometry.px@gmail.com";
+  const subject = encodeURIComponent(`${customerName}${whatsappNumber ? " - " + whatsappNumber : ""}`);
+  const body = encodeURIComponent(emailBody);
+
+  // Open Gmail compose
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${subject}&body=${body}`;
+  window.open(gmailUrl, "_blank");
+}
+
+// Paste listener to restore inputs from CSV
+document.addEventListener("paste", e => {
+  const text = e.clipboardData.getData("text").trim();
+  if (!text.startsWith("RX_EXPORT_INPUTS_V1")) return;
+
+  e.preventDefault();
+  const parts = text.split(",").slice(1);
+
+  parts.forEach(part => {
+    const eq = part.indexOf("=");
+    if (eq === -1) return;
+
+    const id = part.slice(0, eq).trim();
+    const val = part.slice(eq + 1).trim();
+
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    if (el.tagName === "INPUT") {
+      if (el.type === "number") {
+        el.value = parseFloat(val) || "";
+      } else {
+        el.value = val;
+      }
+    } else if (el.tagName === "SELECT") {
+      // Restore select by matching option text
+      const option = Array.from(el.options).find(o => o.text === val);
+      if (option) el.value = option.value;
+    }
+
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+});
+
+</script>
+
+
+
+
+
+
+<script>
+["nearAdd", "nearAddVector", "nearAddFinal"].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener("input", () => {
+    let val = parseFloat(el.value);
+    if (isNaN(val)) return;
+    el.value = (Math.round(val * 4) / 4).toFixed(2);
+  });
+});
+</script>
+
+
+
+
+
 
 
 
@@ -618,11 +778,13 @@ function calcVD(side) {
 }
 
 
-["od","os"].forEach(side => {
+["od","os","ou"].forEach(side => {
   ["S","C","A"].forEach(f => {
-    document.getElementById(`vd_${side}${f}`).addEventListener("input", () => calcVD(side));
+    const el = document.getElementById(`vd_${side}${f}`);
+    if(el) el.addEventListener("input", () => calcVD(side));
   });
 });
+
 </script>
 
 
@@ -875,7 +1037,7 @@ setIf('vc_crossA', fmtAxis(bestVCCrossPlus.A));
 /* ===== Listeners attach after DOM ready ===== */
 window.addEventListener("DOMContentLoaded", ()=>{
   // attach vector listeners (if elements exist)
-  ['vc_odS','vc_odC','vc_odA','vc_osS','vc_osC','vc_osA'].forEach(id=>{
+  ['vc_odS','vc_odC','vc_odA','vc_osS','vc_osC','vc_osA','vc_ouS', 'vc_ouC','vc_ouA'].forEach(id=>{
     const el = document.getElementById(id);
     if(el) el.addEventListener('input', updateFinalFromVector);
   });
@@ -887,11 +1049,14 @@ window.addEventListener("DOMContentLoaded", ()=>{
     i.addEventListener('input', updateCrossedLens);
     // keep sphere/cyl input coloring (existing behavior)
     const id = i.id;
-    const colorInputs = ['od_origS','od_origC','os_origS','os_origC','od_finalS','od_finalC','os_finalS','os_finalC','vc_odS','vc_odC','vc_osS','vc_osC',      'vd_odS','vd_odC','vd_osS','vd_osC'   // added vector defect
-];
+    const colorInputs = [
+  'od_origS', 'od_origC', 'os_origS', 'os_origC',
+  'od_finalS', 'od_finalC', 'os_finalS', 'os_finalC',
+  'vc_odS', 'vc_odC', 'vc_osS', 'vc_osC', 'vc_ouS', 'vc_ouC',
+  'vd_odS', 'vd_odC', 'vd_osS', 'vd_osC', 'vd_ouS', 'vd_ouC',
+  'vd_out_odS', 'vd_out_odC', 'vd_out_osS', 'vd_out_osC', 'vd_out_ouS', 'vd_out_ouC']
 
-
-
+;
 
     if(colorInputs.includes(id)){
       const colorUpdate = ()=> {
@@ -911,20 +1076,59 @@ window.addEventListener("DOMContentLoaded", ()=>{
 
 
 });
+function fireInputEvents(ids) {
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+}
+
+
+
+function copyVD_OU() {
+  const s = Number(document.getElementById("vd_out_ouS").textContent);
+  const c = Number(document.getElementById("vd_out_ouC").textContent);
+  const a = Number(document.getElementById("vd_out_ouA").textContent);
+
+  document.getElementById("vc_ouS").value = s;
+  document.getElementById("vc_ouC").value = c;
+  document.getElementById("vc_ouA").value = a;
+
+  fireInputEvents(["vc_ouS", "vc_ouC", "vc_ouA"]);
+
+  if (typeof updateFinalFromVector === "function") updateFinalFromVector();
+}
 
 function copyVD_OD() {
-  document.getElementById("vc_odS").value = Number(document.getElementById("vd_out_odS").textContent);
-  document.getElementById("vc_odC").value = Number(document.getElementById("vd_out_odC").textContent);
-  document.getElementById("vc_odA").value = Number(document.getElementById("vd_out_odA").textContent);
-  updateFinalFromVector();
+  const s = Number(document.getElementById("vd_out_odS").textContent);
+  const c = Number(document.getElementById("vd_out_odC").textContent);
+  const a = Number(document.getElementById("vd_out_odA").textContent);
+
+  document.getElementById("vc_odS").value = s;
+  document.getElementById("vc_odC").value = c;
+  document.getElementById("vc_odA").value = a;
+
+  fireInputEvents(["vc_odS", "vc_odC", "vc_odA"]);
+
+  if (typeof updateFinalFromVector === "function") updateFinalFromVector();
 }
 
 function copyVD_OS() {
-  document.getElementById("vc_osS").value = Number(document.getElementById("vd_out_osS").textContent);
-  document.getElementById("vc_osC").value = Number(document.getElementById("vd_out_osC").textContent);
-  document.getElementById("vc_osA").value = Number(document.getElementById("vd_out_osA").textContent);
-  updateFinalFromVector();
+  const s = Number(document.getElementById("vd_out_osS").textContent);
+  const c = Number(document.getElementById("vd_out_osC").textContent);
+  const a = Number(document.getElementById("vd_out_osA").textContent);
+
+  document.getElementById("vc_osS").value = s;
+  document.getElementById("vc_osC").value = c;
+  document.getElementById("vc_osA").value = a;
+
+  fireInputEvents(["vc_osS", "vc_osC", "vc_osA"]);
+
+  if (typeof updateFinalFromVector === "function") updateFinalFromVector();
 }
+
 
 </script>
 
@@ -967,9 +1171,13 @@ function updateVDVCSummary() {
   document.getElementById("vc_osSummary").textContent = vcOS;
 }
 
+
 // Attach to inputs
-["vd_odS","vd_odC","vd_odA","vd_osS","vd_osC","vd_osA",
- "vc_odS","vc_odC","vc_odA","vc_osS","vc_osC","vc_osA"]
+["vd_odS","vd_odC","vd_odA",
+ "vd_osS","vd_osC","vd_osA",
+ "vc_odS","vc_odC","vc_odA",
+ "vc_osS","vc_osC","vc_osA",]
+
 .forEach(id => {
   const el = document.getElementById(id);
   if(el) el.addEventListener("input", updateVDVCSummary);
@@ -977,6 +1185,36 @@ function updateVDVCSummary() {
 
 // Initial update
 updateVDVCSummary();
+
+
+function updateVDVCOUSummary() {
+  const vdOU = "DC " + fmtPlus(document.getElementById("vd_ouS").textContent) +
+               " ; FC " + fmtPlus(document.getElementById("vd_ouC").textContent) +
+               " × " + fmtAxis(document.getElementById("vd_ouA").textContent);
+
+  const vcOU = fmtPlus(document.getElementById("vc_ouS").value) +
+               " / " + fmtPlus(document.getElementById("vc_ouC").value) +
+               " × " + fmtAxis(document.getElementById("vc_ouA").value);
+
+  const vdEl = document.getElementById("vd_ouSummary");
+  if(vdEl) vdEl.textContent = vdOU;
+
+  const vcEl = document.getElementById("vc_ouSummary");
+  if(vcEl) vcEl.textContent = vcOU;
+}
+
+
+// Attach to OU inputs
+["vd_ouS","vd_ouC","vd_ouA",
+ "vc_ouS","vc_ouC","vc_ouA"].forEach(id => {
+   const el = document.getElementById(id);
+   if(el) el.addEventListener("input", updateVDVCOUSummary);
+});
+
+// Initial update
+updateVDVCOUSummary();
+
+
 
 </script>
 
@@ -1010,6 +1248,27 @@ updateVDVCSummary();
   }
 
   // === Copy functions (global for onclick) ===
+
+
+
+
+window.copyVD_OU = function(){
+    const sText = document.getElementById("vd_out_ouS")?.textContent || "";
+    const cText = document.getElementById("vd_out_ouC")?.textContent || "";
+    const aText = document.getElementById("vd_out_ouA")?.textContent || "";
+
+    const s = _parseSpanNumber(sText);
+    const c = _parseSpanNumber(cText);
+    const a = _parseSpanNumber(aText);
+
+    if(!isNaN(s) && document.getElementById("vc_ouS")) document.getElementById("vc_ouS").value = s.toFixed(2);
+    if(!isNaN(c) && document.getElementById("vc_ouC")) document.getElementById("vc_ouC").value = c.toFixed(2);
+    if(!isNaN(a) && document.getElementById("vc_ouA")) document.getElementById("vc_ouA").value = (isNaN(a)?'':a);
+
+    if(typeof updateFinalFromVector === "function") updateFinalFromVector();
+};
+
+
   window.copyVD_OD = function(){
     const sText = document.getElementById("vd_out_odS")?.textContent || "";
     const cText = document.getElementById("vd_out_odC")?.textContent || "";
@@ -1042,33 +1301,118 @@ updateVDVCSummary();
     if(typeof updateFinalFromVector === "function") updateFinalFromVector();
   };
 
-// === Combined display updater for round IDs ===
-function updateCombinedRound(){
-  const odS = document.getElementById("od_roundS")?.textContent || "-";
-  const odC = document.getElementById("od_roundC")?.textContent || "-";
-  const odA = document.getElementById("od_roundA")?.textContent || "-";
 
-  const osS = document.getElementById("os_roundS")?.textContent || "-";
-  const osC = document.getElementById("os_roundC")?.textContent || "-";
-  const osA = document.getElementById("os_roundA")?.textContent || "-";
 
-  const odEl = document.getElementById("od_roundCombinedDisplay");
-  const osEl = document.getElementById("os_roundCombinedDisplay");
+// ===== Helper functions =====
+function _parseSpanNumber(text){
+  const n = parseFloat(text.replace(/[^\d.-]/g,""));
+  return isNaN(n) ? NaN : n;
+}
+function fmtPlus(n){ return isNaN(n) ? "-" : (n>0?"+":"")+n.toFixed(2); }
+function fmtAxis(a){ return isNaN(a) ? "-" : Math.round(a)%180; }
 
-  if (odEl) odEl.textContent = `${odS} / ${odC} × ${odA}`;
-  if (osEl) osEl.textContent = `${osS} / ${osC} × ${osA}`;
+// ===== Copy VD to VC and update summary =====
+function copyVD(eye){
+  const sText = document.getElementById(`vd_out_${eye}S`)?.textContent || "";
+  const cText = document.getElementById(`vd_out_${eye}C`)?.textContent || "";
+  const aText = document.getElementById(`vd_out_${eye}A`)?.textContent || "";
+
+  const s = _parseSpanNumber(sText);
+  const c = _parseSpanNumber(cText);
+  const a = _parseSpanNumber(aText);
+
+  const vcS = document.getElementById(`vc_${eye}S`);
+  const vcC = document.getElementById(`vc_${eye}C`);
+  const vcA = document.getElementById(`vc_${eye}A`);
+
+  if(!isNaN(s) && vcS) vcS.value = s.toFixed(2);
+  if(!isNaN(c) && vcC) vcC.value = c.toFixed(2);
+  if(!isNaN(a) && vcA) vcA.value = a;
+
+  // Dispatch input/change so downstream formulas run
+  [vcS, vcC, vcA].forEach(el=>{
+    if(el){
+      el.dispatchEvent(new Event("input",{bubbles:true}));
+      el.dispatchEvent(new Event("change",{bubbles:true}));
+    }
+  });
+
+  // Update final vector calculation
+  if(typeof updateFinalFromVector === "function") updateFinalFromVector();
+
+  updateCombinedRound(); // existing combined display updater
 }
 
-// Observe changes in the round td elements
+
+
+
+
+function copyVD_OU_to_ODOS() {
+  const get = id => document.getElementById(id);
+  
+  // Read input values (not spans)
+  const s = parseFloat(get("vd_ouS")?.value) || 0;
+  const c = parseFloat(get("vd_ouC")?.value) || 0;
+  const a = parseFloat(get("vd_ouA")?.value) || 0;
+
+  // Copy to OD
+  ["od","os"].forEach(eye => {
+    const vcS = get(`vc_${eye}S`);
+    const vcC = get(`vc_${eye}C`);
+    const vcA = get(`vc_${eye}A`);
+    if(vcS) vcS.value = s.toFixed(2);
+    if(vcC) vcC.value = c.toFixed(2);
+    if(vcA) vcA.value = a;
+    
+    // Fire events so listeners update
+    [vcS, vcC, vcA].forEach(el => {
+      if(el){
+        el.dispatchEvent(new Event("input",{bubbles:true}));
+        el.dispatchEvent(new Event("change",{bubbles:true}));
+      }
+    });
+  });
+
+  // Update final vector display if function exists
+  if(typeof updateFinalFromVector === "function") updateFinalFromVector();
+
+  // Update OU summary display
+  const vdOU = "DC " + fmtPlus(s) + " ; FC " + fmtPlus(c) + " × " + fmtAxis(a);
+  const vcOU = fmtPlus(s) + " / " + fmtPlus(c) + " × " + fmtAxis(a);
+  if(get("vd_ouSummary")) get("vd_ouSummary").textContent = vdOU;
+  if(get("vc_ouSummary")) get("vc_ouSummary").textContent = vcOU;
+}
+
+
+
+window.copyVD_OU = ()=>copyVD("ou");
+window.copyVD_OD = ()=>copyVD("od");
+window.copyVD_OS = ()=>copyVD("os");
+
+
+
+
+// ===== Combined display updater =====
+function updateCombinedRound(){
+  ["od","os"].forEach(eye=>{
+    const S = document.getElementById(`${eye}_roundS`)?.textContent || "-";
+    const C = document.getElementById(`${eye}_roundC`)?.textContent || "-";
+    const A = document.getElementById(`${eye}_roundA`)?.textContent || "-";
+    const el = document.getElementById(`${eye}_roundCombinedDisplay`);
+    if(el) el.textContent = `${S} / ${C} × ${A}`;
+  });
+}
+
+// ===== Observe changes =====
 ["od_roundS","od_roundC","od_roundA","os_roundS","os_roundC","os_roundA"].forEach(id=>{
   const el = document.getElementById(id);
   if(!el) return;
-  const mo = new MutationObserver(updateCombinedRound);
-  mo.observe(el, { childList: true, characterData: true, subtree: true });
+  new MutationObserver(updateCombinedRound).observe(el, { childList:true, characterData:true, subtree:true });
 });
 
-// Initial run
+// Initial update
 updateCombinedRound();
+
 
 
 
@@ -1169,7 +1513,12 @@ updateCombinedOriginal();
 
     // also observe vd_out spans if they exist — keep them normalized (no destructive edits)
     // (This does not change original behaviour; only ensures numbers are parseable when copying)
-    _observeIfExists(["vd_out_odS","vd_out_odC","vd_out_odA","vd_out_osS","vd_out_osC","vd_out_osA"], function(){
+    _observeIfExists(["vd_out_odS","vd_out_odC","vd_out_odA",
+ "vd_out_osS","vd_out_osC","vd_out_osA",
+ "vd_out_ouS","vd_out_ouC","vd_out_ouA"]
+, 
+
+function(){
       // noop: observation kept in place to ensure future expansions possible; we call nothing here
     });
   });
@@ -1315,6 +1664,164 @@ link.click();
   });
 }
 </script>
+
+<script>
+// --- Reliable OU summary updater + small hookup to copy function ---
+// (safe: doesn't remove your older scripts, only augments them)
+
+(function(){
+  const get = id => document.getElementById(id);
+
+  function updateVDVCOUSummary() {
+    // Read values from the VD (inputs) and VC (inputs)
+    const vdS = get("vd_ouS")?.value ?? "";
+    const vdC = get("vd_ouC")?.value ?? "";
+    const vdA = get("vd_ouA")?.value ?? "";
+
+    const vcS = get("vc_ouS")?.value ?? "";
+    const vcC = get("vc_ouC")?.value ?? "";
+    const vcA = get("vc_ouA")?.value ?? "";
+
+    // Build formatted strings using your existing helpers (fmtPlus/fmtAxis)
+    const vdOU = "DC " + fmtPlus(vdS) + " ; FC " + fmtPlus(vdC) + " × " + fmtAxis(vdA);
+    const vcOU = fmtPlus(vcS) + " / " + fmtPlus(vcC) + " × " + fmtAxis(vcA);
+
+    const vdEl = get("vd_ouSummary");
+    const vcEl = get("vc_ouSummary");
+    if (vdEl) vdEl.textContent = vdOU;
+    if (vcEl) vcEl.textContent = vcOU;
+  }
+
+  // attach listeners for live updates
+  ["vd_ouS","vd_ouC","vd_ouA","vc_ouS","vc_ouC","vc_ouA"].forEach(id=>{
+    const el = get(id);
+    if (el) el.addEventListener("input", updateVDVCOUSummary);
+  });
+
+  // Ensure the OU summary updates immediately after your copy function runs.
+  // If you already have a window.copyVD_OU function, wrap it so it still runs then updates summary.
+  const origCopy = window.copyVD_OU;
+  window.copyVD_OU = function(...args) {
+    try {
+      if (typeof origCopy === "function") origCopy.apply(this, args);
+    } catch(e) {
+      // swallow to avoid breaking page; still continue to update summary
+      console.error("copyVD_OU wrapped error:", e);
+    }
+    // Trigger the summary update and also trigger input events on vc_ou inputs
+    // so any downstream listeners (coloring/rounding/formulas) run.
+    updateVDVCOUSummary();
+    ["vc_ouS","vc_ouC","vc_ouA"].forEach(id=>{
+      const el = get(id);
+      if (el) {
+        el.dispatchEvent(new Event("input", { bubbles: true }));
+        el.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    });
+  };
+
+  // call once on DOM ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", updateVDVCOUSummary);
+  } else {
+    updateVDVCOUSummary();
+  }
+
+  // expose for quick debugging if helpful
+  window._updateVDVCOUSummary = updateVDVCOUSummary;
+})();
+</script>
+
+
+<script>
+(function(){
+  const byId = id => document.getElementById(id);
+
+  // Safe attach helper
+  function safeOn(id, evt, cb){
+    const el = byId(id);
+    if(el) el.addEventListener(evt, cb);
+  }
+
+  // safe fmt helpers (reuse if you already have them)
+  function fmtPlusLocal(v){
+    const n = Number(v);
+    if (isNaN(n)) return "-";
+    return (n > 0 ? "+" : "") + n.toFixed(2);
+  }
+  function fmtAxisLocal(a){
+    const n = Number(a);
+    if (isNaN(n)) return "-";
+    return Math.round(n) % 180;
+  }
+
+  // Robust copy function exposed on window
+  window.copyVD_OU_to_ODOS = function(){
+    const get = byId;
+    // Read VD (inputs) — keep empty as blank (don't coerce to zero)
+    const sRaw = get("vd_ouS")?.value ?? "";
+    const cRaw = get("vd_ouC")?.value ?? "";
+    const aRaw = get("vd_ouA")?.value ?? "";
+
+    const s = sRaw.trim() === "" ? NaN : parseFloat(sRaw);
+    const c = cRaw.trim() === "" ? NaN : parseFloat(cRaw);
+    const a = aRaw.trim() === "" ? NaN : parseFloat(aRaw);
+
+    // target eyes
+    ["od","os"].forEach(eye => {
+      const vcS = get(`vc_${eye}S`);
+      const vcC = get(`vc_${eye}C`);
+      const vcA = get(`vc_${eye}A`);
+
+      if(vcS) vcS.value = isNaN(s) ? (vcS.value || "") : s.toFixed(2);
+      if(vcC) vcC.value = isNaN(c) ? (vcC.value || "") : c.toFixed(2);
+      if(vcA) vcA.value = isNaN(a) ? (vcA.value || "") : (Math.round(a)==a ? a : a); // keep axis raw
+
+      // dispatch events safely
+      [vcS, vcC, vcA].forEach(el => {
+        if(el){
+          el.dispatchEvent(new Event("input", { bubbles: true }));
+          el.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+      });
+    });
+
+    // try update hook if present (safe)
+    try {
+      if(typeof window.updateFinalFromVector === "function") window.updateFinalFromVector();
+    } catch(e){
+      console.warn("updateFinalFromVector threw", e);
+    }
+
+    // update OU summaries if elements exist
+    const vdOU = "DC " + fmtPlusLocal(sRaw) + " ; FC " + fmtPlusLocal(cRaw) + " × " + fmtAxisLocal(aRaw);
+    const vcOU = fmtPlusLocal(sRaw) + " / " + fmtPlusLocal(cRaw) + " × " + fmtAxisLocal(aRaw);
+    if(get("vd_ouSummary")) get("vd_ouSummary").textContent = vdOU;
+    if(get("vc_ouSummary")) get("vc_ouSummary").textContent = vcOU;
+  };
+
+  // Attach safe listeners for your toggle buttons (avoid null .addEventListener errors)
+  safeOn("toggleMask1", "click", () => document.querySelectorAll(".mask1").forEach(r => r.classList.toggle("hidden-row")));
+  safeOn("toggleMask1_copy", "click", () => document.querySelectorAll(".mask1").forEach(r => r.classList.toggle("hidden-row")));
+  safeOn("toggleMask2", "click", () => document.querySelectorAll(".mask2").forEach(r => r.classList.toggle("hidden-row")));
+  safeOn("toggleMask3", "click", () => document.querySelectorAll(".mask3").forEach(r => r.classList.toggle("hidden-row")));
+
+  // Attach the copy function to a button with id exactly "copyVD_OU_to_ODOS" if present
+  safeOn("copyVD_OU_to_ODOS", "click", () => window.copyVD_OU_to_ODOS());
+
+  // If you prefer a programmatic trigger elsewhere, call window.copyVD_OU_to_ODOS()
+
+})();
+</script>
+
+
+
+
+
+
+
+
+
 
 
 </body>
