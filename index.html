@@ -85,6 +85,7 @@ th:nth-child(4) {
     border: 1px solid lightgrey;
     border-radius:6px;
   }
+
 body, table, th, td, input, button {
   font-size: 11px;
 }
@@ -93,7 +94,7 @@ body, table, th, td, input, button {
 </head>
 <body>
 <div>
-<h2>Superposition Refraction</h2>
+<h2 style="margin-left:3%">Superposition Refraction</h2>
 
 <table>
   
@@ -179,19 +180,19 @@ body, table, th, td, input, button {
 
 </tr>
 <tr>
-  <td>R Dx</td>
+  <td>V R Dx</td>
   <td><input type="number" step="0.25" id="vc_odS"></td>
   <td><input type="number" step="0.25" id="vc_odC"></td>
   <td><input type="number" step="5" min="0" max="180" id="vc_odA"></td>
 </tr>
 <tr>
-  <td>L Dx</td>
+  <td>V L Dx</td>
   <td><input type="number" step="0.25" id="vc_osS"></td>
   <td><input type="number" step="0.25" id="vc_osC"></td>
   <td><input type="number" step="5" min="0" max="180" id="vc_osA"></td>
 </tr>
 <tr >
-  <td>Bino Dx</td>
+  <td>V Bino Dx</td>
   <td id="vc_crossS">-</td>
   <td id="vc_crossC">-</td>
   <td id="vc_crossA">-</td>
@@ -230,20 +231,20 @@ Manual Refraction
 </th></tr>
 
 <tr class="mask1">
-  <td>R Dx</td>
+  <td>M R Dx</td>
   <td id="od_roundS"></td>
   <td id="od_roundC"></td>
   <td id="od_roundA"></td>
 </tr>
 
 <tr class="mask1">
-  <td>L Dx</td>
+  <td>M L Dx</td>
   <td id="os_roundS"></td>
   <td id="os_roundC"></td>
   <td id="os_roundA"></td>
 </tr>
 <tr class="mask1">
-  <td>Bino Dx</td>
+  <td>M Bino Dx</td>
   <td id="diffCrossS"></td>
   <td id="diffCrossC"></td>
   <td id="diffCrossA"></td>
@@ -288,7 +289,12 @@ Manual Refraction
 
 </div>
 
-<div style="height:-20px"></div>
+<div style="height:20px"></div>
+
+
+<div><button style="margin-left:20px; border-radius:10px; height:25px; width:170px" id="toggleMask3">Hide/Show Gaze/BVD</button>
+<button style="margin-left:20px; border-radius:10px; height:25px; width:170px" id="updateAllBtn">Update All</button></div>
+
 
 
 
@@ -296,12 +302,7 @@ Manual Refraction
 
 <table>
 
-<tr style="border:none;">
-  <td style="border:none;"></td>
-  <td style="border:none;"></td>
-  <td style="border:none;"></td>
-  <td style="border:none;"></td>
-</tr>
+
 
 <tr class="mask3" style="border:none;"> 
   <td colspan="4" style="border:none;">
@@ -318,7 +319,8 @@ Manual Refraction
 </tr>
 
 
-<tr><th colspan="4" >Summary <button style="margin-left:20px; border-radius:10px; height:25px; width:170px" id="toggleMask3">Hide/Show Gaze/BVD</button>
+<tr><th colspan="4" >Summary 
+
 </th></tr>
 <tr>
 <td colspan="2" style="border-right:none;">Name : <input type="text" id="customerName" style="width:65%; height:20px"></td>
@@ -436,7 +438,13 @@ Manual Refraction
 </td></tr>
 
 
-<tr style="height:25px"></tr>
+<tr style="border:none; height:1px;">
+  <td style="border:none; height:1px;"></td>
+  <td style="border:none; height:1px;"></td>
+  <td style="border:none; height:1px;"></td>
+  <td style="border:none; height:1px;"></td>
+</tr>
+
 <tr><th colspan="4">Near Vision <button style="margin-left:20px; border-radius:10px; height:25px; width:120px" id="toggleMask2">Hide/Show Add</button></th></tr>
 
 
@@ -472,18 +480,28 @@ Manual Refraction
 
 </table>
 <div style="margin-top:10px; margin-left:20px">
-<div>End of Results</div></div>
-<div style="height:10px"></div>
+<div>End of Results</div>
+
+</div>
+
+<div style="height:20px"></div>
 
 </div>
 
 
-<div style="text-align:left; margin-top:10px;">
+<div style="width:80%; margin-top:10px;">
   <div style="height:10px"></div>
-  <div>
-    <button style="width:150px; height:25px" onclick="exportInputs()">Export Inputs</button>
-    <textarea id="rxExportBox" style="width:95%;height:150px;margin-top:10px;"></textarea>
-  </div>
+  <div style="display:flex; flex-direction:column; align-items:center;">
+  <button style="max-width:550px; width:100%; height:30px;" onclick="exportInputs()">
+    Export Inputs
+  </button>
+
+  <textarea
+    id="rxExportBox"
+    style="max-width:550px; width:99%; height:20px; margin-top:10px;">
+  </textarea>
+</div>
+
   <div style="height:30px"></div>
 </div>
 
@@ -953,22 +971,36 @@ setIf('os_roundA', fmtAxis(osPlus.A));
   setIf('diffCrossC', roundQuarter(bestDiffPlus.C));
 setIf('diffCrossA', fmtAxis(bestDiffPlus.A));
 
-  // decentration (used by prism calculation)
-  const gaze = +document.getElementById("gazeAngle")?.value || 30;
-  const vertex = +document.getElementById("vertexDist")?.value || 12;
-  const dec = calcDecentration(gaze, vertex);
+// Read diffCross spans
+const diffS_text = document.getElementById("diffCrossS")?.textContent;
+const diffC_text = document.getElementById("diffCrossC")?.textContent;
+const diffA_text = document.getElementById("diffCrossA")?.textContent;
 
-  // prism from bestDiff vector
-  const A_rad = deg2rad(bestDiff.A);
-  const M = bestDiff.S + bestDiff.C/2;
-  const J0 = -bestDiff.C/2 * Math.cos(2 * A_rad);
-  const J45 = -bestDiff.C/2 * Math.sin(2 * A_rad);
+// Parse diffCross values
+const diffS = Number.parseFloat(diffS_text) || 0;
+const diffC = Number.parseFloat(diffC_text) || 0;
+const diffA = Number.parseFloat(diffA_text) || 0;
 
-  const prismH = Math.abs((M + J0) * dec);
-  const prismV = Math.abs((M - J0) * dec);
-  const prism45 = Math.abs((M - J45) * dec);
-  const prism135 = Math.abs((M + J45) * dec);
-  const prismD = Math.max(prism45, prism135);
+// Vector calculations (diffCross format)
+const A_diff_rad = deg2rad(diffA);
+const M_diff = diffS + diffC / 2;
+const J0_diff = -diffC / 2 * Math.cos(2 * A_diff_rad);
+const J45_diff = -diffC / 2 * Math.sin(2 * A_diff_rad);
+
+// Decentration
+const gaze = Number(document.getElementById("gazeAngle")?.value) || 30;
+const vertex = Number(document.getElementById("vertexDist")?.value) || 14;
+const dec = calcDecentration(gaze, vertex);
+
+// Prism calculations (diffCross using dec)
+const prismH = Math.abs((M_diff + J0_diff) * dec);
+const prismV = Math.abs((M_diff - J0_diff) * dec);
+const prism45 = Math.abs((M_diff - J45_diff) * dec);
+const prism135 = Math.abs((M_diff + J45_diff) * dec);
+const prismD = Math.max(prism45, prism135);
+
+
+
 
   // write and color main prism outputs
   const elH = document.getElementById("prismH");
@@ -982,6 +1014,8 @@ setIf('diffCrossA', fmtAxis(bestDiffPlus.A));
   const vc_crossS_text = document.getElementById("vc_crossS")?.textContent;
   const vc_crossC_text = document.getElementById("vc_crossC")?.textContent;
   const vc_crossA_text = document.getElementById("vc_crossA")?.textContent;
+
+
   // parseFloat returns NaN for "-", fallback to 0
   const vcS = Number.parseFloat(vc_crossS_text) || 0;
   const vcC = Number.parseFloat(vc_crossC_text) || 0;
@@ -1527,45 +1561,6 @@ function(){
   window._vdHelpers = { parseSpanNumber: _parseSpanNumber, fmtPlus: _fmtPlus, updateCombinedVC, updateCombinedFinal };
 
 })();
-</script>
-
-
-<!-- your existing HTML content -->
-
-<script>
-// === Original Prism Calculation ===
-function updateOriginalPrism() {
-  const od = {
-    S: Number(document.getElementById('od_origS').value) || 0,
-    C: Number(document.getElementById('od_origC').value) || 0,
-    A: Number(document.getElementById('od_origA').value) || 0
-  };
-  const os = {
-    S: Number(document.getElementById('os_origS').value) || 0,
-    C: Number(document.getElementById('os_origC').value) || 0,
-    A: Number(document.getElementById('os_origA').value) || 0
-  };
-
-  const M_od = od.S + od.C/2;
-  const A_od = od.A * Math.PI/180;
-  const J0_od = -od.C/2 * Math.cos(2*A_od);
-  const J45_od = -od.C/2 * Math.sin(2*A_od);
-
-  const M_os = os.S + os.C/2;
-  const A_os = os.A * Math.PI/180;
-  const J0_os = -os.C/2 * Math.cos(2*A_os);
-  const J45_os = -os.C/2 * Math.sin(2*A_os);
-
-  const dec = 12/10; // example factor
-
-  const prismH = Math.abs((M_od - M_os + J0_od - J0_os) );
-  const prismV = Math.abs((M_od - M_os - (J0_od - J0_os)) );
-  const prismD = Math.max(Math.abs(M_od - M_os + J45_od - J45_os), Math.abs(M_od - M_os - (J45_od - J45_os))) ;
-
-  document.getElementById('origCrossS').textContent = prismH.toFixed(2);
-  document.getElementById('origCrossC').textContent = prismV.toFixed(2);
-  document.getElementById('origCrossA').textContent = prismD.toFixed(2);
-}
 
 // attach listeners
 ['od_origS','od_origC','od_origA','os_origS','os_origC','os_origA'].forEach(id=>{
@@ -1575,7 +1570,12 @@ function updateOriginalPrism() {
 
 // initial run
 updateOriginalPrism();
+
 </script>
+
+
+
+
 
 <script>
 // turn opacity ON immediately at page load
@@ -1586,14 +1586,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
-
-
 document.getElementById("toggleMask2").addEventListener("click", function() {
   document.querySelectorAll(".mask2").forEach(row => {
     row.classList.toggle("hidden-row");
   });
 });
-
 
 document.getElementById("toggleMask3").addEventListener("click", function() {
   document.querySelectorAll(".mask3").forEach(row => {
@@ -1602,6 +1599,9 @@ document.getElementById("toggleMask3").addEventListener("click", function() {
 });
 
 </script>
+
+
+
 <script>
 function toggleManualMask1() {
   document.querySelectorAll(".mask1").forEach(row => row.classList.toggle("hidden-row"));
@@ -1611,6 +1611,8 @@ function toggleManualMask1() {
 document.getElementById("toggleMask1").addEventListener("click", toggleManualMask1);
 document.getElementById("toggleMask1_copy").addEventListener("click", toggleManualMask1);
 </script>
+
+
 
 <script>
 function sendWhatsapp() {
@@ -1664,158 +1666,121 @@ link.click();
   });
 }
 </script>
-
 <script>
-// --- Reliable OU summary updater + small hookup to copy function ---
-// (safe: doesn't remove your older scripts, only augments them)
-
 (function(){
   const get = id => document.getElementById(id);
 
+  // --- OU Summary Updater (reads final OU spans) ---
   function updateVDVCOUSummary() {
-    // Read values from the VD (inputs) and VC (inputs)
-    const vdS = get("vd_ouS")?.value ?? "";
-    const vdC = get("vd_ouC")?.value ?? "";
-    const vdA = get("vd_ouA")?.value ?? "";
+    const vdS = get("vd_out_ouS")?.textContent ?? "";
+    const vdC = get("vd_out_ouC")?.textContent ?? "";
+    const vdA = get("vd_out_ouA")?.textContent ?? "";
 
     const vcS = get("vc_ouS")?.value ?? "";
     const vcC = get("vc_ouC")?.value ?? "";
     const vcA = get("vc_ouA")?.value ?? "";
 
-    // Build formatted strings using your existing helpers (fmtPlus/fmtAxis)
     const vdOU = "DC " + fmtPlus(vdS) + " ; FC " + fmtPlus(vdC) + " × " + fmtAxis(vdA);
     const vcOU = fmtPlus(vcS) + " / " + fmtPlus(vcC) + " × " + fmtAxis(vcA);
 
-    const vdEl = get("vd_ouSummary");
-    const vcEl = get("vc_ouSummary");
-    if (vdEl) vdEl.textContent = vdOU;
-    if (vcEl) vcEl.textContent = vcOU;
+    if(get("vd_ouSummary")) get("vd_ouSummary").textContent = vdOU;
+    if(get("vc_ouSummary")) get("vc_ouSummary").textContent = vcOU;
   }
 
-  // attach listeners for live updates
-  ["vd_ouS","vd_ouC","vd_ouA","vc_ouS","vc_ouC","vc_ouA"].forEach(id=>{
+  // Attach listeners only to VC inputs
+  ["vc_ouS","vc_ouC","vc_ouA"].forEach(id=>{
     const el = get(id);
-    if (el) el.addEventListener("input", updateVDVCOUSummary);
+    if(el) el.addEventListener("input", updateVDVCOUSummary);
   });
 
-  // Ensure the OU summary updates immediately after your copy function runs.
-  // If you already have a window.copyVD_OU function, wrap it so it still runs then updates summary.
-  const origCopy = window.copyVD_OU;
-  window.copyVD_OU = function(...args) {
-    try {
-      if (typeof origCopy === "function") origCopy.apply(this, args);
-    } catch(e) {
-      // swallow to avoid breaking page; still continue to update summary
-      console.error("copyVD_OU wrapped error:", e);
-    }
-    // Trigger the summary update and also trigger input events on vc_ou inputs
-    // so any downstream listeners (coloring/rounding/formulas) run.
-    updateVDVCOUSummary();
-    ["vc_ouS","vc_ouC","vc_ouA"].forEach(id=>{
-      const el = get(id);
-      if (el) {
-        el.dispatchEvent(new Event("input", { bubbles: true }));
-        el.dispatchEvent(new Event("change", { bubbles: true }));
-      }
-    });
-  };
-
-  // call once on DOM ready
-  if (document.readyState === "loading") {
+  // Call once on DOM ready
+  if(document.readyState==="loading"){
     document.addEventListener("DOMContentLoaded", updateVDVCOUSummary);
   } else {
     updateVDVCOUSummary();
   }
 
-  // expose for quick debugging if helpful
   window._updateVDVCOUSummary = updateVDVCOUSummary;
+})();
+</script>
+
+<script>
+(function(){
+  const get = id => document.getElementById(id);
+  const safeOn = (id, evt, cb) => { const el = get(id); if(el) el.addEventListener(evt, cb); };
+
+  function fmtPlusLocal(v){
+    const n = Number(v);
+    if(isNaN(n)) return "-";
+    return (n>0 ? "+" : "") + n.toFixed(2);
+  }
+  function fmtAxisLocal(a){
+    const n = Number(a);
+    if(isNaN(n)) return "-";
+    return Math.round(n)%180;
+  }
+
+  // --- Copy final OU spans to OD/OS VC inputs ---
+  window.copyVD_OU_to_ODOS = function(){
+    const sRaw = get("vd_out_ouS")?.textContent ?? "";
+    const cRaw = get("vd_out_ouC")?.textContent ?? "";
+    const aRaw = get("vd_out_ouA")?.textContent ?? "";
+
+    const s = sRaw.trim()==="" ? NaN : parseFloat(sRaw);
+    const c = cRaw.trim()==="" ? NaN : parseFloat(cRaw);
+    const a = aRaw.trim()==="" ? NaN : parseFloat(aRaw);
+
+    ["od","os"].forEach(eye=>{
+      const vcS = get(`vc_${eye}S`);
+      const vcC = get(`vc_${eye}C`);
+      const vcA = get(`vc_${eye}A`);
+
+      if(vcS) vcS.value = isNaN(s)? (vcS.value||"") : s.toFixed(2);
+      if(vcC) vcC.value = isNaN(c)? (vcC.value||"") : c.toFixed(2);
+      if(vcA) vcA.value = isNaN(a)? (vcA.value||"") : (Math.round(a)==a? a : a);
+
+      [vcS,vcC,vcA].forEach(el=>{
+        if(el){
+          el.dispatchEvent(new Event("input",{bubbles:true}));
+          el.dispatchEvent(new Event("change",{bubbles:true}));
+        }
+      });
+    });
+
+    try{ if(typeof window.updateFinalFromVector==="function") window.updateFinalFromVector(); }
+    catch(e){ console.warn("updateFinalFromVector threw",e); }
+
+    // Update summaries
+    const vdOU = "DC "+fmtPlusLocal(sRaw)+" ; FC "+fmtPlusLocal(cRaw)+" × "+fmtAxisLocal(aRaw);
+    const vcOU = fmtPlusLocal(sRaw)+" / "+fmtPlusLocal(cRaw)+" × "+fmtAxisLocal(aRaw);
+    if(get("vd_ouSummary")) get("vd_ouSummary").textContent = vdOU;
+    if(get("vc_ouSummary")) get("vc_ouSummary").textContent = vcOU;
+  };
+
+  safeOn("copyVD_OU_to_ODOS","click",()=>window.copyVD_OU_to_ODOS());
 })();
 </script>
 
 
 <script>
-(function(){
-  const byId = id => document.getElementById(id);
+function fireAllInputs() {
+  // select all inputs that trigger updates
+  const inputs = document.querySelectorAll("input");
+  inputs.forEach(input => {
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+  });
 
-  // Safe attach helper
-  function safeOn(id, evt, cb){
-    const el = byId(id);
-    if(el) el.addEventListener(evt, cb);
-  }
+  // optionally trigger any other update functions directly
+  if (typeof updateCrossedLens === "function") updateCrossedLens();
+  if (typeof updateFinalFromVector === "function") updateFinalFromVector();
+  if (typeof updateVDVCSummary === "function") updateVDVCSummary();
+  if (typeof updateVDVCOUSummary === "function") updateVDVCOUSummary();
+}
 
-  // safe fmt helpers (reuse if you already have them)
-  function fmtPlusLocal(v){
-    const n = Number(v);
-    if (isNaN(n)) return "-";
-    return (n > 0 ? "+" : "") + n.toFixed(2);
-  }
-  function fmtAxisLocal(a){
-    const n = Number(a);
-    if (isNaN(n)) return "-";
-    return Math.round(n) % 180;
-  }
-
-  // Robust copy function exposed on window
-  window.copyVD_OU_to_ODOS = function(){
-    const get = byId;
-    // Read VD (inputs) — keep empty as blank (don't coerce to zero)
-    const sRaw = get("vd_ouS")?.value ?? "";
-    const cRaw = get("vd_ouC")?.value ?? "";
-    const aRaw = get("vd_ouA")?.value ?? "";
-
-    const s = sRaw.trim() === "" ? NaN : parseFloat(sRaw);
-    const c = cRaw.trim() === "" ? NaN : parseFloat(cRaw);
-    const a = aRaw.trim() === "" ? NaN : parseFloat(aRaw);
-
-    // target eyes
-    ["od","os"].forEach(eye => {
-      const vcS = get(`vc_${eye}S`);
-      const vcC = get(`vc_${eye}C`);
-      const vcA = get(`vc_${eye}A`);
-
-      if(vcS) vcS.value = isNaN(s) ? (vcS.value || "") : s.toFixed(2);
-      if(vcC) vcC.value = isNaN(c) ? (vcC.value || "") : c.toFixed(2);
-      if(vcA) vcA.value = isNaN(a) ? (vcA.value || "") : (Math.round(a)==a ? a : a); // keep axis raw
-
-      // dispatch events safely
-      [vcS, vcC, vcA].forEach(el => {
-        if(el){
-          el.dispatchEvent(new Event("input", { bubbles: true }));
-          el.dispatchEvent(new Event("change", { bubbles: true }));
-        }
-      });
-    });
-
-    // try update hook if present (safe)
-    try {
-      if(typeof window.updateFinalFromVector === "function") window.updateFinalFromVector();
-    } catch(e){
-      console.warn("updateFinalFromVector threw", e);
-    }
-
-    // update OU summaries if elements exist
-    const vdOU = "DC " + fmtPlusLocal(sRaw) + " ; FC " + fmtPlusLocal(cRaw) + " × " + fmtAxisLocal(aRaw);
-    const vcOU = fmtPlusLocal(sRaw) + " / " + fmtPlusLocal(cRaw) + " × " + fmtAxisLocal(aRaw);
-    if(get("vd_ouSummary")) get("vd_ouSummary").textContent = vdOU;
-    if(get("vc_ouSummary")) get("vc_ouSummary").textContent = vcOU;
-  };
-
-  // Attach safe listeners for your toggle buttons (avoid null .addEventListener errors)
-  safeOn("toggleMask1", "click", () => document.querySelectorAll(".mask1").forEach(r => r.classList.toggle("hidden-row")));
-  safeOn("toggleMask1_copy", "click", () => document.querySelectorAll(".mask1").forEach(r => r.classList.toggle("hidden-row")));
-  safeOn("toggleMask2", "click", () => document.querySelectorAll(".mask2").forEach(r => r.classList.toggle("hidden-row")));
-  safeOn("toggleMask3", "click", () => document.querySelectorAll(".mask3").forEach(r => r.classList.toggle("hidden-row")));
-
-  // Attach the copy function to a button with id exactly "copyVD_OU_to_ODOS" if present
-  safeOn("copyVD_OU_to_ODOS", "click", () => window.copyVD_OU_to_ODOS());
-
-  // If you prefer a programmatic trigger elsewhere, call window.copyVD_OU_to_ODOS()
-
-})();
+// attach button click
+document.getElementById("updateAllBtn")?.addEventListener("click", fireAllInputs);
 </script>
-
-
-
 
 
 
