@@ -98,7 +98,8 @@ body, table, th, td, input, button {
 
 <table>
   
-<tr><th class="red" colspan="4">Current RX</th></tr>
+<tr><th class="red" colspan="4">Current RX <button style="margin-left:20px; background-color:white; border-radius:10px; height:25px; width:150px" id="fillCurrentBtn">Fill Current with Vector</button>
+</th></tr>
 
 <!-- OD -->
 
@@ -292,10 +293,16 @@ Manual Refraction
 <div style="height:20px"></div>
 
 
-<div><button style="margin-left:20px; border-radius:10px; height:25px; width:170px" id="toggleMask3">Hide/Show Gaze/BVD</button>
-<button style="margin-left:20px; border-radius:10px; height:25px; width:170px" id="updateAllBtn">Update All</button></div>
+<div>
+<button style="margin-left:20px; border-radius:10px; height:25px; width:150px" id="toggleMask3">Hide/Show Gaze/BVD</button>
 
+<button style="margin-left:20px; border-radius:10px; height:25px; width:150px" id="updateAllBtn">Update All</button>
 
+  <button style="margin-left:20px; border-radius:10px; height:25px; width:150px"  onclick="exportInputs()">
+    Export Inputs
+  </button>
+
+</div>
 
 
 <div id="captureTarget">
@@ -492,12 +499,8 @@ Manual Refraction
 <div style="width:80%; margin-top:10px;">
   <div style="height:10px"></div>
   <div style="display:flex; flex-direction:column; align-items:center;">
-  <button style="max-width:550px; width:100%; height:30px;" onclick="exportInputs()">
-    Export Inputs
-  </button>
 
-  <textarea
-    id="rxExportBox"
+  <textarea style="display:none" id="rxExportBox"
     style="max-width:550px; width:99%; height:20px; margin-top:10px;">
   </textarea>
 </div>
@@ -506,7 +509,70 @@ Manual Refraction
 </div>
 
 
-<div style="height:350px"></div>
+<div style="height:100px"></div>
+
+
+
+
+
+
+
+
+
+<script>
+document.getElementById("fillCurrentBtn").addEventListener("click", () => {
+  // Map Vector spans to Current RX input IDs
+  const mapping = [
+    { span: "od_vcFinalS", input: "od_origS" },
+    { span: "od_vcFinalC", input: "od_origC" },
+    { span: "od_vcFinalA", input: "od_origA" },
+    { span: "os_vcFinalS", input: "os_origS" },
+    { span: "os_vcFinalC", input: "os_origC" },
+    { span: "os_vcFinalA", input: "os_origA" }
+  ];
+
+  mapping.forEach(({span, input}) => {
+    const spanEl = document.getElementById(span);
+    const inputEl = document.getElementById(input);
+    if (spanEl && inputEl) {
+      let val = spanEl.textContent.trim();
+      if (val.startsWith("+")) val = val.slice(1); // remove plus sign
+      inputEl.value = val;
+      inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+      inputEl.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  });
+
+  // Clear VC inputs
+  ["vc_odS","vc_odC","vc_odA","vc_osS","vc_osC","vc_osA"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.value = "";
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+      el.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  });
+});
+
+document.getElementById("fillCurrentBtn").addEventListener("click", () => {
+  // --- existing logic ---
+  
+  // Highlight button after click
+  const btn = document.getElementById("fillCurrentBtn");
+  btn.style.backgroundColor = "#FFFEF2";  // yellow
+  btn.style.color = "black";               // text black
+  btn.textContent = "Latest Vector Rx";             // change label
+});
+
+</script>
+
+
+
+
+
+
+
+
 
 
 <script>
@@ -519,16 +585,22 @@ function exportInputs() {
     out.push(`${el.id}=${el.value}`);
   });
 
+
   // statuses (selects)
   ["statusVector", "statusManual"].forEach(id => {
     const el = document.getElementById(id);
     if (el) out.push(`${id}=${el.options[el.selectedIndex].text}`);
   });
 
+["od_vcFinalS","od_vcFinalC","od_vcFinalA","os_vcFinalS","os_vcFinalC","os_vcFinalA"].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) out.push(`${id}=${el.textContent}`);
+});
 
   // CSV-style text
   const csvText = out.join(", ");
   document.getElementById("rxExportBox").value = csvText;
+
 
   // Separator
   const separator = "--------------------------";
@@ -560,7 +632,7 @@ RX Changes R/L:     R: ${document.getElementById("od_roundCombinedDisplay")?.tex
 
   // Prepare Gmail
   const customerNameInput = document.getElementById("customerName");
-  const whatsappNumberInput = document.getElementById("whatsappNumber");
+  const whatsappNumberInput = document.getElementById("customerWhatsapp");
   const customerName = customerNameInput?.value.trim() || "Unnamed";
   const whatsappNumber = whatsappNumberInput?.value.trim() || "";
 
