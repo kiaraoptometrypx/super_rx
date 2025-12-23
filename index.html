@@ -129,7 +129,7 @@ body, table, th, td, input, button {
 <tr>
   <th class="yellow" colspan="4">Vector Refraction</th></tr>
 <tr>
-  <td>FC DC Bal BE<br><div style="margin-top:5px"><button onclick="copyVD_OU_to_ODOS()" style="border-radius:10px; width:70px; height:25px">Export</button></div></td>
+  <td>FC DC Bal BE<br><div style="margin-top:5px"><button onclick="copyVD_OU_to_ODOS()" style="border-radius:10px; width:70px; height:25px">Fill Input</button></div></td>
   <td>
      Sph : <input type="number" step="0.25" id="vd_ouS"><br>
     <div style="margin-top:10px"><span id="vd_out_ouS">-</span></div>
@@ -145,7 +145,7 @@ body, table, th, td, input, button {
 </tr>
 
 <tr>
-  <td>FC DC Bal R<br><div style="margin-top:5px"><button onclick="copyVD_OD()" style="border-radius:10px; width:70px; height:25px">Export</button></div></td>
+  <td>FC DC Bal R<br><div style="margin-top:5px"><button onclick="copyVD_OD()" style="border-radius:10px; width:70px; height:25px">Fill Input</button></div></td>
   <td>
      Sph : <input type="number" step="0.25" id="vd_odS"><br>
     <div style="margin-top:10px"><span id="vd_out_odS">-</span></div>
@@ -163,7 +163,7 @@ body, table, th, td, input, button {
 <tr>
   <td>FC DC Bal L<br>
     <div style="margin-top:5px">
-      <button onclick="copyVD_OS()" style="border-radius:10px; width:70px; height:25px">Export</button>
+      <button onclick="copyVD_OS()" style="border-radius:10px; width:70px; height:25px">Fill Input</button>
     </div>
   </td>
   <td>
@@ -212,13 +212,54 @@ body, table, th, td, input, button {
   <td>Cyl : <span id="os_vcFinalC">0.00</span></td>
   <td>Ax : <span id="os_vcFinalA">-</span></td>
 </tr>
+<tr>
+<td colspan="1">Comments:</td>
+<td colspan="3">
+<input type="text" id="vector_comments1"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Purpose of prescription; Far? Near? Contact lens? etc"
+  oninput="updateVectorSummary()">
+<div style="height:5px"></div>
+
+<input type="text" id="vector_comments2"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Any special plan for this prescription?"
+  oninput="updateVectorSummary()">
+<div style="height:5px"></div>
+
+<input type="text" id="vector_comments3"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Leave empty if not used"
+  oninput="updateVectorSummary()">
+<div style="height:5px"></div>
+
+<input type="text" id="vector_comments4"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Leave empty if not used"
+  oninput="updateVectorSummary()">
+<div style="height:5px"></div>
+
+<input type="text" id="vector_comments5"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Leave empty if not used"
+  oninput="updateVectorSummary()">
+
+</td></tr>
 
 
+<tr><th class="yellow" colspan="4">Please Press Update All! 
+<button style="margin-left:10px; margin-right:10px; border-radius:10px; height:25px; width:75px" class="updateAllBtn">Update All</button>
 
-<tr><th class="yellow" colspan="4">Status : <select id="statusVector" style="font-size:11px; border-radius:6px; height:20px; margin-left:10px">
+Status : <select id="statusVector" style="font-size:11px; border-radius:10px; height:25px; margin-left:2px; width:75px">
   <option value="notdone">Not Done</option>
   <option value="done">Done</option>
-</select></th>
+</select>
+
+
+<button style="margin-left:20px; border-radius:10px; height:25px; width:75px" class="exportBtn">
+    Save
+  </button>
+</th>
 
 </table>
 <table>
@@ -279,11 +320,56 @@ Manual Refraction
   <td id="os_crossA"></td>
 </tr>
 
+<tr class="mask1">
+<td colspan="1">Comments:</td>
+<td colspan="3">
+<input type="text" id="manual_comments1"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Purpose of prescription; Far? Near? Contact lens? etc"
+  oninput="updateManualSummary()">
+<div style="height:5px"></div>
 
-<th class="blue" colspan="4">Status : <select id="statusManual" style="font-size:11px; border-radius:6px; height:20px; margin-left:10px">
+<input type="text" id="manual_comments2"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Any special plan for this prescription"
+  oninput="updateManualSummary()">
+<div style="height:5px"></div>
+
+<input type="text" id="manual_comments3"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Leave empty if not used"
+  oninput="updateManualSummary()">
+<div style="height:5px"></div>
+
+<input type="text" id="manual_comments4"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Leave empty if not used"
+  oninput="updateManualSummary()">
+<div style="height:5px"></div>
+
+<input type="text" id="manual_comments5"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Leave empty if not used"
+  oninput="updateManualSummary()">
+
+</td>
+</tr>
+
+
+<th class="blue" colspan="4">Please Press Update All!
+<button style="margin-left:10px; margin-right:10px; border-radius:10px; height:25px; width:75px" class="updateAllBtn">Update All</button> 
+
+Status : <select id="statusManual" style="font-size:11px; border-radius:10px; height:25px; margin-left:2px; width:75px">
   <option value="notdone">Not Done</option>
   <option value="done">Done</option>
-</select></th>
+</select>
+
+
+<button style="margin-left:20px; border-radius:10px; height:25px; width:75px" class="exportBtn">
+    Save
+  </button>
+
+</th>
 
 </table>
 
@@ -294,13 +380,17 @@ Manual Refraction
 
 
 <div>
-<button style="margin-left:20px; border-radius:10px; height:25px; width:150px" id="toggleMask3">Hide/Show Gaze/BVD</button>
 
-<button style="margin-left:20px; border-radius:10px; height:25px; width:150px" id="updateAllBtn">Update All</button>
+    Gaze Angle: 
+    <input type="range" id="gazeAngle" step="5" value="35" min="10" max="50" oninput="this.nextElementSibling.value = this.value">
+    <output>35</output>
 
-  <button style="margin-left:20px; border-radius:10px; height:25px; width:150px"  onclick="exportInputs()">
-    Export Inputs
-  </button>
+    <span style="display:inline-block; width:10px;"></span> <!-- gap -->
+
+    BVD (mm): 
+    <input type="range" id="vertexDist" step="1" value="12" min="1" max="20" oninput="this.nextElementSibling.value = this.value">
+    <output>14</output>
+
 
 </div>
 
@@ -308,23 +398,6 @@ Manual Refraction
 <div id="captureTarget">
 
 <table>
-
-
-
-<tr class="mask3" style="border:none;"> 
-  <td colspan="4" style="border:none;">
-    Gaze Angle: 
-    <input type="range" id="gazeAngle" step="5" value="35" min="10" max="50" oninput="this.nextElementSibling.value = this.value">
-    <output>35</output>
-
-    <span style="display:inline-block; width:65px;"></span> <!-- gap -->
-
-    BVD (mm): 
-    <input type="range" id="vertexDist" step="1" value="12" min="1" max="20" oninput="this.nextElementSibling.value = this.value">
-    <output>14</output>
-  </td>
-</tr>
-
 
 <tr><th colspan="4" >Summary 
 
@@ -402,8 +475,8 @@ Manual Refraction
     Diagonal : <span id="prismD_vc">-</span>
   </td>
 </tr>
-
-
+<tr><td class="yellow">Comments</td><td colspan="3" class="yellow"><span id="vector_comments_summary"></span>
+</td></tr>
 
 
 <tr class="mask1">
@@ -430,7 +503,36 @@ Manual Refraction
     Diagonal : <span id="prismD">-</span>
   </td>
 </tr>
+<tr class="mask1">
+<td class="blue">Comments</td><td colspan="3" class="blue"><span id="manual_comments_summary"></span>
+</td></tr>
 
+
+<tr><td colspan="4" style="border:none"></td></tr>
+<tr class="mask2">
+  <td class="red">Near Current </td>
+  <td class="red" colspan="3"><input style="margin-right:30px; width:55px" type="number" step="0.25" min="0" max="5" id="nearAdd" placeholder="">
+
+    R: <span id="od_nearCombined" style="margin-right: 50px;">0.00 / 0.00 x 0</span>
+    L: <span id="os_nearCombined">0.00 / 0.00 x 0</span>
+  </td>
+</tr>
+
+<tr class="mask2">
+  <td class="yellow">Near Vector</td>
+  <td class="yellow" colspan="3"><input style="margin-right:30px; width:55px" type="number" step="0.25" min="0" max="5" id="nearAddVector" placeholder="">
+    R: <span id="od_vcNearCombined" style="margin-right: 50px;">0.00 / 0.00 x 0</span>
+    L: <span id="os_vcNearCombined">0.00 / 0.00 x 0</span>
+  </td>
+</tr>
+
+<tr class="mask2">
+  <td class="blue">Near Manual</td>
+  <td class="blue" colspan="3"><input style="margin-right:30px; width:55px" type="number" step="0.25" min="0" max="5" id="nearAddFinal" placeholder="">
+    R: <span id="od_finalNearCombined" style="margin-right: 50px;">0.00 / 0.00 × 0</span>
+    L: <span id="os_finalNearCombined">0.00 / 0.00 × 0</span>
+  </td>
+</tr>
 
 
 
@@ -440,78 +542,79 @@ Manual Refraction
   <span style="color:red;">Red = Risky</span>
 </span>
 </td></tr>
+<tr><td colspan="4">End of Results</td></tr>
+
+
+
+
 <tr><td colspan="4">
 <button style="margin-left:20px; background-color:#F2FFFA; border-radius:10px; height:25px; width:150px" id="toggleMask1_copy">Hide/Show Manual</button>
+
+<button style="margin-left:20px; border-radius:10px; height:25px; width:150px" id="toggleMask2">Hide/Show Near Vision</button>
 </td></tr>
 
-
-<tr style="border:none; height:1px;">
-  <td style="border:none; height:1px;"></td>
-  <td style="border:none; height:1px;"></td>
-  <td style="border:none; height:1px;"></td>
-  <td style="border:none; height:1px;"></td>
-</tr>
-
-<tr><th colspan="4">Near Vision <button style="margin-left:20px; border-radius:10px; height:25px; width:120px" id="toggleMask2">Hide/Show Add</button></th></tr>
-
-
-
-<tr class="mask2">
-  <td class="red">Current </td>
-  <td class="red" colspan="3"><input style="margin-right:30px; width:55px" type="number" step="0.25" min="0" max="5" id="nearAdd" placeholder="">
-
-    R: <span id="od_nearCombined" style="margin-right: 50px;">0.00 / 0.00 x 0</span>
-    L: <span id="os_nearCombined">0.00 / 0.00 x 0</span>
-  </td>
-</tr>
-
-<tr class="mask2">
-  <td class="yellow">Vector</td>
-  <td class="yellow" colspan="3"><input style="margin-right:30px; width:55px" type="number" step="0.25" min="0" max="5" id="nearAddVector" placeholder="">
-    R: <span id="od_vcNearCombined" style="margin-right: 50px;">0.00 / 0.00 x 0</span>
-    L: <span id="os_vcNearCombined">0.00 / 0.00 x 0</span>
-  </td>
-</tr>
-
-<tr class="mask2">
-  <td class="blue">Manual</td>
-  <td class="blue" colspan="3"><input style="margin-right:30px; width:55px" type="number" step="0.25" min="0" max="5" id="nearAddFinal" placeholder="">
-    R: <span id="od_finalNearCombined" style="margin-right: 50px;">0.00 / 0.00 × 0</span>
-    L: <span id="os_finalNearCombined">0.00 / 0.00 × 0</span>
-  </td>
-</tr>
-
-<tr><th colspan="4"></th></tr>
-
-
-
 </table>
-<div style="margin-top:10px; margin-left:20px">
-<div>End of Results</div>
-
-</div>
-
 <div style="height:20px"></div>
 
 </div>
 
 
+
 <div style="width:80%; margin-top:10px;">
-  <div style="height:10px"></div>
   <div style="display:flex; flex-direction:column; align-items:center;">
 
   <textarea style="display:none" id="rxExportBox"
     style="max-width:550px; width:99%; height:20px; margin-top:10px;">
   </textarea>
 </div>
-
-  <div style="height:30px"></div>
 </div>
 
 
 <div style="height:100px"></div>
 
 
+<script>
+function updateVectorSummary() {
+  const fields = [
+    { id: "vector_comments1", label: "Purpose" },
+    { id: "vector_comments2", label: "Plan" },
+    { id: "vector_comments3", label: "Note" },
+    { id: "vector_comments4", label: "Note" },
+    { id: "vector_comments5", label: "Note" }
+  ];
+
+  const parts = [];
+
+  fields.forEach(f => {
+    const v = document.getElementById(f.id)?.value.trim();
+    if (v) parts.push(`${f.label}: ${v}`);
+  });
+
+  document.getElementById("vector_comments_summary").textContent =
+    parts.length ? parts.join(". ") + "." : "";
+}
+</script>
+<script>
+function updateManualSummary() {
+  const fields = [
+    { id: "manual_comments1", label: "Purpose" },
+    { id: "manual_comments2", label: "Plan" },
+    { id: "manual_comments3", label: "Note" },
+    { id: "manual_comments4", label: "Note" },
+    { id: "manual_comments5", label: "Note" }
+  ];
+
+  const parts = [];
+
+  fields.forEach(f => {
+    const v = document.getElementById(f.id)?.value.trim();
+    if (v) parts.push(`${f.label}: ${v}`);
+  });
+
+  document.getElementById("manual_comments_summary").textContent =
+    parts.length ? parts.join(". ") + "." : "";
+}
+</script>
 
 
 
@@ -585,52 +688,55 @@ function exportInputs() {
     out.push(`${el.id}=${el.value}`);
   });
 
-
   // statuses (selects)
   ["statusVector", "statusManual"].forEach(id => {
     const el = document.getElementById(id);
     if (el) out.push(`${id}=${el.options[el.selectedIndex].text}`);
   });
 
-["od_vcFinalS","od_vcFinalC","od_vcFinalA","os_vcFinalS","os_vcFinalC","os_vcFinalA"].forEach(id => {
-  const el = document.getElementById(id);
-  if (el) out.push(`${id}=${el.textContent}`);
-});
+  ["od_vcFinalS","od_vcFinalC","od_vcFinalA","os_vcFinalS","os_vcFinalC","os_vcFinalA"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) out.push(`${id}=${el.textContent}`);
+  });
 
-  // CSV-style text
   const csvText = out.join(", ");
   document.getElementById("rxExportBox").value = csvText;
 
-
-  // Separator
   const separator = "--------------------------";
 
-  // Human-readable summary EXACTLY as you specified
   const summaryText = 
 `CURRENT:
 RX R/L:     ${document.getElementById("od_origCombined")?.textContent || "-"}     //     ${document.getElementById("os_origCombined")?.textContent || "-"}  
+---
 Gaze Imbalance:     Horizontal: ${document.getElementById("origCrossS")?.textContent || "-"}     //     Vertical: ${document.getElementById("origCrossC")?.textContent || "-"}     //     Diagonal: ${document.getElementById("origCrossA")?.textContent || "-"}  
 ADD:     ${document.getElementById("nearAdd")?.value || "0.00"} 
+---
+
 
 VECTOR (${document.getElementById("statusVector")?.options[document.getElementById("statusVector").selectedIndex]?.text || "-"}):
-RX R/L:     ${document.getElementById("od_vcCombined")?.textContent || "-"}     //     ${document.getElementById("os_vcCombined")?.textContent || "-"}  
+RX R/L:     ${document.getElementById("od_vcCombined")?.textContent || "-"}     //     ${document.getElementById("os_vcCombined")?.textContent || "-"} 
+-- 
 Gaze Imbalance:     Horizontal: ${document.getElementById("prismH_vc")?.textContent || "-"}     //     Vertical  ${document.getElementById("prismV_vc")?.textContent || "-"}     //     Diagonal: ${document.getElementById("prismD_vc")?.textContent || "-"}  
 ADD:     ${document.getElementById("nearAddVector")?.value || "0.00"}   
 FC DC Bal Both Eye:     ${document.getElementById("vd_ouSummary")?.textContent || "-"}  
 FC DC BAL R/L:     ${document.getElementById("vd_odSummary")?.textContent || "-"}     //     ${document.getElementById("vd_osSummary")?.textContent || "-"}  
-RX Changes R/L:          ${document.getElementById("vc_odSummary")?.textContent || "-"}     //     ${document.getElementById("vc_osSummary")?.textContent || "-"}  
+RX Changes R/L:          ${document.getElementById("vc_odSummary")?.textContent || "-"}     //     ${document.getElementById("vc_osSummary")?.textContent || "-"}
+VECTOR COMMENTS SUMMARY:     ${document.getElementById("vector_comments_summary")?.textContent || "-" }
+---
+
 
 MANUAL (${document.getElementById("statusManual")?.options[document.getElementById("statusManual").selectedIndex]?.text || "-"}):
-RX R/L:     ${document.getElementById("od_finalCombined")?.textContent || "-"}     //     ${document.getElementById("os_finalCombined")?.textContent || "-"}  
+RX R/L:     ${document.getElementById("od_finalCombined")?.textContent || "-"}     //     ${document.getElementById("os_finalCombined")?.textContent || "-"} 
+-- 
 Gaze Imbalance:     Horizontal: ${document.getElementById("prismH")?.textContent || "-"}     //     Vertical: ${document.getElementById("prismV")?.textContent || "-"}     //     Diagonal: ${document.getElementById("prismD")?.textContent || "-"}  
 ADD:     ${document.getElementById("nearAddFinal")?.value || "0.00"}
 RX Changes R/L:     R: ${document.getElementById("od_roundCombinedDisplay")?.textContent || "-"}     //     ${document.getElementById("os_roundCombinedDisplay")?.textContent || "-"}  
+MANUAL COMMENTS SUMMARY:     ${document.getElementById("manual_comments_summary")?.textContent || "-" }
+
 `;
 
-  // Combine CSV + separator + summary
   const emailBody = csvText + "\n\n" + separator + "\n\n" + summaryText;
 
-  // Prepare Gmail
   const customerNameInput = document.getElementById("customerName");
   const whatsappNumberInput = document.getElementById("customerWhatsapp");
   const customerName = customerNameInput?.value.trim() || "Unnamed";
@@ -640,10 +746,14 @@ RX Changes R/L:     R: ${document.getElementById("od_roundCombinedDisplay")?.tex
   const subject = encodeURIComponent(`${customerName}${whatsappNumber ? " - " + whatsappNumber : ""}`);
   const body = encodeURIComponent(emailBody);
 
-  // Open Gmail compose
   const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${subject}&body=${body}`;
   window.open(gmailUrl, "_blank");
 }
+
+// attach all buttons with the class
+document.querySelectorAll(".exportBtn").forEach(btn => {
+  btn.addEventListener("click", exportInputs);
+});
 
 // Paste listener to restore inputs from CSV
 document.addEventListener("paste", e => {
@@ -670,7 +780,6 @@ document.addEventListener("paste", e => {
         el.value = val;
       }
     } else if (el.tagName === "SELECT") {
-      // Restore select by matching option text
       const option = Array.from(el.options).find(o => o.text === val);
       if (option) el.value = option.value;
     }
@@ -679,7 +788,6 @@ document.addEventListener("paste", e => {
     el.dispatchEvent(new Event('change', { bubbles: true }));
   });
 });
-
 </script>
 
 
@@ -1709,8 +1817,8 @@ function capturePart() {
 
   html2canvas(target).then(fullCanvas => {
 
-    // crop 70px from the top
-    const cropY = 70;
+    // crop 0px from the top
+    const cropY = 0;
     const w = fullCanvas.width;
     const h = fullCanvas.height - cropY;
 
@@ -1850,8 +1958,10 @@ function fireAllInputs() {
   if (typeof updateVDVCOUSummary === "function") updateVDVCOUSummary();
 }
 
-// attach button click
-document.getElementById("updateAllBtn")?.addEventListener("click", fireAllInputs);
+// attach to all buttons with the class
+document.querySelectorAll(".updateAllBtn").forEach(btn => {
+  btn.addEventListener("click", fireAllInputs);
+});
 </script>
 
 
