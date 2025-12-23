@@ -706,28 +706,28 @@ function exportInputs() {
 
   const summaryText = 
 `CURRENT:
-RX R/L:     ${document.getElementById("od_origCombined")?.textContent || "-"}     //     ${document.getElementById("os_origCombined")?.textContent || "-"}  
----
+-->  RX R/L:     ${document.getElementById("od_origCombined")?.textContent || "-"}     //     ${document.getElementById("os_origCombined")?.textContent || "-"}  
+
 Gaze Imbalance:     Horizontal: ${document.getElementById("origCrossS")?.textContent || "-"}     //     Vertical: ${document.getElementById("origCrossC")?.textContent || "-"}     //     Diagonal: ${document.getElementById("origCrossA")?.textContent || "-"}  
 ADD:     ${document.getElementById("nearAdd")?.value || "0.00"} 
----
 
+--------------------------
 
 VECTOR (${document.getElementById("statusVector")?.options[document.getElementById("statusVector").selectedIndex]?.text || "-"}):
-RX R/L:     ${document.getElementById("od_vcCombined")?.textContent || "-"}     //     ${document.getElementById("os_vcCombined")?.textContent || "-"} 
--- 
+-->  RX R/L:     ${document.getElementById("od_vcCombined")?.textContent || "-"}     //     ${document.getElementById("os_vcCombined")?.textContent || "-"} 
+
 Gaze Imbalance:     Horizontal: ${document.getElementById("prismH_vc")?.textContent || "-"}     //     Vertical  ${document.getElementById("prismV_vc")?.textContent || "-"}     //     Diagonal: ${document.getElementById("prismD_vc")?.textContent || "-"}  
 ADD:     ${document.getElementById("nearAddVector")?.value || "0.00"}   
 FC DC Bal Both Eye:     ${document.getElementById("vd_ouSummary")?.textContent || "-"}  
 FC DC BAL R/L:     ${document.getElementById("vd_odSummary")?.textContent || "-"}     //     ${document.getElementById("vd_osSummary")?.textContent || "-"}  
 RX Changes R/L:          ${document.getElementById("vc_odSummary")?.textContent || "-"}     //     ${document.getElementById("vc_osSummary")?.textContent || "-"}
 VECTOR COMMENTS SUMMARY:     ${document.getElementById("vector_comments_summary")?.textContent || "-" }
----
 
+--------------------------
 
 MANUAL (${document.getElementById("statusManual")?.options[document.getElementById("statusManual").selectedIndex]?.text || "-"}):
-RX R/L:     ${document.getElementById("od_finalCombined")?.textContent || "-"}     //     ${document.getElementById("os_finalCombined")?.textContent || "-"} 
--- 
+-->  RX R/L:     ${document.getElementById("od_finalCombined")?.textContent || "-"}     //     ${document.getElementById("os_finalCombined")?.textContent || "-"}  
+
 Gaze Imbalance:     Horizontal: ${document.getElementById("prismH")?.textContent || "-"}     //     Vertical: ${document.getElementById("prismV")?.textContent || "-"}     //     Diagonal: ${document.getElementById("prismD")?.textContent || "-"}  
 ADD:     ${document.getElementById("nearAddFinal")?.value || "0.00"}
 RX Changes R/L:     R: ${document.getElementById("od_roundCombinedDisplay")?.textContent || "-"}     //     ${document.getElementById("os_roundCombinedDisplay")?.textContent || "-"}  
