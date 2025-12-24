@@ -628,39 +628,41 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
 <script>
 function updateVectorSummary() {
   const fields = [
-    { id: "vector_comments1", label: "Purpose" },
-    { id: "vector_comments2", label: "Plan" },
-    { id: "vector_comments3", label: "Note" },
-    { id: "vector_comments4", label: "Note" },
-    { id: "vector_comments5", label: "Note" }
+    { id: "vector_comments1", label: "" },
+    { id: "vector_comments2", label: "" },
+    { id: "vector_comments3", label: "" },
+    { id: "vector_comments4", label: "" },
+    { id: "vector_comments5", label: "" }
   ];
 
   const parts = [];
 
   fields.forEach(f => {
     const v = document.getElementById(f.id)?.value.trim();
-    if (v) parts.push(`${f.label}: ${v}`);
+    if (v) parts.push(v);
   });
 
   document.getElementById("vector_comments_summary").textContent =
-    parts.length ? parts.join(" ; ") + "." : "";
+    parts.length ? parts.join(". ") + "." : "";
 }
 </script>
+
+
 <script>
 function updateManualSummary() {
   const fields = [
-    { id: "manual_comments1", label: "Purpose" },
-    { id: "manual_comments2", label: "Plan" },
-    { id: "manual_comments3", label: "Note" },
-    { id: "manual_comments4", label: "Note" },
-    { id: "manual_comments5", label: "Note" }
+    { id: "manual_comments1", label: " " },
+    { id: "manual_comments2", label: " " },
+    { id: "manual_comments3", label: " " },
+    { id: "manual_comments4", label: " " },
+    { id: "manual_comments5", label: " " }
   ];
 
   const parts = [];
 
   fields.forEach(f => {
     const v = document.getElementById(f.id)?.value.trim();
-    if (v) parts.push(`${f.label}: ${v}`);
+    if (v) parts.push(v);
   });
 
   document.getElementById("manual_comments_summary").textContent =
@@ -757,11 +759,19 @@ function exportInputs() {
   const separator = "--------------------------";
 
   const summaryText = 
-`CURRENT:
+`Vector Comments Summary:     ${document.getElementById("vector_comments_summary")?.textContent || "-" }
+
+Manual Comments Summary:     ${document.getElementById("manual_comments_summary")?.textContent || "-" }
+
+
+--------------------------
+
+CURRENT:
 -->  RX R/L:     ${document.getElementById("od_origCombined")?.textContent || "-"}     //     ${document.getElementById("os_origCombined")?.textContent || "-"}  
 
 Gaze Imbalance:     Horizontal: ${document.getElementById("origCrossS")?.textContent || "-"}     //     Vertical: ${document.getElementById("origCrossC")?.textContent || "-"}     //     Diagonal: ${document.getElementById("origCrossA")?.textContent || "-"}  
 ADD:     ${document.getElementById("nearAdd")?.value || "0.00"} 
+
 
 --------------------------
 
@@ -773,7 +783,7 @@ ADD:     ${document.getElementById("nearAddVector")?.value || "0.00"}
 FC DC Bal Both Eye:     ${document.getElementById("vd_ouSummary")?.textContent || "-"}  
 FC DC BAL R/L:     ${document.getElementById("vd_odSummary")?.textContent || "-"}     //     ${document.getElementById("vd_osSummary")?.textContent || "-"}  
 RX Changes R/L:          ${document.getElementById("vc_odSummary")?.textContent || "-"}     //     ${document.getElementById("vc_osSummary")?.textContent || "-"}
-VECTOR COMMENTS SUMMARY:     ${document.getElementById("vector_comments_summary")?.textContent || "-" }
+
 
 --------------------------
 
@@ -783,7 +793,7 @@ MANUAL (${document.getElementById("statusManual")?.options[document.getElementBy
 Gaze Imbalance:     Horizontal: ${document.getElementById("prismH")?.textContent || "-"}     //     Vertical: ${document.getElementById("prismV")?.textContent || "-"}     //     Diagonal: ${document.getElementById("prismD")?.textContent || "-"}  
 ADD:     ${document.getElementById("nearAddFinal")?.value || "0.00"}
 RX Changes R/L:     R: ${document.getElementById("od_roundCombinedDisplay")?.textContent || "-"}     //     ${document.getElementById("os_roundCombinedDisplay")?.textContent || "-"}  
-MANUAL COMMENTS SUMMARY:     ${document.getElementById("manual_comments_summary")?.textContent || "-" }
+
 
 `;
 
