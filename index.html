@@ -44,7 +44,7 @@ th:nth-child(4) {
 
 
 .hidden-row {
-  opacity: 0.05;       /* semi-transparent */
+  opacity: 0.0;       /* semi-transparent */
   pointer-events: none; /* optional: disable interactions */
 }
 
@@ -60,15 +60,13 @@ th:nth-child(4) {
     border-collapse: collapse;
     width: 100%;
     max-width: 550px;
-    min-width: 550px;
+    min-width: 450px;
     margin-top: 20px;
     text-align: center;
-    margin-right: 20px;
-    margin-left: 20px;
   }
 
   th, td {
-    border: 1px solid #aaa;
+    border: 1px dotted #aaa;
     padding: 10px 14px;
     text-align: center;
   }
@@ -89,18 +87,85 @@ th:nth-child(4) {
 body, table, th, td, input, button {
   font-size: 11px;
 }
+/* Layout */
+.layout {
+  display: flex;
+  align-items: flex-start;
+}
+button {border: 1px dotted}
+
+/* Sidebar */
+.sidebar {
+  position: sticky;
+  top: 0;
+  width: 150px;
+  height: 100vh;
+  background: #541F1F;
+  color: #fff;
+  padding: 15px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.sidebar h3 {
+  margin: 0 0 24px;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+
+.sidebar a {
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  margin-bottom: 50px;
+  cursor: pointer;
+}
+
+.sidebar a:hover {
+  text-decoration: underline;
+}
+
+/* Content fade effect */
+.content {
+  flex: 1;
+  padding: 40px;
+  transition: opacity 0.35s ease;
+}
+
+.content.fade-out {
+  opacity: 0;
+}
+
+/* Sections */
+.section {
+  min-height: 400px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
 </style>
 
 </head>
 <body>
 
-<div>
+<div class="layout">
 
-<h2 style="text-align:center; margin-top:20px;">Hypervision-RX</h2>
+  <!-- Sidebar / directory -->
+  <nav class="sidebar">
+    <a data-target="s1">Current Details</a>
+    <a data-target="s2">Vector RX</a>
+    <a data-target="s3">Manual RX</a>
+    <a data-target="s4">Summary & Near Vision</a>
+  </nav>
 
+  <!-- Content wrapper (fade effect) -->
+  <main id="content" class="content">
+    <div id="s1" class="section">
+
+<h2> Current Details </h2>
 <table>
-
-
 
 <tr>
 <td colspan="2" style="border-right:none;">Name : <input type="text" id="customerName" style="width:65%; height:20px"></td>
@@ -143,14 +208,15 @@ body, table, th, td, input, button {
 </tr>
 
 
-<tr><th class="red" colspan="4"></th></tr>
 
 </table>
+</div>
+
+
+    <div id="s2" class="section">
+<h2> Vector Rx </h2>
+
 <table>
-
-
-
-
 <!-- Vector Refraction -->
 <tr>
   <th class="yellow" colspan="4">Vector Refraction</th></tr>
@@ -239,15 +305,15 @@ body, table, th, td, input, button {
   <td>Ax : <span id="os_vcFinalA">-</span></td>
 </tr>
 <tr><th class="yellow" colspan="4">Please Press Update All! 
-<button style="margin-left:10px; margin-right:10px; border-radius:10px; height:25px; width:75px" class="updateAllBtn">Update All</button>
-
-Status : <select id="statusVector" style="font-size:11px; border-radius:10px; height:25px; margin-left:2px; width:75px">
-  <option value="notdone">Not Done</option>
-  <option value="done">Done</option>
+<button style="margin-left:10px; border-radius:10px; height:25px; width:100px" class="updateAllBtn">Update All</button>
+<br><br>
+Status : <select id="statusVector" style="font-size:11px; border-radius:10px; height:25px; margin-left:2px; width:120px">
+  <option value="notdone">Not Done - Invalid </option>
+  <option value="done">Done - Valid</option>
 </select>
 
 
-<button style="margin-left:20px; border-radius:10px; height:25px; width:75px" class="exportBtn">
+<button style="margin-left:10px; border-radius:10px; height:25px; width:65px" class="exportBtn">
     Save
   </button>
 </th></tr>
@@ -290,8 +356,16 @@ Status : <select id="statusVector" style="font-size:11px; border-radius:10px; he
 <tr><th class="yellow" colspan="4"></th></tr>
 
 </table>
-<table>
 
+
+
+
+</div>
+
+
+    <div id="s3" class="section">
+<h2> Manual Rx </h2>
+<table>
 <!-- Manual Subjective Refraction -->
 <tr><th class="blue" colspan="4">
 
@@ -350,6 +424,7 @@ Manual Refraction
 <tr class="mask1">
 <th class="blue" colspan="4">Please Press Update All!
 <button style="margin-left:10px; margin-right:10px; border-radius:10px; height:25px; width:75px" class="updateAllBtn">Update All</button> 
+<br><br>
 
 Status : <select id="statusManual" style="font-size:11px; border-radius:10px; height:25px; margin-left:2px; width:75px">
   <option value="notdone">Not Done</option>
@@ -357,7 +432,7 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
 </select>
 
 
-<button style="margin-left:20px; border-radius:10px; height:25px; width:75px" class="exportBtn">
+<button style="margin-left:10px; border-radius:10px; height:25px; width:75px" class="exportBtn">
     Save
   </button>
 
@@ -402,9 +477,20 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
 <tr>
 <th colspan="4" class="blue">
 </th></tr>
+</table>
 
-<tr class="mask1">
-<td class="blue" colspan="4">
+
+
+</div>
+    <div id="s4" class="section">
+<h2> Summary </h2>
+
+
+
+
+
+
+
 
 <div style="height:5px"></div>
 
@@ -424,9 +510,6 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
     <output style="vertical-align: middle;">14</output>
   </label>
 </div>
-</td>
-</tr>
-</table>
 
 
 <div id="captureTarget">
@@ -606,6 +689,17 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
 
 
 </table>
+
+</div>
+  </main>
+
+
+
+
+
+</div>
+
+
 <div style="height:20px"></div>
 
 </div>
@@ -759,9 +853,9 @@ function exportInputs() {
   const separator = "--------------------------";
 
   const summaryText = 
-`Vector Comments Summary:     ${document.getElementById("vector_comments_summary")?.textContent || "-" }
-
-Manual Comments Summary:     ${document.getElementById("manual_comments_summary")?.textContent || "-" }
+`Comments Summary:
+Vector : ${document.getElementById("vector_comments_summary")?.textContent || "-" }
+Manual : ${document.getElementById("manual_comments_summary")?.textContent || "-" }
 
 
 --------------------------
@@ -2027,6 +2121,22 @@ document.querySelectorAll(".updateAllBtn").forEach(btn => {
 
 
 
+<script>
+const content = document.getElementById("content");
+
+document.querySelectorAll(".sidebar a").forEach(link => {
+  link.addEventListener("click", () => {
+    const target = document.getElementById(link.dataset.target);
+
+    content.classList.add("fade-out");
+
+    setTimeout(() => {
+      target.scrollIntoView({ behavior: "auto" });
+      content.classList.remove("fade-out");
+    }, 350);
+  });
+});
+</script>
 
 
 
