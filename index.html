@@ -83,6 +83,7 @@ th:nth-child(4) {
     border: 1px solid lightgrey;
     border-radius:6px;
   }
+button {border: 1px dotted}
 
 body, table, th, td, input, button {
   font-size: 11px;
@@ -92,7 +93,7 @@ body, table, th, td, input, button {
   display: flex;
   align-items: flex-start;
 }
-button {border: 1px dotted}
+
 
 /* Sidebar */
 .sidebar {
@@ -130,7 +131,7 @@ button {border: 1px dotted}
 /* Content fade effect */
 .content {
   flex: 1;
-  padding: 40px;
+  padding: 25px;
   transition: opacity 0.35s ease;
 }
 
@@ -141,8 +142,9 @@ button {border: 1px dotted}
 /* Sections */
 .section {
   min-height: 400px;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 20px;
+  margin-bottom: 200px;
+  margin-top: 1250px;
+
 }
 
 </style>
@@ -150,10 +152,17 @@ button {border: 1px dotted}
 </head>
 <body>
 
+
+
+
 <div class="layout">
 
   <!-- Sidebar / directory -->
   <nav class="sidebar">
+<div style="height:50px"></div>
+Hypervision RX
+<div style="height:50px"></div>
+
     <a data-target="s1">Current Details</a>
     <a data-target="s2">Vector RX</a>
     <a data-target="s3">Manual RX</a>
@@ -163,7 +172,7 @@ button {border: 1px dotted}
   <!-- Content wrapper (fade effect) -->
   <main id="content" class="content">
     <div id="s1" class="section">
-
+<div style="height:20px"></div>
 <h2> Current Details </h2>
 <table>
 
@@ -214,7 +223,8 @@ button {border: 1px dotted}
 
 
     <div id="s2" class="section">
-<h2> Vector Rx </h2>
+<div style="height:20px"></div>
+
 
 <table>
 <!-- Vector Refraction -->
@@ -364,7 +374,8 @@ Status : <select id="statusVector" style="font-size:11px; border-radius:10px; he
 
 
     <div id="s3" class="section">
-<h2> Manual Rx </h2>
+<div style="height:20px"></div>
+
 <table>
 <!-- Manual Subjective Refraction -->
 <tr><th class="blue" colspan="4">
@@ -483,7 +494,8 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
 
 </div>
     <div id="s4" class="section">
-<h2> Summary </h2>
+<div style="height:20px"></div>
+
 
 
 
@@ -670,40 +682,20 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
     </span>
   </td>
 </tr>
-
-<tr style="border:none;">
-  <td colspan="4" style="border:none;">End of Results</td>
-</tr>
-
-<tr style="border:none;">
-  <td colspan="4" style="border:none;">
-    <button class="blue" style="margin-left:20px; border-radius:10px; height:25px; width:150px" id="toggleMask1_copy">
-      Hide/Show Manual
-    </button>
-
-    <button class="yellow" style="margin-left:20px; border-radius:10px; height:25px; width:150px" id="toggleMask2">
-      Hide/Show Vector
-    </button>
-  </td>
-</tr>
-
-
 </table>
 
 </div>
-  </main>
 
 
+<div style="margin-top:20px; display:flex; justify-content:center; gap:20px;">
+  <button class="blue" style="border-radius:10px; height:25px; width:150px" id="toggleMask1_copy">
+    Hide/Show Manual
+  </button>
 
-
-
+  <button class="yellow" style="border-radius:10px; height:25px; width:150px" id="toggleMask2">
+    Hide/Show Vector
+  </button>
 </div>
-
-
-<div style="height:20px"></div>
-
-</div>
-
 
 
 <div style="width:80%; margin-top:10px;">
@@ -716,7 +708,22 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
 </div>
 
 
-<div style="height:100px"></div>
+</div>
+
+
+
+</div>
+  </main>
+
+
+
+
+
+
+
+
+
+
 
 
 <script>
@@ -1914,12 +1921,7 @@ updateOriginalPrism();
 
 
 <script>
-// turn opacity ON immediately at page load
-document.addEventListener("DOMContentLoaded", function() {
-  document.querySelectorAll(".mask1").forEach(row => row.classList.add("hidden-row"));
-  document.querySelectorAll(".mask3").forEach(row => row.classList.add("hidden-row"));
 
-});
 
 document.getElementById("toggleMask2").addEventListener("click", function() {
   document.querySelectorAll(".mask2").forEach(row => {
@@ -1972,35 +1974,42 @@ function capturePart() {
 
   html2canvas(target).then(fullCanvas => {
 
-    // crop 0px from the top
-    const cropY = 0;
-    const w = fullCanvas.width;
-    const h = fullCanvas.height - cropY;
+    const borderSize = 20; // size of white border in pixels
+
+    const w = fullCanvas.width + borderSize * 2;
+    const h = fullCanvas.height + borderSize * 2;
 
     const cropped = document.createElement("canvas");
     cropped.width = w;
     cropped.height = h;
 
     const ctx = cropped.getContext("2d");
-    ctx.drawImage(fullCanvas, 0, cropY, w, h, 0, 0, w, h);
 
-// save JPG with customer name and current date
-const link = document.createElement("a");
-const name = document.getElementById("customerName")?.value || "Unnamed";
-const now = new Date();
-const day = String(now.getDate()).padStart(2, '0');
-const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-const month = monthNames[now.getMonth()]; // 0-indexed
-const year = now.getFullYear();
+    // fill background with white
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, w, h);
 
-const today = `${day}-${month}-${year}`; // e.g., 12-Dec-2025
-link.download = `${name}_${today}.jpg`;
-link.href = cropped.toDataURL("image/jpeg", 0.9);
-link.click();
+    // draw the captured content in the center
+    ctx.drawImage(fullCanvas, borderSize, borderSize);
 
-  });
+    // save JPG with customer name and current date
+    const link = document.createElement("a");
+    const name = document.getElementById("customerName")?.value || "Unnamed";
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    const month = monthNames[now.getMonth()];
+    const year = now.getFullYear();
+    const today = `${day}-${month}-${year}`;
+    link.download = `${name}_${today}.jpg`;
+    link.href = cropped.toDataURL("image/jpeg", 0.9);
+    link.click();
+});
+
 }
 </script>
+
+
 <script>
 (function(){
   const get = id => document.getElementById(id);
