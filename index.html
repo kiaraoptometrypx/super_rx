@@ -212,6 +212,22 @@ body, table, th, td, input, button {
   <td>Cyl : <span id="os_vcFinalC">0.00</span></td>
   <td>Ax : <span id="os_vcFinalA">-</span></td>
 </tr>
+<tr><th class="yellow" colspan="4">Please Press Update All! 
+<button style="margin-left:10px; margin-right:10px; border-radius:10px; height:25px; width:75px" class="updateAllBtn">Update All</button>
+
+Status : <select id="statusVector" style="font-size:11px; border-radius:10px; height:25px; margin-left:2px; width:75px">
+  <option value="notdone">Not Done</option>
+  <option value="done">Done</option>
+</select>
+
+
+<button style="margin-left:20px; border-radius:10px; height:25px; width:75px" class="exportBtn">
+    Save
+  </button>
+</th></tr>
+
+
+
 <tr>
 <td colspan="1">Comments:</td>
 <td colspan="3">
@@ -245,21 +261,7 @@ body, table, th, td, input, button {
   oninput="updateVectorSummary()">
 
 </td></tr>
-
-
-<tr><th class="yellow" colspan="4">Please Press Update All! 
-<button style="margin-left:10px; margin-right:10px; border-radius:10px; height:25px; width:75px" class="updateAllBtn">Update All</button>
-
-Status : <select id="statusVector" style="font-size:11px; border-radius:10px; height:25px; margin-left:2px; width:75px">
-  <option value="notdone">Not Done</option>
-  <option value="done">Done</option>
-</select>
-
-
-<button style="margin-left:20px; border-radius:10px; height:25px; width:75px" class="exportBtn">
-    Save
-  </button>
-</th>
+<tr><th class="yellow" colspan="4"></th></tr>
 
 </table>
 <table>
@@ -319,6 +321,22 @@ Manual Refraction
   <td id="os_crossC"></td>
   <td id="os_crossA"></td>
 </tr>
+<tr class="mask1">
+<th class="blue" colspan="4">Please Press Update All!
+<button style="margin-left:10px; margin-right:10px; border-radius:10px; height:25px; width:75px" class="updateAllBtn">Update All</button> 
+
+Status : <select id="statusManual" style="font-size:11px; border-radius:10px; height:25px; margin-left:2px; width:75px">
+  <option value="notdone">Not Done</option>
+  <option value="done">Done</option>
+</select>
+
+
+<button style="margin-left:20px; border-radius:10px; height:25px; width:75px" class="exportBtn">
+    Save
+  </button>
+
+</th>
+</tr>
 
 <tr class="mask1">
 <td colspan="1">Comments:</td>
@@ -354,22 +372,9 @@ Manual Refraction
 
 </td>
 </tr>
-
-
-<th class="blue" colspan="4">Please Press Update All!
-<button style="margin-left:10px; margin-right:10px; border-radius:10px; height:25px; width:75px" class="updateAllBtn">Update All</button> 
-
-Status : <select id="statusManual" style="font-size:11px; border-radius:10px; height:25px; margin-left:2px; width:75px">
-  <option value="notdone">Not Done</option>
-  <option value="done">Done</option>
-</select>
-
-
-<button style="margin-left:20px; border-radius:10px; height:25px; width:75px" class="exportBtn">
-    Save
-  </button>
-
-</th>
+<tr>
+<th colspan="4" class="blue">
+</th></tr>
 
 </table>
 
