@@ -2,19 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Ultimate Calculator</title>
+<title>Hypervision-Rx</title>
 <style>
 
 th.red, td.red {
+  background: #f5f5f5;
+  color: black;
+}
+th.yellow, td.yellow, button.yellow {
   background: #F5EFED;
   color: black;
 }
-th.yellow, td.yellow {
-  background: #FFFEF2;
-  color: black;
-}
-th.blue, td.blue {
-  background: #F2FFFA;
+th.blue, td.blue, button.blue{
+  background: #EDF0FF;
   color: black;
 }
 
@@ -93,10 +93,36 @@ body, table, th, td, input, button {
 
 </head>
 <body>
+
 <div>
-<h2 style="margin-left:3%">Superposition Refraction</h2>
+
+<h2 style="text-align:center; margin-top:20px;">Hypervision-RX</h2>
 
 <table>
+
+
+
+<tr>
+<td colspan="2" style="border-right:none;">Name : <input type="text" id="customerName" style="width:65%; height:20px"></td>
+<td colspan="2" style="border-left:none;">Whatsapp : <input type="text" id="customerWhatsapp" style="width:65%; height:20px"></td>
+
+</tr>
+<tr>
+
+<td colspan="3" style="border-right:none; vertical-align:middle;">
+  Notes :
+  <textarea id="notes" style="width:79%; border-radius:5px; border:1px solid lightgrey; height:40px; vertical-align:middle;"></textarea>
+</td>
+
+
+<td style="border-left:none" colspan="1">
+<button style="border-radius:10px; height:25px; width:100px" id="sendWhatsappBtn">Send WA</button>
+
+<br><br>
+
+<button style="border-radius:10px; height:25px; width:100px"  onclick="capturePart()">Save JPG</button>
+</td>
+</tr>
   
 <tr><th class="red" colspan="4">Current RX <button style="margin-left:20px; background-color:white; border-radius:10px; height:25px; width:150px" id="fillCurrentBtn">Fill Current with Vector</button>
 </th></tr>
@@ -270,7 +296,7 @@ Status : <select id="statusVector" style="font-size:11px; border-radius:10px; he
 <tr><th class="blue" colspan="4">
 
 Manual Refraction
-<button style="margin-left:20px; background-color:#F2FFFA; border-radius:10px; height:25px; width:150px" id="toggleMask1">Hide/Show Manual</button>
+<button class="blue" style="margin-left:20px; border-radius:10px; height:25px; width:150px" id="toggleMask1">Hide/Show Manual</button>
 
 </th></tr>
 
@@ -372,62 +398,49 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
 
 </td>
 </tr>
+
 <tr>
 <th colspan="4" class="blue">
 </th></tr>
 
+<tr class="mask1">
+<td class="blue" colspan="4">
+
+<div style="height:5px"></div>
+
+
+<div style="display: flex; align-items: center; gap: 100px;">
+  <label>
+    Gaze Angle:
+    <input type="range" id="gazeAngle" step="5" value="35" min="10" max="50" 
+           oninput="this.nextElementSibling.value = this.value" style="vertical-align: middle;">
+    <output style="vertical-align: middle;">35</output>
+  </label>
+
+  <label>
+    BVD (mm):
+    <input type="range" id="vertexDist" step="1" value="12" min="1" max="20" 
+           oninput="this.nextElementSibling.value = this.value" style="vertical-align: middle;">
+    <output style="vertical-align: middle;">14</output>
+  </label>
+</div>
+</td>
+</tr>
 </table>
-
-
-</div>
-
-<div style="height:20px"></div>
-
-
-<div>
-
-    Gaze Angle: 
-    <input type="range" id="gazeAngle" step="5" value="35" min="10" max="50" oninput="this.nextElementSibling.value = this.value">
-    <output>35</output>
-
-    <span style="display:inline-block; width:10px;"></span> <!-- gap -->
-
-    BVD (mm): 
-    <input type="range" id="vertexDist" step="1" value="12" min="1" max="20" oninput="this.nextElementSibling.value = this.value">
-    <output>14</output>
-
-
-</div>
 
 
 <div id="captureTarget">
 
 <table>
 
-<tr><th colspan="4" >Summary 
-
-</th></tr>
-<tr>
-<td colspan="2" style="border-right:none;">Name : <input type="text" id="customerName" style="width:65%; height:20px"></td>
-<td colspan="2" style="border-left:none;">Whatsapp : <input type="text" id="customerWhatsapp" style="width:65%; height:20px"></td>
-
+<tr><th colspan="4" >Summary </th></tr>
+<tr style="border:none; height:10px;">
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
 </tr>
-<tr>
 
-<td colspan="3" style="border-right:none; vertical-align:middle;">
-  Notes :
-  <textarea id="notes" style="width:79%; border-radius:5px; border:1px solid lightgrey; height:40px; vertical-align:middle;"></textarea>
-</td>
-
-
-<td style="border-left:none" colspan="1">
-<button style="border-radius:10px; height:25px; width:100px" id="sendWhatsappBtn">Send WA</button>
-
-<br><br>
-
-<button style="border-radius:10px; height:25px; width:100px"  onclick="capturePart()">Save JPG</button>
-</td>
-</tr>
 
 
 <tr>
@@ -439,50 +452,14 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
   </td>
 </tr>
 
-<tr>
-  <td class="red">Current Gaze</td>
-  <td class="red" colspan="3">
-    Horizontal : <span id="origCrossS" style="margin-right: 50px;">-</span>
-    Vertical : <span id="origCrossC" style="margin-right: 50px;">-</span>
-    Diagonal : <span id="origCrossA">-</span>
-  </td>
-</tr>
 
-<tr>
+<tr class="mask2">
   <td class="yellow">Vector Rx</td>
   <td class="yellow" colspan="3">
     R : <span id="od_vcCombined" style="margin-right: 100px;">-</span>
     L : <span id="os_vcCombined">-</span>
   </td>
 </tr>
-<tr>
-  <td class="yellow">FC DC Bal</td>
-  <td colspan="3" class="yellow">
-   BE : <span id="vd_ouSummary">-</span><br><br>
-    R : <span id="vd_odSummary" style="margin-right: 30px;">-</span>
-    L : <span id="vd_osSummary">-</span>
-  </td>
-</tr>
-<tr>
-  <td class="yellow">RX Changes</td>
-  <td colspan="3" class="yellow">
-    R: <span id="vc_odSummary" style="margin-right: 100px;">-</span>
-    L: <span id="vc_osSummary">-</span>
-  </td>
-</tr>
-
-
-<tr>
-  <td class="yellow">Gaze Changes</td>
-  <td class="yellow" colspan="3">
-    Horizontal : <span id="prismH_vc" style="margin-right: 50px;">-</span>
-    Vertical : <span id="prismV_vc" style="margin-right: 50px;">-</span>
-    Diagonal : <span id="prismD_vc">-</span>
-  </td>
-</tr>
-<tr><td class="yellow">Comments</td><td colspan="3" class="yellow"><span id="vector_comments_summary"></span>
-</td></tr>
-
 
 <tr class="mask1">
   <td class="blue">Manual Rx</td>
@@ -492,11 +469,28 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
   </td>
 </tr>
 
-<tr class="mask1">
-  <td class="blue">RX Changes</td>
-  <td colspan="3" class="blue">
-    R: <span id="od_roundCombinedDisplay" style="margin-right: 100px;">-</span>
-    L: <span id="os_roundCombinedDisplay">-</span>
+<tr style="border:none; height:10px;">
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+</tr>
+
+
+<tr>
+  <td class="red">Current Gaze</td>
+  <td class="red" colspan="3">
+    Horizontal : <span id="origCrossS" style="margin-right: 50px;">-</span>
+    Vertical : <span id="origCrossC" style="margin-right: 50px;">-</span>
+    Diagonal : <span id="origCrossA">-</span>
+  </td>
+</tr>
+<tr class="mask2">
+  <td class="yellow">Gaze Changes</td>
+  <td class="yellow" colspan="3">
+    Horizontal : <span id="prismH_vc" style="margin-right: 50px;">-</span>
+    Vertical : <span id="prismV_vc" style="margin-right: 50px;">-</span>
+    Diagonal : <span id="prismD_vc">-</span>
   </td>
 </tr>
 
@@ -508,15 +502,57 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
     Diagonal : <span id="prismD">-</span>
   </td>
 </tr>
+
+<tr style="border:none; height:10px;">
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+</tr>
+
+
+
+<tr class="mask2">
+  <td class="yellow">FC DC Bal</td>
+  <td colspan="3" class="yellow">
+   BE : <span id="vd_ouSummary">-</span><br><br>
+    R : <span id="vd_odSummary" style="margin-right: 30px;">-</span>
+    L : <span id="vd_osSummary">-</span>
+  </td>
+</tr>
+
+<tr class="mask2">
+  <td class="yellow">RX Changes</td>
+  <td colspan="3" class="yellow">
+    R: <span id="vc_odSummary" style="margin-right: 100px;">-</span>
+    L: <span id="vc_osSummary">-</span>
+  </td>
+</tr>
+
+<tr class="mask2">
+<td class="yellow">Comments</td><td colspan="3" class="yellow"><span id="vector_comments_summary"></span>
+</td></tr>
+
+<tr class="mask1">
+  <td class="blue">RX Changes</td>
+  <td colspan="3" class="blue">
+    R: <span id="od_roundCombinedDisplay" style="margin-right: 100px;">-</span>
+    L: <span id="os_roundCombinedDisplay">-</span>
+  </td>
+</tr>
+
 <tr class="mask1">
 <td class="blue">Comments</td><td colspan="3" class="blue"><span id="manual_comments_summary"></span>
 </td></tr>
 
+<tr style="border:none; height:10px;">
+</tr>
 
-<tr><td colspan="4" style="border:none"></td></tr>
-<tr class="mask2">
+
+
+<tr>
   <td class="red">Near Current </td>
-  <td class="red" colspan="3"><input style="margin-right:30px; width:55px" type="number" step="0.25" min="0" max="5" id="nearAdd" placeholder="">
+  <td style="text-align:left;" class="red" colspan="3"><input style="margin-left:10px; margin-right:30px; width:55px" type="number" step="0.25" min="0" max="5" id="nearAdd" placeholder="">
 
     R: <span id="od_nearCombined" style="margin-right: 50px;">0.00 / 0.00 x 0</span>
     L: <span id="os_nearCombined">0.00 / 0.00 x 0</span>
@@ -525,15 +561,15 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
 
 <tr class="mask2">
   <td class="yellow">Near Vector</td>
-  <td class="yellow" colspan="3"><input style="margin-right:30px; width:55px" type="number" step="0.25" min="0" max="5" id="nearAddVector" placeholder="">
+  <td style="text-align:left;" class="yellow" colspan="3"><input style="margin-left:10px; margin-right:30px; width:55px" type="number" step="0.25" min="0" max="5" id="nearAddVector" placeholder="">
     R: <span id="od_vcNearCombined" style="margin-right: 50px;">0.00 / 0.00 x 0</span>
     L: <span id="os_vcNearCombined">0.00 / 0.00 x 0</span>
   </td>
 </tr>
 
-<tr class="mask2">
+<tr class="mask1">
   <td class="blue">Near Manual</td>
-  <td class="blue" colspan="3"><input style="margin-right:30px; width:55px" type="number" step="0.25" min="0" max="5" id="nearAddFinal" placeholder="">
+  <td style="text-align:left;" class="blue" colspan="3"><input style="margin-left:10px; margin-right:30px; width:55px" type="number" step="0.25" min="0" max="5" id="nearAddFinal" placeholder="">
     R: <span id="od_finalNearCombined" style="margin-right: 50px;">0.00 / 0.00 × 0</span>
     L: <span id="os_finalNearCombined">0.00 / 0.00 × 0</span>
   </td>
@@ -541,22 +577,33 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
 
 
 
-<tr><td colspan="4"><span style="display:block;"> Gaze Adaptability  
-  <span style="color:green;">Green = Tolerable</span>,
-  <span style="color:purple;">Purple = Borderline</span>,
-  <span style="color:red;">Red = Risky</span>
-</span>
-</td></tr>
-<tr><td colspan="4">End of Results</td></tr>
+<tr style="border:none;">
+  <td colspan="4" style="border:none;">
+    <span style="display:block;">
+      Gaze Adaptability
+      <span style="color:green;">Green = Tolerable</span>,
+      <span style="color:purple;">Purple = Borderline</span>,
+      <span style="color:red;">Red = Risky</span>
+    </span>
+  </td>
+</tr>
 
+<tr style="border:none;">
+  <td colspan="4" style="border:none;">End of Results</td>
+</tr>
 
+<tr style="border:none;">
+  <td colspan="4" style="border:none;">
+    <button class="blue" style="margin-left:20px; border-radius:10px; height:25px; width:150px" id="toggleMask1_copy">
+      Hide/Show Manual
+    </button>
 
+    <button class="yellow" style="margin-left:20px; border-radius:10px; height:25px; width:150px" id="toggleMask2">
+      Hide/Show Vector
+    </button>
+  </td>
+</tr>
 
-<tr><td colspan="4">
-<button style="margin-left:20px; background-color:#F2FFFA; border-radius:10px; height:25px; width:150px" id="toggleMask1_copy">Hide/Show Manual</button>
-
-<button style="margin-left:20px; border-radius:10px; height:25px; width:150px" id="toggleMask2">Hide/Show Near Vision</button>
-</td></tr>
 
 </table>
 <div style="height:20px"></div>
@@ -596,7 +643,7 @@ function updateVectorSummary() {
   });
 
   document.getElementById("vector_comments_summary").textContent =
-    parts.length ? parts.join(". ") + "." : "";
+    parts.length ? parts.join(" ; ") + "." : "";
 }
 </script>
 <script>
@@ -667,7 +714,7 @@ document.getElementById("fillCurrentBtn").addEventListener("click", () => {
   
   // Highlight button after click
   const btn = document.getElementById("fillCurrentBtn");
-  btn.style.backgroundColor = "#FFFEF2";  // yellow
+  btn.style.backgroundColor = "#F5EFED";  // red
   btn.style.color = "black";               // text black
   btn.textContent = "Latest Vector Rx";             // change label
 });
@@ -1766,7 +1813,6 @@ updateOriginalPrism();
 // turn opacity ON immediately at page load
 document.addEventListener("DOMContentLoaded", function() {
   document.querySelectorAll(".mask1").forEach(row => row.classList.add("hidden-row"));
-  document.querySelectorAll(".mask2").forEach(row => row.classList.add("hidden-row"));
   document.querySelectorAll(".mask3").forEach(row => row.classList.add("hidden-row"));
 
 });
