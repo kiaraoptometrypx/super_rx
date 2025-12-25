@@ -6,15 +6,16 @@
 <style>
 
 th.red, td.red {
-  background: #f5f5f5;
+  background: #E0E0E0;
   color: black;
 }
+
 th.yellow, td.yellow, button.yellow {
-  background: #F5EFED;
+  background: #EBDADA;
   color: black;
 }
 th.blue, td.blue, button.blue{
-  background: #EDF0FF;
+  background: #D8E7F0;
   color: black;
 }
 
@@ -59,17 +60,22 @@ th:nth-child(4) {
   table {
     border-collapse: collapse;
     width: 100%;
-    max-width: 550px;
+    max-width: 700px;
     min-width: 450px;
     margin-top: 20px;
     text-align: center;
   }
 
-  th, td {
+  th {
     border-bottom: 1px solid #aaa;
-     border-top: 1px solid #aaa;
-
-    padding: 10px 14px;
+    border-top: 1px solid #aaa;
+    padding: 10px 15px;
+    text-align: center;
+  }
+  td {
+    border-bottom: 1px solid #aaa;
+    border-top: 1px solid #aaa;
+    padding: 10px;
     text-align: center;
   }
 
@@ -79,13 +85,16 @@ th:nth-child(4) {
   }
 
   input {
-    width: 70px;
+    width: 80px;
     text-align: center;
     padding: 4px 6px;
     border: 1px solid lightgrey;
     border-radius:6px;
   }
-button {border: 1px dotted}
+
+button {
+border: 1px dotted;
+}
 
 body, table, th, td, input, button {
   font-size: 11px;
@@ -145,6 +154,16 @@ body, table, th, td, input, button {
   margin-top: 500px;
 }
 
+.updateAllBtn {
+  cursor: pointer;
+}
+
+.updateAllBtn.updated {
+  background: #444;
+  color: #fff;
+}
+
+
 </style>
 
 </head>
@@ -157,20 +176,21 @@ body, table, th, td, input, button {
 
   <!-- Sidebar / directory -->
   <nav class="sidebar">
-<div style="height:50px"></div>
+<div style="height:30px"></div>
 
-    <a data-target="s1">Current Details</a>
+    <a data-target="s0">Current Rx</a>
     <a data-target="s2">Vector RX</a>
     <a data-target="s3">Manual RX</a>
-    <a data-target="s4">Summary & Near Vision</a>
+    <a data-target="s4">Summary</a>
   </nav>
 
-  <!-- Content wrapper (fade effect) -->
   <main id="content" class="content">
-    <div id="s1" class="section">
+
+    <div id="s0" class="section">
 <div style="height:20px"></div>
 <table>
-<tr><th colspan="4">Current Details</th></tr>
+<tr><th class="red" colspan="4">Name & Details</th></tr>
+
 <tr>
 <td colspan="2" style="border-right:none;">Name : <input type="text" id="customerName" style="width:65%; height:20px"></td>
 <td colspan="2" style="border-left:none;">Whatsapp : <input type="text" id="customerWhatsapp" style="width:65%; height:20px"></td>
@@ -187,13 +207,15 @@ body, table, th, td, input, button {
 <td style="border-left:none" colspan="1">
 <button style="border-radius:10px; height:25px; width:100px" id="sendWhatsappBtn">Send WA</button>
 
-<br><br>
-
-<button style="border-radius:10px; height:25px; width:100px"  onclick="capturePart()">Save JPG</button>
-</td>
+</td> </tr>
+<tr style="border:none; height:10px;">
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
 </tr>
-  
-<tr><th class="red" colspan="4">Current RX <button style="margin-left:20px; background-color:white; border-radius:10px; height:25px; width:150px" id="fillCurrentBtn">Fill Current with Vector</button>
+
+<tr><th class="red" colspan="4">Current RX - <i> Insert the RX that was the most recent and comfortable.</i> <br><br><button style="background-color:white; border-radius:10px; height:25px; width:150px" id="fillCurrentBtn">Fill Current with Vector</button>
 </th></tr>
 
 <!-- OD -->
@@ -210,10 +232,139 @@ body, table, th, td, input, button {
   <td>Cyl : <input type="number" step="0.25" id="os_origC"></td>
   <td>Ax : <input type="number" step="5" min="0" max="180" id="os_origA"></td>
 </tr>
+<tr>
+  <td>Add</td>
+  <td>Sph : <input type="number" step="0.25" min="0" max="5" id="nearAdd"></td>
+<td>-</td><td>-</td>
+<tr><th class="red" colspan="4">Fitting Details</th></tr>
+<tr>
+  <td>Right</td>
+  <td>PD : <input type="number" step="0.25" id="od_PD"></td>
+  <td>NOC : <input type="number" step="0.25" id="od_NOC"></td>
+  <td>-</td>
+</tr>
+<tr>
+  <td>Left</td>
+  <td>PD : <input type="number" step="0.25" id="os_PD"></td>
+  <td>NOC : <input type="number" step="0.25" id="os_NOC"></td>
+  <td>-</td>
+</tr>
+
+
+
+
+<tr><th class="red" colspan="4">Please Press Update All! 
+<button style="margin-left:10px; border-radius:10px; height:25px; width:100px" class="updateAllBtn">Update All</button>
+</th></tr>
+
+<tr>
+<td colspan="1">Comments:</td>
+<td colspan="3">
+<input type="text" id="current_comments1"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Purpose of prescription; Far? Near? Contact lens? etc"
+  oninput="updateCurrentSummary()">
+<div style="height:5px"></div>
+
+<input type="text" id="current_comments2"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Any special plan for this prescription?"
+  oninput="updateCurrentSummary()">
+<div style="height:5px"></div>
+
+<input type="text" id="current_comments3"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Leave empty if not used"
+  oninput="updateCurrentSummary()">
+<div style="height:5px"></div>
+
+<input type="text" id="current_comments4"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Leave empty if not used"
+  oninput="updateCurrentSummary()">
+<div style="height:5px"></div>
+
+
+</td></tr>
 
 
 
 </table>
+</div>
+
+
+
+    <div id="s1" class="section">
+<div style="height:20px"></div>
+
+<table>
+<!-- Rectify Rx -->
+<tr><th class="red" colspan="4">
+
+Rectify Refraction
+
+</th></tr>
+
+<tr class="mask1">
+  <td>Problem<br>Right RX</td>
+  <td>Sph : <input type="number" step="0.25" id="od_rectS"></td>
+  <td>Cyl : <input type="number" step="0.25" id="od_rectC"></td>
+  <td>Ax : <input type="number" step="5" min="0" max="180" id="od_rectA"></td>
+</tr>
+<tr class="mask1">
+  <td>Problem<br>Left RX</td>
+  <td>Sph : <input type="number" step="0.25" id="os_rectS"></td>
+  <td>Cyl : <input type="number" step="0.25" id="os_rectC"></td>
+  <td>Ax : <input type="number" step="5" min="0" max="180" id="os_rectA"></td>
+</tr>
+
+
+
+
+
+
+
+<tr class="mask1">
+
+<tr><th class="red" colspan="4">Please Press Update All! 
+<button style="margin-left:10px; border-radius:10px; height:25px; width:100px" class="updateAllBtn">Update All</button>
+</th>
+</tr>
+
+<tr class="mask1">
+<td colspan="1">Comments:</td>
+<td colspan="3">
+<input type="text" id="rectify_comments1"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Purpose of prescription; Far? Near? Contact lens? etc"
+  oninput="updateRectifySummary()">
+<div style="height:5px"></div>
+
+<input type="text" id="rectify_comments2"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Any special plan for this prescription"
+  oninput="updateRectifySummary()">
+<div style="height:5px"></div>
+
+<input type="text" id="rectify_comments3"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Leave empty if not used"
+  oninput="updateRectifySummary()">
+<div style="height:5px"></div>
+
+<input type="text" id="rectify_comments4"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Leave empty if not used"
+  oninput="updateRectifySummary()">
+<div style="height:5px"></div>
+
+</td>
+</tr>
+
+</table>
+
+
+
 </div>
 
 
@@ -229,15 +380,15 @@ body, table, th, td, input, button {
   <td>FC DC Bal BE<br><div style="margin-top:5px"><button onclick="copyVD_OU_to_ODOS()" style="border-radius:10px; width:70px; height:25px">Fill Input</button></div></td>
   <td>
      Sph : <input type="number" step="0.25" id="vd_ouS"><br>
-    <div style="margin-top:10px"><span id="vd_out_ouS">-</span></div>
+    <div style="margin-top:2px"><span style="margin-right:15px" id="vd_out_ouS">-</span></div>
   </td>
   <td>
     Cyl : <input type="number" step="0.25" id="vd_ouC"><br>
-    <div style="margin-top:10px"><span id="vd_out_ouC">-</span></div>
+    <div style="margin-top:2px"><span style="margin-right:15px" id="vd_out_ouC">-</span></div>
   </td>
   <td>
     Ax : <input type="number" step="5" min="0" max="180" id="vd_ouA"><br>
-    <div style="margin-top:10px"><span id="vd_out_ouA">-</span></div>
+    <div style="margin-top:2px"><span style="margin-right:15px" id="vd_out_ouA">-</span></div>
   </td>
 </tr>
 
@@ -245,15 +396,15 @@ body, table, th, td, input, button {
   <td>FC DC Bal R<br><div style="margin-top:5px"><button onclick="copyVD_OD()" style="border-radius:10px; width:70px; height:25px">Fill Input</button></div></td>
   <td>
      Sph : <input type="number" step="0.25" id="vd_odS"><br>
-    <div style="margin-top:10px"><span id="vd_out_odS">-</span></div>
+    <div style="margin-top:2px"><span style="margin-right:15px" id="vd_out_odS">-</span></div>
   </td>
   <td>
     Cyl : <input type="number" step="0.25" id="vd_odC"><br>
-    <div style="margin-top:10px"><span id="vd_out_odC">-</span></div>
+    <div style="margin-top:2px"><span style="margin-right:15px" id="vd_out_odC">-</span></div>
   </td>
   <td>
     Ax : <input type="number" step="5" min="0" max="180" id="vd_odA"><br>
-    <div style="margin-top:10px"><span id="vd_out_odA">-</span></div>
+    <div style="margin-top:2px"><span style="margin-right:15px" id="vd_out_odA">-</span></div>
   </td>
 </tr>
 
@@ -265,50 +416,58 @@ body, table, th, td, input, button {
   </td>
   <td>
     Sph : <input type="number" step="0.25" id="vd_osS"><br>
-    <div style="margin-top:10px"><span id="vd_out_osS">-</span></div>
+    <div style="margin-top:2px"><span style="margin-right:15px" id="vd_out_osS">-</span></div>
   </td>
   <td>
     Cyl : <input type="number" step="0.25" id="vd_osC"><br>
-    <div style="margin-top:10px"><span id="vd_out_osC">-</span></div>
+    <div style="margin-top:2px"><span style="margin-right:15px" id="vd_out_osC">-</span></div>
   </td>
   <td>
     Ax : <input type="number" step="5" min="0" max="180" id="vd_osA"><br>
-    <div style="margin-top:10px"><span id="vd_out_osA">-</span></div>
+    <div style="margin-top:2px"><span style="margin-right:15px" id="vd_out_osA">-</span></div>
   </td>
 
 </tr>
+
+
 <tr>
-  <td>V R Dx</td>
+  <td>Right FC DC</td>
   <td><input type="number" step="0.25" id="vc_odS"></td>
   <td><input type="number" step="0.25" id="vc_odC"></td>
   <td><input type="number" step="5" min="0" max="180" id="vc_odA"></td>
 </tr>
 <tr>
-  <td>V L Dx</td>
+  <td>Left FC DC</td>
   <td><input type="number" step="0.25" id="vc_osS"></td>
   <td><input type="number" step="0.25" id="vc_osC"></td>
   <td><input type="number" step="5" min="0" max="180" id="vc_osA"></td>
 </tr>
 <tr >
-  <td>V Bino Dx</td>
+  <td>Bino Imbalance</td>
   <td id="vc_crossS">-</td>
   <td id="vc_crossC">-</td>
   <td id="vc_crossA">-</td>
 </tr>
 
 <tr>
-  <td>Right</td>
+  <td>Right RX</td>
   <td>Sph : <span id="od_vcFinalS">0.00</span></td>
   <td>Cyl : <span id="od_vcFinalC">0.00</span></td>
   <td>Ax : <span id="od_vcFinalA">-</span></td>
 </tr>
 
 <tr>
-  <td>Left</td>
+  <td>Left RX</td>
   <td>Sph : <span id="os_vcFinalS">0.00</span></td>
   <td>Cyl : <span id="os_vcFinalC">0.00</span></td>
   <td>Ax : <span id="os_vcFinalA">-</span></td>
 </tr>
+<tr><td>Add</td>
+<td>Sph : <input type="number" step="0.25" min="0" max="5" id="nearAddVector"></td>
+<td>-</td><td>-</td>
+</tr>
+
+
 <tr><th class="yellow" colspan="4">Please Press Update All! 
 <button style="margin-left:10px; border-radius:10px; height:25px; width:100px" class="updateAllBtn">Update All</button>
 <br><br>
@@ -322,6 +481,7 @@ Status : <select id="statusVector" style="font-size:11px; border-radius:10px; he
     Save
   </button>
 </th></tr>
+
 
 
 
@@ -352,19 +512,10 @@ Status : <select id="statusVector" style="font-size:11px; border-radius:10px; he
   oninput="updateVectorSummary()">
 <div style="height:5px"></div>
 
-<input type="text" id="vector_comments5"
-  style="text-align:left; width:95%; height:20px"
-  placeholder="Leave empty if not used"
-  oninput="updateVectorSummary()">
 
 </td></tr>
-<tr><th class="yellow" colspan="4"></th></tr>
 
 </table>
-
-
-
-
 </div>
 
 
@@ -381,38 +532,40 @@ Manual Refraction
 </th></tr>
 
 <tr class="mask1">
-  <td>M R Dx</td>
+  <td>Right RX</td>
+  <td>Sph : <input type="number" step="0.25" id="od_finalS"></td>
+  <td>Cyl : <input type="number" step="0.25" id="od_finalC"></td>
+  <td>Ax : <input type="number" step="5" min="0" max="180" id="od_finalA"></td>
+</tr>
+<tr class="mask1">
+  <td>Left RX</td>
+  <td>Sph : <input type="number" step="0.25" id="os_finalS"></td>
+  <td>Cyl : <input type="number" step="0.25" id="os_finalC"></td>
+  <td>Ax : <input type="number" step="5" min="0" max="180" id="os_finalA"></td>
+</tr>
+<tr><td>Add</td>
+<td>Sph : <input type="number" step="0.25" min="0" max="5" id="nearAddFinal"></td>
+<td>-</td><td>-</td>
+</tr>
+
+<tr class="mask1">
+  <td>Right FC DC</td>
   <td id="od_roundS"></td>
   <td id="od_roundC"></td>
   <td id="od_roundA"></td>
 </tr>
 
 <tr class="mask1">
-  <td>M L Dx</td>
+  <td>Left FC DC</td>
   <td id="os_roundS"></td>
   <td id="os_roundC"></td>
   <td id="os_roundA"></td>
 </tr>
 <tr class="mask1">
-  <td>M Bino Dx</td>
+  <td>Bino Imbalance</td>
   <td id="diffCrossS"></td>
   <td id="diffCrossC"></td>
   <td id="diffCrossA"></td>
-</tr>
-
-
-
-<tr class="mask1">
-  <td>Right</td>
-  <td>Sph : <input type="number" step="0.25" id="od_finalS"></td>
-  <td>Cyl : <input type="number" step="0.25" id="od_finalC"></td>
-  <td>Ax : <input type="number" step="5" min="0" max="180" id="od_finalA"></td>
-</tr>
-<tr class="mask1">
-  <td>Left</td>
-  <td>Sph : <input type="number" step="0.25" id="os_finalS"></td>
-  <td>Cyl : <input type="number" step="0.25" id="os_finalC"></td>
-  <td>Ax : <input type="number" step="5" min="0" max="180" id="os_finalA"></td>
 </tr>
 
 <tr style="display:none" class="mask1">
@@ -427,22 +580,44 @@ Manual Refraction
   <td id="os_crossC"></td>
   <td id="os_crossA"></td>
 </tr>
-<tr class="mask1">
-<th class="blue" colspan="4">Please Press Update All!
-<button style="margin-left:10px; margin-right:10px; border-radius:10px; height:25px; width:75px" class="updateAllBtn">Update All</button> 
-<br><br>
 
-Status : <select id="statusManual" style="font-size:11px; border-radius:10px; height:25px; margin-left:2px; width:75px">
-  <option value="notdone">Not Done</option>
-  <option value="done">Done</option>
+
+
+<tr><th class="blue" colspan="4">Please Press Update All! 
+<button style="margin-left:10px; border-radius:10px; height:25px; width:100px" class="updateAllBtn">Update All</button>
+<br><br>
+Status : <select id="statusManual" style="font-size:11px; border-radius:10px; height:25px; margin-left:2px; width:120px">
+  <option value="notdone">Not Done - Invalid </option>
+  <option value="done">Done - Valid</option>
 </select>
 
 
-<button style="margin-left:10px; border-radius:10px; height:25px; width:75px" class="exportBtn">
+<button style="margin-left:10px; border-radius:10px; height:25px; width:65px" class="exportBtn">
     Save
   </button>
 
 </th>
+</tr>
+<tr style="border:none; height:10px;">
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+</tr>
+<tr><th colspan="4"> Rebalance </th></tr>
+
+<tr class="mask1">
+  <td>Right Dominant</td>
+  <td id="od_roundS"></td>
+  <td id="od_roundC"></td>
+  <td id="od_roundA"></td>
+</tr>
+
+<tr class="mask1">
+  <td>Left Dominant</td>
+  <td id="os_roundS"></td>
+  <td id="os_roundC"></td>
+  <td id="os_roundA"></td>
 </tr>
 
 <tr class="mask1">
@@ -472,17 +647,9 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
   oninput="updateManualSummary()">
 <div style="height:5px"></div>
 
-<input type="text" id="manual_comments5"
-  style="text-align:left; width:95%; height:20px"
-  placeholder="Leave empty if not used"
-  oninput="updateManualSummary()">
-
 </td>
 </tr>
 
-<tr>
-<th colspan="4" class="blue">
-</th></tr>
 </table>
 
 
@@ -490,34 +657,6 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
 </div>
     <div id="s4" class="section">
 <div style="height:20px"></div>
-
-
-
-
-
-
-
-
-
-<div style="height:5px"></div>
-
-
-<div style="display: flex; align-items: center; gap: 100px;">
-  <label>
-    Gaze Angle:
-    <input type="range" id="gazeAngle" step="5" value="35" min="10" max="50" 
-           oninput="this.nextElementSibling.value = this.value" style="vertical-align: middle;">
-    <output style="vertical-align: middle;">35</output>
-  </label>
-
-  <label>
-    BVD (mm):
-    <input type="range" id="vertexDist" step="1" value="12" min="1" max="20" 
-           oninput="this.nextElementSibling.value = this.value" style="vertical-align: middle;">
-    <output style="vertical-align: middle;">14</output>
-  </label>
-</div>
-
 
 <div id="captureTarget">
 
@@ -533,6 +672,7 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
 
 
 
+<tr><th colspan="4">Far & Near Rx</th></tr>
 <tr>
   <td class="red">Current Rx</td>
   <td colspan="3" class="red">
@@ -566,30 +706,31 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
   <td style="border:none; height:1px; padding:0;"></td>
 </tr>
 
-
 <tr>
-  <td class="red">Current Gaze</td>
-  <td class="red" colspan="3">
-    Horizontal : <span id="origCrossS" style="margin-right: 50px;">-</span>
-    Vertical : <span id="origCrossC" style="margin-right: 50px;">-</span>
-    Diagonal : <span id="origCrossA">-</span>
+  <td class="red">Near Current </td>
+  <td style="text-align:left" class="red" colspan="3">
+  Add : <span id="mirrorNearAdd" style="margin-right: 40px"></span>
+    R: <span id="od_nearCombined" style="margin-right: 50px;">0.00 / 0.00 x 0</span>
+    L: <span id="os_nearCombined">0.00 / 0.00 x 0</span>
   </td>
 </tr>
+
 <tr class="mask2">
-  <td class="yellow">Gaze Changes</td>
-  <td class="yellow" colspan="3">
-    Horizontal : <span id="prismH_vc" style="margin-right: 50px;">-</span>
-    Vertical : <span id="prismV_vc" style="margin-right: 50px;">-</span>
-    Diagonal : <span id="prismD_vc">-</span>
+  <td class="yellow">Near Vector</td>
+  <td style="text-align:left" class="yellow" colspan="3">
+  Add : <span id="mirrorNearAddVector" style="margin-right: 40px"></span>
+    R: <span id="od_vcNearCombined" style="margin-right: 50px;">0.00 / 0.00 x 0</span>
+    L: <span id="os_vcNearCombined">0.00 / 0.00 x 0</span>
   </td>
 </tr>
 
 <tr class="mask1">
-  <td class="blue">Gaze Changes</td>
-  <td class="blue" colspan="3">
-    Horizontal : <span id="prismH" style="margin-right: 50px;">-</span>
-    Vertical : <span id="prismV" style="margin-right: 50px;">-</span>
-    Diagonal : <span id="prismD">-</span>
+  <td class="blue">Near Manual</td>
+  <td style="text-align:left" class="blue" colspan="3">
+  Add : <span id="mirrorNearAddFinal" style="margin-right: 40px"></span>
+
+    R: <span id="od_finalNearCombined" style="margin-right: 50px;">0.00 / 0.00 × 0</span>
+    L: <span id="os_finalNearCombined">0.00 / 0.00 × 0</span>
   </td>
 </tr>
 
@@ -600,7 +741,26 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
   <td style="border:none; height:1px; padding:0;"></td>
 </tr>
 
+<tr class="mask2">
+<td class="red">Current</td><td colspan="3" class="red"><span id="current_comments_summary"></span>
+</td></tr>
 
+<tr class="mask2">
+<td class="yellow">Vector</td><td colspan="3" class="yellow"><span id="vector_comments_summary"></span>
+</td></tr>
+
+<tr class="mask1">
+<td class="blue">Manual</td><td colspan="3" class="blue"><span id="manual_comments_summary"></span>
+</td></tr>
+
+<tr style="border:none; height:10px;">
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+</tr>
+
+<tr><th colspan="4">RX Change, Gaze, Dizziness, Bino Imbalance Analysis</th></tr>
 
 <tr class="mask2">
   <td class="yellow">FC DC Bal</td>
@@ -612,56 +772,51 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
 </tr>
 
 <tr class="mask2">
-  <td class="yellow">RX Changes</td>
+  <td class="yellow">Vector Change</td>
   <td colspan="3" class="yellow">
     R: <span id="vc_odSummary" style="margin-right: 100px;">-</span>
     L: <span id="vc_osSummary">-</span>
   </td>
 </tr>
 
-<tr class="mask2">
-<td class="yellow">Comments</td><td colspan="3" class="yellow"><span id="vector_comments_summary"></span>
-</td></tr>
-
 <tr class="mask1">
-  <td class="blue">RX Changes</td>
+  <td class="blue">Manual Change</td>
   <td colspan="3" class="blue">
     R: <span id="od_roundCombinedDisplay" style="margin-right: 100px;">-</span>
     L: <span id="os_roundCombinedDisplay">-</span>
   </td>
 </tr>
 
-<tr class="mask1">
-<td class="blue">Comments</td><td colspan="3" class="blue"><span id="manual_comments_summary"></span>
-</td></tr>
-
 <tr style="border:none; height:10px;">
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
 </tr>
-
-
 
 <tr>
-  <td class="red">Near Current </td>
-  <td style="text-align:left;" class="red" colspan="3"><input style="margin-left:10px; margin-right:30px; width:55px" type="number" step="0.25" min="0" max="5" id="nearAdd" placeholder="">
-
-    R: <span id="od_nearCombined" style="margin-right: 50px;">0.00 / 0.00 x 0</span>
-    L: <span id="os_nearCombined">0.00 / 0.00 x 0</span>
+  <td class="red">Current Gaze</td>
+  <td class="red" colspan="3">
+    Horizontal : <span id="origCrossS" style="margin-right: 50px;">-</span>
+    Vertical : <span id="origCrossC" style="margin-right: 50px;">-</span>
+    Diagonal : <span id="origCrossA">-</span>
   </td>
 </tr>
-
 <tr class="mask2">
-  <td class="yellow">Near Vector</td>
-  <td style="text-align:left;" class="yellow" colspan="3"><input style="margin-left:10px; margin-right:30px; width:55px" type="number" step="0.25" min="0" max="5" id="nearAddVector" placeholder="">
-    R: <span id="od_vcNearCombined" style="margin-right: 50px;">0.00 / 0.00 x 0</span>
-    L: <span id="os_vcNearCombined">0.00 / 0.00 x 0</span>
+  <td class="yellow">Vector Gaze</td>
+  <td class="yellow" colspan="3">
+    Horizontal : <span id="prismH_vc" style="margin-right: 50px;">-</span>
+    Vertical : <span id="prismV_vc" style="margin-right: 50px;">-</span>
+    Diagonal : <span id="prismD_vc">-</span>
   </td>
 </tr>
 
 <tr class="mask1">
-  <td class="blue">Near Manual</td>
-  <td style="text-align:left;" class="blue" colspan="3"><input style="margin-left:10px; margin-right:30px; width:55px" type="number" step="0.25" min="0" max="5" id="nearAddFinal" placeholder="">
-    R: <span id="od_finalNearCombined" style="margin-right: 50px;">0.00 / 0.00 × 0</span>
-    L: <span id="os_finalNearCombined">0.00 / 0.00 × 0</span>
+  <td class="blue">Manual Gaze</td>
+  <td class="blue" colspan="3">
+    Horizontal : <span id="prismH" style="margin-right: 50px;">-</span>
+    Vertical : <span id="prismV" style="margin-right: 50px;">-</span>
+    Diagonal : <span id="prismD">-</span>
   </td>
 </tr>
 
@@ -682,15 +837,43 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
 </div>
 
 
-<div style="margin-top:20px; display:flex; justify-content:center; gap:20px;">
-  <button class="blue" style="border-radius:10px; height:25px; width:150px" id="toggleMask1_copy">
+<div style="margin-top:20px; display:flex; justify-content:center; gap:7px;">
+  <button class="blue" style="border-radius:10px; height:25px; width:130px" id="toggleMask1_copy">
     Hide/Show Manual
   </button>
 
-  <button class="yellow" style="border-radius:10px; height:25px; width:150px" id="toggleMask2">
+  <button class="yellow" style="border-radius:10px; height:25px; width:130px" id="toggleMask2">
     Hide/Show Vector
   </button>
 </div>
+
+<div style="margin-top:5px; display:flex; justify-content:center; gap:7px;">
+
+<button style="border-radius:10px; height:25px; width:85px" class="updateAllBtn">Update All</button>
+<button style="border-radius:10px; height:25px; width:85px"  onclick="capturePart()">Save JPG</button>
+<button style="border-radius:10px; height:25px; width:85px" class="exportBtn">
+    Save Data
+  </button>
+
+
+</div>
+
+<div style="margin-top:20px; display:flex; justify-content:center; gap:20px;">
+  <label>
+    Gaze Angle:
+    <input type="range" id="gazeAngle" step="5" value="35" min="10" max="50" 
+           oninput="this.nextElementSibling.value = this.value" style="vertical-align: middle; width:50px">
+    <output style="vertical-align: middle;">35</output>
+  </label>
+
+  <label>
+    BVD (mm):
+    <input type="range" id="vertexDist" step="1" value="12" min="1" max="20" 
+           oninput="this.nextElementSibling.value = this.value" style="vertical-align: middle; width:50px">
+    <output style="vertical-align: middle;">14</output>
+  </label>
+</div>
+
 
 
 <div style="width:80%; margin-top:10px;">
@@ -719,6 +902,31 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
 
 
 
+
+
+
+
+<script>
+function updateCurrentSummary() {
+  const fields = [
+    { id: "current_comments1", label: "" },
+    { id: "current_comments2", label: "" },
+    { id: "current_comments3", label: "" },
+    { id: "current_comments4", label: "" },
+    { id: "current_comments5", label: "" }
+  ];
+
+  const parts = [];
+
+  fields.forEach(f => {
+    const v = document.getElementById(f.id)?.value.trim();
+    if (v) parts.push(v);
+  });
+
+  document.getElementById("current_comments_summary").textContent =
+    parts.length ? parts.join(". ") + "." : "";
+}
+</script>
 
 
 <script>
@@ -859,7 +1067,6 @@ function exportInputs() {
 Vector : ${document.getElementById("vector_comments_summary")?.textContent || "-" }
 Manual : ${document.getElementById("manual_comments_summary")?.textContent || "-" }
 
-
 --------------------------
 
 CURRENT:
@@ -867,7 +1074,6 @@ CURRENT:
 
 Gaze Imbalance:     Horizontal: ${document.getElementById("origCrossS")?.textContent || "-"}     //     Vertical: ${document.getElementById("origCrossC")?.textContent || "-"}     //     Diagonal: ${document.getElementById("origCrossA")?.textContent || "-"}  
 ADD:     ${document.getElementById("nearAdd")?.value || "0.00"} 
-
 
 --------------------------
 
@@ -880,7 +1086,6 @@ FC DC Bal Both Eye:     ${document.getElementById("vd_ouSummary")?.textContent |
 FC DC BAL R/L:     ${document.getElementById("vd_odSummary")?.textContent || "-"}     //     ${document.getElementById("vd_osSummary")?.textContent || "-"}  
 RX Changes R/L:          ${document.getElementById("vc_odSummary")?.textContent || "-"}     //     ${document.getElementById("vc_osSummary")?.textContent || "-"}
 
-
 --------------------------
 
 MANUAL (${document.getElementById("statusManual")?.options[document.getElementById("statusManual").selectedIndex]?.text || "-"}):
@@ -888,8 +1093,10 @@ MANUAL (${document.getElementById("statusManual")?.options[document.getElementBy
 
 Gaze Imbalance:     Horizontal: ${document.getElementById("prismH")?.textContent || "-"}     //     Vertical: ${document.getElementById("prismV")?.textContent || "-"}     //     Diagonal: ${document.getElementById("prismD")?.textContent || "-"}  
 ADD:     ${document.getElementById("nearAddFinal")?.value || "0.00"}
-RX Changes R/L:     R: ${document.getElementById("od_roundCombinedDisplay")?.textContent || "-"}     //     ${document.getElementById("os_roundCombinedDisplay")?.textContent || "-"}  
+RX Changes R/L:     R: ${document.getElementById("od_roundCombinedDisplay")?.textContent || "-"}     //     ${document.getElementById("os_roundCombinedDisplay")?.textContent || "-"}
 
+--------------------------
+To use this data, copy everything from the top of the body and paste into any inputs in the website.
 
 `;
 
@@ -964,7 +1171,22 @@ document.addEventListener("paste", e => {
   });
 });
 </script>
+<script>
+  const fields = [
+    { input: 'nearAdd', span: 'mirrorNearAdd' },
+    { input: 'nearAddVector', span: 'mirrorNearAddVector' },
+    { input: 'nearAddFinal', span: 'mirrorNearAddFinal' }
+  ];
 
+  fields.forEach(f => {
+    const inputEl = document.getElementById(f.input);
+    const spanEl = document.getElementById(f.span);
+
+    inputEl.addEventListener('input', () => {
+      spanEl.innerText = inputEl.value;
+    });
+  });
+</script>
 
 
 
@@ -1272,6 +1494,7 @@ else el.style.color = "red";
 }
 
 
+
 /* ===== Main update function (integrated, robust) ===== */
 function updateCrossedLens(){
   // read inputs (safe fallback 0)
@@ -1288,15 +1511,15 @@ function updateCrossedLens(){
 
   // safe element writes (only if elements exist)
   const setIf = (id, val)=> { const el = document.getElementById(id); if(el) el.textContent = val; };
-  setIf('od_crossS', odCross.S);
-  setIf('od_crossC', odCross.C);
+  setIf('od_crossS', roundQuarter(odCross.S));
+  setIf('od_crossC', roundQuarter(odCross.C));
 setIf('od_crossA', fmtAxis(odCross.A));
   setIf('od_roundS', roundQuarter(odPlus.S));
   setIf('od_roundC', roundQuarter(odPlus.C));
 setIf('od_roundA', fmtAxis(odPlus.A));
 
-  setIf('os_crossS', osCross.S);
-  setIf('os_crossC', osCross.C);
+setIf('os_crossS', roundQuarter(osCross.S));
+  setIf('os_crossC', roundQuarter(osCross.C));
 setIf('os_crossA', fmtAxis(osCross.A));
   setIf('os_roundS', roundQuarter(osPlus.S));
   setIf('os_roundC', roundQuarter(osPlus.C));
@@ -1421,12 +1644,17 @@ window.addEventListener("DOMContentLoaded", ()=>{
     i.addEventListener('input', updateCrossedLens);
     // keep sphere/cyl input coloring (existing behavior)
     const id = i.id;
-    const colorInputs = [
+ const colorInputs = [
   'od_origS', 'od_origC', 'os_origS', 'os_origC',
   'od_finalS', 'od_finalC', 'os_finalS', 'os_finalC',
   'vc_odS', 'vc_odC', 'vc_osS', 'vc_osC', 'vc_ouS', 'vc_ouC',
   'vd_odS', 'vd_odC', 'vd_osS', 'vd_osC', 'vd_ouS', 'vd_ouC',
-  'vd_out_odS', 'vd_out_odC', 'vd_out_osS', 'vd_out_osC', 'vd_out_ouS', 'vd_out_ouC']
+  'vd_out_odS', 'vd_out_odC', 'vd_out_osS', 'vd_out_osC', 'vd_out_ouS', 'vd_out_ouC',
+  // new Problem inputs
+  'od_rectS', 'od_rectC',  
+  'os_rectS', 'os_rectC',
+];
+
 
 ;
 
@@ -2137,10 +2365,60 @@ document.querySelectorAll(".sidebar a").forEach(link => {
     setTimeout(() => {
       target.scrollIntoView({ behavior: "auto" });
       content.classList.remove("fade-out");
-    }, 350);
+    }, 0);
   });
 });
 </script>
+
+
+<script>
+const updateBtns = document.querySelectorAll('.updateAllBtn');
+const numberInputs = document.querySelectorAll('input[type="number"]');
+
+updateBtns.forEach(btn => btn.dataset.original = btn.innerText);
+
+let ignoreInput = false;
+
+document.addEventListener('input', () => {
+  if (ignoreInput) return;
+  updateBtns.forEach(b => {
+    b.classList.remove('updated');
+    b.innerText = b.dataset.original;
+  });
+});
+
+updateBtns.forEach(btn => {
+  btn.onclick = function () {
+    ignoreInput = true;
+
+    numberInputs.forEach(input => {
+      if (input.value.trim() === '') input.value = '0.00';
+    });
+
+    ignoreInput = false;
+
+    updateBtns.forEach(b => {
+      b.classList.add('updated');
+      b.innerText = 'All Updated';
+    });
+
+    // Trigger the click handler a second time immediately
+    btn.click();
+  };
+});
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
 
 
 
