@@ -294,80 +294,6 @@ body, table, th, td, input, button {
 
 
 
-    <div id="s1" class="section">
-<div style="height:20px"></div>
-
-<table>
-<!-- Rectify Rx -->
-<tr><th class="red" colspan="4">
-
-Rectify Refraction
-
-</th></tr>
-
-<tr class="mask1">
-  <td>Problem<br>Right RX</td>
-  <td>Sph : <input type="number" step="0.25" id="od_rectS"></td>
-  <td>Cyl : <input type="number" step="0.25" id="od_rectC"></td>
-  <td>Ax : <input type="number" step="5" min="0" max="180" id="od_rectA"></td>
-</tr>
-<tr class="mask1">
-  <td>Problem<br>Left RX</td>
-  <td>Sph : <input type="number" step="0.25" id="os_rectS"></td>
-  <td>Cyl : <input type="number" step="0.25" id="os_rectC"></td>
-  <td>Ax : <input type="number" step="5" min="0" max="180" id="os_rectA"></td>
-</tr>
-
-
-
-
-
-
-
-<tr class="mask1">
-
-<tr><th class="red" colspan="4">Please Press Update All! 
-<button style="margin-left:10px; border-radius:10px; height:25px; width:100px" class="updateAllBtn">Update All</button>
-</th>
-</tr>
-
-<tr class="mask1">
-<td colspan="1">Comments:</td>
-<td colspan="3">
-<input type="text" id="rectify_comments1"
-  style="text-align:left; width:95%; height:20px"
-  placeholder="Purpose of prescription; Far? Near? Contact lens? etc"
-  oninput="updateRectifySummary()">
-<div style="height:5px"></div>
-
-<input type="text" id="rectify_comments2"
-  style="text-align:left; width:95%; height:20px"
-  placeholder="Any special plan for this prescription"
-  oninput="updateRectifySummary()">
-<div style="height:5px"></div>
-
-<input type="text" id="rectify_comments3"
-  style="text-align:left; width:95%; height:20px"
-  placeholder="Leave empty if not used"
-  oninput="updateRectifySummary()">
-<div style="height:5px"></div>
-
-<input type="text" id="rectify_comments4"
-  style="text-align:left; width:95%; height:20px"
-  placeholder="Leave empty if not used"
-  oninput="updateRectifySummary()">
-<div style="height:5px"></div>
-
-</td>
-</tr>
-
-</table>
-
-
-
-</div>
-
-
     <div id="s2" class="section">
 <div style="height:20px"></div>
 
@@ -448,20 +374,30 @@ Rectify Refraction
   <td id="vc_crossC">-</td>
   <td id="vc_crossA">-</td>
 </tr>
-
-<tr>
-  <td>Right RX</td>
-  <td>Sph : <span id="od_vcFinalS">0.00</span></td>
-  <td>Cyl : <span id="od_vcFinalC">0.00</span></td>
-  <td>Ax : <span id="od_vcFinalA">-</span></td>
+<tr style="border:none; height:10px;">
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
 </tr>
 
 <tr>
-  <td>Left RX</td>
-  <td>Sph : <span id="os_vcFinalS">0.00</span></td>
-  <td>Cyl : <span id="os_vcFinalC">0.00</span></td>
-  <td>Ax : <span id="os_vcFinalA">-</span></td>
+<td>Current RX</td>
+<td colspan="3">
+R: <span class="od_summary" style="margin-right: 80px;">+0.00 / +0.00 × 0</span>
+L: <span class="os_summary">+0.00 / +0.00 × 0</span>
+</td>
 </tr>
+<tr style="display:">
+  <td>Vector RX</td>
+  <td colspan="3">
+R: <span id="od_vcFinalS">0.00</span> / <span id="od_vcFinalC">0.00</span> x <span id="od_vcFinalA">-</span><span style="margin-left:80px"></span>
+L: <span id="os_vcFinalS">0.00</span> / <span id="os_vcFinalC">0.00</span> x <span id="os_vcFinalA">-</span>
+
+</td>
+</tr>
+
+
 <tr><td>Add</td>
 <td>Sph : <input type="number" step="0.25" min="0" max="5" id="nearAddVector"></td>
 <td>-</td><td>-</td>
@@ -604,20 +540,30 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
   <td style="border:none; height:1px; padding:0;"></td>
   <td style="border:none; height:1px; padding:0;"></td>
 </tr>
-<tr><th colspan="4"> Rebalance </th></tr>
+<tr><th colspan="4"> Vectorized Corrected </th></tr>
+<tr class="mask1">
+<td>Current Rx</td>
+<td colspan="3">
+R: <span class="od_summary" style="margin-right: 80px;">+0.00 / +0.00 × 0</span>
+L: <span class="os_summary">+0.00 / +0.00 × 0</span>
+</td>
 
 <tr class="mask1">
   <td>Right Dominant</td>
-  <td id="od_roundS"></td>
-  <td id="od_roundC"></td>
-  <td id="od_roundA"></td>
+  <td colspan="3">
+R: <span id="od_vectorDisplay" style="margin-right: 80px;">- / - × -</span>
+L: <span id="OScrossedSpan">- / - × -</span>
+
+</td>
 </tr>
 
 <tr class="mask1">
   <td>Left Dominant</td>
-  <td id="os_roundS"></td>
-  <td id="os_roundC"></td>
-  <td id="os_roundA"></td>
+  <td colspan="3">
+R: <span id="ODcrossedSpan" style="margin-right: 80px;">- / - × -</span>
+L: <span id="os_vectorDisplay">- / - × -</span>
+
+</td>
 </tr>
 
 <tr class="mask1">
@@ -895,9 +841,99 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
 
 
 
+<script>
+(function () {
+  const deg2rad = d => d * Math.PI / 180;
+  const rad2deg = r => r * 180 / Math.PI;
+  const normAxis = a => { a = Math.round(a)%180; if(a<0)a+=180; return a; };
+  const roundQuarter = v => Math.round(v*4)/4;
+  const fmt = v => (Number.isFinite(v) ? (v>=0? "+" : "") + v.toFixed(2) : "-");
 
+  function safeReadNumber(id){
+    const el=document.getElementById(id);
+    if(!el) return NaN;
+    let raw = ('value' in el ? el.value : el.textContent ?? "").toString().trim();
+    const n=parseFloat(raw);
+    return Number.isFinite(n)? roundQuarter(n) : NaN;
+  }
 
+  function combinePair(leftIds,rightIds){
+    const sL = safeReadNumber(leftIds.s) || 0;
+    const cL = safeReadNumber(leftIds.c) || 0;
+    const aL = safeReadNumber(leftIds.a) || 0;
 
+    const sR = safeReadNumber(rightIds.s) || 0;
+    const cR = safeReadNumber(rightIds.c) || 0;
+    const aR = safeReadNumber(rightIds.a) || 0;
+
+    const M_total = (sL + 0.5*cL) + (sR + 0.5*cR);
+
+    const J0_new = -0.5*cL*Math.cos(2*deg2rad(aL)) + -0.5*cR*Math.cos(2*deg2rad(aR));
+    const J45_new= -0.5*cL*Math.sin(2*deg2rad(aL)) + -0.5*cR*Math.sin(2*deg2rad(aR));
+
+    const mag = Math.hypot(J0_new,J45_new);
+    const C_new = -2*mag;
+    const axisDefined = mag>1e-8;
+    const A_new = axisDefined ? normAxis(rad2deg(0.5*Math.atan2(J45_new,J0_new))) : "-";
+
+    const S_new = M_total - 0.5*C_new;
+
+    return {S_new,C_new,A_new};
+  }
+
+  function crossPrescriptionsToOScrossedSpan(){
+    const res = combinePair({s:"os_origS",c:"os_origC",a:"os_origA"},{s:"od_roundS",c:"od_roundC",a:"od_roundA"});
+    const span = document.getElementById("OScrossedSpan");
+    if(!span) return;
+    span.textContent = `${fmt(res.S_new)} / ${fmt(res.C_new)} × ${res.A_new}`;
+  }
+
+  function crossPrescriptions2(){
+    const res = combinePair({s:"od_origS",c:"od_origC",a:"od_origA"},{s:"os_roundS",c:"os_roundC",a:"os_roundA"});
+    const span = document.getElementById("ODcrossedSpan");
+    if(!span) return;
+    span.textContent = `${fmt(res.S_new)} / ${fmt(res.C_new)} × ${res.A_new}`;
+  }
+
+  ["os_origS","os_origC","os_origA"].forEach(id=>{
+    const el=document.getElementById(id); if(!el) return;
+    el.addEventListener("input",crossPrescriptionsToOScrossedSpan);
+    el.addEventListener("change",crossPrescriptionsToOScrossedSpan);
+  });
+  ["od_roundS","od_roundC","od_roundA"].forEach(id=>{
+    const el=document.getElementById(id); if(!el) return;
+    new MutationObserver(crossPrescriptionsToOScrossedSpan).observe(el,{childList:true,characterData:true,subtree:true});
+  });
+
+  ["od_origS","od_origC","od_origA"].forEach(id=>{
+    const el=document.getElementById(id); if(!el) return;
+    el.addEventListener("input",crossPrescriptions2);
+    el.addEventListener("change",crossPrescriptions2);
+  });
+  ["os_roundS","os_roundC","os_roundA"].forEach(id=>{
+    const el=document.getElementById(id); if(!el) return;
+    new MutationObserver(crossPrescriptions2).observe(el,{childList:true,characterData:true,subtree:true});
+  });
+
+  let fallbackCount1=0;
+  const fallbackInterval1=setInterval(()=>{
+    crossPrescriptionsToOScrossedSpan();
+    fallbackCount1++; if(fallbackCount1>8) clearInterval(fallbackInterval1);
+  },150);
+
+  let fallbackCount2=0;
+  const fallbackInterval2=setInterval(()=>{
+    crossPrescriptions2();
+    fallbackCount2++; if(fallbackCount2>8) clearInterval(fallbackInterval2);
+  },150);
+
+  crossPrescriptionsToOScrossedSpan();
+  crossPrescriptions2();
+
+  window.crossPrescriptionsToOScrossedSpan=crossPrescriptionsToOScrossedSpan;
+  window.crossPrescriptions2=crossPrescriptions2;
+})();
+</script>
 
 
 
@@ -1190,10 +1226,68 @@ document.addEventListener("paste", e => {
 
 
 
+<script>
+
+function updateVectorized() {
+  ["od","os"].forEach(eye => {
+    const sEl = document.getElementById(eye + "_finalS");
+    const cEl = document.getElementById(eye + "_finalC");
+    const aEl = document.getElementById(eye + "_finalA");
+
+    if (!sEl || !cEl || !aEl) return;
+
+    // Round to nearest 0.25
+    const roundQuarter = v => Math.round(v * 4) / 4;
+
+    // Format with + / - sign
+    const formatPower = v => (v >= 0 ? "+" : "") + roundQuarter(v).toFixed(2);
+
+    const S = formatPower(parseFloat(sEl.value) || 0);
+    const C = formatPower(parseFloat(cEl.value) || 0);
+    const A = parseInt(aEl.value) || 0;
+
+    document.getElementById(eye + "_vectorDisplay").textContent = `${S} / ${C} × ${A}`;
+  });
+}
+
+["od_finalS","od_finalC","od_finalA","os_finalS","os_finalC","os_finalA"].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener("input", updateVectorized);
+  el.addEventListener("change", updateVectorized);
+});
+
+updateVectorized();
 
 
+</script>
 
+<script>
+function updateSummaries() {
+  ["od","os"].forEach(eye => {
+    const s = parseFloat(document.getElementById(eye + "_origS").value) || 0;
+    const c = parseFloat(document.getElementById(eye + "_origC").value) || 0;
+    const a = parseInt(document.getElementById(eye + "_origA").value) || 0;
 
+    const roundQuarter = v => Math.round(v*4)/4;
+    const formatPower = v => (v>=0?"+":"") + roundQuarter(v).toFixed(2);
+    const text = `${formatPower(s)} / ${formatPower(c)} × ${a}`;
+
+    // Update all spans with the corresponding class
+    document.querySelectorAll(`.${eye}_summary`).forEach(el => el.textContent = text);
+  });
+}
+
+// Hook inputs to update summaries automatically
+["od_origS","od_origC","od_origA","os_origS","os_origC","os_origA"].forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener("input", updateSummaries);
+  el.addEventListener("change", updateSummaries);
+});
+
+// Initial update
+updateSummaries();
+</script>
 
 
 
@@ -2409,6 +2503,13 @@ updateBtns.forEach(btn => {
 
 
 </script>
+
+
+
+
+
+
+
 
 
 
