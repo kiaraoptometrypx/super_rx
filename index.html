@@ -165,39 +165,35 @@ body, table, th, td, input, button {
 
 #topBlock {
   position: fixed;
-  top: -25px;
+  top: 0;
   left: 0;
   width: 100%;
-  height: 70px;              /* adjust as needed */
+  height: 70px;
   background: #6f2218;
   color: white;
-  font-size:30px;
-  z-index: 9999;
   display: flex;
   align-items: center;
-  justify-content: center;
-
-}
-/* Sidebar transition */
-.sidebar {
-  position: sticky;
-  top: 40px;
-  width: 150px;
-  height: 98vh;
-  color: #6f2218;
-  padding: 15px;
+  justify-content: space-between; /* space between title and menu */
+  padding: 0 20px;
   box-sizing: border-box;
-  flex-shrink: 0;
-  opacity: 1;
-  transition: opacity 0.3s ease; /* smooth fade */
+  z-index: 9999;
 }
 
-/* Hidden state */
-.sidebar.hidden {
-  opacity: 0;
+#topBlock h2 {
+  font-size: 24px;
+  margin: 0;
 }
 
+.topMenu a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: 600;
+}
 
+.topMenu a:hover {
+  text-decoration: underline;
+}
 
 </style>
 
@@ -205,19 +201,17 @@ body, table, th, td, input, button {
 <body>
 
 
-<h2 id="topBlock">HYPERVISION RX</h2>
-
-<div class="layout">
-
-  <!-- Sidebar / directory -->
-  <nav class="sidebar">
-<div style="height:45px"></div>
+<div id="topBlock">
+  <h2>HYPERVISION RX</h2>
+  <nav class="topMenu">
     <a data-target="s0">Current Rx</a>
     <a data-target="s2">Vector RX</a>
     <a data-target="s3">Manual RX</a>
     <a data-target="s4">Summary</a>
   </nav>
+</div>
 
+<div class="layout">
   <main id="content" class="content">
 
     <div id="s0" class="section">
@@ -2553,7 +2547,7 @@ document.querySelectorAll(".updateAllBtn").forEach(btn => {
 <script>
 const content = document.getElementById("content");
 
-document.querySelectorAll(".sidebar a").forEach(link => {
+document.querySelectorAll(".topMenu a").forEach(link => {
   link.addEventListener("click", () => {
     const target = document.getElementById(link.dataset.target);
 
@@ -2565,28 +2559,8 @@ document.querySelectorAll(".sidebar a").forEach(link => {
     }, 0);
   });
 });
-
-
 </script>
-<script>
-const sidebar = document.querySelector('.sidebar');
-const sidebarLinks = document.querySelectorAll('.sidebar a');
 
-sidebarLinks.forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-
-    // Fade out
-    sidebar.classList.add('hidden');
-
-    // Fade back in after 300ms
-    setTimeout(() => {
-      sidebar.classList.remove('hidden');
-    }, 300); // match the CSS transition duration
-  });
-});
-
-</script>
 
 <script>
 const updateBtns = document.querySelectorAll('.updateAllBtn');
