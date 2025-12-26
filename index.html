@@ -264,7 +264,7 @@ body, table, th, td, input, button {
   <td>Add</td>
   <td>Sph : <input type="number" step="0.25" min="0" max="5" id="nearAdd"></td>
 <td>-</td><td>-</td>
-<tr><th class="red" colspan="4">Fitting Details</th></tr>
+<tr><th class="red" colspan="4">Current Fitting Details - <i>Measure the PD and the NOC (middle of nosepad to optical center)</i></th></tr>
 <tr>
   <td>Right</td>
   <td>PD : <input type="number" step="0.25" id="od_PD"></td>
@@ -693,29 +693,28 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
 </tr>
 
 <tr>
-  <td class="red">Near Current </td>
-  <td style="text-align:left" class="red" colspan="3">
-  +<span id="mirrorNearAdd" style="margin-right: 40px"></span>
-    R: <span id="od_nearCombined" style="margin-right: 50px;">0.00 / 0.00 x 0</span>
+  <td class="red">Current +<span id="mirrorNearAdd"></span> </td>
+  <td style="text-align:middle" class="red" colspan="3">
+  
+    R: <span id="od_nearCombined" style="margin-right: 100px;">0.00 / 0.00 x 0</span>
     L: <span id="os_nearCombined">0.00 / 0.00 x 0</span>
   </td>
 </tr>
 
 <tr class="mask2">
-  <td class="yellow">Near Vector</td>
-  <td style="text-align:left" class="yellow" colspan="3">
-  +<span id="mirrorNearAddVector" style="margin-right: 40px"></span>
-    R: <span id="od_vcNearCombined_mirror" style="margin-right: 50px;">0.00 / 0.00 x 0</span>
+  <td class="yellow">Vector +<span id="mirrorNearAddVector"></span>
+</td>
+  <td style="text-align:middle" class="yellow" colspan="3">
+    R: <span id="od_vcNearCombined_mirror" style="margin-right: 100px;">0.00 / 0.00 x 0</span>
     L: <span id="os_vcNearCombined_mirror">0.00 / 0.00 x 0</span>
   </td>
 </tr>
 
 <tr class="mask1">
-  <td class="blue">Near Manual</td>
-  <td style="text-align:left" class="blue" colspan="3">
-  +<span id="mirrorNearAddFinal" style="margin-right: 40px"></span>
-
-    R: <span id="od_finalNearCombined_mirror" style="margin-right: 50px;">0.00 / 0.00 × 0</span>
+  <td class="blue">Manual +<span id="mirrorNearAddFinal"></span>
+</td>
+  <td style="text-align:middle" class="blue" colspan="3">
+    R: <span id="od_finalNearCombined_mirror" style="margin-right: 100px;">0.00 / 0.00 × 0</span>
     L: <span id="os_finalNearCombined_mirror">0.00 / 0.00 × 0</span>
   </td>
 </tr>
