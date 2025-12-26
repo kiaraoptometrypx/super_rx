@@ -206,10 +206,12 @@ body, table, th, td, input, button {
   <h2>HYPERVISION RX</h2>
   <nav class="topMenu">
     <a data-target="s0">Current Rx</a>
-    <a data-target="s1">Test Prep</a>
+    <a data-target="s1">Defects</a>
     <a data-target="s2">Vector RX</a>
     <a data-target="s3">Manual RX</a>
     <a data-target="s4">Summary</a>
+    <a data-target="s5">Lenses</a>
+
   </nav>
 </div>
 
@@ -222,7 +224,13 @@ body, table, th, td, input, button {
 <tr><th class="red" colspan="4">Name & Details</th></tr>
 
 <tr>
-<td colspan="2" style="border-right:none;" >Name : <input type="text" id="customerName" placeholder="First Name Last Name" style="width:65%; height:20px"></td>
+<td colspan="2" style="border-right:none;">
+  Name :
+  <input type="text" id="customerName"
+         placeholder="First Name Last Name"
+         style="width:65%; height:20px"
+         oninput="updateCustomerName()">
+</td>
 <td colspan="2" style="border-left:none;" >Whatsapp : <input type="text" id="customerWhatsapp" style="width:65%; height:20px"placeholder="6012 3456 789"></td>
 
 </tr>
@@ -337,11 +345,6 @@ body, table, th, td, input, button {
   </div>
 
 </td></tr>
-
-
-
-
-
 <tr><td colspan="4">
   <div style="flex:1; overflow:hidden;">
     <img
@@ -349,31 +352,9 @@ body, table, th, td, input, button {
       style="width:80%; margin-top:-10px; margin-bottom:-25px; "
       alt="Green DC Defect">
   </div>
-
-
-
 </td></tr>
-
-
-
-
-
-
-
-
-
-
 </table>
-
-
-
-
-
-
 </div>
-
-
-
 
 
     <div id="s2" class="section">
@@ -497,10 +478,30 @@ L: <span id="os_vcFinalS">0.00</span> / <span id="os_vcFinalC">0.00</span> x <sp
 <tr><th class="yellow" colspan="4">Please Press Update All! 
 <button style="margin-left:10px; border-radius:10px; height:25px; width:100px" class="updateAllBtn">Update All</button>
 <br><br>
-Status : <select id="statusVector" style="font-size:11px; border-radius:10px; height:25px; margin-left:2px; width:120px">
-  <option value="notdone">Not Done - Invalid </option>
-  <option value="done">Done - Valid</option>
-</select>
+Status : <button id="statusVector"
+        data-value="Not Done - Invalid"
+        style="font-size:11px; border-radius:10px; height:25px; margin-left:2px; width:120px"
+        onclick="toggleStatusVector()">
+  Not Done - Invalid
+</button>
+<script>
+function toggleStatusVector() {
+  const btn = document.getElementById("statusVector");
+
+  if (btn.dataset.value === "Not Done - Invalid") {
+    btn.dataset.value = "done";
+    btn.textContent = "Done - Valid";
+    btn.style.backgroundColor = "#444";
+    btn.style.color = "white";
+  } else {
+    btn.dataset.value = "Not Done - Invalid";
+    btn.textContent = "Not Done - Invalid";
+    btn.style.backgroundColor = ""; // revert to original
+    btn.style.color = "";           // revert to original
+  }
+}
+</script>
+
 
 
 <button style="margin-left:10px; border-radius:10px; height:25px; width:65px" class="exportBtn">
@@ -646,11 +647,28 @@ Add : <input style="width:50px" type="number" step="0.25" min="0" max="5" id="ne
 <tr><th class="blue" colspan="4">Please Press Update All! 
 <button style="margin-left:10px; border-radius:10px; height:25px; width:100px" class="updateAllBtn">Update All</button>
 <br><br>
-Status : <select id="statusManual" style="font-size:11px; border-radius:10px; height:25px; margin-left:2px; width:120px">
-  <option value="notdone">Not Done - Invalid </option>
-  <option value="done">Done - Valid</option>
-</select>
-
+Status : <button id="statusManual"
+        data-value="Not Done - Invalid"
+        style="font-size:11px; border-radius:10px; height:25px; margin-left:2px; width:120px"
+        onclick="toggleStatusManual()">
+  Not Done - Invalid
+</button>
+<script>
+function toggleStatusManual() {
+  const btn = document.getElementById("statusManual");
+  if (btn.dataset.value === "Not Done - Invalid") {
+    btn.dataset.value = "done";
+    btn.textContent = "Done - Valid";
+    btn.style.backgroundColor = "#444";
+    btn.style.color = "white";
+  } else {
+    btn.dataset.value = "Not Done - Invalid";
+    btn.textContent = "Not Done - Invalid";
+    btn.style.backgroundColor = ""; // revert to original
+    btn.style.color = "";           // revert to original
+  }
+}
+</script>
 
 <button style="margin-left:10px; border-radius:10px; height:25px; width:65px" class="exportBtn">
     Save
@@ -702,7 +720,9 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
 
 <table>
 
-<tr><th colspan="4" >Summary </th></tr>
+<tr><th colspan="4" >Summary for <span id="customerName_summary"></span>
+<span id="todayDate"></span>
+</th></tr>
 <tr style="border:none; height:10px;">
   <td style="border:none; height:1px; padding:0;"></td>
   <td style="border:none; height:1px; padding:0;"></td>
@@ -922,7 +942,38 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
     style="max-width:550px; width:99%; height:20px; margin-top:10px;">
   </textarea>
 </div>
+
+    <div id="s5" class="section">
+<div style="height:70px"></div>
+<table>
+<tr><th colspan="4">Hypervision Lenses</th></tr>
+
+<tr><td colspan="4">
+  <div style="flex:1; overflow:hidden;">
+<img src="https://raw.githubusercontent.com/kiaraoptometrypx/super_rx/main/Hyper1.png" alt="Hyper1" style="width:100%;"alt="Hyper1">
+  </div>
+
+</td></tr>
+<tr><td colspan="4">
+  <div style="flex:1; overflow:hidden;">
+<img src="https://raw.githubusercontent.com/kiaraoptometrypx/super_rx/main/Hyper2.png" alt="Hyper2" style="width:100%;"alt="Hyper2">
+  </div>
+</td></tr>
+<tr><td colspan="4">
+  <div style="flex:1; overflow:hidden;">
+<img src="https://raw.githubusercontent.com/kiaraoptometrypx/super_rx/main/Hyper3.png" alt="Hyper3" style="width:100%;"alt="Hyper3">
+  </div>
+</td></tr>
+
+
+</table>
+
+
+
 </div>
+
+</div>
+
 
 
 </div>
@@ -932,6 +983,28 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
 
 </div>
   </main>
+
+<script>
+(function () {
+  const d = new Date();
+  const formatted = d.toLocaleDateString("en-GB", {
+    weekday: "long",
+    day: "2-digit",
+    month: "long",
+    year: "numeric"
+  });
+  document.getElementById("todayDate").textContent = formatted;
+})();
+</script>
+
+<script>
+function updateCustomerName() {
+  document.getElementById("customerName_summary").textContent =
+    document.getElementById("customerName").value;
+}
+</script>
+
+
 
 <script>
 function mirrorById(sourceId, mirrorId) {
@@ -1232,11 +1305,17 @@ function exportInputs() {
     out.push(`${el.id}=${el.value}`);
   });
 
-  // statuses (selects)
-  ["statusVector", "statusManual"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) out.push(`${id}=${el.options[el.selectedIndex].text}`);
-  });
+  // statuses (buttons or selects)
+["statusVector", "statusManual"].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) {
+    const value = el.tagName === "SELECT" 
+                  ? el.options[el.selectedIndex].text 
+                  : el.dataset.value; // button
+    out.push(`${id}=${value}`);
+  }
+});
+
 
   ["od_vcFinalS","od_vcFinalC","od_vcFinalA","os_vcFinalS","os_vcFinalC","os_vcFinalA"].forEach(id => {
     const el = document.getElementById(id);
@@ -1263,8 +1342,14 @@ ADD:     ${document.getElementById("nearAdd")?.value || "0.00"}
 
 --------------------------
 
-VECTOR (${document.getElementById("statusVector")?.options[document.getElementById("statusVector").selectedIndex]?.text || "-"}):
--->  RX R/L:     ${document.getElementById("od_vcCombined")?.textContent || "-"}     //     ${document.getElementById("os_vcCombined")?.textContent || "-"} 
+VECTOR (${
+  (function(el){
+    if(!el) return "-";
+    return el.tagName === "SELECT"
+      ? el.options[el.selectedIndex]?.text || "-"
+      : el.dataset.value || "-";
+  })(document.getElementById("statusVector"))
+}) -->  RX R/L:     ${document.getElementById("od_vcCombined")?.textContent || "-"}     //     ${document.getElementById("os_vcCombined")?.textContent || "-"} 
 
 Gaze Imbalance:     Horizontal: ${document.getElementById("prismH_vc")?.textContent || "-"}     //     Vertical  ${document.getElementById("prismV_vc")?.textContent || "-"}     //     Diagonal: ${document.getElementById("prismD_vc")?.textContent || "-"}  
 ADD:     ${document.getElementById("nearAddVector")?.value || "0.00"}   
@@ -1274,8 +1359,14 @@ RX Changes R/L:          ${document.getElementById("vc_odSummary")?.textContent 
 
 --------------------------
 
-MANUAL (${document.getElementById("statusManual")?.options[document.getElementById("statusManual").selectedIndex]?.text || "-"}):
--->  RX R/L:     ${document.getElementById("od_finalCombined")?.textContent || "-"}     //     ${document.getElementById("os_finalCombined")?.textContent || "-"}  
+MANUAL (${
+  (function(el){
+    if(!el) return "-";
+    return el.tagName === "SELECT"
+      ? el.options[el.selectedIndex]?.text || "-"
+      : el.dataset.value || "-";
+  })(document.getElementById("statusManual"))
+}) -->  RX R/L:     ${document.getElementById("od_finalCombined")?.textContent || "-"}     //     ${document.getElementById("os_finalCombined")?.textContent || "-"}  
 
 Gaze Imbalance:     Horizontal: ${document.getElementById("prismH")?.textContent || "-"}     //     Vertical: ${document.getElementById("prismV")?.textContent || "-"}     //     Diagonal: ${document.getElementById("prismD")?.textContent || "-"}  
 ADD:     ${document.getElementById("nearAddFinal")?.value || "0.00"}
