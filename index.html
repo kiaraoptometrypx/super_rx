@@ -178,6 +178,25 @@ body, table, th, td, input, button {
   justify-content: center;
 
 }
+/* Sidebar transition */
+.sidebar {
+  position: sticky;
+  top: 40px;
+  width: 150px;
+  height: 98vh;
+  color: #6f2218;
+  padding: 15px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  opacity: 1;
+  transition: opacity 0.3s ease; /* smooth fade */
+}
+
+/* Hidden state */
+.sidebar.hidden {
+  opacity: 0;
+}
+
 
 
 </style>
@@ -2543,11 +2562,31 @@ document.querySelectorAll(".sidebar a").forEach(link => {
     setTimeout(() => {
       target.scrollIntoView({ behavior: "auto" });
       content.classList.remove("fade-out");
-    }, 350);
+    }, 0);
   });
 });
-</script>
 
+
+</script>
+<script>
+const sidebar = document.querySelector('.sidebar');
+const sidebarLinks = document.querySelectorAll('.sidebar a');
+
+sidebarLinks.forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    // Fade out
+    sidebar.classList.add('hidden');
+
+    // Fade back in after 300ms
+    setTimeout(() => {
+      sidebar.classList.remove('hidden');
+    }, 300); // match the CSS transition duration
+  });
+});
+
+</script>
 
 <script>
 const updateBtns = document.querySelectorAll('.updateAllBtn');
