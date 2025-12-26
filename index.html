@@ -1296,13 +1296,30 @@ document.addEventListener("paste", e => {
 ["nearAdd", "nearAddVector", "nearAddFinal"].forEach(id => {
   const el = document.getElementById(id);
   if (!el) return;
+
   el.addEventListener("input", () => {
-    let val = parseFloat(el.value);
-    if (isNaN(val)) return;
-    el.value = (Math.round(val * 4) / 4).toFixed(2);
+    let val = el.value;
+
+    // Allow empty or negative sign while typing
+    if (val === "" || val === "-" || val === ".") return;
+
+    let num = parseFloat(val);
+    if (isNaN(num)) return;
+
+    // Snap to nearest 0.25 without removing partial typing
+    let snapped = Math.round(num * 4) / 4;
+
+    // Only update if fully entered number differs from snapped
+    if (snapped !== num) {
+      el.value = snapped.toFixed(2);
+    }
   });
 });
 </script>
+
+
+
+
 <script>
   const fields = [
     { input: 'nearAdd', span: 'mirrorNearAdd' },
