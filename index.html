@@ -111,7 +111,7 @@ body, table, th, td, input, button {
   position: sticky;
   top: 40px;
   width: 150px;
-  height: 800px;
+  height: 98vh;
   background: #6f2218;
   color: #fff;
   padding: 15px;
@@ -165,16 +165,18 @@ body, table, th, td, input, button {
 
 #topBlock {
   position: fixed;
-  top: -20px;
+  top: -25px;
   left: 0;
   width: 100%;
   height: 70px;              /* adjust as needed */
-  background: #fff;
+  background: #6f2218;
+  color: white;
+  font-size:30px;
   z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #ccc;
+
 }
 
 
@@ -190,7 +192,7 @@ body, table, th, td, input, button {
 
   <!-- Sidebar / directory -->
   <nav class="sidebar">
-<div style="height:30px"></div>
+<div style="height:45px"></div>
     <a data-target="s0">Current Rx</a>
     <a data-target="s2">Vector RX</a>
     <a data-target="s3">Manual RX</a>
@@ -200,7 +202,7 @@ body, table, th, td, input, button {
   <main id="content" class="content">
 
     <div id="s0" class="section">
-<div style="height:20px"></div>
+<div style="height:70px"></div>
 <table>
 <tr><th class="red" colspan="4">Name & Details</th></tr>
 
@@ -308,7 +310,7 @@ body, table, th, td, input, button {
 
 
     <div id="s2" class="section">
-<div style="height:20px"></div>
+<div style="height:70px"></div>
 
 
 <table>
@@ -477,7 +479,7 @@ Status : <select id="statusVector" style="font-size:11px; border-radius:10px; he
 
 
     <div id="s3" class="section">
-<div style="height:20px"></div>
+<div style="height:70px"></div>
 
 <table>
 <!-- Manual Subjective Refraction -->
@@ -627,7 +629,7 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
 
 </div>
     <div id="s4" class="section">
-<div style="height:20px"></div>
+<div style="height:70px"></div>
 
 <div id="captureTarget">
 
@@ -858,6 +860,7 @@ Status : <select id="statusManual" style="font-size:11px; border-radius:10px; he
 
 
 </div>
+<div style="height:70px"></div>
 
 
 
