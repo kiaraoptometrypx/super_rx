@@ -112,7 +112,7 @@ body, table, th, td, input, button {
   top: 0;
   width: 150px;
   height: 100vh;
-  background: #541F1F;
+  background: #6f2218;
   color: #fff;
   padding: 15px;
   box-sizing: border-box;
@@ -177,7 +177,6 @@ body, table, th, td, input, button {
   <!-- Sidebar / directory -->
   <nav class="sidebar">
 <div style="height:30px"></div>
-
     <a data-target="s0">Current Rx</a>
     <a data-target="s2">Vector RX</a>
     <a data-target="s3">Manual RX</a>
@@ -192,15 +191,15 @@ body, table, th, td, input, button {
 <tr><th class="red" colspan="4">Name & Details</th></tr>
 
 <tr>
-<td colspan="2" style="border-right:none;">Name : <input type="text" id="customerName" style="width:65%; height:20px"></td>
-<td colspan="2" style="border-left:none;">Whatsapp : <input type="text" id="customerWhatsapp" style="width:65%; height:20px"></td>
+<td colspan="2" style="border-right:none;" >Name : <input type="text" id="customerName" placeholder="First Name Last Name" style="width:65%; height:20px"></td>
+<td colspan="2" style="border-left:none;" >Whatsapp : <input type="text" id="customerWhatsapp" style="width:65%; height:20px"placeholder="6012 3456 789"></td>
 
 </tr>
 <tr>
 
 <td colspan="3" style="border-right:none; vertical-align:middle;">
   Notes :
-  <textarea id="notes" style="width:79%; border-radius:5px; border:1px solid lightgrey; height:40px; vertical-align:middle;"></textarea>
+  <input type="text" id="notes" style="width:79%; border-radius:5px; border:1px solid lightgrey; height:25px; vertical-align:middle;" placeholder="Add notes to send to whatsapp"></textarea>
 </td>
 
 
@@ -215,7 +214,7 @@ body, table, th, td, input, button {
   <td style="border:none; height:1px; padding:0;"></td>
 </tr>
 
-<tr><th class="red" colspan="4">Current RX - <i> Insert the RX that was the most recent and comfortable.</i> <br><br><button style="background-color:white; border-radius:10px; height:25px; width:150px" id="fillCurrentBtn">Fill Current with Vector</button>
+<tr><th class="red" colspan="4">Current RX - <i> Insert the RX that was the most recent and comfortable.</i> <br><button style="margin-top:5px; background-color:white; border-radius:10px; height:20px; width:350px" id="fillCurrentBtn">Press this to fill using Vector RX</button>
 </th></tr>
 
 <!-- OD -->
@@ -382,15 +381,15 @@ body, table, th, td, input, button {
 </tr>
 
 <tr>
-<td>Current RX</td>
-<td colspan="3">
+<td class="red">Current RX</td>
+<td class="red" colspan="3">
 R: <span class="od_summary" style="margin-right: 80px;">+0.00 / +0.00 × 0</span>
 L: <span class="os_summary">+0.00 / +0.00 × 0</span>
 </td>
 </tr>
 <tr style="display:">
-  <td>Vector RX</td>
-  <td colspan="3">
+  <td class="yellow">Vector RX</td>
+  <td class="yellow" colspan="3">
 R: <span id="od_vcFinalS">0.00</span> / <span id="od_vcFinalC">0.00</span> x <span id="od_vcFinalA">-</span><span style="margin-left:80px"></span>
 L: <span id="os_vcFinalS">0.00</span> / <span id="os_vcFinalC">0.00</span> x <span id="os_vcFinalA">-</span>
 
@@ -398,9 +397,17 @@ L: <span id="os_vcFinalS">0.00</span> / <span id="os_vcFinalC">0.00</span> x <sp
 </tr>
 
 
-<tr><td>Add</td>
-<td>Sph : <input type="number" step="0.25" min="0" max="5" id="nearAddVector"></td>
-<td>-</td><td>-</td>
+<tr>
+<td class="yellow">Add : <input style="width:50px" type="number" step="0.25" min="0" max="5" id="nearAddVector"
+</td>
+
+
+<td colspan="3" class="yellow">
+    R: <span id="od_vcNearCombined" style="margin-right: 50px;">0.00 / 0.00 x 0</span>
+    L: <span id="os_vcNearCombined">0.00 / 0.00 x 0</span>
+
+</td>
+
 </tr>
 
 
@@ -479,11 +486,6 @@ Manual Refraction
   <td>Cyl : <input type="number" step="0.25" id="os_finalC"></td>
   <td>Ax : <input type="number" step="5" min="0" max="180" id="os_finalA"></td>
 </tr>
-<tr><td>Add</td>
-<td>Sph : <input type="number" step="0.25" min="0" max="5" id="nearAddFinal"></td>
-<td>-</td><td>-</td>
-</tr>
-
 <tr class="mask1">
   <td>Right FC DC</td>
   <td id="od_roundS"></td>
@@ -504,6 +506,7 @@ Manual Refraction
   <td id="diffCrossA"></td>
 </tr>
 
+
 <tr style="display:none" class="mask1">
   <td colspan="1">Crossed OD</td>
   <td id="od_crossS"></td>
@@ -517,33 +520,16 @@ Manual Refraction
   <td id="os_crossA"></td>
 </tr>
 
-
-
-<tr><th class="blue" colspan="4">Please Press Update All! 
-<button style="margin-left:10px; border-radius:10px; height:25px; width:100px" class="updateAllBtn">Update All</button>
-<br><br>
-Status : <select id="statusManual" style="font-size:11px; border-radius:10px; height:25px; margin-left:2px; width:120px">
-  <option value="notdone">Not Done - Invalid </option>
-  <option value="done">Done - Valid</option>
-</select>
-
-
-<button style="margin-left:10px; border-radius:10px; height:25px; width:65px" class="exportBtn">
-    Save
-  </button>
-
-</th>
-</tr>
 <tr style="border:none; height:10px;">
   <td style="border:none; height:1px; padding:0;"></td>
   <td style="border:none; height:1px; padding:0;"></td>
   <td style="border:none; height:1px; padding:0;"></td>
   <td style="border:none; height:1px; padding:0;"></td>
 </tr>
-<tr><th colspan="4"> Vectorized Corrected </th></tr>
+<tr><th class="red" colspan="4"> Vectorized Corrected </th></tr>
 <tr class="mask1">
-<td>Current Rx</td>
-<td colspan="3">
+<td class="red">Current Rx</td>
+<td class="red" colspan="3">
 R: <span class="od_summary" style="margin-right: 80px;">+0.00 / +0.00 × 0</span>
 L: <span class="os_summary">+0.00 / +0.00 × 0</span>
 </td>
@@ -565,6 +551,31 @@ L: <span id="os_vectorDisplay">- / - × -</span>
 
 </td>
 </tr>
+<tr><td>
+Add : <input style="width:50px" type="number" step="0.25" min="0" max="5" id="nearAddFinal"></td>
+
+<td colspan="3">
+    R: <span id="od_finalNearCombined" style="margin-right: 50px;">0.00 / 0.00 × 0</span>
+    L: <span id="os_finalNearCombined">0.00 / 0.00 × 0</span>
+</td>
+
+</tr>
+<tr><th class="blue" colspan="4">Please Press Update All! 
+<button style="margin-left:10px; border-radius:10px; height:25px; width:100px" class="updateAllBtn">Update All</button>
+<br><br>
+Status : <select id="statusManual" style="font-size:11px; border-radius:10px; height:25px; margin-left:2px; width:120px">
+  <option value="notdone">Not Done - Invalid </option>
+  <option value="done">Done - Valid</option>
+</select>
+
+
+<button style="margin-left:10px; border-radius:10px; height:25px; width:65px" class="exportBtn">
+    Save
+  </button>
+
+</th>
+</tr>
+
 
 <tr class="mask1">
 <td colspan="1">Comments:</td>
@@ -655,7 +666,7 @@ L: <span id="os_vectorDisplay">- / - × -</span>
 <tr>
   <td class="red">Near Current </td>
   <td style="text-align:left" class="red" colspan="3">
-  Add : <span id="mirrorNearAdd" style="margin-right: 40px"></span>
+  +<span id="mirrorNearAdd" style="margin-right: 40px"></span>
     R: <span id="od_nearCombined" style="margin-right: 50px;">0.00 / 0.00 x 0</span>
     L: <span id="os_nearCombined">0.00 / 0.00 x 0</span>
   </td>
@@ -664,19 +675,19 @@ L: <span id="os_vectorDisplay">- / - × -</span>
 <tr class="mask2">
   <td class="yellow">Near Vector</td>
   <td style="text-align:left" class="yellow" colspan="3">
-  Add : <span id="mirrorNearAddVector" style="margin-right: 40px"></span>
-    R: <span id="od_vcNearCombined" style="margin-right: 50px;">0.00 / 0.00 x 0</span>
-    L: <span id="os_vcNearCombined">0.00 / 0.00 x 0</span>
+  +<span id="mirrorNearAddVector" style="margin-right: 40px"></span>
+    R: <span id="od_vcNearCombined_mirror" style="margin-right: 50px;">0.00 / 0.00 x 0</span>
+    L: <span id="os_vcNearCombined_mirror">0.00 / 0.00 x 0</span>
   </td>
 </tr>
 
 <tr class="mask1">
   <td class="blue">Near Manual</td>
   <td style="text-align:left" class="blue" colspan="3">
-  Add : <span id="mirrorNearAddFinal" style="margin-right: 40px"></span>
+  +<span id="mirrorNearAddFinal" style="margin-right: 40px"></span>
 
-    R: <span id="od_finalNearCombined" style="margin-right: 50px;">0.00 / 0.00 × 0</span>
-    L: <span id="os_finalNearCombined">0.00 / 0.00 × 0</span>
+    R: <span id="od_finalNearCombined_mirror" style="margin-right: 50px;">0.00 / 0.00 × 0</span>
+    L: <span id="os_finalNearCombined_mirror">0.00 / 0.00 × 0</span>
   </td>
 </tr>
 
@@ -838,6 +849,62 @@ L: <span id="os_vectorDisplay">- / - × -</span>
 
 </div>
   </main>
+
+<script>
+function mirrorById(sourceId, mirrorId) {
+  const source = document.getElementById(sourceId);
+  const mirror = document.getElementById(mirrorId);
+  if (!source || !mirror) return;
+
+  const sync = () => {
+    mirror.textContent = source.textContent;
+  };
+
+  sync();
+
+  new MutationObserver(sync).observe(source, {
+    childList: true,
+    characterData: true,
+    subtree: true
+  });
+}
+
+mirrorById("od_finalNearCombined", "od_finalNearCombined_mirror");
+mirrorById("os_finalNearCombined", "os_finalNearCombined_mirror");
+</script>
+
+<script>
+function mirrorById(sourceId, mirrorId) {
+  const source = document.getElementById(sourceId);
+  const mirror = document.getElementById(mirrorId);
+  if (!source || !mirror) return;
+
+  const sync = () => {
+    mirror.textContent = source.textContent;
+  };
+
+  sync();
+
+  new MutationObserver(sync).observe(source, {
+    childList: true,
+    characterData: true,
+    subtree: true
+  });
+}
+
+mirrorById("od_vcNearCombined", "od_vcNearCombined_mirror");
+mirrorById("os_vcNearCombined", "os_vcNearCombined_mirror");
+</script>
+
+
+
+
+
+
+
+
+
+
 
 
 
