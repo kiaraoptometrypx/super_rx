@@ -92,6 +92,12 @@ th:nth-child(4) {
     border-radius:6px;
   }
 
+.rx-strike {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+
 button {
 border: 1px dotted;
 }
@@ -189,7 +195,9 @@ body, table, th, td, input, button {
   text-decoration: none;
   margin-left: 20px;
   font-weight: 600;
-  font-size:15px;
+  font-size: 12px;
+  cursor: pointer;
+
 }
 
 .topMenu a:hover {
@@ -218,7 +226,7 @@ body, table, th, td, input, button {
 <div class="layout">
   <main id="content" class="content">
  
-    <div id="s0" class="section">
+    <div id="s0" class="section1">
 <div style="height:70px"></div>
 <table>
 <tr><th class="red" colspan="4">Name & Details</th></tr>
@@ -967,6 +975,7 @@ function toggleStatusManual() {
 
 
 </table>
+<div style="height: 200px"></div>
 
 
 
@@ -977,7 +986,6 @@ function toggleStatusManual() {
 
 
 </div>
-<div style="height: 300px"></div>
 
 
 
@@ -1329,6 +1337,7 @@ function exportInputs() {
 
   const summaryText = 
 `Comments Summary:
+Current : ${document.getElementById("current_comments_summary")?.textContent || "-" }
 Vector : ${document.getElementById("vector_comments_summary")?.textContent || "-" }
 Manual : ${document.getElementById("manual_comments_summary")?.textContent || "-" }
 
