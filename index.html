@@ -212,6 +212,113 @@ body, table, th, td, input, button {
 .topMenu a:hover {
   text-decoration: underline;
 }
+  .card{ background:#fff; border-radius:10px; padding:20px 10px;
+    box-shadow:0 0 10px rgba(0,0,0,.25); display:inline-block; border:1px solid #bbb; margin:8px 0 14px; }
+  .row input[type=number]{ width:70px; text-align:center; }
+  .row b{ display:inline-block; margin-bottom:6px; }
+  button{ margin:5px; padding:5px 10px; cursor:pointer; }
+/* Duochrome */
+.duochrome {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 255px;      /* 85% of 300px */
+  height: 255px;     /* 85% of 300px */
+  margin: 17px auto; /* 85% of 20px */
+  position: relative;
+  overflow: hidden;
+}
+.duo-side {
+  position: relative;
+  width: 128px;      /* 85% of 150px */
+  height: 255px;     /* 85% of 300px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: clip;
+  contain: paint;
+  isolation: isolate;
+}
+@supports not (overflow: clip) { 
+  .duo-side { overflow: hidden; } 
+}
+#redSide  { clip-path: inset(0 0 0 9px); }   /* 85% of 10px */
+#blueSide { clip-path: inset(0 9px 0 0); }   /* 85% of 10px */
+.duo-side img.base {
+  width: 128px;      /* 85% of 150px */
+  height: 255px;     /* 85% of 300px */
+  object-fit: cover;
+  display: block;
+  will-change: filter;
+}
+.duo-side img.overlay {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 128px;      /* 85% of 150px */
+  height: 255px;     /* 85% of 300px */
+  object-fit: cover;
+  pointer-events: none;
+  will-change: transform, filter, opacity;
+  backface-visibility: hidden;
+  transform: translate3d(0,0,0);
+}
+
+/* Fan chart */
+.outer-circle {
+  width: 213px;      /* 85% of 250px */
+  height: 213px;     /* 85% of 250px */
+  border-radius: 50%;
+  border: none;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 34px auto; /* 85% of 40px */
+  transform-origin: center;
+}
+.circular-img img {
+  width: 255px;      /* 85% of 300px */
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  transform-origin: center;
+}
+
+/* Fan chart */
+.outer-circle {
+  width: 175px;    /* 70% of 250px */
+  height: 175px;   /* 70% of 250px */
+  border-radius: 50%;
+  border: none;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 28px auto;  /* 70% of 40px */
+  transform-origin: center;
+}
+.circular-img img {
+  width: 210px;    /* 70% of 300px */
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  transform-origin: center;
+}
+
+  /* Layout */
+  #stage { display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap; }
+  .duochrome, .outer-circle { margin:12px 0; }
+
+  .rx-input { width:100px; font-size:10px; text-align:center; padding:6px; border-radius:6px; border:1px solid #ccc; margin-bottom:5px; }
+  .btn-plus, .btn-minus { font-size:10px; border:1px solid #000; height:30px; width:50px; border-radius:6px; cursor:pointer; color:#fff; transition:opacity .2s; margin:5px; }
+  .btn-plus { background:#212121; } .btn-minus{ background:#d9534f; }
+  .btn-plus:hover, .btn-minus:hover { opacity:.85; }
+  .btn-group button { font-size:10px; padding:5px 5px; margin:5px; border:1px solid #000; border-radius:10px; cursor:pointer; background:#dcdcdc; color:#000; min-width:160px; }
+  .btn-group button:hover { background:#c8c8c8; }
+
+  #targetPanel input{ width:60px; font-size:10px; padding:5px; text-align:center; margin:2px 2px; border-radius:5px; }
 
 </style>
 
@@ -417,10 +524,102 @@ body, table, th, td, input, button {
    <div id="s1" class="section">
 <div style="height:70px"></div>
 <table>
+
+<tr><th colspan="4">How the Test Works</th></tr>
+
+<tr><td colspan="4">
+
+Prescription comes in many types of errors; whether it's myopia, hyperopia or astigmatism.<br>The test works by measuring the error and multiplying it with your current prescription.<br><br>
+
+</div>  
+
+
+<!-- Participant Inputs -->
+  <div style="width:100%; display:flex; justify-content:center; gap:10px; flex-wrap:wrap; align-items:flex-start; margin-top:10px;">
+    <!-- SPH -->
+    <div style="text-align:center;">
+      <label><b>SPH</b></label><br>
+      <input type="number" id="sph" step="0.25" value="0.00" class="rx-input"><br>
+      <div>
+        <button onclick="adj('sph',-0.25)" class="btn-minus">−0.25</button>
+        <button onclick="adj('sph', 0.25)" class="btn-plus">+0.25</button><br>
+        <button onclick="adj('sph',-0.50)" class="btn-minus">−0.50</button>
+        <button onclick="adj('sph', 0.50)" class="btn-plus">+0.50</button><br>
+       </div>
+    </div>
+
+    <!-- CYL -->
+    <div style="text-align:center;">
+      <label><b>CYL</b></label><br>
+      <input type="number" id="cyl" step="0.25" value="0.00" class="rx-input"><br>
+      <div>
+        <button onclick="adj('cyl',-0.25)" class="btn-minus">−0.25</button>
+        <button onclick="adj('cyl', 0.25)" class="btn-plus">+0.25</button><br>
+        <button onclick="adj('cyl',-0.50)" class="btn-minus">−0.50</button>
+        <button onclick="adj('cyl', 0.50)" class="btn-plus">+0.50</button><br>
+
+      </div>
+    </div>
+
+    <!-- AXIS -->
+    <div style="text-align:center;">
+      <label><b>AXIS</b></label><br>
+      <input type="number" id="axis" min="0" step="1" value="180" class="rx-input"><br>
+      <div>
+        <button onclick="adj('axis', -1)"  class="btn-minus">−1</button>
+        <button onclick="adj('axis',  1)"  class="btn-plus">+1</button><br>        
+	<button onclick="adj('axis', -10)"  class="btn-minus">−10</button>
+        <button onclick="adj('axis',  10)"  class="btn-plus">+10</button><br>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+<div style="height:20px"></div>
+
+<!-- Stage -->
+<div id="stage">
+  <!-- Fan Chart -->
+  <div id="stack" style="position:relative; width:44%; height:auto ; margin:0 0 0px 0;">
+    <img class="bg" src="https://raw.githubusercontent.com/kiaraoptometrypx/Trainer/main/FC_DIRECTIONS.png" alt="" style="width:100%; display:block;" />
+    <div class="overlay" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none;">
+      <div class="overlay-stage">
+        <div class="outer-circle" id="outerCircle" style="width:100%; aspect-ratio:1/1; border-radius:9999px; overflow:hidden;">
+          <div class="circular-img" style="width:100%; height:100%;">
+            <img id="fanChart" src="https://raw.githubusercontent.com/kiaraoptometrypx/Trainer/main/C025.png" alt="" style="width:100%; height:100%; object-fit:cover;" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <!-- Duochrome (button above) -->
+<div class="duo-wrap">
+  <div class="duochrome">
+    <div class="duo-side" id="redSide">
+      <img class="base" id="redImg"  src="https://raw.githubusercontent.com/kiaraoptometrypx/Trainer/main/RED_2.png"  alt="">
+      <img class="overlay" id="redOv"  alt="">
+    </div>
+    <div class="duo-side" id="blueSide">
+      <img class="base" id="blueImg" src="https://raw.githubusercontent.com/kiaraoptometrypx/Trainer/main/BLUE_2.png" alt="">
+      <img class="overlay" id="blueOv" alt="">
+    </div>
+  </div>
+
+</div>
+</td></tr>
+
+
+
+
+
+
 <tr><th colspan="4">Duochrome & Fanchart Defects</th></tr>
 
-<tr><td style="padding:5% 0%" colspan="4">  
-<div style="padding:0% 8% 5% 8%">Duochrome <b>measures the status of your current vision setting</b> - if the power is high or low, it shows clarity imbalance. The aim of the test is to find the power that makes both side equal.
+<tr><td colspan="4">  
+<div style="padding:0% 8% 2% 8%">Duochrome <b>measures the status of your current vision setting</b> - if the power is high or low, it shows clarity imbalance. The aim of the test is to find the power that makes both side equal.
 </div>
 
   <div style="flex:1; overflow:hidden;">
@@ -429,13 +628,13 @@ body, table, th, td, input, button {
       style="width:80%; margin-top:-5px; margin-bottom:-10px;"
       alt="Green DC Defect">
   </div>
+<div style="height:20px"></div>
 
-</td></tr>
+<div style="height:20px">--</div>
 
 
 
-<tr><td style="padding:5% 0%" colspan="4">
-<div style="padding:0% 10% 5% 10%">Fanchart is the most reliable and accurate way to assess astigmatism condition. The aim of the test is to find the power that makes all lines equal in quality; whether blur or clear.
+<div style="padding:0% 8% 2% 8%">Fanchart is the <b>most reliable and accurate way to assess astigmatism condition</b>. The aim of the test is to find the power that makes all lines equal in quality; whether blur or clear.
 </div>
 
   <div style="flex:1; overflow:hidden;">
@@ -445,8 +644,18 @@ body, table, th, td, input, button {
       alt="Green DC Defect">
   </div>
 </td></tr>
+
+
+
+
 </table>
+
+
+
+
+
 </div>
+<div style="height:450px"></div>
 
 
     <div id="s2" class="section">
@@ -883,6 +1092,21 @@ L : <span id="CL_os_origCombined">OS -</span>
     L : <span id="os_finalCombined">OS -</span>
   </td>
 </tr>
+<tr class="mirror1">
+  <td class="blue">Vectorized RE Dom</td>
+  <td class="blue" colspan="3">
+    R: <span id="od_vectorDisplay_mirror" style="margin-right: 80px;">- / - × -</span>
+    L: <span id="os_vectorDisplay_mirror">- / - × -</span>
+  </td>
+</tr>
+
+<tr class="mirror2">
+  <td class="blue">Vectorized LE Dom</td>
+  <td class="blue" colspan="3">
+    R: <span id="ODcrossedSpan_mirror" style="margin-right: 80px;">- / - × -</span>
+    L: <span id="OScrossedSpan_mirror">- / - × -</span>
+  </td>
+</tr>
 
 <tr class="mask1">
   <td class="blue">Manual Near +<span id="mirrorNearAddFinal"></span>
@@ -1117,6 +1341,10 @@ L : <span id="CL_os_origCombined">OS -</span>
 </div>
   </main>
 
+
+
+
+
 <script>
 (function () {
   const d = new Date();
@@ -1213,7 +1441,7 @@ mirrorById("os_vcNearCombined", "os_vcNearCombined_mirror");
     return Number.isFinite(n)? roundQuarter(n) : NaN;
   }
 
-  function combinePair(leftIds,rightIds){
+function combinePair(leftIds,rightIds){
     const sL = safeReadNumber(leftIds.s) || 0;
     const cL = safeReadNumber(leftIds.c) || 0;
     const aL = safeReadNumber(leftIds.a) || 0;
@@ -1228,14 +1456,19 @@ mirrorById("os_vcNearCombined", "os_vcNearCombined_mirror");
     const J45_new= -0.5*cL*Math.sin(2*deg2rad(aL)) + -0.5*cR*Math.sin(2*deg2rad(aR));
 
     const mag = Math.hypot(J0_new,J45_new);
-    const C_new = -2*mag;
+    const C_new_raw = -2*mag;
     const axisDefined = mag>1e-8;
     const A_new = axisDefined ? normAxis(rad2deg(0.5*Math.atan2(J45_new,J0_new))) : "-";
 
-    const S_new = M_total - 0.5*C_new;
+    const S_new_raw = M_total - 0.5*C_new_raw;
+
+    // ROUND ONLY FINAL DISPLAY VALUES
+    const S_new = roundQuarter(S_new_raw);
+    const C_new = roundQuarter(C_new_raw);
 
     return {S_new,C_new,A_new};
-  }
+}
+
 
   function crossPrescriptionsToOScrossedSpan(){
     const res = combinePair({s:"os_origS",c:"os_origC",a:"os_origA"},{s:"od_roundS",c:"od_roundC",a:"od_roundA"});
@@ -1504,7 +1737,9 @@ MANUAL (${
 
 Gaze Imbalance:     Horizontal: ${document.getElementById("prismH")?.textContent || "-"}     //     Vertical: ${document.getElementById("prismV")?.textContent || "-"}     //     Diagonal: ${document.getElementById("prismD")?.textContent || "-"}  
 ADD:     ${document.getElementById("nearAddFinal")?.value || "0.00"}
-RX Changes R/L:     R: ${document.getElementById("od_roundCombinedDisplay")?.textContent || "-"}     //     ${document.getElementById("os_roundCombinedDisplay")?.textContent || "-"}
+RX Changes R/L:     ${document.getElementById("od_roundCombinedDisplay")?.textContent || "-"}     //     ${document.getElementById("os_roundCombinedDisplay")?.textContent || "-"}
+Vectorized Right Dominant R/L:     ${document.getElementById("od_vectorDisplay_mirror")?.textContent || "-"}     //     ${document.getElementById("os_vectorDisplay_mirror")?.textContent || "-"}
+Vectorized Left Dominant R/L:     ${document.getElementById("ODcrossedSpan_mirror")?.textContent || "-"}     //     ${document.getElementById("OScrossedSpan_mirror")?.textContent || "-"}
 
 --------------------------
 To use this data, copy everything from the top of the body and paste into any inputs in the website.
@@ -3045,7 +3280,136 @@ function parseText(txt){
 </script>
 
 
+<script>
+(function(){
+  function mirrorSpan(sourceId, mirrorId){
+    const source = document.getElementById(sourceId);
+    const mirror = document.getElementById(mirrorId);
+    if(!source || !mirror) return;
+    mirror.textContent = source.textContent;
+  }
 
+  const mappings = [
+    ['od_vectorDisplay', 'od_vectorDisplay_mirror'],
+    ['OScrossedSpan', 'os_vectorDisplay_mirror'],
+    ['ODcrossedSpan', 'ODcrossedSpan_mirror'],
+    ['os_vectorDisplay', 'OScrossedSpan_mirror']
+  ];
+
+  function updateMirrors(){
+    mappings.forEach(pair => mirrorSpan(pair[0], pair[1]));
+  }
+
+  // Example: update every time original spans change
+  const observer = new MutationObserver(updateMirrors);
+  mappings.forEach(pair => {
+    const source = document.getElementById(pair[0]);
+    if(source) observer.observe(source, { characterData:true, childList:true, subtree:true });
+  });
+
+  // Initial sync
+  updateMirrors();
+})();
+</script>
+
+
+
+
+<script>
+(function(){
+  'use strict';
+
+  /* ========== ONLY GLOBAL FOR BUTTONS ========== */
+  window.adj = function(type, step){
+    const el = document.getElementById(type);
+    if(!el) return;
+    let v = parseFloat(el.value) || 0;
+    v += step;
+    if(type==='axis'){
+      if(v < 1) v=180;
+      if(v > 180) v=1;
+      el.value = Math.round(v);
+    } else {
+      el.value = v.toFixed(2);
+    }
+    el.dispatchEvent(new Event('input',{bubbles:true}));
+  };
+
+  /* ======== INTERNAL STATE ======== */
+  const PX_PER_D = 2, K_BLUR_PER_D = 2.0, EXTRA_ASTIG_BLUR_PER_D=0.4, OVERLAY_ALPHA=0.6;
+  const redImg=document.getElementById('redImg'),
+        blueImg=document.getElementById('blueImg'),
+        redOv=document.getElementById('redOv'),
+        blueOv=document.getElementById('blueOv'),
+        fanImg=document.getElementById('fanChart'),
+        outer=document.getElementById('outerCircle');
+  const sphInput=document.getElementById('sph'),
+        cylInput=document.getElementById('cyl'),
+        axisInput=document.getElementById('axis');
+
+  let TRUE={sph:0, cyl:0, axis:180, se:0};
+
+  const quant05 = v=>Math.round(v*2)/2;
+  const wrapAxis = v=>{
+    let n=parseFloat(v);
+    if(!Number.isFinite(n)) return 180;
+    n=((Math.round(n)%180)+180)%180;
+    return n===0?180:n;
+  };
+
+  /* ======== COMPUTE & RENDER ======== */
+  function recompute(){
+    TRUE.sph  = parseFloat(sphInput.value)||0;
+    TRUE.cyl  = parseFloat(cylInput.value)||0;
+    TRUE.axis = wrapAxis(axisInput.value);
+    TRUE.se   = TRUE.sph + TRUE.cyl/2;
+    render();
+  }
+
+  function render(){
+    const blur = Math.abs(TRUE.se)*K_BLUR_PER_D;
+    const extra = Math.abs(TRUE.cyl)*EXTRA_ASTIG_BLUR_PER_D;
+
+    // Red / Blue overlay
+    redImg.style.filter = blueImg.style.filter = `blur(${quant05(blur)}px)`;
+    redOv.style.filter = blueOv.style.filter = `blur(${quant05(blur+extra)}px)`;
+    redOv.style.opacity = blueOv.style.opacity = OVERLAY_ALPHA;
+
+    // Duochrome shift
+    const mag = Math.abs(TRUE.cyl)*PX_PER_D;
+    const rad = ((TRUE.axis*2)-90)*Math.PI/180;
+    const dx = Math.round(Math.cos(rad)*mag);
+    const dy = Math.round(Math.sin(rad)*mag);
+    redOv.style.transform = blueOv.style.transform = `translate(${dx}px,${dy}px)`;
+
+    // Fanchart rotation
+    const fcOffset = 0; // can adjust if needed
+    outer.style.transform = `scaleX(-1) rotate(${-TRUE.axis-fcOffset}deg)`;
+
+    // Fanchart image can optionally change based on cyl magnitude
+    let imgName="C025.png";
+    const absC = Math.abs(TRUE.cyl);
+    if(absC>0.25 && absC<=0.5) imgName="C050.png";
+    else if(absC>0.5 && absC<=0.75) imgName="C075.png";
+    else if(absC>0.75 && absC<=1.0) imgName="C100.png";
+    else if(absC>1.0) imgName="C150.png";
+    fanImg.src=`https://raw.githubusercontent.com/kiaraoptometrypx/Trainer/main/${imgName}`;
+  }
+
+  /* ======== EVENT LISTENERS ======== */
+  sphInput.addEventListener('input', recompute);
+  cylInput.addEventListener('input', recompute);
+  axisInput.addEventListener('input',()=>{ axisInput.value=wrapAxis(axisInput.value); recompute(); });
+  axisInput.addEventListener('keydown', e=>{
+    if(e.key==='ArrowUp'){ e.preventDefault(); axisInput.value=wrapAxis((parseFloat(axisInput.value)||0)+1); recompute(); }
+    if(e.key==='ArrowDown'){ e.preventDefault(); axisInput.value=wrapAxis((parseFloat(axisInput.value)||0)-1); recompute(); }
+  });
+
+  /* ======== INIT ======== */
+  recompute();
+
+})();
+</script>
 
 
 
