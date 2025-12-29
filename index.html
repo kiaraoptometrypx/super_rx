@@ -30,6 +30,15 @@ td:nth-child(2),
 th:nth-child(2) {
   width: 26%;
 }
+button.{user-select:none;}
+
+button.greyonclick.clicked {
+  background: #444 !important;
+  color: #fff !important;
+  border-color: #666 !important;
+  cursor: default;
+  user-select:none;
+}
 
 /* Column 3: width 25% + remove LEFT & RIGHT borders */
 td:nth-child(3),
@@ -245,8 +254,8 @@ body, table, th, td, input, button {
 <tr>
 
 <td colspan="3" style="border-right:none; vertical-align:middle;">
-  Notes :
-  <input type="text" id="notes" style="width:79%; border-radius:5px; border:1px solid lightgrey; height:25px; vertical-align:middle;" placeholder="Add notes to send to whatsapp"></textarea>
+  Message :
+  <input type="text" id="notes" style="width:74%; border-radius:5px; border:1px solid lightgrey; height:25px; vertical-align:middle;" placeholder="Add notes to send to whatsapp"></textarea>
 </td>
 
 
@@ -261,7 +270,56 @@ body, table, th, td, input, button {
   <td style="border:none; height:1px; padding:0;"></td>
 </tr>
 
-<tr><th class="red" colspan="4">Current RX<br><i> Insert the RX that was the most recent and comfortable.</i> <br><button style="margin-top:5px; background-color:white; border-radius:10px; height:20px; width:350px" id="fillCurrentBtn">Press this to fill using Vector RX</button>
+
+<tr><th class="red" colspan="4">
+<button style="background-color:white; border-radius:10px; height:20px; width:380px" onclick="toggleTbody('rxBody')"><b>Current Contact Lens RX - <i> Convert to Spectacles Rx.</i></b></button>
+
+
+</th>
+
+<tbody id="rxBody" style="display:none;">
+
+</tr>
+
+<!-- OD -->
+
+<tr>
+  <td>CL Right</td>
+  <td>Sph : <input type="number" step="0.25" id="cl-sph-re"></td>
+  <td>Cyl : <input type="number" step="0.25" id="cl-cyl-re"></td>
+  <td>Axis : <input type="number" step="5" min="0" max="180" id="cl-axis-re"></td>
+</tr>
+<tr>
+  <td>CL Left</td>
+  <td>Sph : <input type="number" step="0.25" id="cl-sph-le"></td>
+  <td>Cyl : <input type="number" step="0.25" id="cl-cyl-le"></td>
+  <td>Axis : <input type="number" step="5" min="0" max="180" id="cl-axis-le"></td>
+</tr>
+
+<tr><td>
+
+<button class="greyonclick" style="background-color:white; border-radius:10px; height:20px; width:70px" onclick="convertToSpecs()">Convert</button>
+</td>
+<td colspan="3">
+  R : <span style="margin-right:100px"id="reResult">0.00 / 0.00 x 0</span> 
+  L : <span id="leResult">0.00 / 0.00 x 0</span>
+</td>
+</tr>
+</tbody>
+<tr style="border:none; height:10px;">
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+</tr>
+
+
+<tr><th class="red" colspan="4">Current RX - <i> Insert the RX that was the most recent and comfortable.</i> <br>
+
+<button style="margin-top:5px; margin-right:15px; background-color:white; border-radius:10px; height:20px; width:180px" id="fillCurrentBtn">Use Vector RX</button>
+
+
+<button class="greyonclick" style="margin-top:5px; background-color:white; border-radius:10px; height:20px; width:180px" onclick="autofillOriginalInputs()">Use Contact Lens Convert</button>
 </th></tr>
 
 <!-- OD -->
@@ -282,7 +340,7 @@ body, table, th, td, input, button {
   <td>Add</td>
   <td>Sph : <input type="number" step="0.25" min="0" max="5" id="nearAdd"></td>
 <td>-</td><td>-</td>
-<tr><th class="red" colspan="4">Current Fitting Details<br><i>Measure the PD and the NOC (middle of nosepad to optical center)</i></th></tr>
+<tr><th class="red" colspan="4">Current Fitting Details - <i>Measure the PD and the NOC (middle of nosepad to optical center)</i></th></tr>
 <tr>
   <td>Right</td>
   <td>PD : <input type="number" step="0.25" id="od_PD"></td>
@@ -294,6 +352,23 @@ body, table, th, td, input, button {
   <td>PD : <input type="number" step="0.25" id="os_PD"></td>
   <td>NOC : <input type="number" step="0.25" id="os_NOC"></td>
   <td>-</td>
+</tr>
+<tr>
+<td>Lens Details</td>
+<td colspan="3">
+<div>
+<input type="text" id="current_lens_details"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Index , Type of Vision , Corridor">
+</div>
+<div style="text-align:left; margin-left:2%; margin-top:1%;">
+<span>**Index : 1.56 , 1.61 , 1.67 , 1.74</span><br> 
+<span>**Vision Type : SV , MF , Relax , Office</span><br>
+<span>**Purpose : See Far, See Near, See Intermediate, See everything</span><br>
+<span>**Corridor (for MF only) : Short, Medium, Long</span>
+
+</div>
+</td>
 </tr>
 
 
@@ -758,13 +833,46 @@ function toggleStatusManual() {
     L: <span id="os_origCombined">OS -</span>
   </td>
 </tr>
+<tr>
+  <td class="red">Current Near +<span id="mirrorNearAdd"></span> </td>
+  <td style="text-align:middle" class="red" colspan="3">
+  
+    R: <span id="od_nearCombined" style="margin-right: 100px;">0.00 / 0.00 x 0</span>
+    L: <span id="os_nearCombined">0.00 / 0.00 x 0</span>
+  </td>
+</tr>
 
+<tr>
+  <td class="red">Current CL Rx</td>
+  <td colspan="3" class="red">
+
+R : <span id="CL_od_origCombined" style="margin-right: 100px;">OD -</span>
+L : <span id="CL_os_origCombined">OS -</span>
+  </td>
+</tr>
 
 <tr class="mask2">
   <td class="yellow">Vector Rx</td>
   <td class="yellow" colspan="3">
     R : <span id="od_vcCombined" style="margin-right: 100px;">-</span>
     L : <span id="os_vcCombined">-</span>
+  </td>
+</tr>
+
+<tr class="mask2">
+  <td class="yellow">Vector Near +<span id="mirrorNearAddVector"></span>
+</td>
+  <td style="text-align:middle" class="yellow" colspan="3">
+    R: <span id="od_vcNearCombined_mirror" style="margin-right: 100px;">0.00 / 0.00 x 0</span>
+    L: <span id="os_vcNearCombined_mirror">0.00 / 0.00 x 0</span>
+  </td>
+</tr>
+
+<tr class="mask2">
+  <td class="yellow">Vector CL Rx</td>
+  <td class="yellow" colspan="3">
+    R : <span id="CL_od_vcCombined" style="margin-right: 100px;">-</span>
+    L : <span id="CL_os_vcCombined">-</span>
   </td>
 </tr>
 
@@ -776,33 +884,8 @@ function toggleStatusManual() {
   </td>
 </tr>
 
-<tr style="border:none; height:10px;">
-  <td style="border:none; height:1px; padding:0;"></td>
-  <td style="border:none; height:1px; padding:0;"></td>
-  <td style="border:none; height:1px; padding:0;"></td>
-  <td style="border:none; height:1px; padding:0;"></td>
-</tr>
-
-<tr>
-  <td class="red">Current +<span id="mirrorNearAdd"></span> </td>
-  <td style="text-align:middle" class="red" colspan="3">
-  
-    R: <span id="od_nearCombined" style="margin-right: 100px;">0.00 / 0.00 x 0</span>
-    L: <span id="os_nearCombined">0.00 / 0.00 x 0</span>
-  </td>
-</tr>
-
-<tr class="mask2">
-  <td class="yellow">Vector +<span id="mirrorNearAddVector"></span>
-</td>
-  <td style="text-align:middle" class="yellow" colspan="3">
-    R: <span id="od_vcNearCombined_mirror" style="margin-right: 100px;">0.00 / 0.00 x 0</span>
-    L: <span id="os_vcNearCombined_mirror">0.00 / 0.00 x 0</span>
-  </td>
-</tr>
-
 <tr class="mask1">
-  <td class="blue">Manual +<span id="mirrorNearAddFinal"></span>
+  <td class="blue">Manual Near +<span id="mirrorNearAddFinal"></span>
 </td>
   <td style="text-align:middle" class="blue" colspan="3">
     R: <span id="od_finalNearCombined_mirror" style="margin-right: 100px;">0.00 / 0.00 × 0</span>
@@ -810,6 +893,15 @@ function toggleStatusManual() {
   </td>
 </tr>
 
+<tr class="mask1">
+  <td class="blue">Manual CL Rx</td>
+  <td class="blue" colspan="3">
+    R : <span id="CL_od_finalCombined" style="margin-right: 100px;">OD -</span>
+    L : <span id="CL_os_finalCombined">OS -</span>
+  </td>
+</tr>
+
+
 <tr style="border:none; height:10px;">
   <td style="border:none; height:1px; padding:0;"></td>
   <td style="border:none; height:1px; padding:0;"></td>
@@ -817,6 +909,30 @@ function toggleStatusManual() {
   <td style="border:none; height:1px; padding:0;"></td>
 </tr>
 
+
+<tr><th colspan="4">New Lens Details</th></tr>
+<td colspan="4">
+<div>
+<input type="text" id="new_lens_details"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Index , Type of Vision , Purpose of Vision, Corridor">
+</div>
+<div style="text-align:left; margin-left:2%; margin-top:1%;">
+<span>**Index : 1.56 , 1.61 , 1.67 , 1.74</span><br> 
+<span>**Vision Type : SV , MF , Relax , Office</span><br>
+<span>**Purpose : See Far, See Near, See Intermediate, See everything</span><br>
+<span>**Corridor (for MF only) : Short, Medium, Long</span>
+
+</div>
+</td>
+</tr>
+<tr style="border:none; height:10px;">
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+</tr>
+<tr><th colspan="4">Comments</th></tr>
 <tr class="mask2">
 <td class="red">Current</td><td colspan="3" class="red"><span id="current_comments_summary"></span>
 </td></tr>
@@ -1296,7 +1412,7 @@ document.getElementById("fillCurrentBtn").addEventListener("click", () => {
   
   // Highlight button after click
   const btn = document.getElementById("fillCurrentBtn");
-  btn.style.backgroundColor = "#F5EFED";  // red
+  btn.style.backgroundColor = "#EBDADA";  // red
   btn.style.color = "black";               // text black
   btn.textContent = "Latest Vector Rx";             // change label
 });
@@ -1451,34 +1567,6 @@ document.addEventListener("paste", e => {
 </script>
 
 
-
-
-
-
-<script>
-["nearAdd", "nearAddVector", "nearAddFinal"].forEach(id => {
-  const el = document.getElementById(id);
-  if (!el) return;
-
-  el.addEventListener("input", () => {
-    let val = el.value;
-
-    // Allow empty or negative sign while typing
-    if (val === "" || val === "-" || val === ".") return;
-
-    let num = parseFloat(val);
-    if (isNaN(num)) return;
-
-    // Snap to nearest 0.25 without removing partial typing
-    let snapped = Math.round(num * 4) / 4;
-
-    // Only update if fully entered number differs from snapped
-    if (snapped !== num) {
-      el.value = snapped.toFixed(2);
-    }
-  });
-});
-</script>
 
 
 
@@ -2023,6 +2111,9 @@ window.addEventListener("DOMContentLoaded", ()=>{
   // new Problem inputs
   'od_rectS', 'od_rectC',  
   'os_rectS', 'os_rectC',
+  'cl-sph-re','cl-cyl-re','cl-sph-le','cl-cyl-le',
+ 'nearAddVector','nearAddFinal','nearAdd',
+  
 ];
 
 
@@ -2780,14 +2871,178 @@ updateBtns.forEach(btn => {
 
 </script>
 
+<script>
+let latest = { re: null, le: null };
+
+(function(){
+
+  function CLtoGlasses(F){ const d=0.01; return F / (1 + d * F); }
+  function r025(x){ return Math.round(x/0.25)*0.25; }
+  function flattenAxis(a){ a=parseFloat(a)||180; if(a<=0)a=180; return Math.round(a/10)*10; }
+
+  function convertOne_CLtoSpec(S,C,A){
+    S=parseFloat(S)||0; C=parseFloat(C)||0; A=parseFloat(A)||0;
+    const total = S+C;
+    const specS = CLtoGlasses(S);
+    const specT = CLtoGlasses(total);
+    const rawCyl = specT - specS;
+    const SE = specS + rawCyl/2;
+
+    if(Math.abs(rawCyl)<0.75) return { S: r025(SE), C:0, A:null };
+    return { S: r025(specS), C: r025(rawCyl), A: flattenAxis(A) };
+  }
+
+function fmtD(x){
+  return (x >= 0 ? "+" : "") + x.toFixed(2);
+}
+
+function display(side,data){
+  const div = document.getElementById(side==="re"?"reResult":"leResult");
+  if(!div) return;
+
+  if(data.C === 0){
+    div.textContent = `${fmtD(data.S)}`;
+  } else {
+    div.textContent = `${fmtD(data.S)} / ${fmtD(data.C)} x ${data.A}`;
+  }
+
+  if(side==="re") latest.re = data;
+  else latest.le = data;
+}
+
+  window.convertToSpecs = function(){
+    display("re", convertOne_CLtoSpec(
+      document.getElementById("cl-sph-re").value,
+      document.getElementById("cl-cyl-re").value,
+      document.getElementById("cl-axis-re").value
+    ));
+    display("le", convertOne_CLtoSpec(
+      document.getElementById("cl-sph-le").value,
+      document.getElementById("cl-cyl-le").value,
+      document.getElementById("cl-axis-le").value
+    ));
+  };
+
+  window.autofillOriginalInputs = function(){
+    if(latest.re){
+      document.getElementById("od_origS").value = latest.re.S;
+      document.getElementById("od_origC").value = latest.re.C;
+      document.getElementById("od_origA").value = latest.re.A || 0;
+    }
+    if(latest.le){
+      document.getElementById("os_origS").value = latest.le.S;
+      document.getElementById("os_origC").value = latest.le.C;
+      document.getElementById("os_origA").value = latest.le.A || 0;
+    }
+  };
+
+})();
+</script>
+
+<script>
+/* run once — add to your IIFE or below it */
+document.querySelectorAll('button.greyonclick').forEach(btn=>{
+  btn.addEventListener('click', function(e){
+    // make grey and optionally disable
+    this.classList.add('clicked');
+    // uncomment to disable the button after click:
+    // this.disabled = true;
+  });
+});
+</script>
+
+<script>
+function toggleTbody(tbodyId){
+  const tb = document.getElementById(tbodyId);
+  if(!tb) return;
+
+  tb.style.display = (tb.style.display === "none") ? "" : "none";
+}
+</script>
 
 
+<script>
+(function(){
+  const CL_CYL_STEPS = [-0.75,-1.25,-1.75,-2.25,-2.75];
+
+  function glassesToCL(F){ const d=0.01; return F/(1 - d*F); }
+  function r025(x){ return Math.round(x/0.25)*0.25; }
+  function roundUp025(x){ return Math.ceil(x/0.25)*0.25; }
+  function fmt(x){ x=parseFloat(x)||0; const s=x>=0?"+":""; return s+x.toFixed(2); }
+  function nearest(arr,val){ return arr.reduce((b,v)=>Math.abs(v-val)<Math.abs(b-val)?v:b,arr[0]); }
+  function flatterAxis(a){ a = parseFloat(a) || 0; if(a <= 0) a = 180; return Math.round(a / 10) * 10; }
+  function roundClipDiff(x){ return Math.round(x/0.50)*0.50; }
+
+function convertOne(S, C, A){
+  S = parseFloat(S)||0;
+  C = parseFloat(C)||0;
+  A = parseFloat(A)||0;
+
+  const total = S + C;
+  const convS = glassesToCL(S);
+  const convT = glassesToCL(total);
+  const rawCyl = convT - convS;
+
+  if(Math.abs(rawCyl) < 0.75){
+    return fmt(convS); // just sphere
+  }
+
+  const rS = r025(convS);
+  const rClipC = nearest(CL_CYL_STEPS, rawCyl);
+  const axis = flatterAxis(A);
+  const clipDiffRounded = roundClipDiff(rawCyl - rClipC);
+  const correctedSphere = roundUp025(rS + clipDiffRounded/2);
+
+  // OUTPUT FORMAT CHANGE HERE: S / C x A
+  return `${fmt(correctedSphere)} / ${fmt(rClipC)} x ${axis}`;
+}
 
 
+  const sets = [
+    ["od_origCombined","os_origCombined"],
+    ["od_vcCombined","os_vcCombined"],
+    ["od_finalCombined","os_finalCombined"]
+  ];
+
+function parseText(txt){
+  if(!txt || txt.includes("-") && txt.trim().length === 1) return [0,0,0]; // handle empty "-"
+  const parts = txt.split("/");
+  let S = parseFloat(parts[0]) || 0;
+  let C = 0, A = 0;
+  if(parts[1]){
+    const sub = parts[1].split("x");
+    C = parseFloat(sub[0]) || 0;
+    A = parseFloat(sub[1]) || 0;
+  }
+  return [S,C,A];
+}
 
 
+  function updateCL(odSpan, osSpan, odCL, osCL){
+    const [sOD,cOD,aOD] = parseText(odSpan.textContent);
+    const [sOS,cOS,aOS] = parseText(osSpan.textContent);
+    odCL.textContent = convertOne(sOD,cOD,aOD);
+    osCL.textContent = convertOne(sOS,cOS,aOS);
+  }
 
+  sets.forEach(([odId, osId])=>{
+    const odSpan = document.getElementById(odId);
+    const osSpan = document.getElementById(osId);
+    const odCL = document.getElementById("CL_" + odId);
+    const osCL = document.getElementById("CL_" + osId);
+    if(!odSpan || !osSpan || !odCL || !osCL) return;
 
+    // Initial calculation
+    updateCL(odSpan, osSpan, odCL, osCL);
+
+    // Live update using MutationObserver
+    const observer = new MutationObserver(()=>updateCL(odSpan, osSpan, odCL, osCL));
+    observer.observe(odSpan, { childList: true, characterData: true, subtree: true });
+    observer.observe(osSpan, { childList: true, characterData: true, subtree: true });
+  });
+
+})();
+</script>
 
 
 
