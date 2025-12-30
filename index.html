@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -3313,21 +3314,19 @@ function parseText(txt){
 </script>
 
 
-
-
 <script>
 (function(){
   'use strict';
 
-  /* ========== ONLY GLOBAL FOR BUTTONS ========== */
+  /* ========= GLOBAL BUTTON ADJ ========= */
   window.adj = function(type, step){
     const el = document.getElementById(type);
     if(!el) return;
     let v = parseFloat(el.value) || 0;
     v += step;
-    if(type==='axis'){
-      if(v < 1) v=180;
-      if(v > 180) v=1;
+    if(type === 'axis'){
+      if(v < 1) v = 180;
+      if(v > 180) v = 1;
       el.value = Math.round(v);
     } else {
       el.value = v.toFixed(2);
@@ -3335,77 +3334,122 @@ function parseText(txt){
     el.dispatchEvent(new Event('input',{bubbles:true}));
   };
 
-  /* ======== INTERNAL STATE ======== */
-  const PX_PER_D = 2, K_BLUR_PER_D = 2.0, EXTRA_ASTIG_BLUR_PER_D=0.4, OVERLAY_ALPHA=0.6;
-  const redImg=document.getElementById('redImg'),
-        blueImg=document.getElementById('blueImg'),
-        redOv=document.getElementById('redOv'),
-        blueOv=document.getElementById('blueOv'),
-        fanImg=document.getElementById('fanChart'),
-        outer=document.getElementById('outerCircle');
-  const sphInput=document.getElementById('sph'),
-        cylInput=document.getElementById('cyl'),
-        axisInput=document.getElementById('axis');
+  /* ========= TUNABLES ========= */
+  const PX_PER_D = 2;
+  const K_BLUR_PER_D = 2;
+  const EXTRA_ASTIG_BLUR_PER_D = 0;
+  const OVERLAY_ALPHA = 0.5;
+  const FC_BLUR_GAIN = 0.5;
 
-  let TRUE={sph:0, cyl:0, axis:180, se:0};
+  /* ========= ELEMENTS ========= */
+  const redImg  = document.getElementById('redImg');
+  const blueImg = document.getElementById('blueImg');
+  const redOv   = document.getElementById('redOv');
+  const blueOv  = document.getElementById('blueOv');
+  const fanImg  = document.getElementById('fanChart');
+  const outer   = document.getElementById('outerCircle');
 
-  const quant05 = v=>Math.round(v*2)/2;
-  const wrapAxis = v=>{
-    let n=parseFloat(v);
+  const sphInput  = document.getElementById('sph');
+  const cylInput  = document.getElementById('cyl');
+  const axisInput = document.getElementById('axis');
+
+  /* ========= STATE ========= */
+  let TRUE = { sph:0, cyl:0, axis:180, se:0 };
+
+  /* ========= HELPERS ========= */
+  const quant05 = v => Math.round(v*2)/2;
+
+  function wrapAxis(v){
+    let n = parseFloat(v);
     if(!Number.isFinite(n)) return 180;
-    n=((Math.round(n)%180)+180)%180;
-    return n===0?180:n;
-  };
+    n = ((Math.round(n)%180)+180)%180;
+    return n===0 ? 180 : n;
+  }
 
-  /* ======== COMPUTE & RENDER ======== */
+  /* ========= CORE ========= */
   function recompute(){
-    TRUE.sph  = parseFloat(sphInput.value)||0;
-    TRUE.cyl  = parseFloat(cylInput.value)||0;
+    TRUE.sph  = parseFloat(sphInput.value) || 0;
+    TRUE.cyl  = parseFloat(cylInput.value) || 0;
     TRUE.axis = wrapAxis(axisInput.value);
-    TRUE.se   = TRUE.sph + TRUE.cyl/2;
+    TRUE.se   = TRUE.sph + TRUE.cyl/2;   // DELTA SE
     render();
   }
 
   function render(){
-    const blur = Math.abs(TRUE.se)*K_BLUR_PER_D;
-    const extra = Math.abs(TRUE.cyl)*EXTRA_ASTIG_BLUR_PER_D;
+    const deltaSE = TRUE.se;
+    const cyl  = TRUE.cyl;
+    const axis = TRUE.axis;
 
-    // Red / Blue overlay
-    redImg.style.filter = blueImg.style.filter = `blur(${quant05(blur)}px)`;
-    redOv.style.filter = blueOv.style.filter = `blur(${quant05(blur+extra)}px)`;
+    /* ---- SPH → DOMINANT SIDE BLUR ---- */
+    const s = Math.abs(deltaSE);
+    const primary   = s * K_BLUR_PER_D;
+    const secondary = (s >= 0.75) ? ((s - 0.5) * K_BLUR_PER_D) : 0;
+
+    let blurRed = 0, blurBlue = 0;
+    if(deltaSE > 0){
+      blurRed  = primary;
+      blurBlue = secondary;
+    } else if(deltaSE < 0){
+      blurBlue = primary;
+      blurRed  = secondary;
+    }
+
+    redImg.style.filter  = `blur(${quant05(blurRed)}px)`;
+    blueImg.style.filter = `blur(${quant05(blurBlue)}px)`;
+
+    /* ---- CYL → DUOCHROME SEPARATION ---- */
+    const mag = Math.abs(cyl) * PX_PER_D;
+    const rad = (((axis % 180) * 2) - 90) * Math.PI / 180;
+    const dx = Math.round(Math.cos(rad) * mag);
+    const dy = Math.round(Math.sin(rad) * mag);
+
+    redOv.style.transform  = `translate(${dx}px, ${dy}px)`;
+    blueOv.style.transform = `translate(${dx}px, ${dy}px)`;
+
+    if(Math.abs(cyl) > 0.01){
+      redImg.style.transform  = `translate(${-dx}px, ${-dy}px)`;
+      blueImg.style.transform = `translate(${-dx}px, ${-dy}px)`;
+    } else {
+      redImg.style.transform  = 'translate(0,0)';
+      blueImg.style.transform = 'translate(0,0)';
+    }
+
+    /* ---- ASTIG BLUR ---- */
+    const extra = Math.abs(cyl) * EXTRA_ASTIG_BLUR_PER_D;
+    redOv.style.filter  = `blur(${quant05(blurRed  + extra)}px)`;
+    blueOv.style.filter = `blur(${quant05(blurBlue + extra)}px)`;
     redOv.style.opacity = blueOv.style.opacity = OVERLAY_ALPHA;
 
-    // Duochrome shift
-    const mag = Math.abs(TRUE.cyl)*PX_PER_D;
-    const rad = ((TRUE.axis*2)-90)*Math.PI/180;
-    const dx = Math.round(Math.cos(rad)*mag);
-    const dy = Math.round(Math.sin(rad)*mag);
-    redOv.style.transform = blueOv.style.transform = `translate(${dx}px,${dy}px)`;
+    /* ---- FAN CHART ---- */
+const absC = Math.abs(cyl);
+let img;
+if(absC === 0)             img = "C000.png";
+else if(absC <= 0.25)      img = "C050.png";
+else if(absC <= 0.5)       img = "C075.png";
+else if(absC <= 0.75)      img = "C100.png";
+else                       img = "C150.png";
+fanImg.src = `https://raw.githubusercontent.com/kiaraoptometrypx/Trainer/main/${img}`;
 
-    // Fanchart rotation
-    const fcOffset = 0; // can adjust if needed
-    outer.style.transform = `scaleX(-1) rotate(${-TRUE.axis-fcOffset}deg)`;
 
-    // Fanchart image can optionally change based on cyl magnitude
-    let imgName="C025.png";
-    const absC = Math.abs(TRUE.cyl);
-    if(absC>0.25 && absC<=0.5) imgName="C050.png";
-    else if(absC>0.5 && absC<=0.75) imgName="C075.png";
-    else if(absC>0.75 && absC<=1.0) imgName="C100.png";
-    else if(absC>1.0) imgName="C150.png";
-    fanImg.src=`https://raw.githubusercontent.com/kiaraoptometrypx/Trainer/main/${imgName}`;
+
+    const axisFC  = (axis + 90) % 180;
+    const fcShift = (deltaSE > 0) ? 90 : 0;
+    outer.style.transform = `scaleX(-1) rotate(${-(axisFC + fcShift)}deg)`;
   }
 
-  /* ======== EVENT LISTENERS ======== */
+  /* ========= EVENTS ========= */
   sphInput.addEventListener('input', recompute);
   cylInput.addEventListener('input', recompute);
-  axisInput.addEventListener('input',()=>{ axisInput.value=wrapAxis(axisInput.value); recompute(); });
+  axisInput.addEventListener('input', ()=>{
+    axisInput.value = wrapAxis(axisInput.value);
+    recompute();
+  });
   axisInput.addEventListener('keydown', e=>{
-    if(e.key==='ArrowUp'){ e.preventDefault(); axisInput.value=wrapAxis((parseFloat(axisInput.value)||0)+1); recompute(); }
-    if(e.key==='ArrowDown'){ e.preventDefault(); axisInput.value=wrapAxis((parseFloat(axisInput.value)||0)-1); recompute(); }
+    if(e.key==='ArrowUp'){ e.preventDefault(); axisInput.value=wrapAxis(+axisInput.value+1); recompute(); }
+    if(e.key==='ArrowDown'){ e.preventDefault(); axisInput.value=wrapAxis(+axisInput.value-1); recompute(); }
   });
 
-  /* ======== INIT ======== */
+  /* ========= INIT ========= */
   recompute();
 
 })();
