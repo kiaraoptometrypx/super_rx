@@ -321,6 +321,36 @@ body, table, th, td, input, button {
 
   #targetPanel input{ width:60px; font-size:10px; padding:5px; text-align:center; margin:2px 2px; border-radius:5px; }
 
+/* General dropdown styling */
+select {
+  padding: 5px 10px;
+  font-size: 12px;
+  border: 1px dotted black;
+  border-radius: 6px;
+  background-color: #fff;
+  color: black;
+  transition: 0.1s;
+}
+
+/* Hover effect */
+select:hover {
+  border-color: #E0E0E0;
+  background-color: #E0E0E0;
+}
+
+/* Focus effect */
+select:focus {
+  border-color: #E0E0E0;
+  background-color: #fff;
+}
+
+/* Option styling (limited support in browsers) */
+option {
+  padding: 8px;
+  font-size: 12px;
+}
+
+
 </style>
 
 </head>
@@ -331,7 +361,8 @@ body, table, th, td, input, button {
   <h2>HYPERVISION RX</h2>
   <nav class="topMenu">
     <a data-target="s0">Current Rx</a>
-    <a data-target="s1">Defects</a>
+    <a data-target="s1">Errors</a>
+    <a data-target="s6">Troubleshoot</a>
     <a data-target="s2">Vector RX</a>
     <a data-target="s3">Manual RX</a>
     <a data-target="s4">Summary</a>
@@ -526,7 +557,7 @@ body, table, th, td, input, button {
 <div style="height:70px"></div>
 <table>
 
-<tr><th colspan="4">How the Test Works</th></tr>
+<tr><th colspan="4">Errors</th></tr>
 
 <tr><td colspan="4">
 
@@ -617,7 +648,7 @@ Prescription comes in many types of errors; whether it's myopia, hyperopia or as
 
 
 
-<tr><th colspan="4">Duochrome & Fanchart Defects</th></tr>
+<tr><th colspan="4">Duochrome & Fanchart Errors</th></tr>
 
 <tr><td colspan="4">  
 <div style="padding:0% 8% 2% 8%">Duochrome <b>measures the status of your current vision setting</b> - if the power is high or low, it shows clarity imbalance. The aim of the test is to find the power that makes both side equal.
@@ -656,7 +687,47 @@ Prescription comes in many types of errors; whether it's myopia, hyperopia or as
 
 
 </div>
-<div style="height:450px"></div>
+<div style="height:350px"></div>
+
+
+
+   <div id="s6" class="section">
+<div style="height:70px"></div>
+<table>
+
+<tr><th colspan="4">Troubleshoot</th></tr>
+
+<tr><td colspan="4">  
+
+
+<label for="duochrome">Duochrome Status : </label>
+<select style="width:200px" id="duochrome" onchange="updateFanChart()">
+  <option value="">--Select--</option>
+  <option value="red">Red clearer</option>
+  <option value="blue">Blue clearer</option>
+  <option value="both_badly">Both blur badly</option>
+  <option value="both_slightly">Both blur slightly</option>
+  <option value="both_clear">Both clear</option>
+</select>
+
+<br><br>
+
+<label for="fanchart">Fan Chart Status : </label>
+<select style="width:200px" id="fanchart">
+  <option value="">--Select--</option>
+</select>
+
+<br><br>
+
+<button style="border-radius:6px; padding:10px 30px; width:300px "onclick="showResult()">Check Result</button><br><br>
+Suspect Type <span id="result"><i>-</i></span><br><br>
+</td></tr>
+
+
+
+
+</table>
+</div>
 
 
     <div id="s2" class="section">
@@ -3456,6 +3527,61 @@ fanImg.src = `https://raw.githubusercontent.com/kiaraoptometrypx/Trainer/main/${
 </script>
 
 
+
+<script>
+const fanOptions = {
+  "red": ["all_blur", "one_clearer", "multiple_clear_blur"],
+  "blue": ["all_similar", "one_clearer", "multiple_clear_blur"],
+  "both_badly": ["all_blur", "one_clearer", "multiple_clear_blur"],
+  "both_slightly": ["all_blur", "one_clearer", "multiple_clear_blur"],
+  "both_clear": ["one_clearer", "multiple_clear_blur"]
+};
+
+const fanLabels = {
+  "all_blur": "All blur",
+  "all_similar": "All similar",
+  "one_clearer": "One direction clearer",
+  "multiple_clear_blur": "Multiple directions clear/blur"
+};
+
+function updateFanChart() {
+  const d = document.getElementById("duochrome").value;
+  const f = document.getElementById("fanchart");
+  f.innerHTML = '<option value="">--Select--</option>';
+  if(fanOptions[d]){
+    fanOptions[d].forEach(opt => {
+      const el = document.createElement("option");
+      el.value = opt;
+      el.textContent = fanLabels[opt];
+      f.appendChild(el);
+    });
+  }
+}
+
+const lookup = {
+  "red|all_blur": "1. Underpowered, almost no astigmatism",
+  "red|one_clearer": "2. Underpowered, has astigmatism, possibly more than 0.50 CYL",
+  "red|multiple_clear_blur": "3. Underpowered, astigmatism from dry eyes or corneal irregularity",
+  "blue|all_similar": "4. Overpowered, most likely no astigmatism",
+  "blue|one_clearer": "5. Overpowered, has astigmatism, possibly more than 0.50 CYL",
+  "blue|multiple_clear_blur": "6. Overpowered, astigmatism from dry eyes or corneal irregularity",
+  "both_badly|all_blur": "7. Highly over or underpowered, cannot conclude astigmatism amount",
+  "both_badly|one_clearer": "8. Highly over or underpowered definitely has astigmatism",
+  "both_badly|multiple_clear_blur": "9. Highly over or underpowered, astigmatism from dry eyes or corneal irregularity",
+  "both_slightly|all_blur": "10. Poor visual acuity, amblyopia, cornea opacity, cataract, macula or retina issue, etc.",
+  "both_slightly|one_clearer": "11. Uncorrected astigmatism disturbing the visual acuity.",
+  "both_slightly|multiple_clear_blur": "12. Poor visual acuity with astigmatism from dry eyes or corneal irregularity",
+  "both_clear|one_clearer": "13. Slight uncorrected astigmatism or maybe too little for 0.25 CYL to correct.",
+  "both_clear|multiple_clear_blur": "14. Astigmatism errors from dry eyes, post cornea surgery, corneal irregularity, cataract, macula or retina issue, etc."
+};
+
+function showResult() {
+  const d = document.getElementById("duochrome").value;
+  const f = document.getElementById("fanchart").value;
+  const key = d + "|" + f;
+  document.getElementById("result").textContent = lookup[key] || "No result for this combination";
+}
+</script>
 
 
 
