@@ -712,10 +712,17 @@ Prescription comes in many types of errors; whether it's myopia, hyperopia or as
 
 <br><br>
 
-<label for="fanchart">Fan Chart Status : </label>
-<select style="width:200px" id="fanchart">
-  <option value="">--Select--</option>
-</select>
+    <label for="fanchart">Fan Chart : </label>
+    <select style="width:200px" id="fanchart" onchange="updateAxisDirection()">
+      <option value="">--Select--</option>
+    </select>
+
+<br><br>
+
+    <label for="axisDirection">FC Darker Lines : </label>
+    <select style="width:200px" id="axisDirection">
+      <option value="">--Select--</option>
+    </select>
 
 <br><br>
 
@@ -738,8 +745,9 @@ Suspect Type <span id="result"><i>-</i></span><br><br>
 <!-- Vector Refraction -->
 <tr>
   <th class="yellow" colspan="4">Vector Refraction</th></tr>
+<tr><td colspan="4"><b><i> Instructions to fill FC DC Bal </i></b><br><br>1. Measure and input the amount of sph needed to shift DC to balance.<br>2. Calculate fogging (+1.00 + DC Bal) for FC test.<br>3. Apply fogging, measure and input the amount of cyl and axis needed to balance FC.<br>4. Press USE to transfer details to Vector Changes. </td></tr>
 <tr>
-  <td>FC DC Bal BE<br><div style="margin-top:5px"><button onclick="copyVD_OU_to_ODOS()" style="border-radius:10px; width:70px; height:25px">Fill Input</button></div></td>
+  <td>FC DC Bal BE<br><div style="margin-top:5px"><button onclick="copyVD_OU_to_ODOS()" style="border-radius:10px; width:70px; height:25px">Use BE</button></div></td>
   <td>
      Sph : <input type="number" step="0.25" id="vd_ouS"><br>
     <div style="margin-top:2px"><span style="margin-right:15px" id="vd_out_ouS">-</span></div>
@@ -755,7 +763,7 @@ Suspect Type <span id="result"><i>-</i></span><br><br>
 </tr>
 
 <tr>
-  <td>FC DC Bal R<br><div style="margin-top:5px"><button onclick="copyVD_OD()" style="border-radius:10px; width:70px; height:25px">Fill Input</button></div></td>
+  <td>FC DC Bal R<br><div style="margin-top:5px"><button onclick="copyVD_OD()" style="border-radius:10px; width:70px; height:25px">Use RE</button></div></td>
   <td>
      Sph : <input type="number" step="0.25" id="vd_odS"><br>
     <div style="margin-top:2px"><span style="margin-right:15px" id="vd_out_odS">-</span></div>
@@ -773,7 +781,7 @@ Suspect Type <span id="result"><i>-</i></span><br><br>
 <tr>
   <td>FC DC Bal L<br>
     <div style="margin-top:5px">
-      <button onclick="copyVD_OS()" style="border-radius:10px; width:70px; height:25px">Fill Input</button>
+      <button onclick="copyVD_OS()" style="border-radius:10px; width:70px; height:25px">Use LE</button>
     </div>
   </td>
   <td>
@@ -790,16 +798,21 @@ Suspect Type <span id="result"><i>-</i></span><br><br>
   </td>
 
 </tr>
-
+<tr style="border:none; height:10px;">
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+</tr>
 
 <tr>
-  <td>Right FC DC</td>
+  <td>Vector Changes R</td>
   <td><input type="number" step="0.25" id="vc_odS"></td>
   <td><input type="number" step="0.25" id="vc_odC"></td>
   <td><input type="number" step="5" min="0" max="180" id="vc_odA"></td>
 </tr>
 <tr>
-  <td>Left FC DC</td>
+  <td>Vector Changes L</td>
   <td><input type="number" step="0.25" id="vc_osS"></td>
   <td><input type="number" step="0.25" id="vc_osC"></td>
   <td><input type="number" step="5" min="0" max="180" id="vc_osA"></td>
@@ -3544,11 +3557,29 @@ const fanLabels = {
   "multiple_clear_blur": "Multiple directions clear/blur"
 };
 
+const axisOptions = {
+  "red": {
+    "one_clearer": ["12 - 6 darker","1 - 7 darker","2 - 8 darker","3 - 9 darker","4 - 10 darker","5 - 11 darker"]
+  },
+  "blue": {
+    "one_clearer": ["12 - 6 darker","1 - 7 darker","2 - 8 darker","3 - 9 darker","4 - 10 darker","5 - 11 darker"]
+  },
+  "both_badly": {
+    "one_clearer": ["12 - 6 darker","1 - 7 darker","2 - 8 darker","3 - 9 darker","4 - 10 darker","5 - 11 darker"]
+  },
+  "both_slightly": {
+    "one_clearer": ["12 - 6 darker","1 - 7 darker","2 - 8 darker","3 - 9 darker","4 - 10 darker","5 - 11 darker"]
+  },
+  "both_clear": {
+    "one_clearer": ["12 - 6 darker","1 - 7 darker","2 - 8 darker","3 - 9 darker","4 - 10 darker","5 - 11 darker"]
+  }
+};
+
 function updateFanChart() {
   const d = document.getElementById("duochrome").value;
   const f = document.getElementById("fanchart");
   f.innerHTML = '<option value="">--Select--</option>';
-  if(fanOptions[d]){
+  if(d && fanOptions[d]){
     fanOptions[d].forEach(opt => {
       const el = document.createElement("option");
       el.value = opt;
@@ -3556,38 +3587,57 @@ function updateFanChart() {
       f.appendChild(el);
     });
   }
+  updateAxisDirection(); // update axis whenever fan chart changes
+}
+
+function updateAxisDirection() {
+  const d = document.getElementById("duochrome").value;
+  const f = document.getElementById("fanchart").value;
+  const axisSelect = document.getElementById("axisDirection");
+  axisSelect.innerHTML = '<option value="">--Select--</option>';
+
+  if(d && f === "one_clearer" && axisOptions[d] && axisOptions[d][f]){
+    axisOptions[d][f].forEach(opt => {
+      const el = document.createElement("option");
+      el.value = opt;
+      el.textContent = opt;
+      axisSelect.appendChild(el);
+    });
+  }
 }
 
 const lookup = {
-  "red|all_blur": "1. Underpowered, almost no astigmatism",
-  "red|one_clearer": "2. Underpowered, has astigmatism, possibly more than 0.50 CYL",
-  "red|multiple_clear_blur": "3. Underpowered, astigmatism from dry eyes or corneal irregularity",
-  "blue|all_similar": "4. Overpowered, most likely no astigmatism",
-  "blue|one_clearer": "5. Overpowered, has astigmatism, possibly more than 0.50 CYL",
-  "blue|multiple_clear_blur": "6. Overpowered, astigmatism from dry eyes or corneal irregularity",
-  "both_badly|all_blur": "7. Highly over or underpowered, cannot conclude astigmatism amount",
-  "both_badly|one_clearer": "8. Highly over or underpowered definitely has astigmatism",
-  "both_badly|multiple_clear_blur": "9. Highly over or underpowered, astigmatism from dry eyes or corneal irregularity",
-  "both_slightly|all_blur": "10. Poor visual acuity, amblyopia, cornea opacity, cataract, macula or retina issue, etc.",
-  "both_slightly|one_clearer": "11. Uncorrected astigmatism disturbing the visual acuity.",
+  "red|all_blur": "1. Myope, almost no astigmatism",
+  "red|one_clearer": "2. Myope, has astigmatism, possibly more than 0.50 CYL",
+  "red|multiple_clear_blur": "3. Myope, astigmatism from dry eyes or corneal irregularity",
+  "blue|all_similar": "4. Hyperope, most likely no astigmatism",
+  "blue|one_clearer": "5. Hyperope, has astigmatism, possibly more than 0.50 CYL",
+  "blue|multiple_clear_blur": "6. Hyperope, astigmatism from dry eyes or corneal irregularity",
+  "both_badly|all_blur": "7. High myope or high hyperope, cannot conclude astigmatism amount",
+  "both_badly|one_clearer": "8. High myope or high hyperope, definitely has astigmatism",
+  "both_badly|multiple_clear_blur": "9. High myope or high hyperope, astigmatism from dry eyes or corneal irregularity",
+  "both_slightly|all_blur": "10. Poor visual acuity",
+  "both_slightly|one_clearer": "11. Poor visual acuity with astigmatism",
   "both_slightly|multiple_clear_blur": "12. Poor visual acuity with astigmatism from dry eyes or corneal irregularity",
-  "both_clear|one_clearer": "13. Slight uncorrected astigmatism or maybe too little for 0.25 CYL to correct.",
-  "both_clear|multiple_clear_blur": "14. Astigmatism errors from dry eyes, post cornea surgery, corneal irregularity, cataract, macula or retina issue, etc."
+  "both_clear|one_clearer": "13. Sharp visual acuity with astigmatism",
+  "both_clear|multiple_clear_blur": "14. Sharp visual acuity with astigmatism from dry eyes or corneal irregularity"
 };
 
 function showResult() {
   const d = document.getElementById("duochrome").value;
   const f = document.getElementById("fanchart").value;
-  const key = d + "|" + f;
-  document.getElementById("result").textContent = lookup[key] || "No result for this combination";
+  const axis = document.getElementById("axisDirection").value;
+  let key = d + "|" + f;
+  let result = lookup[key] || "No result for this combination";
+  if(f === "one_clearer" && axis) {
+    result += " | Axis: " + axis;
+  }
+  document.getElementById("result").textContent = result;
 }
+
+// Populate Fan Chart on load
+window.onload = updateFanChart;
 </script>
-
-
-
-
-
-
 
 
 </body>
