@@ -217,7 +217,7 @@ body, table, th, td, input, button {
     box-shadow:0 0 10px rgba(0,0,0,.25); display:inline-block; border:1px solid #bbb; margin:8px 0 14px; }
   .row input[type=number]{ width:70px; text-align:center; }
   .row b{ display:inline-block; margin-bottom:6px; }
-  button{ margin:0px; padding:5px 10px; cursor:pointer; }
+  button{ margin:0px; padding:5px 10px; cursor:pointer; border-radius:6px }
 /* Duochrome */
 .duochrome {
   display: flex;
@@ -349,7 +349,9 @@ option {
   padding: 8px;
   font-size: 12px;
 }
-
+.resultRow {
+  margin-bottom: 10px;
+}
 
 </style>
 
@@ -359,7 +361,7 @@ option {
 
 <div id="topBlock">
   <h2>HYPERVISION RX</h2>
-  <nav class="topMenu">
+  <nav class="topMenu" style="user-select:none">
     <a data-target="s0">Current Rx</a>
     <a data-target="s1">Errors</a>
     <a data-target="s6">Troubleshoot</a>
@@ -695,26 +697,35 @@ Prescription comes in many types of errors; whether it's myopia, hyperopia or as
 <div style="height:70px"></div>
 <table>
 
-<tr><th colspan="4">Troubleshoot</th></tr>
-
-<tr><td colspan="4">  
+<tr><th colspan="4">Troubleshoot<br></th></tr>
+<tr><td colspan="4"><b><i>  
+Use this to know what RX to fit next based on patient's response.
+</b></i><br>
+1. Key in the current prescription.<br>
+2. Key in their response of the FC and DC.<br>
+3. Press calculate prescription.<br>
+4. Refill the new prescription to the top by pressing the 'Copy to Top'.<br>
+<br><br> 
 
 
 <div>
   <!-- Inputs -->
   <div class="row">
-    <label>SPH: <input id="TS_sph" type="number" step="0.25"></label>
-    <label>CYL: <input id="TS_cyl" type="number" step="0.25" ></label>
-    <label>AXIS: <input id="TS_axis" type="number" step="5" min="0" max="180"></label>
-    <button id="lockFinalBtn">Lock as Final</button>
+    <label>SPH : <input id="TS_sph" type="number" step="0.25"></label>
+    <label>CYL : <input id="TS_cyl" type="number" step="0.25" ></label>
+    <label>AXIS : <input id="TS_axis" type="number" step="5" min="0" max="180"></label>
+</div>
+<div style="margin-top:15px" class="row">
+    <button id="lockFinalBtn">Copy to Finalized Prescription</button>
     <button id="resetBtn">Reset to 0</button>
-  </div>
+  </div><br>
+
 
   <!-- Dropdowns -->
   <div class="row">
     <div>
-      <label>Duochrome</label><br>
-      <select id="duochrome">
+      <label>Duochrome : </label>
+      <select style="width:50%" id="duochrome">
         <option value="">--Select--</option>
         <option value="red">Red clearer</option>
         <option value="blue">Blue clearer</option>
@@ -722,36 +733,40 @@ Prescription comes in many types of errors; whether it's myopia, hyperopia or as
         <option value="both_slightly">Both blur slightly</option>
         <option value="both_clear">Both clear</option>
       </select>
-    </div>
+    </div><br>
 
     <div>
-      <label>Fan Chart</label><br>
-      <select id="fanchart">
+      <label>Fan Chart : </label>
+      <select style="width:50%" id="fanchart">
         <option value="">--Select--</option>
         <option value="one_clearer">One direction clearer</option>
         <option value="all_blur">All same quality / no darker line</option>
         <option value="multiple_clear_blur">Multiple clear / blur (no single line pattern)</option>
       </select>
-    </div>
+    </div><br>
+
 
     <div>
-      <label>Axis Darker</label><br>
-      <select id="axisDarker"></select>
+      <label>Darker Axis : </label>
+      <select style="width:50%" id="axisDarker"></select>
     </div>
   </div>
+</td></tr>
+
+<tr><td colspan="4">  
 
   <div class="row">
-    <button onclick="runAllCalculations()">Calculate Prescription</button>
-  </div>
+    <button style="width:50%" onclick="runAllCalculations()">Calculate Prescription</button>
+  </div><br>
+
 
   <div id="result"></div>
 
-  <h3>Finalized Results</h3>
   <table id="finalTable">
     <thead>
       <tr class="red">
-         <th class="red" style="width:40%">Finalized Prescription</th>
-        <th class="red" style="width:60%">Comment</th>
+         <th class="red" style="width:40%">List of Finalized Prescription</th>
+        <th class="red" style="width:60%">Notes</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -3683,7 +3698,8 @@ function runAllCalculations(){
 const text = `If using ${r.usedPower}, New RX is ${formatDiopter(round025(r.sph))} / CYL ${formatDiopter(round025(r.cyl))} X ${r.axis}`;
 
     const span=document.createElement("span"); span.textContent=text;
-    const btn=document.createElement("button"); btn.textContent="Copy To Top"; btn.className="copyBtn";
+    const btn=document.createElement("button"); btn.textContent="Copy To Top"; btn.className="copyBtn"; btn.style.marginLeft = "5%";
+
     btn.onclick=()=>{ document.getElementById("TS_sph").value=r.sph!=="-"?r.sph:""; document.getElementById("TS_cyl").value=r.cyl!=="-"?r.cyl:""; document.getElementById("TS_axis").value=r.axis!=="-"?r.axis:""; };
     row.appendChild(span); row.appendChild(btn); container.appendChild(row);
   });
