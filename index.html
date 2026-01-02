@@ -217,7 +217,7 @@ body, table, th, td, input, button {
     box-shadow:0 0 10px rgba(0,0,0,.25); display:inline-block; border:1px solid #bbb; margin:8px 0 14px; }
   .row input[type=number]{ width:70px; text-align:center; }
   .row b{ display:inline-block; margin-bottom:6px; }
-  button{ margin:5px; padding:5px 10px; cursor:pointer; }
+  button{ margin:0px; padding:5px 10px; cursor:pointer; }
 /* Duochrome */
 .duochrome {
   display: flex;
@@ -501,10 +501,10 @@ option {
   placeholder="Index , Type of Vision , Corridor">
 </div>
 <div style="text-align:left; margin-left:2%; margin-top:1%;">
-<span>**Index : 1.56 , 1.61 , 1.67 , 1.74</span><br> 
-<span>**Vision Type : SV , MF , Relax , Office</span><br>
-<span>**Purpose : See Far, See Near, See Intermediate, See everything</span><br>
-<span>**Corridor (for MF only) : Short, Medium, Long</span>
+<span>1. Index : 1.56 , 1.61 , 1.67 , 1.74</span><br> 
+<span>2. Vision Type : SV , MF , Relax , Office</span><br>
+<span>3. Purpose : See Far, See Near, See Intermediate, See everything</span><br>
+<span>4. Corridor (for MF only) : Short, Medium, Long</span>
 
 </div>
 </td>
@@ -700,34 +700,72 @@ Prescription comes in many types of errors; whether it's myopia, hyperopia or as
 <tr><td colspan="4">  
 
 
-<label for="duochrome">Duochrome Status : </label>
-<select style="width:200px" id="duochrome" onchange="updateFanChart()">
-  <option value="">--Select--</option>
-  <option value="red">Red clearer</option>
-  <option value="blue">Blue clearer</option>
-  <option value="both_badly">Both blur badly</option>
-  <option value="both_slightly">Both blur slightly</option>
-  <option value="both_clear">Both clear</option>
-</select>
+<div>
+  <!-- Inputs -->
+  <div class="row">
+    <label>SPH: <input id="TS_sph" type="number" step="0.25"></label>
+    <label>CYL: <input id="TS_cyl" type="number" step="0.25" ></label>
+    <label>AXIS: <input id="TS_axis" type="number" step="5" min="0" max="180"></label>
+    <button id="lockFinalBtn">Lock as Final</button>
+    <button id="resetBtn">Reset to 0</button>
+  </div>
 
-<br><br>
+  <!-- Dropdowns -->
+  <div class="row">
+    <div>
+      <label>Duochrome</label><br>
+      <select id="duochrome">
+        <option value="">--Select--</option>
+        <option value="red">Red clearer</option>
+        <option value="blue">Blue clearer</option>
+        <option value="both_badly">Both blur badly</option>
+        <option value="both_slightly">Both blur slightly</option>
+        <option value="both_clear">Both clear</option>
+      </select>
+    </div>
 
-    <label for="fanchart">Fan Chart : </label>
-    <select style="width:200px" id="fanchart" onchange="updateAxisDirection()">
-      <option value="">--Select--</option>
-    </select>
+    <div>
+      <label>Fan Chart</label><br>
+      <select id="fanchart">
+        <option value="">--Select--</option>
+        <option value="one_clearer">One direction clearer</option>
+        <option value="all_blur">All same quality / no darker line</option>
+        <option value="multiple_clear_blur">Multiple clear / blur (no single line pattern)</option>
+      </select>
+    </div>
 
-<br><br>
+    <div>
+      <label>Axis Darker</label><br>
+      <select id="axisDarker"></select>
+    </div>
+  </div>
 
-    <label for="axisDirection">FC Darker Lines : </label>
-    <select style="width:200px" id="axisDirection">
-      <option value="">--Select--</option>
-    </select>
+  <div class="row">
+    <button onclick="runAllCalculations()">Calculate Prescription</button>
+  </div>
 
-<br><br>
+  <div id="result"></div>
 
-<button style="border-radius:6px; padding:10px 30px; width:300px "onclick="showResult()">Check Result</button><br><br>
-Suspect Type <span id="result"><i>-</i></span><br><br>
+  <h3>Finalized Results</h3>
+  <table id="finalTable">
+    <thead>
+      <tr class="red">
+         <th class="red" style="width:40%">Finalized Prescription</th>
+        <th class="red" style="width:60%">Comment</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  
+</div>
+
+
+
+
+
+
+
 </td></tr>
 
 
@@ -943,7 +981,19 @@ Manual Refraction
 <button class="blue" style="margin-left:20px; border-radius:10px; height:25px; width:150px" id="toggleMask1">Hide/Show Manual</button>
 
 </th></tr>
+</table>
 
+<table id="finalTableMirror">
+    <thead>
+      <tr>
+         <th class="red" style="width:40%">Prescription from Troubleshoot</th>
+        <th class="red" style="width:60%">Comment</th>
+      </tr>
+    </thead>
+  <tbody></tbody>
+</table>
+
+<table>
 <tr class="mask1">
   <td>Right RX</td>
   <td>Sph : <input type="number" step="0.25" id="od_finalS"></td>
@@ -1177,7 +1227,7 @@ L : <span id="CL_os_origCombined">OS -</span>
     L : <span id="os_finalCombined">OS -</span>
   </td>
 </tr>
-<tr class="mirror1">
+<tr class="mirror1 mask1">
   <td class="blue">Vectorized RE Dom</td>
   <td class="blue" colspan="3">
     R: <span id="od_vectorDisplay_mirror" style="margin-right: 80px;">- / - × -</span>
@@ -1185,7 +1235,7 @@ L : <span id="CL_os_origCombined">OS -</span>
   </td>
 </tr>
 
-<tr class="mirror2">
+<tr class="mirror2 mask1">
   <td class="blue">Vectorized LE Dom</td>
   <td class="blue" colspan="3">
     R: <span id="ODcrossedSpan_mirror" style="margin-right: 80px;">- / - × -</span>
@@ -1227,10 +1277,10 @@ L : <span id="CL_os_origCombined">OS -</span>
   placeholder="Index , Type of Vision , Purpose of Vision, Corridor">
 </div>
 <div style="text-align:left; margin-left:2%; margin-top:1%;">
-<span>**Index : 1.56 , 1.61 , 1.67 , 1.74</span><br> 
-<span>**Vision Type : SV , MF , Relax , Office</span><br>
-<span>**Purpose : See Far, See Near, See Intermediate, See everything</span><br>
-<span>**Corridor (for MF only) : Short, Medium, Long</span>
+<span>1. Index : 1.56 , 1.61 , 1.67 , 1.74</span><br> 
+<span>2. Vision Type : SV , MF , Relax , Office</span><br>
+<span>3. Purpose : See Far, See Near, See Intermediate, See everything</span><br>
+<span>4. Corridor (for MF only) : Short, Medium, Long</span>
 
 </div>
 </td>
@@ -3541,103 +3591,179 @@ fanImg.src = `https://raw.githubusercontent.com/kiaraoptometrypx/Trainer/main/${
 
 
 
+
+
+
+
+
 <script>
-const fanOptions = {
-  "red": ["all_blur", "one_clearer", "multiple_clear_blur"],
-  "blue": ["all_similar", "one_clearer", "multiple_clear_blur"],
-  "both_badly": ["all_blur", "one_clearer", "multiple_clear_blur"],
-  "both_slightly": ["all_blur", "one_clearer", "multiple_clear_blur"],
-  "both_clear": ["one_clearer", "multiple_clear_blur"]
-};
+/* ------------------- Helpers ------------------- */
+function round025(x){ return Math.round(x*4)/4; }
+function formatDiopter(x){ return (x>=0?'+':'') + parseFloat(x).toFixed(2); }
 
-const fanLabels = {
-  "all_blur": "All blur",
-  "all_similar": "All similar",
-  "one_clearer": "One direction clearer",
-  "multiple_clear_blur": "Multiple directions clear/blur"
-};
+/* ------------------- Axis Dropdown ------------------- */
+const axisLocked = [
+  {label:"3-9 , 9-3", deg:180},{label:"3:30-9:30 , 9:30-3:30", deg:15},{label:"4-10 , 10-4", deg:30},
+  {label:"4:30-10:30 , 10:30-4:30", deg:45},{label:"5-11 , 11-5", deg:60},{label:"5:30-11:30 , 11:30-5:30", deg:75},
+  {label:"6-12 , 12-6", deg:90},{label:"6:30-12:30 , 12:30-6:30", deg:105},{label:"7-1 , 1-7", deg:120},
+  {label:"7:30-1:30 , 1:30-7:30", deg:135},{label:"8-2 , 2-8", deg:150},{label:"8:30-2:30 , 2:30-8:30", deg:165}
+];
+function populateAxisDarker(){
+  const sel = document.getElementById("axisDarker");
+  sel.innerHTML = '<option value="">--Select--</option>';
+  axisLocked.forEach(a=>{ const opt = document.createElement("option"); opt.value=a.deg; opt.textContent=a.label; sel.appendChild(opt); });
+}
+populateAxisDarker();
+document.getElementById("fanchart").addEventListener("change", populateAxisDarker);
 
-const axisOptions = {
-  "red": {
-    "one_clearer": ["12 - 6 darker","1 - 7 darker","2 - 8 darker","3 - 9 darker","4 - 10 darker","5 - 11 darker"]
-  },
-  "blue": {
-    "one_clearer": ["12 - 6 darker","1 - 7 darker","2 - 8 darker","3 - 9 darker","4 - 10 darker","5 - 11 darker"]
-  },
-  "both_badly": {
-    "one_clearer": ["12 - 6 darker","1 - 7 darker","2 - 8 darker","3 - 9 darker","4 - 10 darker","5 - 11 darker"]
-  },
-  "both_slightly": {
-    "one_clearer": ["12 - 6 darker","1 - 7 darker","2 - 8 darker","3 - 9 darker","4 - 10 darker","5 - 11 darker"]
-  },
-  "both_clear": {
-    "one_clearer": ["12 - 6 darker","1 - 7 darker","2 - 8 darker","3 - 9 darker","4 - 10 darker","5 - 11 darker"]
-  }
-};
+/* ------------------- Cylinder/Axis <-> J0/J45 ------------------- */
+function toMinusCyl(cyl, axis){
+  cyl=Number(cyl)||0; axis=Number(axis)||0;
+  if(cyl>0){ let n=-cyl, a=(axis+90)%180; if(a===0)a=180; return {cyl:n, axis:a}; } return {cyl, axis};
+}
+function cylAxisToJ0J45(cyl, axis){ const rad=axis*Math.PI/180; return {j0:(-cyl/2)*Math.cos(2*rad), j45:(-cyl/2)*Math.sin(2*rad)}; }
+function j0j45ToCylAxisVals(j0,j45){ const mag=Math.sqrt(j0*j0+j45*j45); let cyl=-2*mag; let axis=cyl===0?0:0.5*Math.atan2(j45,j0)*180/Math.PI; if(axis<0) axis+=180; if(cyl>0){ cyl=-cyl; axis=(axis+90)%180; if(axis===0) axis=180;} return { cyl: parseFloat(cyl.toFixed(2)), axis: Math.round(axis) }; }
 
-function updateFanChart() {
-  const d = document.getElementById("duochrome").value;
-  const f = document.getElementById("fanchart");
-  f.innerHTML = '<option value="">--Select--</option>';
-  if(d && fanOptions[d]){
-    fanOptions[d].forEach(opt => {
-      const el = document.createElement("option");
-      el.value = opt;
-      el.textContent = fanLabels[opt];
-      f.appendChild(el);
-    });
-  }
-  updateAxisDirection(); // update axis whenever fan chart changes
+/* ------------------- Cross-cylinder calculation ------------------- */
+function crossCylinder(orig, deltaC, deltaAxis){
+  const minus = toMinusCyl(orig.cyl, orig.axis);
+  const j_orig = cylAxisToJ0J45(minus.cyl, minus.axis);
+  const j_delta = cylAxisToJ0J45(deltaC, deltaAxis);
+  const newJ0 = j_orig.j0 + j_delta.j0;
+  const newJ45 = j_orig.j45 + j_delta.j45;
+  const vals = j0j45ToCylAxisVals(newJ0,newJ45);
+  const SE_final = Number(orig.sph||0) + (Number(orig.cyl||0))/2 + deltaC/2;
+  const sph_final = parseFloat((SE_final - vals.cyl/2).toFixed(2));
+  return { sph:sph_final, cyl:vals.cyl, axis:vals.axis };
 }
 
-function updateAxisDirection() {
-  const d = document.getElementById("duochrome").value;
-  const f = document.getElementById("fanchart").value;
-  const axisSelect = document.getElementById("axisDirection");
-  axisSelect.innerHTML = '<option value="">--Select--</option>';
+/* ------------------- Main Rule Engine ------------------- */
+function runFanChartCalculation(input){
+  const results=[]; 
+  const sph0=Number(input.sph)||0, cyl0=Number(input.cyl)||0, axis0=Number(input.axis)||0;
+  const duochrome=input.duochrome, fanChart=input.fanChart, axisDarkerDeg=input.axisDarkerDeg?Number(input.axisDarkerDeg):null;
+  function pushDash(){ results.push({sph:"-",cyl:"-",axis:"-",usedPower:"-"}) }
 
-  if(d && f === "one_clearer" && axisOptions[d] && axisOptions[d][f]){
-    axisOptions[d][f].forEach(opt => {
-      const el = document.createElement("option");
-      el.value = opt;
-      el.textContent = opt;
-      axisSelect.appendChild(el);
-    });
+  if(fanChart!=="one_clearer"){
+    if(duochrome==="red"){ [-0.25,-0.5].forEach(d=>results.push({sph:sph0+d,cyl:toMinusCyl(cyl0,axis0).cyl,axis:toMinusCyl(cyl0,axis0).axis, usedPower:`${d>=0?"+":""}${d}`})) ; return results;}
+    if(duochrome==="blue"){ [0.25,0.5].forEach(d=>results.push({sph:sph0+d,cyl:toMinusCyl(cyl0,axis0).cyl,axis:toMinusCyl(cyl0,axis0).axis, usedPower:`${d>=0?"+":""}${d}`})) ; return results;}
+    if(duochrome==="both_clear"||duochrome==="both_slightly"){ pushDash(); return results;}
+    if(duochrome==="both_badly"){ [2,-2].forEach(d=>results.push({sph:sph0+d,cyl:toMinusCyl(cyl0,axis0).cyl,axis:toMinusCyl(cyl0,axis0).axis, usedPower:`${d>=0?"+":""}${d}`})) ; return results;}
+    pushDash(); return results;
   }
+
+  if(axisDarkerDeg===null){ pushDash(); return results; }
+  const perpDeg=(axisDarkerDeg+90)%180;
+
+  if(duochrome==="red"){ [-0.25,-0.50].forEach(d=>results.push({...crossCylinder({sph:sph0,cyl:cyl0,axis:axis0},d,perpDeg), usedPower:`${d>=0?"+":""}${d} x ${perpDeg}`})) ; return results;}
+  if(duochrome==="blue"){ [0.25,0.50].forEach(d=>results.push({...crossCylinder({sph:sph0,cyl:cyl0,axis:axis0},d,perpDeg), usedPower:`${d>=0?"+":""}${d} x ${perpDeg}`})) ; return results;}
+  if(duochrome==="both_clear"){ results.push({...crossCylinder({sph:sph0,cyl:cyl0,axis:axis0},0.25,perpDeg), usedPower:`+0.25 x ${perpDeg}`}) ; return results;}
+  if(duochrome==="both_slightly"){ [[0.25,-0.5],[0.5,-1]].forEach(pair=>results.push({...crossCylinder({sph:sph0+pair[0],cyl:cyl0,axis:axis0},pair[1],axisDarkerDeg), usedPower:`${pair[1]>=0?"+":""}${pair[1]} x ${axisDarkerDeg}`})) ; return results;}
+  if(duochrome==="both_badly"){ [1.50,-1.50].forEach(d=>results.push({...crossCylinder({sph:sph0,cyl:cyl0,axis:axis0},d,perpDeg), usedPower:`${d>=0?"+":""}${d} x ${perpDeg}`})) ; return results;}
+  pushDash(); return results;
 }
 
-const lookup = {
-  "red|all_blur": "1. Myope, almost no astigmatism",
-  "red|one_clearer": "2. Myope, has astigmatism, possibly more than 0.50 CYL",
-  "red|multiple_clear_blur": "3. Myope, astigmatism from dry eyes or corneal irregularity",
-  "blue|all_similar": "4. Hyperope, most likely no astigmatism",
-  "blue|one_clearer": "5. Hyperope, has astigmatism, possibly more than 0.50 CYL",
-  "blue|multiple_clear_blur": "6. Hyperope, astigmatism from dry eyes or corneal irregularity",
-  "both_badly|all_blur": "7. High myope or high hyperope, cannot conclude astigmatism amount",
-  "both_badly|one_clearer": "8. High myope or high hyperope, definitely has astigmatism",
-  "both_badly|multiple_clear_blur": "9. High myope or high hyperope, astigmatism from dry eyes or corneal irregularity",
-  "both_slightly|all_blur": "10. Poor visual acuity",
-  "both_slightly|one_clearer": "11. Poor visual acuity with astigmatism",
-  "both_slightly|multiple_clear_blur": "12. Poor visual acuity with astigmatism from dry eyes or corneal irregularity",
-  "both_clear|one_clearer": "13. Sharp visual acuity with astigmatism",
-  "both_clear|multiple_clear_blur": "14. Sharp visual acuity with astigmatism from dry eyes or corneal irregularity"
-};
+/* ------------------- Run & Display ------------------- */
+let lastResults=[];
+function runAllCalculations(){
+  const input={ sph:document.getElementById("TS_sph").value,
+                cyl:document.getElementById("TS_cyl").value,
+                axis:document.getElementById("TS_axis").value,
+                duochrome:document.getElementById("duochrome").value,
+                fanChart:document.getElementById("fanchart").value,
+                axisDarkerDeg:document.getElementById("axisDarker").value };
+  const results=runFanChartCalculation(input);
+  lastResults=results;
 
-function showResult() {
-  const d = document.getElementById("duochrome").value;
-  const f = document.getElementById("fanchart").value;
-  const axis = document.getElementById("axisDirection").value;
-  let key = d + "|" + f;
-  let result = lookup[key] || "No result for this combination";
-  if(f === "one_clearer" && axis) {
-    result += " | Axis: " + axis;
-  }
-  document.getElementById("result").textContent = result;
+  const container=document.getElementById("result");
+  container.innerHTML="";
+  results.forEach((r,i)=>{
+    const row=document.createElement("div"); row.className="resultRow";
+    const rounded=`[${formatDiopter(round025(r.sph))}, ${formatDiopter(round025(r.cyl))}, ${r.axis}]`;
+const text = `If using ${r.usedPower}, New RX is ${formatDiopter(round025(r.sph))} / CYL ${formatDiopter(round025(r.cyl))} X ${r.axis}`;
+
+    const span=document.createElement("span"); span.textContent=text;
+    const btn=document.createElement("button"); btn.textContent="Copy To Top"; btn.className="copyBtn";
+    btn.onclick=()=>{ document.getElementById("TS_sph").value=r.sph!=="-"?r.sph:""; document.getElementById("TS_cyl").value=r.cyl!=="-"?r.cyl:""; document.getElementById("TS_axis").value=r.axis!=="-"?r.axis:""; };
+    row.appendChild(span); row.appendChild(btn); container.appendChild(row);
+  });
 }
 
-// Populate Fan Chart on load
-window.onload = updateFanChart;
+/* ------------------- Reset Inputs ------------------- */
+document.getElementById("resetBtn").addEventListener("click",()=>{
+  document.getElementById("TS_sph").value=0;
+  document.getElementById("TS_cyl").value=0;
+  document.getElementById("TS_axis").value=0;
+});
+
+/* ------------------- Lock as Final Table ------------------- */
+document.getElementById("lockFinalBtn").addEventListener("click", () => {
+  const sph  = Number(document.getElementById("TS_sph").value)  || 0;
+  const cyl  = Number(document.getElementById("TS_cyl").value)  || 0;
+  const axis = document.getElementById("TS_axis").value || 0;
+
+  const tbody = document.querySelector("#finalTable tbody");
+  const tr = document.createElement("tr");
+
+  tr.innerHTML = `
+    <td  class="red" style="width:40%">
+      ${formatDiopter(round025(sph))} / ${formatDiopter(round025(cyl))} X ${axis}
+      <button class="removeBtn"
+        style="margin-left:12px"
+        type="button"
+        onclick="this.closest('tr').remove(); syncFinalTableMirror();">
+        Remove
+      </button>
+    </td>
+    <td class="red" style="width:60%">
+      <input style="width:90%" type="text" placeholder="Comment">
+    </td>
+  `;
+
+  tbody.appendChild(tr);
+  syncFinalTableMirror();
+});
+
+
+/* ------------------- Mirror Sync ------------------- */
+function syncFinalTableMirror(){
+  const srcBody = document.querySelector("#finalTable tbody");
+  const dstBody = document.querySelector("#finalTableMirror tbody");
+
+  dstBody.innerHTML = "";
+
+  [...srcBody.rows].forEach(row => {
+    const clone = row.cloneNode(true);
+
+    // remove Remove button inside prescription cell
+    const btn = clone.querySelector(".removeBtn");
+    if (btn) btn.remove();
+
+    dstBody.appendChild(clone);
+  });
+}
+
+
+/* ------------------- Live Comment Sync ------------------- */
+document.querySelector("#finalTable tbody").addEventListener("input", e => {
+  if (e.target.tagName === "INPUT") {
+    syncFinalTableMirror();
+  }
+});
+
+
+
 </script>
+
+
+
+
+
+
+
+
+
+
 
 
 </body>
