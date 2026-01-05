@@ -6,9 +6,15 @@
 <title>Hypervision-Rx</title>
 <style>
 
-/* =========================
-   TABLE COLOR STATES
-========================= */
+
+html, body, table, th, td, input, button, select, option, a, b, label {
+  font-size: 11px !important;
+  font-family: 'Manrope', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 th.red, td.red {
   background: #E0E0E0;
   color: black;
@@ -18,156 +24,114 @@ th.yellow, td.yellow, button.yellow {
   background: #EBDADA;
   color: black;
 }
-
-th.blue, td.blue, button.blue {
+th.blue, td.blue, button.blue{
   background: #D8E7F0;
   color: black;
 }
 
-/* =========================
-   TABLE COLUMN WIDTHS
-========================= */
-td:nth-child(1), th:nth-child(1) { width: 22%; }
-td:nth-child(2), th:nth-child(2) { width: 26%; }
-td:nth-child(3), th:nth-child(3) { width: 26%; }
-td:nth-child(4), th:nth-child(4) { width: 26%; }
-
-/* =========================
-   GLOBAL BASICS
-========================= */
-body {
-  font-family: 'Manrope', sans-serif;
-  background: #f5f5f5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Column 1: width 25% */
+td:nth-child(1),
+th:nth-child(1) {
+  width: 22%;
 }
 
-body, table, th, td, input, button {
-  font-size: 11px;
+/* Column 2: width 25% + remove RIGHT border */
+td:nth-child(2),
+th:nth-child(2) {
+  width: 26%;
 }
-
-button {
-  border: 1px dotted;
-  margin: 0;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 6px;
-  user-select: none;
-}
-
-/* =========================
-   TABLE CORE
-========================= */
-table {
-  border-collapse: collapse;
-  width: 100%;
-  max-width: 600px;
-  min-width: 600px;
-  margin-top: 20px;
-  text-align: center;
-}
-
-th, td {
-  border-top: 1px solid #aaa;
-  border-bottom: 1px solid #aaa;
-  text-align: center;
-}
-
-th {
-  background: #eee;
-  font-weight: 400;
-  padding: 10px 15px;
-}
-
-td {
-  padding: 10px;
-}
-
-/* =========================
-   INPUTS
-========================= */
-input {
-  width: 80px;
-  text-align: center;
-  padding: 4px 6px;
-  border: 1px solid lightgrey;
-  border-radius: 6px;
-}
-
-.rx-input {
-  width: 100px;
-  font-size: 10px;
-  padding: 6px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  margin-bottom: 5px;
-}
-
-.row input[type=number] {
-  width: 70px;
-  text-align: center;
-}
-
-#targetPanel input {
-  width: 60px;
-  font-size: 10px;
-  padding: 5px;
-  text-align: center;
-  margin: 2px;
-  border-radius: 5px;
-}
-
-/* =========================
-   STATES / VISIBILITY
-========================= */
-.hidden-row {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.rx-strike {
-  text-decoration: line-through;
-  opacity: 0.5;
-}
+button.{user-select:none;}
 
 button.greyonclick.clicked {
   background: #444 !important;
   color: #fff !important;
   border-color: #666 !important;
   cursor: default;
+  user-select:none;
 }
 
-/* =========================
-   LAYOUT
-========================= */
+/* Column 3: width 25% + remove LEFT & RIGHT borders */
+td:nth-child(3),
+th:nth-child(3) {
+  width: 26%;
+}
+
+/* Column 4: width 25% + remove LEFT border */
+td:nth-child(4),
+th:nth-child(4) {
+  width: 26%;
+}
+
+
+.hidden-row {
+  opacity: 0.0;       /* semi-transparent */
+  pointer-events: none; /* optional: disable interactions */
+}
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 600px;
+    min-width: 600px;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  th {
+    border-bottom: 1px solid #aaa;
+    border-top: 1px solid #aaa;
+    padding: 10px 15px;
+    text-align: center;
+  }
+  td {
+    border-bottom: 1px solid #aaa;
+    border-top: 1px solid #aaa;
+    padding: 10px;
+    text-align: center;
+  }
+
+  th {
+    background: #eee;
+    font-weight: 400;
+  }
+
+  input {
+    width: 80px;
+    text-align: center;
+    padding: 4px 6px;
+    border: 1px solid lightgrey;
+    border-radius:6px;
+  }
+
+.rx-strike {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+
+button {
+border: 1px dotted;
+}
+
+body, table, th, td, input, button {
+  font-size: 11px;
+}
+
+/* Layout */
 .layout {
   display: flex;
   align-items: flex-start;
 }
 
-.content {
-  flex: 1;
-  padding: 0 30px;
-  opacity: 1;
-}
-
-.section {
-  max-height: 700px;
-  margin: 500px 0 200px;
-}
-
-#stage {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-/* =========================
-   SIDEBAR
-========================= */
+/* Sidebar */
 .sidebar {
   position: sticky;
   top: 40px;
@@ -191,7 +155,8 @@ button.greyonclick.clicked {
   font-weight: 600;
   color: #6f2218;
   text-decoration: none;
-  margin: 80px 0;
+  margin-bottom: 80px;
+  margin-top: 80px;
   cursor: pointer;
 }
 
@@ -199,9 +164,30 @@ button.greyonclick.clicked {
   text-decoration: underline;
 }
 
-/* =========================
-   TOP BAR
-========================= */
+/* Content (no transition) */
+.content {
+  flex: 1;
+  padding: 0px 30px 0px 30px;
+  opacity: 1;
+}
+
+
+/* Sections */
+.section {
+  max-height: 700px;
+  margin-bottom: 200px;
+  margin-top: 500px;
+}
+
+.updateAllBtn {
+  cursor: pointer;
+}
+
+.updateAllBtn.updated {
+  background: #444;
+  color: #fff;
+}
+
 #topBlock {
   position: fixed;
   top: 0;
@@ -212,7 +198,7 @@ button.greyonclick.clicked {
   color: white;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* space between title and menu */
   padding: 0 20px;
   box-sizing: border-box;
   z-index: 9999;
@@ -230,84 +216,32 @@ button.greyonclick.clicked {
   font-weight: 600;
   font-size: 12px;
   cursor: pointer;
+
 }
 
 .topMenu a:hover {
   text-decoration: underline;
 }
-
-/* =========================
-   BUTTON GROUPS
-========================= */
-.btn-plus, .btn-minus {
-  font-size: 10px;
-  height: 30px;
-  width: 50px;
-  border-radius: 6px;
-  cursor: pointer;
-  margin: 5px;
-  transition: opacity .2s;
-}
-
-.btn-plus { background: #E0E0E0; }
-.btn-minus { background: #d9534f; }
-
-.btn-plus:hover, .btn-minus:hover {
-  opacity: .85;
-}
-
-.btn-group button {
-  font-size: 10px;
-  padding: 5px;
-  margin: 5px;
-  border: 1px solid #000;
-  border-radius: 10px;
-  background: #dcdcdc;
-  color: #000;
-  min-width: 160px;
-}
-
-.btn-group button:hover {
-  background: #c8c8c8;
-}
-
-.updateAllBtn { cursor: pointer; }
-.updateAllBtn.updated {
-  background: #444;
-  color: #fff;
-}
-
-/* =========================
-   CARD
-========================= */
-.card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 20px 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,.25);
-  display: inline-block;
-  border: 1px solid #bbb;
-  margin: 8px 0 14px;
-}
-
-/* =========================
-   DUOCHROME
-========================= */
+  .card{ background:#fff; border-radius:10px; padding:20px 10px;
+    box-shadow:0 0 10px rgba(0,0,0,.25); display:inline-block; border:1px solid #bbb; margin:8px 0 14px; }
+  .row input[type=number]{ width:70px; text-align:center; }
+  .row b{ display:inline-block; margin-bottom:6px; }
+  button{ margin:0px; padding:5px 10px; cursor:pointer; border-radius:6px }
+/* Duochrome */
 .duochrome {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 255px;
-  height: 255px;
-  margin: 17px auto;
+  width: 255px;      /* 85% of 300px */
+  height: 255px;     /* 85% of 300px */
+  margin: 17px auto; /* 85% of 20px */
   position: relative;
   overflow: hidden;
 }
-
 .duo-side {
   position: relative;
-  width: 128px;
-  height: 255px;
+  width: 128px;      /* 85% of 150px */
+  height: 255px;     /* 85% of 300px */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -315,92 +249,120 @@ button.greyonclick.clicked {
   contain: paint;
   isolation: isolate;
 }
-
-@supports not (overflow: clip) {
-  .duo-side { overflow: hidden; }
+@supports not (overflow: clip) { 
+  .duo-side { overflow: hidden; } 
 }
-
-#redSide  { clip-path: inset(0 0 0 9px); }
-#blueSide { clip-path: inset(0 9px 0 0); }
-
-.duo-side img.base,
-.duo-side img.overlay {
-  width: 128px;
-  height: 255px;
+#redSide  { clip-path: inset(0 0 0 9px); }   /* 85% of 10px */
+#blueSide { clip-path: inset(0 9px 0 0); }   /* 85% of 10px */
+.duo-side img.base {
+  width: 128px;      /* 85% of 150px */
+  height: 255px;     /* 85% of 300px */
   object-fit: cover;
+  display: block;
+  will-change: filter;
 }
-
 .duo-side img.overlay {
   display: none;
   position: absolute;
   left: 0;
   top: 0;
+  width: 128px;      /* 85% of 150px */
+  height: 255px;     /* 85% of 300px */
+  object-fit: cover;
   pointer-events: none;
   will-change: transform, filter, opacity;
   backface-visibility: hidden;
   transform: translate3d(0,0,0);
 }
 
-/* =========================
-   FAN CHART (FINAL SIZE)
-========================= */
+/* Fan chart */
 .outer-circle {
-  width: 175px;
-  height: 175px;
+  width: 213px;      /* 85% of 250px */
+  height: 213px;     /* 85% of 250px */
   border-radius: 50%;
+  border: none;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 28px auto;
+  margin: 34px auto; /* 85% of 40px */
   transform-origin: center;
 }
-
 .circular-img img {
-  width: 210px;
+  width: 255px;      /* 85% of 300px */
   height: auto;
   object-fit: cover;
   object-position: center;
   transform-origin: center;
 }
 
-/* =========================
-   DROPDOWNS
-========================= */
+/* Fan chart */
+.outer-circle {
+  width: 175px;    /* 70% of 250px */
+  height: 175px;   /* 70% of 250px */
+  border-radius: 50%;
+  border: none;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 28px auto;  /* 70% of 40px */
+  transform-origin: center;
+}
+.circular-img img {
+  width: 210px;    /* 70% of 300px */
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  transform-origin: center;
+}
+
+  /* Layout */
+  #stage { display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap; }
+  .duochrome, .outer-circle { margin:12px 0; }
+
+  .rx-input { width:100px; font-size:10px; text-align:center; padding:6px; border-radius:6px; border:1px solid #ccc; margin-bottom:5px; }
+  .btn-plus, .btn-minus { font-size:10px; border:1px dotted ; height:30px; width:50px; border-radius:6px; cursor:pointer; color:black; transition:opacity .2s; margin:5px; }
+  .btn-plus { background:#E0E0E0; } .btn-minus{ background:#d9534f; }
+  .btn-plus:hover, .btn-minus:hover { opacity:.85; }
+  .btn-group button { font-size:10px; padding:5px 5px; margin:5px; border:1px solid #000; border-radius:10px; cursor:pointer; background:#dcdcdc; color:#000; min-width:160px; }
+  .btn-group button:hover { background:#c8c8c8; }
+
+  #targetPanel input{ width:60px; font-size:10px; padding:5px; text-align:center; margin:2px 2px; border-radius:5px; }
+
+/* General dropdown styling */
 select {
   padding: 5px 10px;
   font-size: 12px;
   border: 1px dotted black;
   border-radius: 6px;
-  background: #fff;
+  background-color: #fff;
   color: black;
   transition: 0.1s;
 }
 
+/* Hover effect */
 select:hover {
   border-color: #E0E0E0;
-  background: #E0E0E0;
+  background-color: #E0E0E0;
 }
 
+/* Focus effect */
 select:focus {
   border-color: #E0E0E0;
-  background: #fff;
+  background-color: #fff;
 }
 
+/* Option styling (limited support in browsers) */
 option {
   padding: 8px;
   font-size: 12px;
 }
-
-/* =========================
-   MISC
-========================= */
 .resultRow {
   margin-bottom: 10px;
 }
 
 </style>
-
 
 </head>
 <body>
