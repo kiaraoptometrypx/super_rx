@@ -6,15 +6,14 @@
 <title>Hypervision-Rx</title>
 <style>
 
-
 html, body, table, th, td, input, button, select, option, a, b, label {
   font-size: 11px !important;
   font-family: 'Manrope', sans-serif;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
 
+}
 th.red, td.red {
   background: #E0E0E0;
   color: black;
@@ -100,7 +99,7 @@ th:nth-child(4) {
 
   th {
     background: #eee;
-    font-weight: 400;
+    font-weight: 600;
   }
 
   input {
@@ -145,7 +144,7 @@ body, table, th, td, input, button {
 
 .sidebar h3 {
   margin: 0 0 24px;
-  font-size: 12px;
+  font-size: 18px;
   letter-spacing: 1px;
 }
 
@@ -205,7 +204,7 @@ body, table, th, td, input, button {
 }
 
 #topBlock h2 {
-  font-size: 24px;
+  font-size: 18px;
   margin: 0;
 }
 
@@ -373,7 +372,6 @@ option {
   <nav class="topMenu" style="user-select:none">
     <a data-target="s0">Current Rx</a>
     <a data-target="s1">Errors</a>
-    <a data-target="s6">Troubleshoot</a>
     <a data-target="s2">Vector RX</a>
     <a data-target="s3">Manual RX</a>
     <a data-target="s4">Summary</a>
@@ -495,7 +493,8 @@ option {
   <td>Right</td>
   <td>PD : <input type="number" step="0.25" id="od_PD"></td>
   <td>NOC : <input type="number" step="0.25" id="od_NOC"></td>
-  <td>-</td>
+  <td><button type="button" onclick="copyRightToLeft()">Copy to Left</button>
+</td>
 </tr>
 <tr>
   <td>Left</td>
@@ -521,6 +520,12 @@ option {
 </td>
 </tr>
 
+<script>
+function copyRightToLeft(){
+  document.getElementById("os_PD").value  = document.getElementById("od_PD").value;
+  document.getElementById("os_NOC").value = document.getElementById("od_NOC").value;
+}
+</script>
 
 
 
@@ -700,103 +705,6 @@ Prescription comes in many types of errors; whether it's myopia, hyperopia or as
 </div>
 <div style="height:350px"></div>
 
-
-
-   <div id="s6" class="section">
-<div style="height:70px"></div>
-<table>
-
-<tr><th colspan="4">Troubleshoot<br></th></tr>
-<tr><td colspan="4"><b><i>  
-Use this to know what RX to fit next based on patient's response.
-</b></i><br>
-1. Key in the current prescription.<br>
-2. Key in their response of the FC and DC.<br>
-3. Press calculate prescription.<br>
-4. Refill the new prescription to the top by pressing the 'Copy to Top'.<br>
-<br><br> 
-
-
-<div>
-  <!-- Inputs -->
-  <div class="row">
-    <label>SPH : <input id="TS_sph" type="number" step="0.25"></label>
-    <label>CYL : <input id="TS_cyl" type="number" step="0.25" ></label>
-    <label>AXIS : <input id="TS_axis" type="number" step="5" min="0" max="180"></label>
-</div>
-<div style="margin-top:15px" class="row">
-    <button id="lockFinalBtn">Copy to Finalized Prescription</button>
-    <button id="resetBtn">Reset to 0</button>
-  </div><br>
-
-
-  <!-- Dropdowns -->
-  <div class="row">
-    <div>
-      <label>Duochrome : </label>
-      <select style="width:50%" id="duochrome">
-        <option value="">--Select--</option>
-        <option value="red">Red clearer</option>
-        <option value="blue">Blue clearer</option>
-        <option value="both_badly">Both blur badly</option>
-        <option value="both_slightly">Both blur slightly</option>
-        <option value="both_clear">Both clear</option>
-      </select>
-    </div><br>
-
-    <div>
-      <label>Fan Chart : </label>
-      <select style="width:50%" id="fanchart">
-        <option value="">--Select--</option>
-        <option value="one_clearer">One direction clearer</option>
-        <option value="all_blur">All same quality / no darker line</option>
-        <option value="multiple_clear_blur">Multiple clear / blur (no single line pattern)</option>
-      </select>
-    </div><br>
-
-
-    <div>
-      <label>Darker Axis : </label>
-      <select style="width:50%" id="axisDarker"></select>
-    </div>
-  </div>
-</td></tr>
-
-<tr><td colspan="4">  
-
-  <div class="row">
-    <button style="width:50%" onclick="runAllCalculations()">Calculate Prescription</button>
-  </div><br>
-
-
-  <div id="result"></div>
-
-  <table id="finalTable">
-    <thead>
-      <tr class="red">
-         <th class="red" style="width:40%">List of Finalized Prescription</th>
-        <th class="red" style="width:60%">Notes</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  
-</div>
-
-
-
-
-
-
-
-</td></tr>
-
-
-
-
-</table>
-</div>
 
 
     <div id="s2" class="section">
@@ -992,6 +900,7 @@ function toggleStatusVector() {
 
 </table>
 </div>
+<div style="height:50px"></div>
 
 
     <div id="s3" class="section">
@@ -1005,17 +914,84 @@ Manual Refraction
 <button class="blue" style="margin-left:20px; border-radius:10px; height:25px; width:150px" id="toggleMask1">Hide/Show Manual</button>
 
 </th></tr>
+
+
+<tr><td colspan="4"><b><i>
+<b><i>Troubleshooter</b></i><br>  
+Use this to know what RX to fit next based on patient's response.
+</b></i><br>
+1. Key in the current prescription.<br>
+2. Key in their response of the FC and DC.<br>
+3. Press calculate prescription.<br>
+4. Refill the new prescription to the top by pressing the 'Copy to Top'.<br>
+<br><br> 
+
+
+  <!-- Inputs -->
+  <div class="row">
+    <label>SPH : <input id="TS_sph" type="number" step="0.25"></label>
+    <label>CYL : <input id="TS_cyl" type="number" step="0.25" ></label>
+    <label>AXIS : <input id="TS_axis" type="number" step="5" min="0" max="180"></label>
+</div>
+<div style="margin-top:15px" class="row">
+    <button id="lockFinalBtn">Copy to Finalized Prescription</button>
+    <button id="resetBtn">Reset to 0</button>
+  </div><br>
+
+
+  <!-- Dropdowns -->
+  <div class="row">
+    <div>
+      <label>Duochrome : </label>
+      <select style="width:50%" id="duochrome">
+        <option value="">--Select--</option>
+        <option value="red">Red clearer</option>
+        <option value="blue">Blue clearer</option>
+        <option value="both_badly">Both blur badly</option>
+        <option value="both_slightly">Both blur slightly</option>
+        <option value="both_clear">Both clear</option>
+      </select>
+    </div><br>
+
+    <div>
+      <label>Fan Chart : </label>
+      <select style="width:50%" id="fanchart">
+        <option value="">--Select--</option>
+        <option value="one_clearer">One direction clearer</option>
+        <option value="all_blur">All same quality / no darker line</option>
+        <option value="multiple_clear_blur">Multiple clear / blur (no single line pattern)</option>
+      </select>
+    </div><br>
+
+
+    <div>
+      <label>Darker Axis : </label>
+      <select style="width:50%" id="axisDarker"></select>
+    </div>
+  </div>
+
+
+  <div style="margin-top:15px" class="row">
+    <button style="width:50%" onclick="runAllCalculations()">Calculate Prescription</button>
+  </div><br>
+
+
+  <div style="height:30px" id="result"><i>- Press Calculate Prescription to see Results -</div>
 </table>
 
-<table id="finalTableMirror">
+
+  <table id="finalTable">
     <thead>
-      <tr>
-         <th class="red" style="width:40%">Prescription from Troubleshoot</th>
-        <th class="red" style="width:60%">Comment</th>
+      <tr id="finalTable" class="red">
+         <th class="red" style="width:50%">List of Finalized Prescription</th>
+        <th class="red" style="width:40%">Notes</th>
       </tr>
     </thead>
-  <tbody></tbody>
-</table>
+    <tbody></tbody>
+
+  </table>
+
+
 
 <table>
 <tr class="mask1">
@@ -1170,11 +1146,30 @@ function toggleStatusManual() {
 
 </table>
 
+</div>
+
+<div style="height:300px"></div>
+
+    <div id="s4" class="section">
+<div style="height:70px"></div>
+
+<div style="margin-top:20px; display:flex; justify-content:center; gap:7px;">
+  <button class="blue" style="border-radius:10px; height:25px; width:130px" id="toggleMask1_copy">
+    Hide/Show Manual
+  </button>
+
+  <button class="yellow" style="border-radius:10px; height:25px; width:130px" id="toggleMask2">
+    Hide/Show Vector
+  </button>
+
+<button style="border-radius:10px; height:25px; width:85px" class="updateAllBtn">Update All</button>
+<button style="border-radius:10px; height:25px; width:85px"  onclick="capturePart()">Save JPG</button>
+<button style="border-radius:10px; height:25px; width:85px" class="exportBtn">
+    Save Data
+  </button>
 
 
 </div>
-    <div id="s4" class="section">
-<div style="height:70px"></div>
 
 <div id="captureTarget">
 
@@ -1293,8 +1288,23 @@ L : <span id="CL_os_origCombined">OS -</span>
 </tr>
 
 
-<tr><th colspan="4">New Lens Details</th></tr>
-<td colspan="4">
+<tr><th colspan="4">New Fitting Details</th></tr>
+
+<tr><td>Right</td>
+
+<td colspan="3">
+
+PD : <span class="mirror" data-mirror="od_PD">-</span> mm  <span style="margin-left:15%; margin-right:15%"> ; </span> NOC : <span class="mirror" data-mirror="od_NOC">-</span> mm 
+</td></tr>
+<tr><td>Left</td>
+
+<td colspan="3">
+
+PD : <span class="mirror" data-mirror="os_PD">-</span> mm  <span style="margin-left:15%; margin-right:15%"> ; </span> NOC : <span class="mirror" data-mirror="os_NOC">-</span> mm 
+</td></tr>
+
+<tr><td>New Lens Details</td>
+<td colspan="3">
 <div>
 <input type="text" id="new_lens_details"
   style="text-align:left; width:95%; height:20px"
@@ -1411,27 +1421,6 @@ L : <span id="CL_os_origCombined">OS -</span>
 
 </div>
 
-
-<div style="margin-top:20px; display:flex; justify-content:center; gap:7px;">
-  <button class="blue" style="border-radius:10px; height:25px; width:130px" id="toggleMask1_copy">
-    Hide/Show Manual
-  </button>
-
-  <button class="yellow" style="border-radius:10px; height:25px; width:130px" id="toggleMask2">
-    Hide/Show Vector
-  </button>
-</div>
-
-<div style="margin-top:5px; display:flex; justify-content:center; gap:7px;">
-
-<button style="border-radius:10px; height:25px; width:85px" class="updateAllBtn">Update All</button>
-<button style="border-radius:10px; height:25px; width:85px"  onclick="capturePart()">Save JPG</button>
-<button style="border-radius:10px; height:25px; width:85px" class="exportBtn">
-    Save Data
-  </button>
-
-
-</div>
 
 <div style="margin-top:20px; display:flex; justify-content:center; gap:20px;">
   <label>
@@ -1861,7 +1850,10 @@ Manual : ${document.getElementById("manual_comments_summary")?.textContent || "-
 --------------------------
 
 CURRENT:
--->  RX R/L:     ${document.getElementById("od_origCombined")?.textContent || "-"}     //     ${document.getElementById("os_origCombined")?.textContent || "-"}  
+--> Far RX R/L:     ${document.getElementById("od_origCombined")?.textContent || "-"}     //     ${document.getElementById("os_origCombined")?.textContent || "-"}
+--> Near RX R/L:     (Add ${document.getElementById("mirrorNearAdd")?.textContent || "+0.00"})     ${document.getElementById("od_nearCombined")?.textContent || "-"}     //     ${document.getElementById("os_nearCombined")?.textContent || "-"}
+--> PD R/L:     ${document.getElementById("od_PD")?.value || "-"} / ${document.getElementById("os_PD")?.value || "-"}
+--> NOC R/L:     ${document.getElementById("od_NOC")?.value || "-"} / ${document.getElementById("os_NOC")?.value || "-"}
 
 Gaze Imbalance:     Horizontal: ${document.getElementById("origCrossS")?.textContent || "-"}     //     Vertical: ${document.getElementById("origCrossC")?.textContent || "-"}     //     Diagonal: ${document.getElementById("origCrossA")?.textContent || "-"}  
 ADD:     ${document.getElementById("nearAdd")?.value || "0.00"} 
@@ -1875,7 +1867,12 @@ VECTOR (${
       ? el.options[el.selectedIndex]?.text || "-"
       : el.dataset.value || "-";
   })(document.getElementById("statusVector"))
-}) -->  RX R/L:     ${document.getElementById("od_vcCombined")?.textContent || "-"}     //     ${document.getElementById("os_vcCombined")?.textContent || "-"} 
+})
+--> Far RX R/L:     ${document.getElementById("od_vcCombined")?.textContent || "-"}     //     ${document.getElementById("os_vcCombined")?.textContent || "-"}
+--> Near RX R/L:     (Add ${document.getElementById("mirrorNearAddVector")?.textContent || "+0.00"})     ${document.getElementById("od_vcNearCombined_mirror")?.textContent || "-"}     //     ${document.getElementById("os_vcNearCombined_mirror")?.textContent || "-"}
+--> CL RX R/L:     ${document.getElementById("CL_od_vcCombined")?.textContent || "-"}     //     ${document.getElementById("CL_os_vcCombined")?.textContent || "-"}
+--> PD R/L:     ${document.getElementById("od_PD")?.value || "-"} / ${document.getElementById("os_PD")?.value || "-"}
+--> NOC R/L:     ${document.getElementById("od_NOC")?.value || "-"} / ${document.getElementById("os_NOC")?.value || "-"}
 
 Gaze Imbalance:     Horizontal: ${document.getElementById("prismH_vc")?.textContent || "-"}     //     Vertical  ${document.getElementById("prismV_vc")?.textContent || "-"}     //     Diagonal: ${document.getElementById("prismD_vc")?.textContent || "-"}  
 ADD:     ${document.getElementById("nearAddVector")?.value || "0.00"}   
@@ -1892,13 +1889,19 @@ MANUAL (${
       ? el.options[el.selectedIndex]?.text || "-"
       : el.dataset.value || "-";
   })(document.getElementById("statusManual"))
-}) -->  RX R/L:     ${document.getElementById("od_finalCombined")?.textContent || "-"}     //     ${document.getElementById("os_finalCombined")?.textContent || "-"}  
+})
+--> Far RX R/L:     ${document.getElementById("od_finalCombined")?.textContent || "-"}     //     ${document.getElementById("os_finalCombined")?.textContent || "-"}
+--> Near RX R/L:     (Add ${document.getElementById("mirrorNearAddFinal")?.textContent || "+0.00"})     ${document.getElementById("od_finalNearCombined_mirror")?.textContent || "-"}     //     ${document.getElementById("os_finalNearCombined_mirror")?.textContent || "-"}
+--> CL RX R/L:     ${document.getElementById("CL_od_finalCombined")?.textContent || "-"}     //     ${document.getElementById("CL_os_finalCombined")?.textContent || "-"}
+--> Vectorized Right Dominant R/L:     ${document.getElementById("od_vectorDisplay_mirror")?.textContent || "-"}     //     ${document.getElementById("os_vectorDisplay_mirror")?.textContent || "-"}
+--> Vectorized Left Dominant R/L:     ${document.getElementById("ODcrossedSpan_mirror")?.textContent || "-"}     //     ${document.getElementById("OScrossedSpan_mirror")?.textContent || "-"}
+--> PD R/L:     ${document.getElementById("od_PD")?.value || "-"} / ${document.getElementById("os_PD")?.value || "-"}
+--> NOC R/L:     ${document.getElementById("od_NOC")?.value || "-"} / ${document.getElementById("os_NOC")?.value || "-"}
 
 Gaze Imbalance:     Horizontal: ${document.getElementById("prismH")?.textContent || "-"}     //     Vertical: ${document.getElementById("prismV")?.textContent || "-"}     //     Diagonal: ${document.getElementById("prismD")?.textContent || "-"}  
 ADD:     ${document.getElementById("nearAddFinal")?.value || "0.00"}
 RX Changes R/L:     ${document.getElementById("od_roundCombinedDisplay")?.textContent || "-"}     //     ${document.getElementById("os_roundCombinedDisplay")?.textContent || "-"}
-Vectorized Right Dominant R/L:     ${document.getElementById("od_vectorDisplay_mirror")?.textContent || "-"}     //     ${document.getElementById("os_vectorDisplay_mirror")?.textContent || "-"}
-Vectorized Left Dominant R/L:     ${document.getElementById("ODcrossedSpan_mirror")?.textContent || "-"}     //     ${document.getElementById("OScrossedSpan_mirror")?.textContent || "-"}
+
 
 --------------------------
 To use this data, copy everything from the top of the body and paste into any inputs in the website.
@@ -1960,6 +1963,19 @@ document.addEventListener("paste", e => {
 });
 </script>
 
+
+<script>
+const keys = ["od_PD","od_NOC","os_PD","os_NOC"];
+
+document.addEventListener("input", e => {
+  if (!keys.includes(e.target.id)) return; // only PD/NOC
+
+  const key = e.target.id;
+  document
+    .querySelectorAll(`.mirror[data-mirror="${key}"]`)
+    .forEach(m => m.textContent = e.target.value || "");
+});
+</script>
 
 
 
@@ -3364,7 +3380,23 @@ function toggleTbody(tbodyId){
   function roundUp025(x){ return Math.ceil(x/0.25)*0.25; }
   function fmt(x){ x=parseFloat(x)||0; const s=x>=0?"+":""; return s+x.toFixed(2); }
   function nearest(arr,val){ return arr.reduce((b,v)=>Math.abs(v-val)<Math.abs(b-val)?v:b,arr[0]); }
-  function flatterAxis(a){ a = parseFloat(a) || 0; if(a <= 0) a = 180; return Math.round(a / 10) * 10; }
+function flatterAxis(a){
+  a = Math.round(parseFloat(a));
+  if (!a || a < 1) return 180;
+  if (a > 180) return 180;
+
+  const base = Math.floor(a / 10) * 10;
+  const upper = base + 10;
+  const mid = base + 5;
+
+  if (a === mid) {
+    return a < 90 ? base : upper;
+  }
+
+  return Math.round(a / 10) * 10;
+}
+
+
   function roundClipDiff(x){ return Math.round(x/0.50)*0.50; }
 
 function convertOne(S, C, A){
@@ -3387,29 +3419,30 @@ function convertOne(S, C, A){
   const clipDiffRounded = roundClipDiff(rawCyl - rClipC);
   const correctedSphere = roundUp025(rS + clipDiffRounded/2);
 
-  // OUTPUT FORMAT CHANGE HERE: S / C x A
+  // OUTPUT FORMAT CHANGE HERE: S / C x AXXX
   return `${fmt(correctedSphere)} / ${fmt(rClipC)} x ${axis}`;
 }
 
 
-  const sets = [
-    ["od_origCombined","os_origCombined"],
-    ["od_vcCombined","os_vcCombined"],
-    ["od_finalCombined","os_finalCombined"]
-  ];
+const sets = [
+  ["od_origCombined","os_origCombined"],
+  ["od_vcCombined","os_vcCombined"],
+  ["od_finalCombined","os_finalCombined"]
+];
 
 function parseText(txt){
-  if(!txt || txt.includes("-") && txt.trim().length === 1) return [0,0,0]; // handle empty "-"
-  const parts = txt.split("/");
-  let S = parseFloat(parts[0]) || 0;
-  let C = 0, A = 0;
-  if(parts[1]){
-    const sub = parts[1].split("x");
-    C = parseFloat(sub[0]) || 0;
-    A = parseFloat(sub[1]) || 0;
-  }
-  return [S,C,A];
+  if(!txt) return [0,0,0];
+
+  const m = txt.match(/([+-]?\d+(\.\d+)?)\s*\/\s*([+-]?\d+(\.\d+)?)\s*[xX×]\s*(\d+)/);
+  if(!m) return [0,0,0];
+
+  return [
+    parseFloat(m[1]),
+    parseFloat(m[3]),
+    parseFloat(m[5])
+  ];
 }
+
 
 
   function updateCL(odSpan, osSpan, odCL, osCL){
@@ -3704,7 +3737,7 @@ function runAllCalculations(){
   results.forEach((r,i)=>{
     const row=document.createElement("div"); row.className="resultRow";
     const rounded=`[${formatDiopter(round025(r.sph))}, ${formatDiopter(round025(r.cyl))}, ${r.axis}]`;
-const text = `If using ${r.usedPower}, New RX is ${formatDiopter(round025(r.sph))} / CYL ${formatDiopter(round025(r.cyl))} X ${r.axis}`;
+const text = `Change with ${r.usedPower}, New RX is ${formatDiopter(round025(r.sph))} / CYL ${formatDiopter(round025(r.cyl))} X ${r.axis}`;
 
     const span=document.createElement("span"); span.textContent=text;
     const btn=document.createElement("button"); btn.textContent="Copy To Top"; btn.className="copyBtn"; btn.style.marginLeft = "5%";
@@ -3731,7 +3764,7 @@ document.getElementById("lockFinalBtn").addEventListener("click", () => {
   const tr = document.createElement("tr");
 
   tr.innerHTML = `
-    <td  class="red" style="width:40%">
+    <td  class="red" style="width:50%">
       ${formatDiopter(round025(sph))} / ${formatDiopter(round025(cyl))} X ${axis}
       <button class="removeBtn"
         style="margin-left:12px"
@@ -3740,8 +3773,8 @@ document.getElementById("lockFinalBtn").addEventListener("click", () => {
         Remove
       </button>
     </td>
-    <td class="red" style="width:60%">
-      <input style="width:90%" type="text" placeholder="Comment">
+    <td class="red" style="width:40%">
+      <input style="width:80%" type="text" placeholder="Comment">
     </td>
   `;
 
