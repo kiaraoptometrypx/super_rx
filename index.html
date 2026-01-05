@@ -932,11 +932,14 @@ Use this to know what RX to fit next based on patient's response.
     <label>CYL : <input id="TS_cyl" type="number" step="0.25" ></label>
     <label>AXIS : <input id="TS_axis" type="number" step="5" min="0" max="180"></label>
 </div>
-<div style="margin-top:15px" class="row">
-    <button id="lockFinalBtn">Save to Finalized Prescription</button>
-    <button id="resetBtn">Reset to 0</button>
-  </div><br>
 
+<br>
+  <div style="margin-top:15px" class="row">
+    <button style="width:33%; margin-right:2%" onclick="runAllCalculations()">Calculate RX</button>
+
+    <button style="width:18%; margin-right:2%"id="lockFinalBtn">Save to List</button>
+    <button style="width:18%; "id="resetBtn">Reset to 0</button>
+  </div><br>
 
   <!-- Dropdowns -->
   <div class="row">
@@ -944,10 +947,10 @@ Use this to know what RX to fit next based on patient's response.
       <label>Duochrome : </label>
       <select style="width:50%" id="duochrome">
         <option value="">--Select--</option>
+        <option value="both_badly">Both badly blur - 6 / 9 unreadable </option>
+        <option value="both_moderately">Both little blur - 6 / 9 readable but shadowy</option>
         <option value="red">Red clearer</option>
         <option value="blue">Blue clearer</option>
-        <option value="both_badly">Both blur badly</option>
-        <option value="both_moderately">Both blur moderately</option>
         <option value="both_clear">Both clear</option>
       </select>
     </div><br>
@@ -956,8 +959,8 @@ Use this to know what RX to fit next based on patient's response.
       <label>Fan Chart : </label>
       <select style="width:50%" id="fanchart">
         <option value="">--Select--</option>
-        <option value="one_clearer">One direction clearer</option>
         <option value="all_blur">All same quality / no darker line</option>
+        <option value="one_clearer">One direction clearer</option>
         <option value="multiple_clear_blur">Multiple clear / blur (no single line pattern)</option>
       </select>
     </div><br>
@@ -967,22 +970,16 @@ Use this to know what RX to fit next based on patient's response.
       <label>Darker Axis : </label>
       <select style="width:50%" id="axisDarker"></select>
     </div>
-  </div>
-
-
-  <div style="margin-top:15px" class="row">
-    <button style="width:50%" onclick="runAllCalculations()">Calculate Prescription</button>
   </div><br>
 
-
-  <div style="height:60px" id="result"><i>- Press Calculate Prescription to see Results -</div>
+  <div style="height:90px" id="result"><i>- Press Calculate RX to see Results -</div>
 </table>
 
 
   <table id="finalTable">
     <thead>
       <tr id="finalTable" class="red">
-         <th class="red" style="width:50%">List of Finalized Prescription</th>
+         <th class="red" style="width:50%">List of RX</th>
         <th class="red" style="width:40%">Notes</th>
       </tr>
     </thead>
@@ -3673,16 +3670,31 @@ const axisLocked = [
 
 function populateAxisDarker(){
   const sel = document.getElementById("axisDarker");
+  const fan = document.getElementById("fanchart").value;
+
   sel.innerHTML = '<option value="">--Select--</option>';
-  axisLocked.forEach(a=>{
-    const opt=document.createElement("option");
-    opt.value=a.deg;
-    opt.textContent=a.label;
-    sel.appendChild(opt);
-  });
+
+  // Only populate options if fan chart is "one_clearer"
+  if(fan === "one_clearer"){
+    axisLocked.forEach(a=>{
+      const opt=document.createElement("option");
+      opt.value=a.deg;
+      opt.textContent=a.label;
+      sel.appendChild(opt);
+    });
+    sel.disabled = false;
+  } else {
+    // Otherwise disable the dropdown
+    sel.disabled = true;
+  }
 }
+
+// Run on page load
 populateAxisDarker();
+
+// Add reactive listener to fan chart change
 document.getElementById("fanchart").addEventListener("change", populateAxisDarker);
+
 
 /* =================== Cylinder / Vector Math =================== */
 function toMinusCyl(cyl, axis){
@@ -3735,7 +3747,44 @@ function runFanChartCalculation(input){
   const fan=input.fanChart;
   const dark=input.axisDarkerDeg?Number(input.axisDarkerDeg):null;
 
-  const dash=()=>out.push({sph:"-",cyl:"-",axis:"-",usedPower:"-"});
+  // If fan chart not selected or axis missing, show note only
+  if(!fan){
+    out.push({usedPower:"Please select Fan Chart"});
+    return out;
+  }
+
+  if(fan==="one_clearer" && dark===null){
+    out.push({usedPower:"Please select Darker Axis"});
+    return out;
+  }
+
+  // Both clear case
+  if(du==="both_clear"){
+    out.push({usedPower:"No changes needed. Rx is optimized."});
+    return out;
+  }
+
+  // Both slightly + multiple_clear_blur
+  if(du==="both_slightly" && fan==="multiple_clear_blur"){
+    out.push({usedPower:"No changes needed. Rx is optimized but vision may blur due to other causes."});
+    return out;
+  }
+
+
+// ✅ NEW FIXED CASE: Both moderately + multiple_clear_blur
+if(du==="both_moderately" && fan==="multiple_clear_blur"){
+  out.push({usedPower:"Conclusion: Poor visual acuity with astigmatism from dry eyes or corneal irregularity."});
+  return out;
+}
+
+// ✅ NEW FIXED CASE: Both moderately + all_similar
+if(du==="both_moderately" && fan==="all_blur"){
+  out.push({usedPower:"Conclusion: Poor visual acuity with astigmatism from dry eyes or corneal irregularity."});
+  return out;
+}
+
+  // ====== Normal calculations ======
+  const dash=()=>out.push({usedPower:"Choose all selection"});
 
   if(fan!=="one_clearer"){
     if(du==="red")   [-0.25,-0.50].forEach(d=>out.push({
@@ -3782,6 +3831,7 @@ function runFanChartCalculation(input){
   return out;
 }
 
+
 /* =================== Run & Display =================== */
 let lastResults=[];
 function runAllCalculations(){
@@ -3794,25 +3844,28 @@ function runAllCalculations(){
   const res=runFanChartCalculation(input);
   lastResults=res;
 
-  result.innerHTML="";
-  res.forEach(r=>{
-    const row=document.createElement("div");
-    row.className="resultRow";
-    row.textContent=
-      `Change ${r.usedPower} , New RX `+
-      `${formatDiopter(round025(r.sph))} / `+
-      `${formatDiopter(round025(r.cyl))} X ${r.axis}`;
-    const btn=document.createElement("button");
-    btn.textContent="Copy To Top";
-btn.style.marginLeft = "3%";
-    btn.onclick=()=>{
-      TS_sph.value=r.sph!=="-"?r.sph:"";
-      TS_cyl.value=r.cyl!=="-"?r.cyl:"";
-      TS_axis.value=r.axis!=="-"?r.axis:"";
-    };
-    row.appendChild(btn);
-    result.appendChild(row);
-  });
+result.innerHTML = "";
+res.forEach((r, i) => {
+  const row = document.createElement("div");
+  row.className = "resultRow";
+  row.textContent =
+    `Option ${i + 1}: Change ${r.usedPower}, New RX ` +
+    `${formatDiopter(round025(r.sph))} / ` +
+    `${formatDiopter(round025(r.cyl))} X ${r.axis}`;
+
+  const btn = document.createElement("button");
+  btn.textContent = "Refine this RX";
+  btn.style.marginLeft = "3%";
+  btn.onclick = () => {
+    TS_sph.value = r.sph !== "-" ? r.sph : "";
+    TS_cyl.value = r.cyl !== "-" ? r.cyl : "";
+    TS_axis.value = r.axis !== "-" ? r.axis : "";
+  };
+
+  row.appendChild(btn);
+  result.appendChild(row);
+});
+
 }
 
 /* =================== Reset =================== */
@@ -3838,6 +3891,81 @@ lockFinalBtn.onclick=()=>{
     </td>`;
   document.querySelector("#finalTable tbody").appendChild(tr);
 };
+
+const lookup = {
+  "red|all_blur": "1. Myope, almost no astigmatism",
+  "red|one_clearer": "2. Myope, has astigmatism, possibly more than 0.50 CYL",
+  "red|multiple_clear_blur": "3. Myope, astigmatism from dry eyes or corneal irregularity",
+  "blue|all_blur": "4. Hyperope, most likely no astigmatism",
+  "blue|one_clearer": "5. Hyperope, has astigmatism, possibly more than 0.50 CYL",
+  "blue|multiple_clear_blur": "6. Hyperope, astigmatism from dry eyes or corneal irregularity",
+  "both_badly|all_blur": "7. High myope or high hyperope, cannot conclude astigmatism amount",
+  "both_badly|one_clearer": "8. High myope or high hyperope, definitely has astigmatism",
+  "both_badly|multiple_clear_blur": "9. High myope or high hyperope, astigmatism from dry eyes or corneal irregularity",
+  "both_slightly|all_blur": "10. Poor visual acuity",
+  "both_slightly|one_clearer": "11. Poor visual acuity with astigmatism",
+  "both_slightly|multiple_clear_blur": "12. Poor visual acuity with astigmatism from dry eyes or corneal irregularity",
+  "both_clear|one_clearer": "13. Sharp visual acuity with astigmatism",
+  "both_clear|multiple_clear_blur": "14. Sharp visual acuity with astigmatism from dry eyes or corneal irregularity"
+};
+
+function runAllCalculations(){
+  const input={
+    sph:TS_sph.value, cyl:TS_cyl.value, axis:TS_axis.value,
+    duochrome:duochrome.value,
+    fanChart:fanchart.value,
+    axisDarkerDeg:axisDarker.value
+  };
+  const res=runFanChartCalculation(input);
+  lastResults=res;
+
+  const key = `${input.duochrome}|${input.fanChart}`;
+  const description = lookup[key] || "";
+
+  result.innerHTML = "";
+
+  // Display each RX option as before
+res.forEach((r, i) => {
+  const row = document.createElement("div");
+  row.className = "resultRow";
+
+  // Only show note if sph/cyl/axis are missing
+  if(r.sph===undefined && r.cyl===undefined && r.axis===undefined){
+    row.textContent = r.usedPower || "Choose all selection";
+  } else {
+    row.textContent =
+      `Option ${i + 1}: Change ${r.usedPower}, New RX ` +
+      `${formatDiopter(round025(r.sph))} / ` +
+      `${formatDiopter(round025(r.cyl))} X ${r.axis}`;
+
+    const btn = document.createElement("button");
+    btn.textContent = "Refine this RX";
+    btn.style.marginLeft = "3%";
+    btn.onclick = () => {
+      TS_sph.value = r.sph !== "-" ? r.sph : "";
+      TS_cyl.value = r.cyl !== "-" ? r.cyl : "";
+      TS_axis.value = r.axis !== "-" ? r.axis : "";
+    };
+    row.appendChild(btn);
+  }
+
+  result.appendChild(row);
+});
+
+
+
+  // Add the lookup description BELOW all results in one line
+  if(description){
+    const descRow = document.createElement("div");
+    descRow.style.marginTop = "10px";
+    descRow.style.fontWeight = "bold";
+    descRow.textContent = `Scenario: ${description}`;
+    result.appendChild(descRow);
+  }
+}
+
+
+
 </script>
 
 
