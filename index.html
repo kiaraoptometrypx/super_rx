@@ -5,15 +5,14 @@
 <meta charset="UTF-8">
 <title>Hypervision-Rx</title>
 <style>
-
 html, body, table, th, td, input, button, select, option, a, b, label {
   font-size: 11px !important;
   font-family: 'Manrope', sans-serif;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-
 }
+
 th.red, td.red {
   background: #E0E0E0;
   color: black;
@@ -934,7 +933,7 @@ Use this to know what RX to fit next based on patient's response.
     <label>AXIS : <input id="TS_axis" type="number" step="5" min="0" max="180"></label>
 </div>
 <div style="margin-top:15px" class="row">
-    <button id="lockFinalBtn">Copy to Finalized Prescription</button>
+    <button id="lockFinalBtn">Save to Finalized Prescription</button>
     <button id="resetBtn">Reset to 0</button>
   </div><br>
 
@@ -948,7 +947,7 @@ Use this to know what RX to fit next based on patient's response.
         <option value="red">Red clearer</option>
         <option value="blue">Blue clearer</option>
         <option value="both_badly">Both blur badly</option>
-        <option value="both_slightly">Both blur slightly</option>
+        <option value="both_moderately">Both blur moderately</option>
         <option value="both_clear">Both clear</option>
       </select>
     </div><br>
@@ -976,7 +975,7 @@ Use this to know what RX to fit next based on patient's response.
   </div><br>
 
 
-  <div style="height:30px" id="result"><i>- Press Calculate Prescription to see Results -</div>
+  <div style="height:60px" id="result"><i>- Press Calculate Prescription to see Results -</div>
 </table>
 
 
@@ -2522,7 +2521,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
   'od_rectS', 'od_rectC',  
   'os_rectS', 'os_rectC',
   'cl-sph-re','cl-cyl-re','cl-sph-le','cl-cyl-le',
- 'nearAddVector','nearAddFinal','nearAdd',
+ 'nearAddVector','nearAddFinal','nearAdd','TS_sph','TS_cyl'
   
 ];
 
@@ -3649,168 +3648,196 @@ fanImg.src = `https://raw.githubusercontent.com/kiaraoptometrypx/Trainer/main/${
 
 
 
-
-
-
-
 <script>
-/* ------------------- Helpers ------------------- */
+/* =================== Helpers =================== */
 function round025(x){ return Math.round(x*4)/4; }
-function formatDiopter(x){ return (x>=0?'+':'') + parseFloat(x).toFixed(2); }
+function formatDiopter(x){
+  return (x>=0?"+":"") + Number(x).toFixed(2);
+}
+function formatSphChange(x){
+  return `${formatDiopter(x)}`;
+}
+function formatCylChange(x){
+  return `${formatDiopter(x)}`;
+}
 
-/* ------------------- Axis Dropdown ------------------- */
+/* =================== Axis Dropdown =================== */
 const axisLocked = [
-  {label:"3-9 , 9-3", deg:180},{label:"3:30-9:30 , 9:30-3:30", deg:15},{label:"4-10 , 10-4", deg:30},
-  {label:"4:30-10:30 , 10:30-4:30", deg:45},{label:"5-11 , 11-5", deg:60},{label:"5:30-11:30 , 11:30-5:30", deg:75},
-  {label:"6-12 , 12-6", deg:90},{label:"6:30-12:30 , 12:30-6:30", deg:105},{label:"7-1 , 1-7", deg:120},
-  {label:"7:30-1:30 , 1:30-7:30", deg:135},{label:"8-2 , 2-8", deg:150},{label:"8:30-2:30 , 2:30-8:30", deg:165}
+  {label:"3-9 , 9-3", deg:180},{label:"3:30-9:30 , 9:30-3:30", deg:15},
+  {label:"4-10 , 10-4", deg:30},{label:"4:30-10:30 , 10:30-4:30", deg:45},
+  {label:"5-11 , 11-5", deg:60},{label:"5:30-11:30 , 11:30-5:30", deg:75},
+  {label:"6-12 , 12-6", deg:90},{label:"6:30-12:30 , 12:30-6:30", deg:105},
+  {label:"7-1 , 1-7", deg:120},{label:"7:30-1:30 , 1:30-7:30", deg:135},
+  {label:"8-2 , 2-8", deg:150},{label:"8:30-2:30 , 2:30-8:30", deg:165}
 ];
+
 function populateAxisDarker(){
   const sel = document.getElementById("axisDarker");
   sel.innerHTML = '<option value="">--Select--</option>';
-  axisLocked.forEach(a=>{ const opt = document.createElement("option"); opt.value=a.deg; opt.textContent=a.label; sel.appendChild(opt); });
+  axisLocked.forEach(a=>{
+    const opt=document.createElement("option");
+    opt.value=a.deg;
+    opt.textContent=a.label;
+    sel.appendChild(opt);
+  });
 }
 populateAxisDarker();
 document.getElementById("fanchart").addEventListener("change", populateAxisDarker);
 
-/* ------------------- Cylinder/Axis <-> J0/J45 ------------------- */
+/* =================== Cylinder / Vector Math =================== */
 function toMinusCyl(cyl, axis){
   cyl=Number(cyl)||0; axis=Number(axis)||0;
-  if(cyl>0){ let n=-cyl, a=(axis+90)%180; if(a===0)a=180; return {cyl:n, axis:a}; } return {cyl, axis};
+  if(cyl>0){
+    let n=-cyl;
+    let a=(axis+90)%180; if(a===0)a=180;
+    return {cyl:n, axis:a};
+  }
+  return {cyl, axis};
 }
-function cylAxisToJ0J45(cyl, axis){ const rad=axis*Math.PI/180; return {j0:(-cyl/2)*Math.cos(2*rad), j45:(-cyl/2)*Math.sin(2*rad)}; }
-function j0j45ToCylAxisVals(j0,j45){ const mag=Math.sqrt(j0*j0+j45*j45); let cyl=-2*mag; let axis=cyl===0?0:0.5*Math.atan2(j45,j0)*180/Math.PI; if(axis<0) axis+=180; if(cyl>0){ cyl=-cyl; axis=(axis+90)%180; if(axis===0) axis=180;} return { cyl: parseFloat(cyl.toFixed(2)), axis: Math.round(axis) }; }
+function cylAxisToJ0J45(cyl, axis){
+  const rad=axis*Math.PI/180;
+  return {
+    j0:(-cyl/2)*Math.cos(2*rad),
+    j45:(-cyl/2)*Math.sin(2*rad)
+  };
+}
+function j0j45ToCylAxisVals(j0,j45){
+  const mag=Math.sqrt(j0*j0+j45*j45);
+  let cyl=-2*mag;
+  let axis=cyl===0?0:0.5*Math.atan2(j45,j0)*180/Math.PI;
+  if(axis<0) axis+=180;
+  if(cyl>0){
+    cyl=-cyl;
+    axis=(axis+90)%180; if(axis===0)axis=180;
+  }
+  return { cyl:Number(cyl.toFixed(2)), axis:Math.round(axis) };
+}
 
-/* ------------------- Cross-cylinder calculation ------------------- */
+/* =================== Cross Cylinder =================== */
 function crossCylinder(orig, deltaC, deltaAxis){
-  const minus = toMinusCyl(orig.cyl, orig.axis);
-  const j_orig = cylAxisToJ0J45(minus.cyl, minus.axis);
-  const j_delta = cylAxisToJ0J45(deltaC, deltaAxis);
-  const newJ0 = j_orig.j0 + j_delta.j0;
-  const newJ45 = j_orig.j45 + j_delta.j45;
-  const vals = j0j45ToCylAxisVals(newJ0,newJ45);
-  const SE_final = Number(orig.sph||0) + (Number(orig.cyl||0))/2 + deltaC/2;
-  const sph_final = parseFloat((SE_final - vals.cyl/2).toFixed(2));
-  return { sph:sph_final, cyl:vals.cyl, axis:vals.axis };
+  const minus=toMinusCyl(orig.cyl, orig.axis);
+  const jO=cylAxisToJ0J45(minus.cyl, minus.axis);
+  const jD=cylAxisToJ0J45(deltaC, deltaAxis);
+  const vals=j0j45ToCylAxisVals(jO.j0+jD.j0, jO.j45+jD.j45);
+
+  const SE=Number(orig.sph||0)+(Number(orig.cyl||0))/2+deltaC/2;
+  const sph=Number((SE - vals.cyl/2).toFixed(2));
+  return { sph, cyl:vals.cyl, axis:vals.axis };
 }
 
-/* ------------------- Main Rule Engine ------------------- */
+/* =================== Rule Engine =================== */
 function runFanChartCalculation(input){
-  const results=[]; 
-  const sph0=Number(input.sph)||0, cyl0=Number(input.cyl)||0, axis0=Number(input.axis)||0;
-  const duochrome=input.duochrome, fanChart=input.fanChart, axisDarkerDeg=input.axisDarkerDeg?Number(input.axisDarkerDeg):null;
-  function pushDash(){ results.push({sph:"-",cyl:"-",axis:"-",usedPower:"-"}) }
+  const out=[];
+  const sph0=Number(input.sph)||0;
+  const cyl0=Number(input.cyl)||0;
+  const axis0=Number(input.axis)||0;
+  const du=input.duochrome;
+  const fan=input.fanChart;
+  const dark=input.axisDarkerDeg?Number(input.axisDarkerDeg):null;
 
-  if(fanChart!=="one_clearer"){
-    if(duochrome==="red"){ [-0.25,-0.5].forEach(d=>results.push({sph:sph0+d,cyl:toMinusCyl(cyl0,axis0).cyl,axis:toMinusCyl(cyl0,axis0).axis, usedPower:`${d>=0?"+":""}${d}`})) ; return results;}
-    if(duochrome==="blue"){ [0.25,0.5].forEach(d=>results.push({sph:sph0+d,cyl:toMinusCyl(cyl0,axis0).cyl,axis:toMinusCyl(cyl0,axis0).axis, usedPower:`${d>=0?"+":""}${d}`})) ; return results;}
-    if(duochrome==="both_clear"||duochrome==="both_slightly"){ pushDash(); return results;}
-    if(duochrome==="both_badly"){ [2,-2].forEach(d=>results.push({sph:sph0+d,cyl:toMinusCyl(cyl0,axis0).cyl,axis:toMinusCyl(cyl0,axis0).axis, usedPower:`${d>=0?"+":""}${d}`})) ; return results;}
-    pushDash(); return results;
+  const dash=()=>out.push({sph:"-",cyl:"-",axis:"-",usedPower:"-"});
+
+  if(fan!=="one_clearer"){
+    if(du==="red")   [-0.25,-0.50].forEach(d=>out.push({
+      sph:sph0+d,cyl:toMinusCyl(cyl0,axis0).cyl,axis:toMinusCyl(cyl0,axis0).axis,
+      usedPower:formatSphChange(d)
+    }));
+    else if(du==="blue") [0.25,0.50].forEach(d=>out.push({
+      sph:sph0+d,cyl:toMinusCyl(cyl0,axis0).cyl,axis:toMinusCyl(cyl0,axis0).axis,
+      usedPower:formatSphChange(d)
+    }));
+    else if(du==="both_badly") [2,-2].forEach(d=>out.push({
+      sph:sph0+d,cyl:toMinusCyl(cyl0,axis0).cyl,axis:toMinusCyl(cyl0,axis0).axis,
+      usedPower:formatSphChange(d)
+    }));
+    else dash();
+    return out;
   }
 
-  if(axisDarkerDeg===null){ pushDash(); return results; }
-  const perpDeg=(axisDarkerDeg+90)%180;
+  if(dark===null){ dash(); return out; }
+  const perp=(dark+90)%180;
 
-  if(duochrome==="red"){ [-0.25,-0.50].forEach(d=>results.push({...crossCylinder({sph:sph0,cyl:cyl0,axis:axis0},d,perpDeg), usedPower:`${d>=0?"+":""}${d} x ${perpDeg}`})) ; return results;}
-  if(duochrome==="blue"){ [0.25,0.50].forEach(d=>results.push({...crossCylinder({sph:sph0,cyl:cyl0,axis:axis0},d,perpDeg), usedPower:`${d>=0?"+":""}${d} x ${perpDeg}`})) ; return results;}
-  if(duochrome==="both_clear"){ results.push({...crossCylinder({sph:sph0,cyl:cyl0,axis:axis0},0.25,perpDeg), usedPower:`+0.25 x ${perpDeg}`}) ; return results;}
-  if(duochrome==="both_slightly"){ [[0.25,-0.5],[0.5,-1]].forEach(pair=>results.push({...crossCylinder({sph:sph0+pair[0],cyl:cyl0,axis:axis0},pair[1],axisDarkerDeg), usedPower:`${pair[1]>=0?"+":""}${pair[1]} x ${axisDarkerDeg}`})) ; return results;}
-  if(duochrome==="both_badly"){ [1.50,-1.50].forEach(d=>results.push({...crossCylinder({sph:sph0,cyl:cyl0,axis:axis0},d,perpDeg), usedPower:`${d>=0?"+":""}${d} x ${perpDeg}`})) ; return results;}
-  pushDash(); return results;
+  if(du==="red") [-0.25,-0.50].forEach(d=>out.push({
+    ...crossCylinder({sph:sph0,cyl:cyl0,axis:axis0},d,perp),
+    usedPower:`PL / ${formatCylChange(d)} × ${perp}`
+  }));
+  else if(du==="blue") [0.25,0.50].forEach(d=>out.push({
+    ...crossCylinder({sph:sph0,cyl:cyl0,axis:axis0},d,perp),
+    usedPower:`PL / ${formatCylChange(d)} × ${perp}`
+  }));
+  else if(du==="both_clear") out.push({
+    ...crossCylinder({sph:sph0,cyl:cyl0,axis:axis0},0.25,perp),
+    usedPower:`PL / ${formatCylChange(0.25)} × ${perp}`
+  });
+  else if(du==="both_moderately") [[0.25,-0.50],[0.50,-1.00]].forEach(p=>out.push({
+    ...crossCylinder({sph:sph0+p[0],cyl:cyl0,axis:axis0},p[1],dark),
+    usedPower:`${formatSphChange(p[0])} / ${formatCylChange(p[1])} × ${dark}`
+  }));
+  else if(du==="both_badly") [1.50,-1.50].forEach(d=>out.push({
+    ...crossCylinder({sph:sph0,cyl:cyl0,axis:axis0},d,perp),
+    usedPower:`PL / ${formatCylChange(d)} × ${perp}`
+  }));
+  else dash();
+
+  return out;
 }
 
-/* ------------------- Run & Display ------------------- */
+/* =================== Run & Display =================== */
 let lastResults=[];
 function runAllCalculations(){
-  const input={ sph:document.getElementById("TS_sph").value,
-                cyl:document.getElementById("TS_cyl").value,
-                axis:document.getElementById("TS_axis").value,
-                duochrome:document.getElementById("duochrome").value,
-                fanChart:document.getElementById("fanchart").value,
-                axisDarkerDeg:document.getElementById("axisDarker").value };
-  const results=runFanChartCalculation(input);
-  lastResults=results;
+  const input={
+    sph:TS_sph.value,cyl:TS_cyl.value,axis:TS_axis.value,
+    duochrome:duochrome.value,
+    fanChart:fanchart.value,
+    axisDarkerDeg:axisDarker.value
+  };
+  const res=runFanChartCalculation(input);
+  lastResults=res;
 
-  const container=document.getElementById("result");
-  container.innerHTML="";
-  results.forEach((r,i)=>{
-    const row=document.createElement("div"); row.className="resultRow";
-    const rounded=`[${formatDiopter(round025(r.sph))}, ${formatDiopter(round025(r.cyl))}, ${r.axis}]`;
-const text = `Change with ${r.usedPower}, New RX is ${formatDiopter(round025(r.sph))} / CYL ${formatDiopter(round025(r.cyl))} X ${r.axis}`;
-
-    const span=document.createElement("span"); span.textContent=text;
-    const btn=document.createElement("button"); btn.textContent="Copy To Top"; btn.className="copyBtn"; btn.style.marginLeft = "5%";
-
-    btn.onclick=()=>{ document.getElementById("TS_sph").value=r.sph!=="-"?r.sph:""; document.getElementById("TS_cyl").value=r.cyl!=="-"?r.cyl:""; document.getElementById("TS_axis").value=r.axis!=="-"?r.axis:""; };
-    row.appendChild(span); row.appendChild(btn); container.appendChild(row);
+  result.innerHTML="";
+  res.forEach(r=>{
+    const row=document.createElement("div");
+    row.className="resultRow";
+    row.textContent=
+      `Change ${r.usedPower} , New RX `+
+      `${formatDiopter(round025(r.sph))} / `+
+      `${formatDiopter(round025(r.cyl))} X ${r.axis}`;
+    const btn=document.createElement("button");
+    btn.textContent="Copy To Top";
+btn.style.marginLeft = "3%";
+    btn.onclick=()=>{
+      TS_sph.value=r.sph!=="-"?r.sph:"";
+      TS_cyl.value=r.cyl!=="-"?r.cyl:"";
+      TS_axis.value=r.axis!=="-"?r.axis:"";
+    };
+    row.appendChild(btn);
+    result.appendChild(row);
   });
 }
 
-/* ------------------- Reset Inputs ------------------- */
-document.getElementById("resetBtn").addEventListener("click",()=>{
-  document.getElementById("TS_sph").value=0;
-  document.getElementById("TS_cyl").value=0;
-  document.getElementById("TS_axis").value=0;
-});
+/* =================== Reset =================== */
+resetBtn.onclick=()=>{
+  TS_sph.value=0; TS_cyl.value=0; TS_axis.value=0;
+};
 
-/* ------------------- Lock as Final Table ------------------- */
-document.getElementById("lockFinalBtn").addEventListener("click", () => {
-  const sph  = Number(document.getElementById("TS_sph").value)  || 0;
-  const cyl  = Number(document.getElementById("TS_cyl").value)  || 0;
-  const axis = document.getElementById("TS_axis").value || 0;
+/* =================== Lock Final =================== */
+lockFinalBtn.onclick=()=>{
+  const sph=Number(TS_sph.value)||0;
+  const cyl=Number(TS_cyl.value)||0;
+  const axis=TS_axis.value||0;
 
-  const tbody = document.querySelector("#finalTable tbody");
-  const tr = document.createElement("tr");
-
-  tr.innerHTML = `
-    <td  class="red" style="width:50%">
-      ${formatDiopter(round025(sph))} / ${formatDiopter(round025(cyl))} X ${axis}
-      <button class="removeBtn"
-        style="margin-left:12px"
-        type="button"
-        onclick="this.closest('tr').remove(); syncFinalTableMirror();">
-        Remove
-      </button>
+  const tr=document.createElement("tr");
+  tr.innerHTML=`
+    <td class="red" style="width:50%">
+      ${formatDiopter(round025(sph))} /
+      ${formatDiopter(round025(cyl))} X ${axis}
+      <button class="removeBtn" onclick="this.closest('tr').remove()">Remove</button>
     </td>
     <td class="red" style="width:40%">
       <input style="width:80%" type="text" placeholder="Comment">
-    </td>
-  `;
-
-  tbody.appendChild(tr);
-  syncFinalTableMirror();
-});
-
-
-/* ------------------- Mirror Sync ------------------- */
-function syncFinalTableMirror(){
-  const srcBody = document.querySelector("#finalTable tbody");
-  const dstBody = document.querySelector("#finalTableMirror tbody");
-
-  dstBody.innerHTML = "";
-
-  [...srcBody.rows].forEach(row => {
-    const clone = row.cloneNode(true);
-
-    // remove Remove button inside prescription cell
-    const btn = clone.querySelector(".removeBtn");
-    if (btn) btn.remove();
-
-    dstBody.appendChild(clone);
-  });
-}
-
-
-/* ------------------- Live Comment Sync ------------------- */
-document.querySelector("#finalTable tbody").addEventListener("input", e => {
-  if (e.target.tagName === "INPUT") {
-    syncFinalTableMirror();
-  }
-});
-
-
-
+    </td>`;
+  document.querySelector("#finalTable tbody").appendChild(tr);
+};
 </script>
 
 
