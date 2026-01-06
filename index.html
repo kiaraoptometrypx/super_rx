@@ -260,7 +260,7 @@ body, table, th, td, input, button {
   will-change: filter;
 }
 .duo-side img.overlay {
-  display: none;
+  display: block;
   position: absolute;
   left: 0;
   top: 0;
@@ -647,11 +647,11 @@ Prescription comes in many types of errors; whether it's myopia, hyperopia or as
   <div class="duochrome">
     <div class="duo-side" id="redSide">
       <img class="base" id="redImg"  src="https://raw.githubusercontent.com/kiaraoptometrypx/Trainer/main/RED_1.png"  alt="">
-      <img class="overlay" id="redOv"  alt="">
+<img class="overlay" id="redOv" src="https://raw.githubusercontent.com/kiaraoptometrypx/Trainer/main/RED_1.png" alt="">
     </div>
     <div class="duo-side" id="blueSide">
       <img class="base" id="blueImg" src="https://raw.githubusercontent.com/kiaraoptometrypx/Trainer/main/BLUE_1.png" alt="">
-      <img class="overlay" id="blueOv" alt="">
+<img class="overlay" id="blueOv" src="https://raw.githubusercontent.com/kiaraoptometrypx/Trainer/main/BLUE_1.png" alt="">
     </div>
   </div>
 
@@ -3893,20 +3893,20 @@ lockFinalBtn.onclick=()=>{
 };
 
 const lookup = {
-  "red|all_blur": "1. Myope, almost no astigmatism",
-  "red|one_clearer": "2. Myope, has astigmatism, possibly more than 0.50 CYL",
-  "red|multiple_clear_blur": "3. Myope, astigmatism from dry eyes or corneal irregularity",
-  "blue|all_blur": "4. Hyperope, most likely no astigmatism",
-  "blue|one_clearer": "5. Hyperope, has astigmatism, possibly more than 0.50 CYL",
-  "blue|multiple_clear_blur": "6. Hyperope, astigmatism from dry eyes or corneal irregularity",
-  "both_badly|all_blur": "7. High myope or high hyperope, cannot conclude astigmatism amount",
-  "both_badly|one_clearer": "8. High myope or high hyperope, definitely has astigmatism",
-  "both_badly|multiple_clear_blur": "9. High myope or high hyperope, astigmatism from dry eyes or corneal irregularity",
-  "both_slightly|all_blur": "10. Poor visual acuity",
-  "both_slightly|one_clearer": "11. Poor visual acuity with astigmatism",
-  "both_slightly|multiple_clear_blur": "12. Poor visual acuity with astigmatism from dry eyes or corneal irregularity",
-  "both_clear|one_clearer": "13. Sharp visual acuity with astigmatism",
-  "both_clear|multiple_clear_blur": "14. Sharp visual acuity with astigmatism from dry eyes or corneal irregularity"
+  "red|all_blur": "1. Myope, almost no astig.",
+  "red|one_clearer": "2. Myope, has astig possibly more than 0.50.",
+  "red|multiple_clear_blur": "3. Myope, has irregular astig from dry eyes, corneal irregularity or internal (cataract, macula, vitreous etc).",
+  "blue|all_blur": "4. Hyperope, almost no astig.",
+  "blue|one_clearer": "5. Hyperope, has astig possibly more than 0.50 CYL.",
+  "blue|multiple_clear_blur": "6. Hyperope, astig from dry eyes, corneal irregularity or internal (cataract, macula, vitreous etc).",
+  "both_badly|all_blur": "7. High myope or high hyperope. Use -2.00 if patient can see near. Use +2.00 if patient cannot see near.",
+  "both_badly|one_clearer": "8. High myope or high hyperope. Try both option and ask which is better.",
+  "both_badly|multiple_clear_blur": "9. High myope or high hyperope, irregular astig from dry eyes, corneal irregularity or internal (cataract, macula, vitreous etc).",
+  "both_slightly|all_blur": "10. Poor visual acuity. Possibly from internal (cataract, macula, vitreous etc) or amblyopia.",
+  "both_slightly|one_clearer": "11. Astig mostly disturbing the vision.",
+  "both_slightly|multiple_clear_blur": "12. Poor visual acuity with irregular astig from dry eyes, corneal irregularity or internal (cataract, macula, vitreous etc).",
+  "both_clear|one_clearer": "13. Sharp visual acuity with astigmatism.",
+  "both_clear|multiple_clear_blur": "14. Sharp visual acuity with irregular astig from dry eyes, corneal irregularity or internal (cataract, macula, vitreous etc)."
 };
 
 function runAllCalculations(){
@@ -3923,6 +3923,15 @@ function runAllCalculations(){
   const description = lookup[key] || "";
 
   result.innerHTML = "";
+// Add the lookup description above all results in one line
+if(description){
+  const descSpan = document.createElement("span");
+  descSpan.style.fontWeight = "bold";
+  descSpan.style.marginBottom = "2%"; // spacing below description
+  descSpan.style.display = "inline-block"; // so margin applies
+  descSpan.textContent = `Scenario: ${description} — `;
+  result.insertBefore(descSpan, result.firstChild); // only once
+}
 
   // Display each RX option as before
 res.forEach((r, i) => {
@@ -3951,17 +3960,6 @@ res.forEach((r, i) => {
 
   result.appendChild(row);
 });
-
-
-
-  // Add the lookup description BELOW all results in one line
-  if(description){
-    const descRow = document.createElement("div");
-    descRow.style.marginTop = "10px";
-    descRow.style.fontWeight = "bold";
-    descRow.textContent = `Scenario: ${description}`;
-    result.appendChild(descRow);
-  }
 }
 
 
