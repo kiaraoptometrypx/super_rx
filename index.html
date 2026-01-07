@@ -580,9 +580,14 @@ Prescription comes in many types of errors; whether it's myopia, hyperopia or as
 
 </div>  
 
-
+<div>
+  <button style="width:75%" onclick="resetRx()">Reset</button>
+</div>
 <!-- Participant Inputs -->
   <div style="width:100%; display:flex; justify-content:center; gap:10px; flex-wrap:wrap; align-items:flex-start; margin-top:10px;">
+
+
+
     <!-- SPH -->
     <div style="text-align:center;">
       <label><b>SPH</b></label><br>
@@ -620,6 +625,63 @@ Prescription comes in many types of errors; whether it's myopia, hyperopia or as
       </div>
     </div>
   </div>
+
+<div style="
+  display:grid;
+  grid-template-columns: repeat(3, 25%);
+  gap:10px;
+  justify-content:center;
+  margin-top:12px;
+">
+  <button style="width:100%" onclick="highlightRx(this,'sph',-1.00)">Near-Sighted</button>
+  <button style="width:100%" onclick="highlightRx(this,'sph',1.00)">Far-Sighted</button>
+  <button style="width:100%" onclick="highlightRx(this,'cyl',-1.00)">Astig</button>
+  <button style="width:100%" onclick="highlightRx(this,'sph',-2.00)">High Near-Sighted</button>
+  <button style="width:100%" onclick="highlightRx(this,'sph',2.00)">High Far-Sighted</button>
+  <button style="width:100%" onclick="highlightRx(this,'cyl',-2.00)">High Astig</button>
+</div>
+
+<style>
+  .rx-active { background:#ccc; }
+</style>
+
+<script>
+let activeBtn = { sph: null, cyl: null };
+
+// Your original setRx function
+function setRx(field, value){
+  const el = document.getElementById(field);
+  el.value = Number(value).toFixed(2);
+
+  // force same behavior as clicking +/- buttons
+  el.dispatchEvent(new Event('input', { bubbles:true }));
+  el.dispatchEvent(new Event('change', { bubbles:true }));
+
+  if (typeof updateAll === 'function') updateAll();
+  if (typeof redraw === 'function') redraw();
+}
+
+// New wrapper for highlighting + calling setRx
+function highlightRx(btn, field, value){
+  if(activeBtn[field]) activeBtn[field].classList.remove('rx-active');
+  btn.classList.add('rx-active');
+  activeBtn[field] = btn;
+
+  setRx(field, value);
+}
+
+// Reset everything
+function resetRx(){
+  if(activeBtn.sph) activeBtn.sph.classList.remove('rx-active');
+  if(activeBtn.cyl) activeBtn.cyl.classList.remove('rx-active');
+  activeBtn.sph = null;
+  activeBtn.cyl = null;
+
+  setRx('sph', 0.00);
+  setRx('cyl', 0.00);
+  setRx('axis', 180);
+}
+</script>
 
 
 
