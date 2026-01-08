@@ -636,13 +636,21 @@ function copyRightToLeft(){
 </tr>
 
 <tr>
-  <td>Vector Changes R</td>
+  <td>Vector Changes R<br>
+<button style="border-radius:10px; margin-right:5%; color:green" type="button" onclick="adjustValue('vc_odS', 0.25)">+0.25</button>
+<button style="border-radius:10px; color:red" type="button" onclick="adjustValue('vc_odS', -0.25)">-0.25</button>
+
+</td>
   <td><input type="number" step="0.25" id="vc_odS"></td>
   <td><input type="number" step="0.25" id="vc_odC"></td>
   <td><input type="number" step="5" min="0" max="180" id="vc_odA"></td>
 </tr>
 <tr>
-  <td>Vector Changes L</td>
+  <td>Vector Changes L<br>
+<button style="border-radius:10px; color:green; margin-right:5%" type="button" onclick="adjustValue('vc_osS', 0.25)">+0.25</button>
+<button style="border-radius:10px; color:red" type="button" onclick="adjustValue('vc_osS', -0.25)">-0.25</button>
+
+</td>
   <td><input type="number" step="0.25" id="vc_osS"></td>
   <td><input type="number" step="0.25" id="vc_osC"></td>
   <td><input type="number" step="5" min="0" max="180" id="vc_osA"></td>
@@ -653,6 +661,7 @@ function copyRightToLeft(){
   <td id="vc_crossC">-</td>
   <td id="vc_crossA">-</td>
 </tr>
+
 <tr style="border:none; height:10px;">
   <td style="border:none; height:1px; padding:0;"></td>
   <td style="border:none; height:1px; padding:0;"></td>
@@ -678,7 +687,7 @@ L: <span id="os_vcFinalS">0.00</span> / <span id="os_vcFinalC">0.00</span> x <sp
 
 
 <tr>
-<td class="yellow">Add : <input style="width:50px" type="number" step="0.25" min="0" max="5" id="nearAddVector"
+<td class="yellow">Add : <input style="width:60px" type="number" step="0.25" min="0" max="5" id="nearAddVector"
 </td>
 
 
@@ -930,7 +939,7 @@ L: <span id="os_vectorDisplay">- / - × -</span>
 </td>
 </tr>
 <tr><td>
-Add : <input style="width:50px" type="number" step="0.25" min="0" max="5" id="nearAddFinal"></td>
+Add : <input style="width:60px" type="number" step="0.25" min="0" max="5" id="nearAddFinal"></td>
 
 <td colspan="3">
     R: <span id="od_finalNearCombined" style="margin-right: 80px;">0.00 / 0.00 × 0</span>
@@ -1297,34 +1306,27 @@ PD : <span class="mirror" data-mirror="os_PD">-</span> mm  <span style="margin-l
 <tr><th colspan="4">    <span style="display:block;">
       Gaze Imbalance (
       <span style="color:green;">Green = Good</span>,
-      <span style="color:red;">Red = Discomfort</span>)<br><br>
+      <span style="color:red;">Red = Discomfort</span> )
 
-<div style="display:flex; justify-content:center; gap:20px;">
+<div style="display:flex; margin-top:2%; justify-content:center; gap:1%;">
   <label>
     Gaze Angle:
     <input type="range" id="gazeAngle" step="5" value="35" min="10" max="50" 
-           oninput="this.nextElementSibling.value = this.value" style="vertical-align: middle; width:50px">
+           oninput="this.nextElementSibling.value = this.value" style="vertical-align: middle; width:45%">
     <output style="vertical-align: middle;">35</output>
   </label>
 
   <label>
     BVD (mm):
-    <input type="range" id="vertexDist" step="1" value="12" min="0" max="20" 
-           oninput="this.nextElementSibling.value = this.value" style="vertical-align: middle; width:50px">
-    <output style="vertical-align: middle;">14</output>
+    <input type="range" id="vertexDist" step="1" value="12" min="1" max="20" 
+           oninput="this.nextElementSibling.value = this.value" style="vertical-align: middle; width:45%">
+    <output style="vertical-align: middle;">12</output>
   </label>
 </div>
 </th></tr>
 
 
-<tr>
-  <td class="red">Current Gaze</td>
-  <td class="red" colspan="3">
-    Horizontal : <span id="origCrossS" style="margin-right: 50px;">-</span>
-    Vertical : <span id="origCrossC" style="margin-right: 50px;">-</span>
-    Diagonal : <span id="origCrossA">-</span>
-  </td>
-</tr>
+
 <tr class="mask2">
   <td class="yellow">Vector Gaze</td>
   <td class="yellow" colspan="3">
@@ -4075,7 +4077,24 @@ res.forEach((r, i) => {
 
 </script>
 
+<script>
+function adjustValue(id, delta){
+  const el = document.getElementById(id);
+  el.value = (parseFloat(el.value) || 0) + delta;
+  el.dispatchEvent(new Event('input'));
+}
 
+function adjustValue(id, delta){
+  const el = document.getElementById(id);
+  const current = parseFloat(el.value) || 0;
+
+  // snap to 0.25 D steps
+  const snapped = Math.round((current + delta) * 4) / 4;
+
+  el.value = snapped.toFixed(2); // keeps clean diopter format
+  el.dispatchEvent(new Event('input'));
+}
+</script>
 
 
 
