@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -374,6 +375,7 @@ option {
     <a data-target="s3">Manual RX</a>
     <a data-target="s4">Summary</a>
     <a data-target="s1">Analysis</a>
+    <a data-target="s6">How Eyes Work</a>
     <a data-target="s5">Lenses</a>
 
   </nav>
@@ -1022,14 +1024,17 @@ function toggleStatusManual() {
 
 <div style="margin-top:20px; display:flex; justify-content:center; gap:7px;">
 
-  <button class="blue" style="border-radius:10px; height:25px; width:130px" id="toggleMask1_copy">
-    Hide/Show Manual
+  <button class="blue" style="border-radius:10px; height:25px; width:70px" id="toggleMask1_copy">
+    Manual
   </button>
 
-<button class="yellow toggleMask2" style="border-radius:10px; height:25px; width:130px">
-  Hide/Show Vector
+<button class="yellow toggleMask2" style="border-radius:10px; height:25px; width:70px">
+  Vector
 </button>
 
+<button class="toggleMask4" style="border-radius:10px; height:25px; width:70px">
+  Fitting
+</button>
 
 <button style="border-radius:10px; height:25px; width:85px" class="updateAllBtn">Update All</button>
 
@@ -1157,22 +1162,22 @@ L : <span id="CL_os_origCombined">OS -</span>
 </tr>
 
 
-<tr><th colspan="4">New Fitting Details</th></tr>
+<tr class="mask4"><th colspan="4">New Fitting Details</th></tr>
 
-<tr><td>Right</td>
+<tr class="mask4"><td>Right</td>
 
 <td colspan="3">
 
 PD : <span class="mirror" data-mirror="od_PD">-</span> mm  <span style="margin-left:15%; margin-right:15%"> ; </span> NOC : <span class="mirror" data-mirror="od_NOC">-</span> mm 
 </td></tr>
-<tr><td>Left</td>
+<tr class="mask4"><td>Left</td>
 
 <td colspan="3">
 
 PD : <span class="mirror" data-mirror="os_PD">-</span> mm  <span style="margin-left:15%; margin-right:15%"> ; </span> NOC : <span class="mirror" data-mirror="os_NOC">-</span> mm 
 </td></tr>
 
-<tr><td>New Lens Details</td>
+<tr class="mask4"><td>New Lens Details</td>
 <td colspan="3">
 <div>
 <input type="text" id="new_lens_details"
@@ -1239,14 +1244,17 @@ PD : <span class="mirror" data-mirror="os_PD">-</span> mm  <span style="margin-l
 
 
 <div style="margin-top:20px; display:flex; justify-content:center; gap:7px;">
-  <button class="blue" style="border-radius:10px; height:25px; width:130px" id="toggleMask1">
-    Hide/Show Manual
+  <button class="blue" style="border-radius:10px; height:25px; width:70px" id="toggleMask1">
+    Manual
   </button>
 
-<button class="yellow toggleMask2" style="border-radius:10px; height:25px; width:130px">
-  Hide/Show Vector
+<button class="yellow toggleMask2" style="border-radius:10px; height:25px; width:70px">
+  Vector
 </button>
 
+<button class="toggleMask4" style="border-radius:10px; height:25px; width:70px">
+  Fitting
+</button>
 
 <button style="border-radius:10px; height:25px; width:85px" class="updateAllBtn">Update All</button>
 <button style="border-radius:10px; height:25px; width:85px"  onclick="capturePart()">Save JPG</button>
@@ -1352,9 +1360,12 @@ PD : <span class="mirror" data-mirror="os_PD">-</span> mm  <span style="margin-l
   <td style="border:none; height:1px; padding:0;"></td>
 </tr>
 
-<tr><th colspan="4">Blur Value</th></tr>
+<tr><th colspan="4">Blur Value <button class="toggleMask3" style="border-radius:10px; margin-left:3%; height:25px; width:130px">
+  Hide/Show
+</button></th></tr>
 
-<tr><td colspan="4">
+<tr class="mask3 hidden-row">
+<td colspan="4">
 <div>
 Prescription comes in many types of errors; whether it's myopia, hyperopia or astigmatism.<br>The test works by measuring the blur, then correcting your vision with the amount.<br><br>
 
@@ -1500,84 +1511,201 @@ function resetRx(){
 </div>
 </td></tr>
 
+</table>
 
 
 
 
+   <div id="s6" class="section">
+<div style="height:70px"></div>
 
-<tr><th colspan="4">Duochrome & Fanchart Errors</th></tr>
+<table>
+<tr><th colspan="4">How Eyes Work</th></tr>
+<tr style="border:none; height:10px;">
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+</tr>
+
+<tr><th colspan="4">What is Prescription and Why we need them.</th></tr>
 
 <tr><td colspan="4">  
-<div style="padding:0% 8% 2% 8%">Duochrome <b>measures the status of your current vision setting</b> - if the power is high or low, it shows clarity imbalance. The aim of the test is to find the power that makes both side equal.
+
+<div style="padding:0% 8% 2% 8%; text-align:left; line-height:1.5">&bull; Prescription is the <b>amount of lens power needed to help you see clearly</b>.<br>
+&bull; A <b>perfectly round eyeball</b> can focus light clearly and sharp without needing lenses.<br>
+&bull; However, if the eyeball is <b>longer, shorter, or oval</b>, light cannot focus properly.<br>
+&bull; In these cases, lenses are needed to <b>help focus the light so images appear clear and sharp</b><br>
+&bull; Therefore, vision becomes the same as a perfectly round eyeball.
+
 </div>
 
-
   <div style="flex:1; overflow:hidden;">
 
-<img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/How%20DC%20works.png"       style="width:80%; margin-top:-10px; margin-bottom:-10px;"
- alt="How DC works">
-</div>
-
-<div style="height:10px"></div>
-
-
-  <div style="flex:1; overflow:hidden;">
-    <img
-      src="https://raw.githubusercontent.com/kiaraoptometrypx/RX-calculator/main/DC%20Defect/Defects_type.png"
-      style="width:80%; margin-top:-5px; margin-bottom:5px;"
-      alt="Green DC Defect">
-
-  </div>
-
-
-  <div style="flex:1; overflow:hidden;">
-
-<img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/Sph%20Define.png"       style="width:80%; margin-top:-10px; margin-bottom:-10px;"
+<img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/Sph%20Define.png"       style="width:80%; margin-top:-10px; margin-bottom:-20px;"
  alt="Sphere Define">
 </div>
 
-
 <div style="height:10px"></div>
 
-<div style="padding:0% 8% 2% 8%">Duochrome can be used to <b>check for Presbyopia</b> too. By using the same concept, we can tell how much prescription we need to be balance at near.
-</div>
-
   <div style="flex:1; overflow:hidden;">
 
-<img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/Presbyopia%20Define.png" style="width:80%; margin-top:-10px; margin-bottom:-10px;" alt="Presbyopia Define"> 
-</div>
-
-<div style="height:20px"></div>
-
-<div style="height:50px">--</div>
-
-
-
-<div style="padding:0% 8% 2% 8%">Fanchart is the <b>most reliable and accurate way to assess astigmatism condition</b>. Fanchart tells all the different meridians of the eye, then find the prescription that makes all meridians equal.
-</div>
-
-  <div style="flex:1; overflow:hidden;">
-    <img
-      src="https://raw.githubusercontent.com/kiaraoptometrypx/RX-calculator/main/FC%20Defect/Defects_type.png"
-      style="width:80%; margin-top:-10px; margin-bottom:-15px; "
-      alt="Green DC Defect">
-
-  </div>
-<div style="height:10px"></div>
-
-
-  <div style="flex:1; overflow:hidden;">
-
-<img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/Astig%20Define.png"       style="width:80%; margin-top:-5px; margin-bottom:-5px;"
+<img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/Astig%20Define.png"       style="width:80%; margin-top:-35px; margin-bottom:-5px;"
  alt="Astig Define">
 
 
   </div>
 
+
+
+<div style="text-align:center;">
+  <div class="fade-compare" style="width:80%; margin:0 auto; position:relative;">
+    <div style="position:relative; overflow:hidden; padding-top:0;">
+      <img id="imgRelax" src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/relaxed_state.png" 
+           style="width:100%; display:block; position:relative; margin:0 auto; clip-path: inset(20px 0 20px 0);">
+      <img id="imgWork" src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/working_state.png" 
+           style="width:100%; display:block; position:absolute; top:0; left:0; opacity:0; clip-path: inset(20px 0 20px 0);">
+    </div>
+    <input type="range" min="0" max="100" value="0" style="width:60%; margin-top:0px;">
+  </div><br>
+<span>Drag slider to see how your eyes work when you see Far & Near.</span>
+</div>
+
+<div style="height:20px"></div>
+
+
 </td></tr>
 
+<tr><th colspan="4">How do I know if I'm short or far-sighted?</th></tr>
+
+<tr><td colspan="4">  
+
+<div style="padding:0% 8% 2% 8%; text-align:left; line-height:1.5">
+&bull; Incorrect lenses may allow you to see clearly but feel uneasy later on.<br>
+&bull; Traditional method uses comparison and memory, asking you which lens is better.<br>
+&bull; Our method removes uncertainty. We measure the blur to create a linear logic.<br>
+&bull; We use the <b>Duochrome</b> to know your vision status at any moment and distance.<br>
+</div>
+
+  <div style="flex:1; overflow:hidden;">
+
+<img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/How%20DC%20works.png"       style="width:80%; margin-top:-65px; margin-bottom:-45px;"
+ alt="How DC works">
+
+</div>
 
 
+<div style="height:10px"></div>
+
+  <div style="flex:1; overflow:hidden;">
+
+<img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/How_to_tell_DC.png" style="width:80%; margin-top:-50px; margin-bottom:-20px;"
+ alt="How DC works">
+
+</div>
+
+
+  <div style="display:none; flex:1; overflow:hidden;">
+    <img
+      src="https://raw.githubusercontent.com/kiaraoptometrypx/RX-calculator/main/DC%20Defect/Defects_type.png"
+      style="width:80%; margin-top:-5px; margin-bottom:5px;"
+      alt="Green DC Defect">
+
+  </div><br>
+<div style="padding:0% 8% 2% 8%; text-align:left; line-height:1.5">
+&bull; <b>You will see through a series of lenses</b> and tell which side is clearer.<br>
+&bull; From there, we can <b>observe a pattern on how your vision changes</b> when lenses are changed.<br>
+&bull; We can then <b>prescribe according to your visual needs</b>; whether wanting to see far or near.<br>
+&bull; Every pair of glasses can be adjusted <b>to function to your needs.</b><br>
+</div>
+
+<div style="height:10px"></div>
+</td></tr>
+<tr><th colspan="4">How do I know if I have astigmatism?</th></tr>
+
+<tr><td colspan="4">  
+
+
+<div style="padding:0% 8% 2% 8%; text-align:left; line-height:1.5">
+&bull; Astigmatism happens when the <b>eye has different meridians with uneven curvature</b>.<br>
+&bull; Light focuses differently along each meridian, causing <b>some to be blur and clear</b>.<br>
+&bull; <b>Fanchart measures angular blur</b>, a.k.a. astigmatism.<br>
+
+</div>
+<div style="height:10px"></div>
+
+  <div style="flex:1; overflow:hidden;">
+
+<img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/astig_explained.png"       style="width:80%; margin-top:0px; margin-bottom:0px;"
+ alt="How DC works">
+
+</div>
+
+<div style="height:10px"></div>
+
+  <div style="flex:1; overflow:hidden;">
+    <img
+      src="https://raw.githubusercontent.com/kiaraoptometrypx/RX-calculator/main/FC%20Defect/Defects_type.png"
+      style="width:80%; margin-top:-10px; margin-bottom:-55px; "
+      alt="FC Defect">
+
+  </div>
+<div style="height:10px"></div>
+<div style="padding:0% 8% 2% 8%; text-align:left; line-height:1.5">
+&bull; <b>You will see through a series of lenses</b> and tell which side is clearer.<br>
+&bull; From there, we can <b>observe a pattern on how your vision changes</b> when lenses are changed.<br>
+&bull; We can then <b>prescribe according to your visual needs</b>; whether wanting to see far or near.<br>
+&bull; Every pair of glasses can be adjusted <b>to function to your needs.</b><br>
+</div>
+
+
+
+
+<div style="height:20px"></div>
+
+
+
+
+
+
+</td></tr>
+<tr><th colspan="4">Do I have Presbyopia? (Lou-Fa / Far-sighted / Near-Weakening)?</th></tr>
+
+<tr><td colspan="4">  
+
+<div style="padding:0% 8% 2% 8%; text-align:left; line-height:1.5">
+&bull; <b>Presbyopia</b> is the natural weakening of near vision that happens with age.<br>
+&bull; People with <b>perfect distance vision</b> will notice near objects being blur.<br>
+
+</div>
+
+
+  <div style="flex:1; overflow:hidden;">
+
+<img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/Presbyopia%20Define.png" style="width:80%; margin-top:-40px; margin-bottom:-60px;" alt="Presbyopia Define"> 
+</div>
+
+<div style="height:10px"></div>
+
+<div style="padding:0% 8% 2% 8%; text-align:left; line-height:1.5">
+&bull; <b>Near-sighted people</b> often do not feel presbyopia when they remove their glasses.<br>
+&bull; That's because their original vision happens to be near-sighted.<br>
+&bull; Not needing glasses for near does <b>not mean presbyopia is gone</b>.<br><br>
+
+&bull; <b>Far-sighted people</b> experience presbyopia earlier than others.<br>
+&bull; That's because their original vision is already challenging to see near.<br>
+&bull; When younger, the eye muscles are strong enough to handle the demand.<br>
+&bull; The <b>solution</b> is to wear some amount of <b>lenses at far and near to relieve</b> the total stress.<br>
+&bull; The challenge is to accept that glasses have to be used every now and then.<br><br>
+
+
+&bull; Wearing reading glasses or progressive lenses <b>does not make your eyes weaker</b><br>
+&bull; They simply reduce eye strain and make near vision more comfortable.<br>
+
+
+
+</div>
+</td></tr>
 
 </table>
 
@@ -1586,6 +1714,7 @@ function resetRx(){
 
 
 </div>
+<div style="height:750px"></div>
 <div style="height:750px"></div>
 <div style="height:750px"></div>
 
@@ -3173,9 +3302,19 @@ document.querySelectorAll(".toggleMask2").forEach(btn => {
   });
 });
 
-document.getElementById("toggleMask3").addEventListener("click", function() {
-  document.querySelectorAll(".mask3").forEach(row => {
-    row.classList.toggle("hidden-row");
+document.querySelectorAll(".toggleMask3").forEach(btn => {
+  btn.addEventListener("click", function () {
+    document.querySelectorAll(".mask3").forEach(row => {
+      row.classList.toggle("hidden-row");
+    });
+  });
+});
+
+document.querySelectorAll(".toggleMask4").forEach(btn => {
+  btn.addEventListener("click", function () {
+    document.querySelectorAll(".mask4").forEach(row => {
+      row.classList.toggle("hidden-row");
+    });
   });
 });
 
@@ -4141,6 +4280,17 @@ function adjustValue(id, delta){
 
 
 
+<script>
+const slider = document.querySelector(".fade-compare input");
+const relax = document.getElementById("imgRelax");
+const work = document.getElementById("imgWork");
+
+slider.addEventListener("input", () => {
+  const v = slider.value / 100;
+  relax.style.opacity = 1 - v;
+  work.style.opacity = v;
+});
+</script>
 
 
 
