@@ -28,7 +28,7 @@ html, body, table, th, td, input, button, select, option, a, b, label {
     top: 0;
     left: 0;
     object-fit: contain;
-  transition: opacity 1.5s linear, transform 0.5s ease;
+  transition: opacity 1s linear, transform 0.2s ease;
   }
 
 th.red, td.red {
@@ -4369,7 +4369,7 @@ function HEW_swapImage(src) {
   setTimeout(() => {
     HEW_img.src = src;
     HEW_img.style.opacity = 1;
-  }, 200); // must match CSS transition
+  }, 100); // must match CSS transition
 }
 
 function HEW_next() {
