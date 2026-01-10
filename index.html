@@ -13,6 +13,23 @@ html, body, table, th, td, input, button, select, option, a, b, label {
   margin: 0;
   padding: 0;
 }
+  #HEW_img-container {
+    width: 520px;
+    max-width: 100%;
+    height: 380px;
+    margin: 0 auto 10px;
+    position: relative;
+  }
+
+  #HEW_img-container img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: contain;
+    transition: opacity 0.2s linear;
+  }
 
 th.red, td.red {
   background: #E0E0E0;
@@ -1527,6 +1544,24 @@ function resetRx(){
   <td style="border:none; height:1px; padding:0;"></td>
   <td style="border:none; height:1px; padding:0;"></td>
 </tr>
+
+<tr><td colspan="4">
+<div id="HEW_img-container">
+  <img id="HEW_imgA" src="" alt="Eye diagram">
+  <img id="HEW_imgB" src="" alt="Eye diagram">
+</div>
+
+<div>
+  <button onclick="HEW_setMode('reset')">Reset</button>
+  <button onclick="HEW_setMode('emme')">No power</button>
+  <button onclick="HEW_setMode('hyper')">Far-sighted</button>
+  <button onclick="HEW_setMode('myo')">Near-sighted</button>
+</div>
+
+<br>
+
+<input style="width:80%" type="range" id="HEW_slider" min="0" step="1">
+</td></tr>
 
 <tr><th colspan="4">What is Prescription and Why we need them.</th></tr>
 
@@ -4294,6 +4329,67 @@ slider.addEventListener("input", () => {
 
 
 
+<script>
+const HEW_BASE =
+  "https://raw.githubusercontent.com/kiaraoptometrypx/super_rx/main/How%20eyes%20work/";
+
+const HEW_images = {
+  reset: [ HEW_BASE + "reset.png" ],
+
+  emme: [
+    HEW_BASE + "Emm1.png", HEW_BASE + "Emm2.png", HEW_BASE + "Emm3.png", HEW_BASE + "Emm4.png",
+    HEW_BASE + "Emm5.png", HEW_BASE + "Emm6.png", HEW_BASE + "Emm7.png", HEW_BASE + "Emm8.png"
+  ],
+
+  hyper: [
+    HEW_BASE + "Hy1.png", HEW_BASE + "Hy2.png", HEW_BASE + "Hy3.png", HEW_BASE + "Hy4.png",
+    HEW_BASE + "Hy5.png", HEW_BASE + "Hy6.png", HEW_BASE + "Hy7.png", HEW_BASE + "Hy8.png",
+    HEW_BASE + "Hy9.png", HEW_BASE + "Hy10.png", HEW_BASE + "Hy11.png", HEW_BASE + "Hy12.png",
+    HEW_BASE + "Hy13.png", HEW_BASE + "Hy14.png", HEW_BASE + "Hy15.png", HEW_BASE + "Hy16.png"
+  ],
+
+  myo: [
+    HEW_BASE + "My1.png", HEW_BASE + "My2.png", HEW_BASE + "My3.png", HEW_BASE + "My4.png",
+    HEW_BASE + "My5.png", HEW_BASE + "My6.png", HEW_BASE + "My7.png", HEW_BASE + "My8.png",
+    HEW_BASE + "My9.png", HEW_BASE + "My10.png", HEW_BASE + "My11.png"
+  ]
+};
+
+let HEW_currentSet = HEW_images.reset;
+
+const HEW_imgA = document.getElementById("HEW_imgA");
+const HEW_imgB = document.getElementById("HEW_imgB");
+const HEW_slider = document.getElementById("HEW_slider");
+
+function HEW_setMode(mode) {
+  HEW_currentSet = HEW_images[mode];
+  HEW_slider.max = HEW_currentSet.length - 1;
+  HEW_slider.value = 0;
+  HEW_slider.disabled = (mode === "reset");
+  // init images
+  HEW_imgA.src = HEW_currentSet[0];
+  HEW_imgB.src = HEW_currentSet[0];
+  HEW_imgA.style.opacity = 1;
+  HEW_imgB.style.opacity = 0;
+}
+
+// smooth slider function
+HEW_slider.addEventListener("input", () => {
+  let val = parseFloat(HEW_slider.value);
+  let index1 = Math.floor(val);
+  let index2 = Math.min(index1 + 1, HEW_currentSet.length - 1);
+  let t = val - index1; // blend factor
+
+  HEW_imgA.src = HEW_currentSet[index1];
+  HEW_imgB.src = HEW_currentSet[index2];
+
+  HEW_imgA.style.opacity = 1 - t;
+  HEW_imgB.style.opacity = t;
+});
+
+// init
+HEW_setMode("reset");
+</script>
 
 
 
