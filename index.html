@@ -28,7 +28,7 @@ html, body, table, th, td, input, button, select, option, a, b, label {
     top: 0;
     left: 0;
     object-fit: contain;
-    transition: opacity 0.2s linear;
+  transition: opacity 1.5s linear, transform 0.5s ease;
   }
 
 th.red, td.red {
@@ -1546,21 +1546,22 @@ function resetRx(){
 </tr>
 
 <tr><td colspan="4">
-<div id="HEW_img-container">
-  <img id="HEW_imgA" src="" alt="Eye diagram">
-  <img id="HEW_imgB" src="" alt="Eye diagram">
-</div>
-
 <div>
   <button onclick="HEW_setMode('reset')">Reset</button>
   <button onclick="HEW_setMode('emme')">No power</button>
   <button onclick="HEW_setMode('hyper')">Far-sighted</button>
   <button onclick="HEW_setMode('myo')">Near-sighted</button>
+</div><br>
+
+
+<div id="HEW_img-container">
+  <img id="HEW_img" src="" alt="Eye diagram">
 </div>
 
-<br>
-
-<input style="width:80%" type="range" id="HEW_slider" min="0" step="1">
+<div style="margin-top:2%; margin-bottom:2%" class="hew-controls">
+  <button onclick="HEW_prev()">◀ Left</button>
+  <button onclick="HEW_next()">Right ▶</button>
+</div>
 </td></tr>
 
 <tr><th colspan="4">What is Prescription and Why we need them.</th></tr>
@@ -4328,7 +4329,6 @@ slider.addEventListener("input", () => {
 </script>
 
 
-
 <script>
 const HEW_BASE =
   "https://raw.githubusercontent.com/kiaraoptometrypx/super_rx/main/How%20eyes%20work/";
@@ -4337,62 +4337,71 @@ const HEW_images = {
   reset: [ HEW_BASE + "reset.png" ],
 
   emme: [
-    HEW_BASE + "Emm1.png", HEW_BASE + "Emm2.png", HEW_BASE + "Emm3.png", HEW_BASE + "Emm4.png",
-    HEW_BASE + "Emm5.png", HEW_BASE + "Emm6.png", HEW_BASE + "Emm7.png", HEW_BASE + "Emm8.png"
-  ],
+    "Emm1.png","Emm2.png","Emm3.png","Emm4.png",
+    "Emm5.png","Emm6.png","Emm7.png","Emm8.png"
+  ].map(f => HEW_BASE + f),
 
   hyper: [
-    HEW_BASE + "Hy1.png", HEW_BASE + "Hy2.png", HEW_BASE + "Hy3.png", HEW_BASE + "Hy4.png",
-    HEW_BASE + "Hy5.png", HEW_BASE + "Hy6.png", HEW_BASE + "Hy7.png", HEW_BASE + "Hy8.png",
-    HEW_BASE + "Hy9.png", HEW_BASE + "Hy10.png", HEW_BASE + "Hy11.png", HEW_BASE + "Hy12.png",
-    HEW_BASE + "Hy13.png", HEW_BASE + "Hy14.png", HEW_BASE + "Hy15.png", HEW_BASE + "Hy16.png"
-  ],
+    "Hy1.png","Hy2.png","Hy3.png","Hy4.png","Hy5.png","Hy6.png","Hy7.png","Hy8.png",
+    "Hy9.png","Hy10.png","Hy11.png","Hy12.png","Hy13.png","Hy14.png","Hy15.png","Hy16.png"
+  ].map(f => HEW_BASE + f),
 
   myo: [
-    HEW_BASE + "My1.png", HEW_BASE + "My2.png", HEW_BASE + "My3.png", HEW_BASE + "My4.png",
-    HEW_BASE + "My5.png", HEW_BASE + "My6.png", HEW_BASE + "My7.png", HEW_BASE + "My8.png",
-    HEW_BASE + "My9.png", HEW_BASE + "My10.png", HEW_BASE + "My11.png"
-  ]
+    "My1.png","My2.png","My3.png","My4.png","My5.png",
+    "My6.png","My7.png","My8.png","My9.png","My10.png","My11.png"
+  ].map(f => HEW_BASE + f)
 };
 
 let HEW_currentSet = HEW_images.reset;
+let HEW_index = 0;
 
-const HEW_imgA = document.getElementById("HEW_imgA");
-const HEW_imgB = document.getElementById("HEW_imgB");
-const HEW_slider = document.getElementById("HEW_slider");
+const HEW_img = document.getElementById("HEW_img");
 
 function HEW_setMode(mode) {
   HEW_currentSet = HEW_images[mode];
-  HEW_slider.max = HEW_currentSet.length - 1;
-  HEW_slider.value = 0;
-  HEW_slider.disabled = (mode === "reset");
-  // init images
-  HEW_imgA.src = HEW_currentSet[0];
-  HEW_imgB.src = HEW_currentSet[0];
-  HEW_imgA.style.opacity = 1;
-  HEW_imgB.style.opacity = 0;
+  HEW_index = 0;
+  HEW_img.src = HEW_currentSet[0];
 }
 
-// smooth slider function
-HEW_slider.addEventListener("input", () => {
-  let val = parseFloat(HEW_slider.value);
-  let index1 = Math.floor(val);
-  let index2 = Math.min(index1 + 1, HEW_currentSet.length - 1);
-  let t = val - index1; // blend factor
+function HEW_swapImage(src) {
+  HEW_img.style.opacity = 0;
 
-  HEW_imgA.src = HEW_currentSet[index1];
-  HEW_imgB.src = HEW_currentSet[index2];
+  setTimeout(() => {
+    HEW_img.src = src;
+    HEW_img.style.opacity = 1;
+  }, 200); // must match CSS transition
+}
 
-  HEW_imgA.style.opacity = 1 - t;
-  HEW_imgB.style.opacity = t;
-});
+function HEW_next() {
+  if (HEW_currentSet.length <= 1) return;
+  if (HEW_index >= HEW_currentSet.length - 1) return;
+
+  HEW_index++;
+  HEW_swapImage(HEW_currentSet[HEW_index]);
+}
+
+function HEW_prev() {
+  if (HEW_currentSet.length <= 1) return;
+  if (HEW_index <= 0) return;
+
+  HEW_index--;
+  HEW_swapImage(HEW_currentSet[HEW_index]);
+}
 
 // init
 HEW_setMode("reset");
 </script>
 
+<script>
+function HEW_preloadAll() {
+  Object.values(HEW_images).flat().forEach(src => {
+    const img = new Image();
+    img.src = src;
+  });
+}
 
-
+HEW_preloadAll();
+</script>
 
 </body>
 </html>
