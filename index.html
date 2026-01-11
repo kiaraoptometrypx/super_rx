@@ -13,6 +13,26 @@ html, body, table, th, td, input, button, select, option, a, b, label {
   margin: 0;
   padding: 0;
 }
+
+.vectorhelper-row{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+
+.vectorhelper-rx{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.vectorhelper-rx span{
+  margin-bottom: 6px;
+  font-weight: 400;
+}
+
   #HEW_img-container {
     width: 520px;
     max-width: 100%;
@@ -594,7 +614,423 @@ function copyRightToLeft(){
 <!-- Vector Refraction -->
 <tr>
   <th class="yellow" colspan="4">Vector Refraction</th></tr>
-<tr><td colspan="4"><b><i> Instructions to fill FC DC Bal </i></b><br><br>1. Measure and input the amount of sph needed to shift DC to balance.<br>2. Calculate fogging (+1.00 + DC Bal) for FC test.<br>3. Apply fogging, measure and input the amount of cyl and axis needed to balance FC.<br>4. Press USE to transfer details to Vector Changes. </td></tr>
+<tr style="border-bottom:none"><td style="border-bottom:none" colspan="4"><b><i> Instructions to fill FC DC Bal </i></b><br><br>1. Measure and input the amount of sph needed to shift DC to balance.<br>2. Calculate fogging (+1.00 + DC Bal) for FC test.<br>3. Apply fogging, measure and input the amount of cyl and axis needed to balance FC.<br>4. Press USE to transfer details to Vector Changes.<br><br>
+<button style="width:80%" id="toggleBtn">Show / Hide Helper</button>
+ </td></tr>
+
+</table>
+
+
+<div class="hide_show" style="display:none">
+<table>
+<tr style="border:none; height:5px;">
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+</tr>
+<tr><th colspan="4">Use Helper to keep track of your records</th></tr>
+
+<tr style="border-bottom:none"><td style="border-bottom:none">DC Status Both Eye</td>
+<td style="border-bottom:none" colspan="3">
+<div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;width:100%;">
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+1.00 SPH</span>
+    <select class="vectorhelper_duo" data-rx="1.00" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+0.50 SPH</span>
+    <select class="vectorhelper_duo" data-rx="0.50" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>NOW</span>
+    <select class="vectorhelper_duo" data-rx="0.00" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>-0.50 SPH</span>
+    <select class="vectorhelper_duo" data-rx="-0.50" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>-1.00 SPH</span>
+    <select class="vectorhelper_duo" data-rx="-1.00" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+</div>
+</td></tr>
+
+<tr style="border-top:none"><td style="border-top:none">FC Status Both Eye</td>
+<td style="border-top:none"colspan="3">
+
+<div class="fc-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:5%;width:100%;">
+
+  <!-- +0.00 FC -->
+  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>NOW</span>
+    <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
+      <option value="n/a">N/A</option>
+      <option value="bal">Bal</option>
+      <option value="180">3-9 , 9-3</option>
+      <option value="15">3:30-9:30 , 9:30-3:30</option>
+      <option value="30">4-10 , 10-4</option>
+      <option value="45">4:30-10:30 , 10:30-4:30</option>
+      <option value="60">5-11 , 11-5</option>
+      <option value="75">5:30-11:30 , 11:30-5:30</option>
+      <option value="90">6-12 , 12-6</option>
+      <option value="105">6:30-12:30 , 12:30-6:30</option>
+      <option value="120">7-1 , 1-7</option>
+      <option value="135">7:30-1:30 , 1:30-7:30</option>
+      <option value="150">8-2 , 2-8</option>
+      <option value="165">8:30-2:30 , 2:30-8:30</option>
+    </select>
+  </div>
+
+  <!-- +0.50 FC -->
+  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+0.50 CYL</span>
+    <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
+      <option value="n/a">N/A</option>
+      <option value="bal">Bal</option>
+      <option value="180">3-9 , 9-3</option>
+      <option value="15">3:30-9:30 , 9:30-3:30</option>
+      <option value="30">4-10 , 10-4</option>
+      <option value="45">4:30-10:30 , 10:30-4:30</option>
+      <option value="60">5-11 , 11-5</option>
+      <option value="75">5:30-11:30 , 11:30-5:30</option>
+      <option value="90">6-12 , 12-6</option>
+      <option value="105">6:30-12:30 , 12:30-6:30</option>
+      <option value="120">7-1 , 1-7</option>
+      <option value="135">7:30-1:30 , 1:30-7:30</option>
+      <option value="150">8-2 , 2-8</option>
+      <option value="165">8:30-2:30 , 2:30-8:30</option>
+    </select>
+  </div>
+
+  <!-- +1.00 FC -->
+  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+1.00 CYL</span>
+    <select class="fc_duo" data-rx="1.00" style="padding:4px; width:100%;">
+      <option value="n/a">N/A</option>
+      <option value="bal">Bal</option>
+      <option value="180">3-9 , 9-3</option>
+      <option value="15">3:30-9:30 , 9:30-3:30</option>
+      <option value="30">4-10 , 10-4</option>
+      <option value="45">4:30-10:30 , 10:30-4:30</option>
+      <option value="60">5-11 , 11-5</option>
+      <option value="75">5:30-11:30 , 11:30-5:30</option>
+      <option value="90">6-12 , 12-6</option>
+      <option value="105">6:30-12:30 , 12:30-6:30</option>
+      <option value="120">7-1 , 1-7</option>
+      <option value="135">7:30-1:30 , 1:30-7:30</option>
+      <option value="150">8-2 , 2-8</option>
+      <option value="165">8:30-2:30 , 2:30-8:30</option>
+    </select>
+  </div>
+
+</div>
+
+</td></tr>
+
+<tr style="border-bottom:none"><td style="border-bottom:none">DC Status Right Eye</td>
+<td style="border-bottom:none"colspan="3">
+
+<div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;width:100%;">
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+1.00 SPH</span>
+    <select class="vectorhelper_duo" data-rx="1.00" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+0.50 SPH</span>
+    <select class="vectorhelper_duo" data-rx="0.50" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>NOW</span>
+    <select class="vectorhelper_duo" data-rx="0.00" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>-0.50 SPH</span>
+    <select class="vectorhelper_duo" data-rx="-0.50" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>-1.00 SPH</span>
+    <select class="vectorhelper_duo" data-rx="-1.00" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+</div>
+</td></tr>
+
+<tr style="border-top:none"><td style="border-top:none">FC Status Right Eye</td>
+<td style="border-top:none"colspan="3">
+
+<div class="fc-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:5%;width:100%;">
+
+  <!-- +0.00 FC -->
+  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>NOW</span>
+    <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
+      <option value="n/a">N/A</option>
+      <option value="bal">Bal</option>
+      <option value="180">3-9 , 9-3</option>
+      <option value="15">3:30-9:30 , 9:30-3:30</option>
+      <option value="30">4-10 , 10-4</option>
+      <option value="45">4:30-10:30 , 10:30-4:30</option>
+      <option value="60">5-11 , 11-5</option>
+      <option value="75">5:30-11:30 , 11:30-5:30</option>
+      <option value="90">6-12 , 12-6</option>
+      <option value="105">6:30-12:30 , 12:30-6:30</option>
+      <option value="120">7-1 , 1-7</option>
+      <option value="135">7:30-1:30 , 1:30-7:30</option>
+      <option value="150">8-2 , 2-8</option>
+      <option value="165">8:30-2:30 , 2:30-8:30</option>
+    </select>
+  </div>
+
+  <!-- +0.50 FC -->
+  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+0.50 CYL</span>
+    <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
+      <option value="n/a">N/A</option>
+      <option value="bal">Bal</option>
+      <option value="180">3-9 , 9-3</option>
+      <option value="15">3:30-9:30 , 9:30-3:30</option>
+      <option value="30">4-10 , 10-4</option>
+      <option value="45">4:30-10:30 , 10:30-4:30</option>
+      <option value="60">5-11 , 11-5</option>
+      <option value="75">5:30-11:30 , 11:30-5:30</option>
+      <option value="90">6-12 , 12-6</option>
+      <option value="105">6:30-12:30 , 12:30-6:30</option>
+      <option value="120">7-1 , 1-7</option>
+      <option value="135">7:30-1:30 , 1:30-7:30</option>
+      <option value="150">8-2 , 2-8</option>
+      <option value="165">8:30-2:30 , 2:30-8:30</option>
+    </select>
+  </div>
+
+  <!-- +1.00 FC -->
+  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+1.00 CYL</span>
+    <select class="fc_duo" data-rx="1.00" style="padding:4px; width:100%;">
+      <option value="n/a">N/A</option>
+      <option value="bal">Bal</option>
+      <option value="180">3-9 , 9-3</option>
+      <option value="15">3:30-9:30 , 9:30-3:30</option>
+      <option value="30">4-10 , 10-4</option>
+      <option value="45">4:30-10:30 , 10:30-4:30</option>
+      <option value="60">5-11 , 11-5</option>
+      <option value="75">5:30-11:30 , 11:30-5:30</option>
+      <option value="90">6-12 , 12-6</option>
+      <option value="105">6:30-12:30 , 12:30-6:30</option>
+      <option value="120">7-1 , 1-7</option>
+      <option value="135">7:30-1:30 , 1:30-7:30</option>
+      <option value="150">8-2 , 2-8</option>
+      <option value="165">8:30-2:30 , 2:30-8:30</option>
+    </select>
+  </div>
+
+</div>
+</td></tr>
+<tr style="border-bottom:none"><td style="border-bottom:none">DC Status Left Eye</td>
+<td style="border-bottom:none"colspan="3">
+<div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;width:100%;">
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+1.00 SPH</span>
+    <select class="vectorhelper_duo" data-rx="1.00" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+0.50 SPH</span>
+    <select class="vectorhelper_duo" data-rx="0.50" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>NOW</span>
+    <select class="vectorhelper_duo" data-rx="0.00" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>-0.50 SPH</span>
+    <select class="vectorhelper_duo" data-rx="-0.50" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>-1.00 SPH</span>
+    <select class="vectorhelper_duo" data-rx="-1.00" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+</div>
+</td></tr>
+
+<tr style="border-top:none"><td style="border-top:none">FC Status Left Eye</td>
+<td style="border-top:none"colspan="3">
+
+<div class="fc-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:5%;width:100%;">
+
+  <!-- +0.00 FC -->
+  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>NOW</span>
+    <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
+      <option value="n/a">N/A</option>
+      <option value="bal">Bal</option>
+      <option value="180">3-9 , 9-3</option>
+      <option value="15">3:30-9:30 , 9:30-3:30</option>
+      <option value="30">4-10 , 10-4</option>
+      <option value="45">4:30-10:30 , 10:30-4:30</option>
+      <option value="60">5-11 , 11-5</option>
+      <option value="75">5:30-11:30 , 11:30-5:30</option>
+      <option value="90">6-12 , 12-6</option>
+      <option value="105">6:30-12:30 , 12:30-6:30</option>
+      <option value="120">7-1 , 1-7</option>
+      <option value="135">7:30-1:30 , 1:30-7:30</option>
+      <option value="150">8-2 , 2-8</option>
+      <option value="165">8:30-2:30 , 2:30-8:30</option>
+    </select>
+  </div>
+
+  <!-- +0.50 FC -->
+  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+0.50 CYL</span>
+    <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
+      <option value="n/a">N/A</option>
+      <option value="bal">Bal</option>
+      <option value="180">3-9 , 9-3</option>
+      <option value="15">3:30-9:30 , 9:30-3:30</option>
+      <option value="30">4-10 , 10-4</option>
+      <option value="45">4:30-10:30 , 10:30-4:30</option>
+      <option value="60">5-11 , 11-5</option>
+      <option value="75">5:30-11:30 , 11:30-5:30</option>
+      <option value="90">6-12 , 12-6</option>
+      <option value="105">6:30-12:30 , 12:30-6:30</option>
+      <option value="120">7-1 , 1-7</option>
+      <option value="135">7:30-1:30 , 1:30-7:30</option>
+      <option value="150">8-2 , 2-8</option>
+      <option value="165">8:30-2:30 , 2:30-8:30</option>
+    </select>
+  </div>
+
+  <!-- +1.00 FC -->
+  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+1.00 CYL</span>
+    <select class="fc_duo" data-rx="1.00" style="padding:4px; width:100%;">
+      <option value="n/a">N/A</option>
+      <option value="bal">Bal</option>
+      <option value="180">3-9 , 9-3</option>
+      <option value="15">3:30-9:30 , 9:30-3:30</option>
+      <option value="30">4-10 , 10-4</option>
+      <option value="45">4:30-10:30 , 10:30-4:30</option>
+      <option value="60">5-11 , 11-5</option>
+      <option value="75">5:30-11:30 , 11:30-5:30</option>
+      <option value="90">6-12 , 12-6</option>
+      <option value="105">6:30-12:30 , 12:30-6:30</option>
+      <option value="120">7-1 , 1-7</option>
+      <option value="135">7:30-1:30 , 1:30-7:30</option>
+      <option value="150">8-2 , 2-8</option>
+      <option value="165">8:30-2:30 , 2:30-8:30</option>
+    </select>
+  </div>
+
+</div>
+</td></tr>
+
+
+
+
+
+</table>
+</div>
+
+<table>
+
 <tr>
   <td>FC DC Bal BE<br><div style="margin-top:5px"><button onclick="copyVD_OU_to_ODOS()" style="border-radius:10px; width:70px; height:25px">Use BE</button></div></td>
   <td>
@@ -4402,6 +4838,53 @@ function HEW_preloadAll() {
 
 HEW_preloadAll();
 </script>
+
+
+
+<script>
+document.querySelectorAll('.vectorhelper_duo').forEach(sel=>{
+  const bgMap = {
+    blue:'#1e90ff',
+    bal:'#888',
+    red:'#e53935',
+    na:'#f0f0f0'
+  };
+  const colorMap = {
+    blue:'#fff',
+    bal:'#fff',
+    red:'#fff',
+    na:'#555'
+  };
+
+  function updateBackground(){
+    const val = sel.value;
+    sel.style.background = bgMap[val] || '#fff';
+    sel.style.color = colorMap[val] || '#000';
+    sel.style.fontStyle = (val==='na')?'italic':'normal';
+  }
+
+  sel.addEventListener('change', updateBackground);
+
+  // initialize on load
+  updateBackground();
+});
+</script>
+
+
+<script>
+document.getElementById('toggleBtn').addEventListener('click', ()=>{
+  document.querySelectorAll('.hide_show').forEach(el=>{
+    if(el.style.display === 'none'){
+      el.style.display = 'block';
+    } else {
+      el.style.display = 'none';
+    }
+  });
+});
+</script>
+
+
+
 
 </body>
 </html>
