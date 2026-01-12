@@ -14,43 +14,6 @@ html, body, table, th, td, input, button, select, option, a, b, label {
   padding: 0;
 }
 
-.vectorhelper-row{
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
-  width: 100%;
-}
-
-.vectorhelper-rx{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.vectorhelper-rx span{
-  margin-bottom: 6px;
-  font-weight: 400;
-}
-
-  #HEW_img-container {
-    width: 520px;
-    max-width: 100%;
-    height: 380px;
-    margin: 0 auto 10px;
-    position: relative;
-  }
-
-  #HEW_img-container img {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    object-fit: contain;
-  transition: opacity 1s linear, transform 0.2s ease;
-  }
-
 th.red, td.red {
   background: #E0E0E0;
   color: black;
@@ -434,6 +397,9 @@ option {
          style="width:65%; height:20px"
          oninput="updateCustomerName()">
 </td>
+
+
+
 <td colspan="2" style="border-left:none;" >Whatsapp : <input type="text" id="customerWhatsapp" style="width:65%; height:20px"placeholder="6012 3456 789"></td>
 
 </tr>
@@ -441,7 +407,7 @@ option {
 
 <td colspan="3" style="border-right:none; vertical-align:middle;">
   Message :
-  <input type="text" id="notes" style="width:74%; border-radius:5px; border:1px solid lightgrey; height:25px; vertical-align:middle;" placeholder="Add notes to send to whatsapp"></textarea>
+  <input type="text" id="notes" style="width:74%; border-radius:5px; border:1px solid lightgrey; height:25px; vertical-align:middle;" placeholder="Notes To Whatsapp"></textarea>
 </td>
 
 
@@ -455,7 +421,31 @@ option {
   <td style="border:none; height:1px; padding:0;"></td>
   <td style="border:none; height:1px; padding:0;"></td>
 </tr>
-
+<tr style="display:none"><td colspan="4">
+1. Calculate: +0.25 + (-0.75)
+2. Calculate: -1.25 + 0.50
+3. Calculate: +2.00 − 0.75
+4. Calculate: -0.50 − 0.25
+5. Calculate: +1.75 + (-2.25)
+6. Calculate: Start at -1.00. Add +0.25 three times.
+7. Calculate: Start at +0.50. Subtract +0.25, then subtract +0.50.
+8. Calculate: Start at +0.75. Increases -0.25 four times.
+9. Which is bigger: -0.25 or -0.75?
+9. Which is lower: +0.50 or -0.75?
+10. Which is closer to zero: +0.50 or -0.25?
+11. Complete the sequence: -1.00, -0.75, -0.50, ?
+12. Complete the sequence: +0.25, +0.50, ?, +1.00
+13. Calculate: Start at -0.50, increase by +0.25, then decrease by -0.75.
+14. If blue is add, red is subtract, what do you do when +1.00 is red? +1.25 or +0.75?
+15. If blue is add, red is subtract, what do you get when +1.00 is blue 3 times? +0.25 or +1.75?
+16. Using a logic of a clock, 3 o'clock and 9 o'clock is the same axis, right or wrong?
+17. Using a logic of a clock, 3 o'clock and 12 o'clock is the same axis, right or wrong?
+18. Using a logic of a clock, what is the perpendicular value of 10:30 o'clock?
+19. The middle between +0.25 and +0.75 is +0.50. What is the middle between -1.00 and -2.00?
+19. The middle between +0.25 and +0.75 is +0.50. What is the middle between +0.50 and -1.00?
+20. What is -1.50 divide by 2, then added to -4.00?
+21. Using a logic of a clock, if -1.00 is 3 o'clock, -1.50 is 12 o'clock, what is -1.25?
+</td></tr>
 
 <tr><th class="red" colspan="4">
 <button style="background-color:white; border-radius:10px; height:25px; width:380px" onclick="toggleTbody('rxBody')"><b> Contact lens to Spectacles Converter</b></button>
@@ -484,7 +474,7 @@ option {
 
 <tr><td>
 
-<button class="greyonclick" style="background-color:white; border-radius:10px; height:25px; width:70px" onclick="convertToSpecs()">Convert</button>
+<button class="greyonclick" style="background-color:white; border-radius:10px; height:20px; width:70px" onclick="convertToSpecs()">Convert</button>
 </td>
 <td colspan="3">
   R : <span style="margin-right:100px"id="reResult">0.00 / 0.00 x 0</span> 
@@ -523,9 +513,99 @@ option {
   <td>Axis : <input type="number" step="5" min="0" max="180" id="os_origA"></td>
 </tr>
 <tr>
-  <td>Add</td>
-  <td>Sph : <input type="number" step="0.25" min="0" max="5" id="nearAdd"></td>
-<td>-</td><td>-</td>
+  <td>Near Vision</td>
+  <td >Add : <input type="number" step="0.25" min="0" max="5" id="nearAdd"></td>
+  <td style="text-align:left" colspan="2"><span style="margin-left:5%">Age :</span> <input type="number" step="1" min="1" max="100" id="age">
+<span style="margin-left:2%" id="addComment"><i>Key in age to see normal add</i></span></td>
+</tr>
+
+<tr><td colspan="4" id="overcorrectionComment"></td>
+</tr>
+
+
+<script>
+function analyzeAgeAdd() {
+  const age = parseInt(document.getElementById("age").value);
+  let add = "";
+
+  if (!age || age < 1) {
+    add = "Enter a valid age.";
+  } else if (age < 37) {
+    add = "Normal add is +0.00";
+  } else if (age < 43) {
+    add = "Normal add is +0.25 to +0.50";
+  } else if (age < 45) {
+    add = "Normal add is +0.50 to +0.75";
+  } else if (age < 47) {
+    add = "Normal add is +0.75 to +1.00";
+  } else if (age < 49) {
+    add = "Normal add is +1.00 to +1.25";
+  } else if (age < 51) {
+    add = "Normal add is +1.25 to +1.50";
+  } else if (age < 53) {
+    add = "Normal add is +1.50 to +1.75";
+  } else if (age < 55) {
+    add = "Normal add is +1.75 to +2.00";
+  } else if (age < 57) {
+    add = "Normal add is +2.00 to +2.25";
+  } else if (age < 59) {
+    add = "Normal add is +2.25 to +2.50";
+  } else if (age < 61) {
+    add = "Normal add is +2.50";
+  } else {
+    add = "Normal add is +2.50";
+  }
+
+  document.getElementById("addComment").innerText = add;
+
+  // Run overcorrection check only if nearAdd has a value
+  const nearAddVal = parseFloat(document.getElementById("nearAdd").value);
+  if (nearAddVal) {
+    checkOvercorrection(add);
+  } else {
+    document.getElementById("overcorrectionComment").innerText = "";
+  }
+}
+
+function parseNormalAdd(normalAddStr) {
+  const match = normalAddStr.match(/\+([\d.]+)/g);
+  if (!match) return 0;
+  const values = match.map(s => parseFloat(s.replace("+","")));
+  return Math.max(...values);
+}
+
+function checkOvercorrection(normalAddStr) {
+  const normalAdd = parseNormalAdd(normalAddStr);
+  const nearAdd = parseFloat(document.getElementById("nearAdd").value);
+  const commentEl = document.getElementById("overcorrectionComment");
+
+  if (!nearAdd) {
+    commentEl.innerText = "";
+  } else if (nearAdd > normalAdd) {
+    commentEl.innerText = "Possible overcorrection";
+    commentEl.style.color = "red";
+  } else if (nearAdd < normalAdd) {
+    commentEl.innerText = "Near add below normal";
+    commentEl.style.color = "green";
+  } else {
+    commentEl.innerText = "Near add within normal range";
+    commentEl.style.color = "black";
+  }
+}
+
+// Trigger when age changes
+document.getElementById("age").addEventListener("input", analyzeAgeAdd);
+
+// Trigger when nearAdd changes
+document.getElementById("nearAdd").addEventListener("input", function() {
+  const normalAddStr = document.getElementById("addComment").innerText;
+  if (normalAddStr.includes("Normal add")) {
+    checkOvercorrection(normalAddStr);
+  } else {
+    document.getElementById("overcorrectionComment").innerText = "";
+  }
+});</script>
+
 <tr><th class="red" colspan="4">Current Fitting Details - <i>Measure the PD and the NOC (middle of nosepad to optical center)</i></th></tr>
 <tr>
   <td>Right</td>
@@ -614,423 +694,7 @@ function copyRightToLeft(){
 <!-- Vector Refraction -->
 <tr>
   <th class="yellow" colspan="4">Vector Refraction</th></tr>
-<tr style="border-bottom:none"><td style="border-bottom:none" colspan="4"><b><i> Instructions to fill FC DC Bal </i></b><br><br>1. Measure and input the amount of sph needed to shift DC to balance.<br>2. Calculate fogging (+1.00 + DC Bal) for FC test.<br>3. Apply fogging, measure and input the amount of cyl and axis needed to balance FC.<br>4. Press USE to transfer details to Vector Changes.<br><br>
-<button style="width:80%" id="toggleBtn">Show / Hide Helper</button>
- </td></tr>
-
-</table>
-
-
-<div class="hide_show" style="display:none">
-<table>
-<tr style="border:none; height:5px;">
-  <td style="border:none; height:1px; padding:0;"></td>
-  <td style="border:none; height:1px; padding:0;"></td>
-  <td style="border:none; height:1px; padding:0;"></td>
-  <td style="border:none; height:1px; padding:0;"></td>
-</tr>
-<tr><th colspan="4">Use Helper to keep track of your records</th></tr>
-
-<tr style="border-bottom:none"><td style="border-bottom:none">DC Status Both Eye</td>
-<td style="border-bottom:none" colspan="3">
-<div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;width:100%;">
-
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>+1.00 SPH</span>
-    <select class="vectorhelper_duo" data-rx="1.00" style="padding:4px;">
-      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
-
-      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
-      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
-      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
-    </select>
-  </div>
-
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>+0.50 SPH</span>
-    <select class="vectorhelper_duo" data-rx="0.50" style="padding:4px;">
-      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
-      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
-      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
-      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
-    </select>
-  </div>
-
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>NOW</span>
-    <select class="vectorhelper_duo" data-rx="0.00" style="padding:4px;">
-      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
-      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
-      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
-      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
-    </select>
-  </div>
-
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>-0.50 SPH</span>
-    <select class="vectorhelper_duo" data-rx="-0.50" style="padding:4px;">
-      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
-      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
-      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
-      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
-      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
-    </select>
-  </div>
-
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>-1.00 SPH</span>
-    <select class="vectorhelper_duo" data-rx="-1.00" style="padding:4px;">
-      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
-      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
-      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
-      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
-    </select>
-  </div>
-
-</div>
-</td></tr>
-
-<tr style="border-top:none"><td style="border-top:none">FC Status Both Eye</td>
-<td style="border-top:none"colspan="3">
-
-<div class="fc-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:5%;width:100%;">
-
-  <!-- +0.00 FC -->
-  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>NOW</span>
-    <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
-      <option value="n/a">N/A</option>
-      <option value="bal">Bal</option>
-      <option value="180">3-9 , 9-3</option>
-      <option value="15">3:30-9:30 , 9:30-3:30</option>
-      <option value="30">4-10 , 10-4</option>
-      <option value="45">4:30-10:30 , 10:30-4:30</option>
-      <option value="60">5-11 , 11-5</option>
-      <option value="75">5:30-11:30 , 11:30-5:30</option>
-      <option value="90">6-12 , 12-6</option>
-      <option value="105">6:30-12:30 , 12:30-6:30</option>
-      <option value="120">7-1 , 1-7</option>
-      <option value="135">7:30-1:30 , 1:30-7:30</option>
-      <option value="150">8-2 , 2-8</option>
-      <option value="165">8:30-2:30 , 2:30-8:30</option>
-    </select>
-  </div>
-
-  <!-- +0.50 FC -->
-  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>+0.50 CYL</span>
-    <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
-      <option value="n/a">N/A</option>
-      <option value="bal">Bal</option>
-      <option value="180">3-9 , 9-3</option>
-      <option value="15">3:30-9:30 , 9:30-3:30</option>
-      <option value="30">4-10 , 10-4</option>
-      <option value="45">4:30-10:30 , 10:30-4:30</option>
-      <option value="60">5-11 , 11-5</option>
-      <option value="75">5:30-11:30 , 11:30-5:30</option>
-      <option value="90">6-12 , 12-6</option>
-      <option value="105">6:30-12:30 , 12:30-6:30</option>
-      <option value="120">7-1 , 1-7</option>
-      <option value="135">7:30-1:30 , 1:30-7:30</option>
-      <option value="150">8-2 , 2-8</option>
-      <option value="165">8:30-2:30 , 2:30-8:30</option>
-    </select>
-  </div>
-
-  <!-- +1.00 FC -->
-  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>+1.00 CYL</span>
-    <select class="fc_duo" data-rx="1.00" style="padding:4px; width:100%;">
-      <option value="n/a">N/A</option>
-      <option value="bal">Bal</option>
-      <option value="180">3-9 , 9-3</option>
-      <option value="15">3:30-9:30 , 9:30-3:30</option>
-      <option value="30">4-10 , 10-4</option>
-      <option value="45">4:30-10:30 , 10:30-4:30</option>
-      <option value="60">5-11 , 11-5</option>
-      <option value="75">5:30-11:30 , 11:30-5:30</option>
-      <option value="90">6-12 , 12-6</option>
-      <option value="105">6:30-12:30 , 12:30-6:30</option>
-      <option value="120">7-1 , 1-7</option>
-      <option value="135">7:30-1:30 , 1:30-7:30</option>
-      <option value="150">8-2 , 2-8</option>
-      <option value="165">8:30-2:30 , 2:30-8:30</option>
-    </select>
-  </div>
-
-</div>
-
-</td></tr>
-
-<tr style="border-bottom:none"><td style="border-bottom:none">DC Status Right Eye</td>
-<td style="border-bottom:none"colspan="3">
-
-<div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;width:100%;">
-
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>+1.00 SPH</span>
-    <select class="vectorhelper_duo" data-rx="1.00" style="padding:4px;">
-      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
-
-      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
-      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
-      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
-    </select>
-  </div>
-
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>+0.50 SPH</span>
-    <select class="vectorhelper_duo" data-rx="0.50" style="padding:4px;">
-      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
-      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
-      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
-      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
-    </select>
-  </div>
-
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>NOW</span>
-    <select class="vectorhelper_duo" data-rx="0.00" style="padding:4px;">
-      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
-      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
-      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
-      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
-    </select>
-  </div>
-
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>-0.50 SPH</span>
-    <select class="vectorhelper_duo" data-rx="-0.50" style="padding:4px;">
-      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
-      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
-      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
-      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
-      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
-    </select>
-  </div>
-
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>-1.00 SPH</span>
-    <select class="vectorhelper_duo" data-rx="-1.00" style="padding:4px;">
-      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
-      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
-      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
-      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
-    </select>
-  </div>
-
-</div>
-</td></tr>
-
-<tr style="border-top:none"><td style="border-top:none">FC Status Right Eye</td>
-<td style="border-top:none"colspan="3">
-
-<div class="fc-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:5%;width:100%;">
-
-  <!-- +0.00 FC -->
-  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>NOW</span>
-    <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
-      <option value="n/a">N/A</option>
-      <option value="bal">Bal</option>
-      <option value="180">3-9 , 9-3</option>
-      <option value="15">3:30-9:30 , 9:30-3:30</option>
-      <option value="30">4-10 , 10-4</option>
-      <option value="45">4:30-10:30 , 10:30-4:30</option>
-      <option value="60">5-11 , 11-5</option>
-      <option value="75">5:30-11:30 , 11:30-5:30</option>
-      <option value="90">6-12 , 12-6</option>
-      <option value="105">6:30-12:30 , 12:30-6:30</option>
-      <option value="120">7-1 , 1-7</option>
-      <option value="135">7:30-1:30 , 1:30-7:30</option>
-      <option value="150">8-2 , 2-8</option>
-      <option value="165">8:30-2:30 , 2:30-8:30</option>
-    </select>
-  </div>
-
-  <!-- +0.50 FC -->
-  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>+0.50 CYL</span>
-    <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
-      <option value="n/a">N/A</option>
-      <option value="bal">Bal</option>
-      <option value="180">3-9 , 9-3</option>
-      <option value="15">3:30-9:30 , 9:30-3:30</option>
-      <option value="30">4-10 , 10-4</option>
-      <option value="45">4:30-10:30 , 10:30-4:30</option>
-      <option value="60">5-11 , 11-5</option>
-      <option value="75">5:30-11:30 , 11:30-5:30</option>
-      <option value="90">6-12 , 12-6</option>
-      <option value="105">6:30-12:30 , 12:30-6:30</option>
-      <option value="120">7-1 , 1-7</option>
-      <option value="135">7:30-1:30 , 1:30-7:30</option>
-      <option value="150">8-2 , 2-8</option>
-      <option value="165">8:30-2:30 , 2:30-8:30</option>
-    </select>
-  </div>
-
-  <!-- +1.00 FC -->
-  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>+1.00 CYL</span>
-    <select class="fc_duo" data-rx="1.00" style="padding:4px; width:100%;">
-      <option value="n/a">N/A</option>
-      <option value="bal">Bal</option>
-      <option value="180">3-9 , 9-3</option>
-      <option value="15">3:30-9:30 , 9:30-3:30</option>
-      <option value="30">4-10 , 10-4</option>
-      <option value="45">4:30-10:30 , 10:30-4:30</option>
-      <option value="60">5-11 , 11-5</option>
-      <option value="75">5:30-11:30 , 11:30-5:30</option>
-      <option value="90">6-12 , 12-6</option>
-      <option value="105">6:30-12:30 , 12:30-6:30</option>
-      <option value="120">7-1 , 1-7</option>
-      <option value="135">7:30-1:30 , 1:30-7:30</option>
-      <option value="150">8-2 , 2-8</option>
-      <option value="165">8:30-2:30 , 2:30-8:30</option>
-    </select>
-  </div>
-
-</div>
-</td></tr>
-<tr style="border-bottom:none"><td style="border-bottom:none">DC Status Left Eye</td>
-<td style="border-bottom:none"colspan="3">
-<div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;width:100%;">
-
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>+1.00 SPH</span>
-    <select class="vectorhelper_duo" data-rx="1.00" style="padding:4px;">
-      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
-
-      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
-      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
-      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
-    </select>
-  </div>
-
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>+0.50 SPH</span>
-    <select class="vectorhelper_duo" data-rx="0.50" style="padding:4px;">
-      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
-      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
-      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
-      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
-    </select>
-  </div>
-
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>NOW</span>
-    <select class="vectorhelper_duo" data-rx="0.00" style="padding:4px;">
-      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
-      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
-      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
-      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
-    </select>
-  </div>
-
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>-0.50 SPH</span>
-    <select class="vectorhelper_duo" data-rx="-0.50" style="padding:4px;">
-      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
-      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
-      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
-      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
-      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
-    </select>
-  </div>
-
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>-1.00 SPH</span>
-    <select class="vectorhelper_duo" data-rx="-1.00" style="padding:4px;">
-      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
-      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
-      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
-      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
-    </select>
-  </div>
-
-</div>
-</td></tr>
-
-<tr style="border-top:none"><td style="border-top:none">FC Status Left Eye</td>
-<td style="border-top:none"colspan="3">
-
-<div class="fc-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:5%;width:100%;">
-
-  <!-- +0.00 FC -->
-  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>NOW</span>
-    <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
-      <option value="n/a">N/A</option>
-      <option value="bal">Bal</option>
-      <option value="180">3-9 , 9-3</option>
-      <option value="15">3:30-9:30 , 9:30-3:30</option>
-      <option value="30">4-10 , 10-4</option>
-      <option value="45">4:30-10:30 , 10:30-4:30</option>
-      <option value="60">5-11 , 11-5</option>
-      <option value="75">5:30-11:30 , 11:30-5:30</option>
-      <option value="90">6-12 , 12-6</option>
-      <option value="105">6:30-12:30 , 12:30-6:30</option>
-      <option value="120">7-1 , 1-7</option>
-      <option value="135">7:30-1:30 , 1:30-7:30</option>
-      <option value="150">8-2 , 2-8</option>
-      <option value="165">8:30-2:30 , 2:30-8:30</option>
-    </select>
-  </div>
-
-  <!-- +0.50 FC -->
-  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>+0.50 CYL</span>
-    <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
-      <option value="n/a">N/A</option>
-      <option value="bal">Bal</option>
-      <option value="180">3-9 , 9-3</option>
-      <option value="15">3:30-9:30 , 9:30-3:30</option>
-      <option value="30">4-10 , 10-4</option>
-      <option value="45">4:30-10:30 , 10:30-4:30</option>
-      <option value="60">5-11 , 11-5</option>
-      <option value="75">5:30-11:30 , 11:30-5:30</option>
-      <option value="90">6-12 , 12-6</option>
-      <option value="105">6:30-12:30 , 12:30-6:30</option>
-      <option value="120">7-1 , 1-7</option>
-      <option value="135">7:30-1:30 , 1:30-7:30</option>
-      <option value="150">8-2 , 2-8</option>
-      <option value="165">8:30-2:30 , 2:30-8:30</option>
-    </select>
-  </div>
-
-  <!-- +1.00 FC -->
-  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <span>+1.00 CYL</span>
-    <select class="fc_duo" data-rx="1.00" style="padding:4px; width:100%;">
-      <option value="n/a">N/A</option>
-      <option value="bal">Bal</option>
-      <option value="180">3-9 , 9-3</option>
-      <option value="15">3:30-9:30 , 9:30-3:30</option>
-      <option value="30">4-10 , 10-4</option>
-      <option value="45">4:30-10:30 , 10:30-4:30</option>
-      <option value="60">5-11 , 11-5</option>
-      <option value="75">5:30-11:30 , 11:30-5:30</option>
-      <option value="90">6-12 , 12-6</option>
-      <option value="105">6:30-12:30 , 12:30-6:30</option>
-      <option value="120">7-1 , 1-7</option>
-      <option value="135">7:30-1:30 , 1:30-7:30</option>
-      <option value="150">8-2 , 2-8</option>
-      <option value="165">8:30-2:30 , 2:30-8:30</option>
-    </select>
-  </div>
-
-</div>
-</td></tr>
-
-
-
-
-
-</table>
-</div>
-
-<table>
-
+<tr><td colspan="4"><b><i> Instructions to fill FC DC Bal </i></b><br><br>1. Measure and input the amount of sph needed to shift DC to balance.<br>2. Calculate fogging (+1.00 + DC Bal) for FC test.<br>3. Apply fogging, measure and input the amount of cyl and axis needed to balance FC.<br>4. Press USE to transfer details to Vector Changes. </td></tr>
 <tr>
   <td>FC DC Bal BE<br><div style="margin-top:5px"><button onclick="copyVD_OU_to_ODOS()" style="border-radius:10px; width:70px; height:25px">Use BE</button></div></td>
   <td>
@@ -1316,32 +980,32 @@ Use this to know what RX to fit next based on patient's response.
 <table>
 <tr><th class="red" colspan="4"> Finalized Manual RX </th></tr>
 
-<tr>
+<tr class="mask1">
   <td>Right RX</td>
   <td>Sph : <input type="number" step="0.25" id="od_finalS"></td>
   <td>Cyl : <input type="number" step="0.25" id="od_finalC"></td>
   <td>Axis : <input type="number" step="5" min="0" max="180" id="od_finalA"></td>
 </tr>
-<tr>
+<tr class="mask1">
   <td>Left RX</td>
   <td>Sph : <input type="number" step="0.25" id="os_finalS"></td>
   <td>Cyl : <input type="number" step="0.25" id="os_finalC"></td>
   <td>Axis : <input type="number" step="5" min="0" max="180" id="os_finalA"></td>
 </tr>
-<tr>
+<tr class="mask1">
   <td>Right FC DC</td>
   <td id="od_roundS"></td>
   <td id="od_roundC"></td>
   <td id="od_roundA"></td>
 </tr>
 
-<tr>
+<tr class="mask1">
   <td>Left FC DC</td>
   <td id="os_roundS"></td>
   <td id="os_roundC"></td>
   <td id="os_roundA"></td>
 </tr>
-<tr>
+<tr class="mask1">
   <td>Bino Imbalance</td>
   <td id="diffCrossS"></td>
   <td id="diffCrossC"></td>
@@ -1369,14 +1033,14 @@ Use this to know what RX to fit next based on patient's response.
   <td style="border:none; height:1px; padding:0;"></td>
 </tr>
 <tr><th class="red" colspan="4"> Vectorized Corrected </th></tr>
-<tr>
+<tr class="mask1">
 <td class="red">Current Rx</td>
 <td class="red" colspan="3">
 R: <span class="od_summary" style="margin-right: 80px;">+0.00 / +0.00 × 0</span>
 L: <span class="os_summary">+0.00 / +0.00 × 0</span>
 </td>
 
-<tr>
+<tr class="mask1">
   <td>Right Dominant</td>
   <td colspan="3">
 R: <span id="od_vectorDisplay" style="margin-right: 80px;">- / - × -</span>
@@ -1385,7 +1049,7 @@ L: <span id="OScrossedSpan">- / - × -</span>
 </td>
 </tr>
 
-<tr>
+<tr class="mask1">
   <td>Left Dominant</td>
   <td colspan="3">
 R: <span id="ODcrossedSpan" style="margin-right: 80px;">- / - × -</span>
@@ -1436,7 +1100,7 @@ function toggleStatusManual() {
 </tr>
 
 
-<tr>
+<tr class="mask1">
 <td colspan="1">Comments:</td>
 <td colspan="3">
 <input type="text" id="manual_comments1"
@@ -1981,25 +1645,6 @@ function resetRx(){
   <td style="border:none; height:1px; padding:0;"></td>
 </tr>
 
-<tr><td colspan="4">
-<div>
-  <button onclick="HEW_setMode('reset')">Reset</button>
-  <button onclick="HEW_setMode('emme')">No power</button>
-  <button onclick="HEW_setMode('hyper')">Far-sighted</button>
-  <button onclick="HEW_setMode('myo')">Near-sighted</button>
-</div><br>
-
-
-<div id="HEW_img-container">
-  <img id="HEW_img" src="" alt="Eye diagram">
-</div>
-
-<div style="margin-top:2%; margin-bottom:2%" class="hew-controls">
-  <button onclick="HEW_prev()">◀ Left</button>
-  <button onclick="HEW_next()">Right ▶</button>
-</div>
-</td></tr>
-
 <tr><th colspan="4">What is Prescription and Why we need them.</th></tr>
 
 <tr><td colspan="4">  
@@ -2071,7 +1716,7 @@ function resetRx(){
 
   <div style="flex:1; overflow:hidden;">
 
-<img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/How_to_tell_DC.png" style="width:80%; margin-top:0px; margin-bottom:0px;"
+<img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/How_to_tell_DC.png" style="width:80%; margin-top:-50px; margin-bottom:-20px;"
  alt="How DC works">
 
 </div>
@@ -2109,7 +1754,7 @@ function resetRx(){
   <div style="flex:1; overflow:hidden;">
 
 <img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/astig_explained.png"       style="width:80%; margin-top:0px; margin-bottom:0px;"
- alt="How DC works">
+ alt="Astig Explained">
 
 </div>
 
@@ -4131,132 +3776,102 @@ function toggleTbody(tbodyId){
 }
 </script>
 
+
 <script>
 (function(){
+  const CL_CYL_STEPS = [-0.75,-1.25,-1.75,-2.25,-2.75];
 
-  const CL_CYL_STEPS = [-0.75, -1.25, -1.75, -2.25, -2.75];
+  function glassesToCL(F){ const d=0.01; return F/(1 - d*F); }
+  function r025(x){ return Math.round(x/0.25)*0.25; }
+  function roundUp025(x){ return Math.ceil(x/0.25)*0.25; }
+  function fmt(x){ x=parseFloat(x)||0; const s=x>=0?"+":""; return s+x.toFixed(2); }
+  function nearest(arr,val){ return arr.reduce((b,v)=>Math.abs(v-val)<Math.abs(b-val)?v:b,arr[0]); }
+function flatterAxis(a){
+  a = Math.round(parseFloat(a));
+  if (!a || a < 1) return 180;
+  if (a > 180) return 180;
 
-  /* ===== Helpers ===== */
-  function glassesToCL(F){
-    const d = 0.01;
-    return F / (1 - d * F);
+  const base = Math.floor(a / 10) * 10;
+  const upper = base + 10;
+  const mid = base + 5;
+
+  if (a === mid) {
+    return a < 90 ? base : upper;
   }
 
-  function r025(x){
-    return Math.round(x / 0.25) * 0.25;
+  return Math.round(a / 10) * 10;
+}
+
+
+  function roundClipDiff(x){ return Math.round(x/0.50)*0.50; }
+
+function convertOne(S, C, A){
+  S = parseFloat(S)||0;
+  C = parseFloat(C)||0;
+  A = parseFloat(A)||0;
+
+  const total = S + C;
+  const convS = glassesToCL(S);
+  const convT = glassesToCL(total);
+  const rawCyl = convT - convS;
+
+  if(Math.abs(rawCyl) < 0.75){
+    return fmt(convS); // just sphere
   }
 
-  function roundUp025(x){
-    return Math.ceil(x / 0.25) * 0.25;
-  }
+  const rS = r025(convS);
+  const rClipC = nearest(CL_CYL_STEPS, rawCyl);
+  const axis = flatterAxis(A);
+  const clipDiffRounded = roundClipDiff(rawCyl - rClipC);
+  const correctedSphere = roundUp025(rS + clipDiffRounded/2);
 
-  function roundClipDiff(x){
-    return Math.round(x / 0.50) * 0.50;
-  }
+  // OUTPUT FORMAT CHANGE HERE: S / C x AXXX
+  return `${fmt(correctedSphere)} / ${fmt(rClipC)} x ${axis}`;
+}
 
-  function fmt(x){
-    x = parseFloat(x) || 0;
-    return (x >= 0 ? "+" : "") + x.toFixed(2);
-  }
 
-  function nearest(arr, val){
-    return arr.reduce((b, v) =>
-      Math.abs(v - val) < Math.abs(b - val) ? v : b, arr[0]
-    );
-  }
+const sets = [
+  ["od_origCombined","os_origCombined"],
+  ["od_vcCombined","os_vcCombined"],
+  ["od_finalCombined","os_finalCombined"]
+];
 
-  function flatterAxis(a){
-    a = Math.round(parseFloat(a));
-    if (!a || a < 1 || a > 180) return 180;
+function parseText(txt){
+  if(!txt) return [0,0,0];
 
-    const base = Math.floor(a / 10) * 10;
-    const upper = base + 10;
-    const mid = base + 5;
+  const m = txt.match(/([+-]?\d+(\.\d+)?)\s*\/\s*([+-]?\d+(\.\d+)?)\s*[xX×]\s*(\d+)/);
+  if(!m) return [0,0,0];
 
-    if (a === mid) return a < 90 ? base : upper;
-    return Math.round(a / 10) * 10;
-  }
-
-  /* ===== Core Conversion ===== */
-  function convertOne(S, C, A){
-    S = parseFloat(S) || 0;
-    C = parseFloat(C) || 0;
-    A = parseFloat(A) || 0;
-
-    const total = S + C;
-    const convS = glassesToCL(S);
-    const convT = glassesToCL(total);
-    const rawCyl = convT - convS;
-
-    /* Sphere-only CL */
-    if (Math.abs(rawCyl) < 0.75){
-      return fmt(r025(convS));
-    }
-
-    /* Toric CL */
-    const rS = r025(convS);
-    const rClipC = nearest(CL_CYL_STEPS, rawCyl);
-    const axis = flatterAxis(A);
-    const clipDiffRounded = roundClipDiff(rawCyl - rClipC);
-    const correctedSphere = roundUp025(rS + clipDiffRounded / 2);
-
-    return `${fmt(correctedSphere)} / ${fmt(rClipC)} x ${axis}`;
-  }
-
-  /* ===== Input Parsing ===== */
-  function parseText(txt){
-    if (!txt) return [0, 0, 0];
-
-    // S / C x A
-    let m = txt.match(/([+-]?\d+(\.\d+)?)\s*\/\s*([+-]?\d+(\.\d+)?)\s*[xX×]\s*(\d+)/);
-    if (m){
-      return [
-        parseFloat(m[1]),
-        parseFloat(m[3]),
-        parseFloat(m[5])
-      ];
-    }
-
-    // Sphere only (or cyl = 0)
-    m = txt.match(/^[+-]?\d+(\.\d+)?$/);
-    if (m){
-      return [parseFloat(m[0]), 0, 0];
-    }
-
-    return [0, 0, 0];
-  }
-
-  /* ===== DOM Wiring ===== */
-  const sets = [
-    ["od_origCombined", "os_origCombined"],
-    ["od_vcCombined",   "os_vcCombined"],
-    ["od_finalCombined","os_finalCombined"]
+  return [
+    parseFloat(m[1]),
+    parseFloat(m[3]),
+    parseFloat(m[5])
   ];
+}
+
+
 
   function updateCL(odSpan, osSpan, odCL, osCL){
-    const [sOD, cOD, aOD] = parseText(odSpan.textContent);
-    const [sOS, cOS, aOS] = parseText(osSpan.textContent);
-
-    odCL.textContent = convertOne(sOD, cOD, aOD);
-    osCL.textContent = convertOne(sOS, cOS, aOS);
+    const [sOD,cOD,aOD] = parseText(odSpan.textContent);
+    const [sOS,cOS,aOS] = parseText(osSpan.textContent);
+    odCL.textContent = convertOne(sOD,cOD,aOD);
+    osCL.textContent = convertOne(sOS,cOS,aOS);
   }
 
   sets.forEach(([odId, osId])=>{
     const odSpan = document.getElementById(odId);
     const osSpan = document.getElementById(osId);
-    const odCL   = document.getElementById("CL_" + odId);
-    const osCL   = document.getElementById("CL_" + osId);
+    const odCL = document.getElementById("CL_" + odId);
+    const osCL = document.getElementById("CL_" + osId);
+    if(!odSpan || !osSpan || !odCL || !osCL) return;
 
-    if (!odSpan || !osSpan || !odCL || !osCL) return;
-
+    // Initial calculation
     updateCL(odSpan, osSpan, odCL, osCL);
 
-    const observer = new MutationObserver(() =>
-      updateCL(odSpan, osSpan, odCL, osCL)
-    );
-
-    observer.observe(odSpan, { childList:true, characterData:true, subtree:true });
-    observer.observe(osSpan, { childList:true, characterData:true, subtree:true });
+    // Live update using MutationObserver
+    const observer = new MutationObserver(()=>updateCL(odSpan, osSpan, odCL, osCL));
+    observer.observe(odSpan, { childList: true, characterData: true, subtree: true });
+    observer.observe(osSpan, { childList: true, characterData: true, subtree: true });
   });
 
 })();
@@ -4795,123 +4410,7 @@ slider.addEventListener("input", () => {
 </script>
 
 
-<script>
-const HEW_BASE =
-  "https://raw.githubusercontent.com/kiaraoptometrypx/super_rx/main/How%20eyes%20work/";
 
-const HEW_images = {
-  reset: [ HEW_BASE + "reset.png" ],
-
-  emme: [
-    "Emm1.png","Emm2.png","Emm3.png","Emm4.png",
-    "Emm5.png","Emm6.png","Emm7.png","Emm8.png"
-  ].map(f => HEW_BASE + f),
-
-  hyper: [
-    "Hy1.png","Hy2.png","Hy3.png","Hy4.png","Hy5.png","Hy6.png","Hy7.png","Hy8.png",
-    "Hy9.png","Hy10.png","Hy11.png","Hy12.png","Hy13.png","Hy14.png","Hy15.png","Hy16.png"
-  ].map(f => HEW_BASE + f),
-
-  myo: [
-    "My1.png","My2.png","My3.png","My4.png","My5.png",
-    "My6.png","My7.png","My8.png","My9.png","My10.png","My11.png"
-  ].map(f => HEW_BASE + f)
-};
-
-let HEW_currentSet = HEW_images.reset;
-let HEW_index = 0;
-
-const HEW_img = document.getElementById("HEW_img");
-
-function HEW_setMode(mode) {
-  HEW_currentSet = HEW_images[mode];
-  HEW_index = 0;
-  HEW_img.src = HEW_currentSet[0];
-}
-
-function HEW_swapImage(src) {
-  HEW_img.style.opacity = 0;
-
-  setTimeout(() => {
-    HEW_img.src = src;
-    HEW_img.style.opacity = 1;
-  }, 100); // must match CSS transition
-}
-
-function HEW_next() {
-  if (HEW_currentSet.length <= 1) return;
-  if (HEW_index >= HEW_currentSet.length - 1) return;
-
-  HEW_index++;
-  HEW_swapImage(HEW_currentSet[HEW_index]);
-}
-
-function HEW_prev() {
-  if (HEW_currentSet.length <= 1) return;
-  if (HEW_index <= 0) return;
-
-  HEW_index--;
-  HEW_swapImage(HEW_currentSet[HEW_index]);
-}
-
-// init
-HEW_setMode("reset");
-</script>
-
-<script>
-function HEW_preloadAll() {
-  Object.values(HEW_images).flat().forEach(src => {
-    const img = new Image();
-    img.src = src;
-  });
-}
-
-HEW_preloadAll();
-</script>
-
-
-
-<script>
-document.querySelectorAll('.vectorhelper_duo').forEach(sel=>{
-  const bgMap = {
-    blue:'#1e90ff',
-    bal:'#888',
-    red:'#e53935',
-    na:'#f0f0f0'
-  };
-  const colorMap = {
-    blue:'#fff',
-    bal:'#fff',
-    red:'#fff',
-    na:'#555'
-  };
-
-  function updateBackground(){
-    const val = sel.value;
-    sel.style.background = bgMap[val] || '#fff';
-    sel.style.color = colorMap[val] || '#000';
-    sel.style.fontStyle = (val==='na')?'italic':'normal';
-  }
-
-  sel.addEventListener('change', updateBackground);
-
-  // initialize on load
-  updateBackground();
-});
-</script>
-
-
-<script>
-document.getElementById('toggleBtn').addEventListener('click', ()=>{
-  document.querySelectorAll('.hide_show').forEach(el=>{
-    if(el.style.display === 'none'){
-      el.style.display = 'block';
-    } else {
-      el.style.display = 'none';
-    }
-  });
-});
-</script>
 
 
 
