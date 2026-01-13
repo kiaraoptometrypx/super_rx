@@ -75,6 +75,7 @@ th:nth-child(4) {
     align-items: center;
   }
 
+
   table {
     border-collapse: collapse;
     width: 100%;
@@ -93,6 +94,8 @@ th:nth-child(4) {
   td {
     border-bottom: 1px solid #aaa;
     border-top: 1px solid #aaa;
+    background: #f5f5f5;
+
     padding: 10px;
     text-align: center;
   }
@@ -192,12 +195,12 @@ body, table, th, td, input, button {
   top: 0;
   left: 0;
   width: 100%;
-  height: 7%;
+  height: 50px; /* use fixed px for consistency */
   background: #6f2218;
   color: white;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* space between title and menu */
+  justify-content: space-between;
   padding: 0 3%;
   box-sizing: border-box;
   z-index: 9999;
@@ -205,22 +208,24 @@ body, table, th, td, input, button {
 
 #topBlock h2 {
   font-size: 17px;
-  margin: 0;
+  margin-left:3%;
+  margin-right:10%; /* remove extra margin */
 }
 
 .topMenu a {
   color: white;
   text-decoration: none;
-  margin-left: 5%;
+  margin-left: 20px; /* fixed spacing instead of percentage */
   font-weight: 600;
-  font-size: 12px;
+  font-size: 14px; /* slightly bigger for readability */
   cursor: pointer;
-
 }
 
 .topMenu a:hover {
   text-decoration: underline;
 }
+
+
   .card{ background:#fff; border-radius:10px; padding:20px 10px;
     box-shadow:0 0 10px rgba(0,0,0,.25); display:inline-block; border:1px solid #bbb; margin:8px 0 14px; }
   .row input[type=number]{ width:70px; text-align:center; }
@@ -368,9 +373,9 @@ option {
 
 
 <div id="topBlock">
-  <h2>HYPERVISION</h2>
+<h2> Ready?</h2>
   <nav class="topMenu" style="user-select:none">
-      <a data-target="s-1">Welcome</a>
+      <a data-target="s-1">Intro</a>
     <a data-target="s0">Current Rx</a>
     <a data-target="s2">Vector RX</a>
     <a data-target="s3">Manual RX</a>
@@ -447,23 +452,27 @@ function copyText() {
     <div id="s-1" class="section">
 <div style="height:70px"></div>
 <table>
-<tr><th class="red" colspan="4">Welcome</th></tr>
+<tr><th class="red" colspan="4">Intro</th></tr>
 <tr>
   <td colspan="4" style="height:400px; text-align:center; padding:20px; vertical-align:middle; background-color:#EBDADA;">
 
     <h1 style="margin:0 10% 0 10%; color:#6F2218; line-height:25px; text-align:left;">HYPERVISION Eye Exam<br>---</h1>
 
-    <p style="margin:0 10% 3% 10%; font-size:15px; line-height:20px; text-align:left;">The best prescription is smooth and clear.<br>And this exam never misses.</p>
+    <p style="margin:0 10% 3% 10%; font-size:15px; line-height:20px; text-align:left;">The best prescription are smooth, comfortable and clear.<br>And this test always deliver.</p>
 
-    <p style="margin:0% 10% 3% 10%; font-size:12px; line-height:15px; text-align:left;">Blur and discomforts are 'quantified' then<br>the best prescriptions are generated.</p>
+    <p style="margin:0% 10% 3% 10%; font-size:12px; line-height:15px; text-align:left;">Mathematically converts blur & discomfort into data.<br>Then the best prescriptions are formula generated.</p>
 
-    <p style="margin:0% 10% 0% 10%; font-size:12px; color:#6F2218; line-height:18px; text-align:left;">This test benefits those who:</p>
+    <p style="margin:0% 10% 0% 10%; font-size:12px; color:#6F2218; line-height:18px; text-align:left;">This test helps those who:</p>
 
 <ul style="margin:0% 10%; font-size:12px; color:#6F2218; padding-left:20px; text-align:left;">
   <li>Are age 35 and above.
   <li>Are dizzy when changing glasses.</li>
   <li>Have unexplained headaches and bluriness.</li>
+  <li>Have weaker vision than your peers.</li>
+  <li>Wants to see their very best possible.</li>
+
   <li>Appreciates how science creates your best vision.</li>
+
 </ul>
     </p>
   </td>
