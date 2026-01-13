@@ -174,8 +174,8 @@ body, table, th, td, input, button {
 /* Sections */
 .section {
   max-height: 900px;
-  margin-bottom: 200px;
-  margin-top: 500px;
+  margin-bottom: 750px;
+  margin-top: 70px;
 }
 
 .updateAllBtn {
@@ -192,26 +192,26 @@ body, table, th, td, input, button {
   top: 0;
   left: 0;
   width: 100%;
-  height: 70px;
+  height: 7%;
   background: #6f2218;
   color: white;
   display: flex;
   align-items: center;
   justify-content: space-between; /* space between title and menu */
-  padding: 0 20px;
+  padding: 0 3%;
   box-sizing: border-box;
   z-index: 9999;
 }
 
 #topBlock h2 {
-  font-size: 18px;
+  font-size: 17px;
   margin: 0;
 }
 
 .topMenu a {
   color: white;
   text-decoration: none;
-  margin-left: 20px;
+  margin-left: 5%;
   font-weight: 600;
   font-size: 12px;
   cursor: pointer;
@@ -368,8 +368,9 @@ option {
 
 
 <div id="topBlock">
-  <h2>HYPERVISION RX</h2>
+  <h2>HYPERVISION</h2>
   <nav class="topMenu" style="user-select:none">
+      <a data-target="s-1">Welcome</a>
     <a data-target="s0">Current Rx</a>
     <a data-target="s2">Vector RX</a>
     <a data-target="s3">Manual RX</a>
@@ -380,14 +381,100 @@ option {
 
   </nav>
 </div>
+<div style="height:70px"></div>
+
+<div>
+<button type="button" onclick="screener()">Toggle Screener</button> 
+<button id="copyBtn"  onclick="copyText()">Copy</button>
+
+</div>
+
+
+<script>
+function screener() {
+  const el = document.getElementById("screenerPanel");
+  el.style.display = (el.style.display === "none" || el.style.display === "")
+    ? "block"
+    : "none";
+}
+
+function copyText() {
+  const text = document.getElementById("screenerText").innerText;
+  navigator.clipboard.writeText(text);
+  document.getElementById("copyBtn").innerText = "Copied";
+}
+</script>
 
 <div class="layout">
   <main id="content" class="content">
- 
-    <div id="s0" class="section1">
+
+
+<div id="screenerPanel" style="display:none;">
+<table>
+  <tr>
+    <td id="screenerText" style="text-align:left; line-height:1.6;">
+      1. Calculate: +0.25 + (-0.75)<br>
+      2. Calculate: -1.25 + 0.50<br>
+      3. Calculate: +2.00 − 0.75<br>
+      4. Calculate: -0.50 − 0.25<br>
+      5. Calculate: +1.75 + (-2.25)<br>
+      6. Calculate: Start at -1.00. Add +0.25 three times.<br>
+      7. Calculate: Start at +0.50. Subtract +0.25, then subtract +0.50.<br>
+      8. Calculate: Start at +0.75. Increase by -0.25 four times.<br>
+      9. Which is bigger: -0.25 or -0.75?<br>
+      10. Which is lower: +0.50 or -0.75?<br>
+      11. Which is closer to zero: +0.50 or -0.25?<br>
+      12. Complete the sequence: -1.00, -0.75, -0.50, ?<br>
+      13. Complete the sequence: +0.25, +0.50, ?, +1.00<br>
+      14. Calculate: Start at -0.50, increase by +0.25, then decrease by -0.75.<br>
+      15. If blue is add, red is subtract, what do you do when +1.00 is red? +1.25 or +0.75?<br>
+      16. If blue is add, red is subtract, what do you get when +1.00 is blue 3 times? +0.25 or +1.75?<br>
+      17. Using a logic of a clock, 3 o'clock and 9 o'clock is the same axis, right or wrong?<br>
+      18. Using a logic of a clock, 3 o'clock and 12 o'clock is the same axis, right or wrong?<br>
+      19. Using a logic of a clock, what is the perpendicular value of 10:30 o'clock?<br>
+      20. The middle between +0.25 and +0.75 is +0.50. What is the middle between -1.00 and -2.00?<br>
+      21. The middle between +0.25 and +0.75 is +0.50. What is the middle between +0.50 and -1.00?<br>
+      22. What is -1.50 divided by 2, then added to -4.00?<br>
+      23. Using a logic of a clock, if -1.00 is 3 o'clock, -1.50 is 12 o'clock, what is -1.25?<br>
+    </td>
+  </tr>
+</table>
+
+</div>
+
+
+
+    <div id="s-1" class="section">
 <div style="height:70px"></div>
 <table>
-<tr><th class="red" colspan="4">Name & Details</th></tr>
+<tr><th class="red" colspan="4">Welcome</th></tr>
+<tr>
+  <td colspan="4" style="height:400px; text-align:center; padding:20px; vertical-align:middle; background-color:#EBDADA;">
+
+    <h1 style="margin:0 10% 0 10%; color:#6F2218; line-height:25px; text-align:left;">HYPERVISION Eye Exam<br>---</h1>
+
+    <p style="margin:0 10% 3% 10%; font-size:15px; line-height:20px; text-align:left;">The best prescription is smooth and clear.<br>And this exam never misses.</p>
+
+    <p style="margin:0% 10% 3% 10%; font-size:12px; line-height:15px; text-align:left;">Blur and discomforts are 'quantified' then<br>the best prescriptions are generated.</p>
+
+    <p style="margin:0% 10% 0% 10%; font-size:12px; color:#6F2218; line-height:18px; text-align:left;">This test benefits those who:</p>
+
+<ul style="margin:0% 10%; font-size:12px; color:#6F2218; padding-left:20px; text-align:left;">
+  <li>Are age 35 and above.
+  <li>Are dizzy when changing glasses.</li>
+  <li>Have unexplained headaches and bluriness.</li>
+  <li>Appreciates how science creates your best vision.</li>
+</ul>
+    </p>
+  </td>
+</tr>
+
+<tr style="border:none; height:10px;">
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+</tr>
 
 <tr>
 <td colspan="2" style="border-right:none;">
@@ -415,40 +502,48 @@ option {
 <button style="border-radius:10px; height:25px; width:100px" id="sendWhatsappBtn">Send WA</button>
 
 </td> </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+</table>
+
+</div>
+ 
+    <div id="s0" class="section">
+<div style="height:70px"></div>
+<table>
+
+<tr><th class="red" colspan="4">Current RX</th></tr>
+
+
+
 <tr style="border:none; height:10px;">
   <td style="border:none; height:1px; padding:0;"></td>
   <td style="border:none; height:1px; padding:0;"></td>
   <td style="border:none; height:1px; padding:0;"></td>
   <td style="border:none; height:1px; padding:0;"></td>
 </tr>
-<tr style="display:none"><td colspan="4">
-1. Calculate: +0.25 + (-0.75)
-2. Calculate: -1.25 + 0.50
-3. Calculate: +2.00 − 0.75
-4. Calculate: -0.50 − 0.25
-5. Calculate: +1.75 + (-2.25)
-6. Calculate: Start at -1.00. Add +0.25 three times.
-7. Calculate: Start at +0.50. Subtract +0.25, then subtract +0.50.
-8. Calculate: Start at +0.75. Increases -0.25 four times.
-9. Which is bigger: -0.25 or -0.75?
-9. Which is lower: +0.50 or -0.75?
-10. Which is closer to zero: +0.50 or -0.25?
-11. Complete the sequence: -1.00, -0.75, -0.50, ?
-12. Complete the sequence: +0.25, +0.50, ?, +1.00
-13. Calculate: Start at -0.50, increase by +0.25, then decrease by -0.75.
-14. If blue is add, red is subtract, what do you do when +1.00 is red? +1.25 or +0.75?
-15. If blue is add, red is subtract, what do you get when +1.00 is blue 3 times? +0.25 or +1.75?
-16. Using a logic of a clock, 3 o'clock and 9 o'clock is the same axis, right or wrong?
-17. Using a logic of a clock, 3 o'clock and 12 o'clock is the same axis, right or wrong?
-18. Using a logic of a clock, what is the perpendicular value of 10:30 o'clock?
-19. The middle between +0.25 and +0.75 is +0.50. What is the middle between -1.00 and -2.00?
-19. The middle between +0.25 and +0.75 is +0.50. What is the middle between +0.50 and -1.00?
-20. What is -1.50 divide by 2, then added to -4.00?
-21. Using a logic of a clock, if -1.00 is 3 o'clock, -1.50 is 12 o'clock, what is -1.25?
-</td></tr>
+
+
+<tr><th class="red" colspan="4"><i>Load a file by copying everything and pasting in any input, press this button to use latest RX. </i><br>
+
+<button style="margin-top:5px; margin-right:15px; background-color:white; border-radius:10px; height:25px; width:180px" id="fillCurrentBtn">Use Vector RX</button>
+
+</th></tr>
+
+
 
 <tr><th class="red" colspan="4">
-<button style="background-color:white; border-radius:10px; height:25px; width:380px" onclick="toggleTbody('rxBody')"><b> Contact lens to Spectacles Converter</b></button>
+<button style="background-color:white; border-radius:10px; height:25px; width:80%" onclick="toggleTbody('rxBody')">Press this if wearing Contact lenses (Converter CL to Specs)</button>
 
 
 </th>
@@ -460,54 +555,44 @@ option {
 <!-- OD -->
 
 <tr>
-  <td>CL Right</td>
-  <td>Sph : <input type="number" step="0.25" id="cl-sph-re"></td>
-  <td>Cyl : <input type="number" step="0.25" id="cl-cyl-re"></td>
-  <td>Axis : <input type="number" step="5" min="0" max="180" id="cl-axis-re"></td>
+  <td class="red">CL Right</td>
+  <td class="red">Sph : <input type="number" step="0.25" id="cl-sph-re"></td>
+  <td class="red">Cyl : <input type="number" step="0.25" id="cl-cyl-re"></td>
+  <td class="red">Axis : <input type="number" step="5" min="0" max="180" id="cl-axis-re"></td>
 </tr>
 <tr>
-  <td>CL Left</td>
-  <td>Sph : <input type="number" step="0.25" id="cl-sph-le"></td>
-  <td>Cyl : <input type="number" step="0.25" id="cl-cyl-le"></td>
-  <td>Axis : <input type="number" step="5" min="0" max="180" id="cl-axis-le"></td>
+  <td class="red">CL Left</td>
+  <td class="red">Sph : <input type="number" step="0.25" id="cl-sph-le"></td>
+  <td class="red">Cyl : <input type="number" step="0.25" id="cl-cyl-le"></td>
+  <td class="red">Axis : <input type="number" step="5" min="0" max="180" id="cl-axis-le"></td>
 </tr>
 
-<tr><td>
+<tr><td class="red">
 
-<button class="greyonclick" style="background-color:white; border-radius:10px; height:20px; width:70px" onclick="convertToSpecs()">Convert</button>
+<button class="greyonclick" style="background-color:white; border-radius:10px; height:25px; width:90px" onclick="convertToSpecs()">Convert</button>
+
+<button class="greyonclick" style="margin-top:1%; background-color:white; border-radius:10px; height:25px; width:90px" onclick="autofillOriginalInputs()">Use This RX</button>
+
 </td>
-<td colspan="3">
+<td  class="red"colspan="3">
   R : <span style="margin-right:100px"id="reResult">0.00 / 0.00 x 0</span> 
   L : <span id="leResult">0.00 / 0.00 x 0</span>
 </td>
 </tr>
 </tbody>
-<tr style="border:none; height:10px;">
-  <td style="border:none; height:1px; padding:0;"></td>
-  <td style="border:none; height:1px; padding:0;"></td>
-  <td style="border:none; height:1px; padding:0;"></td>
-  <td style="border:none; height:1px; padding:0;"></td>
-</tr>
 
 
-<tr><th class="red" colspan="4">Current RX - <i> Insert the RX that was the most recent and comfortable.</i> <br>
-
-<button style="margin-top:5px; margin-right:15px; background-color:white; border-radius:10px; height:25px; width:180px" id="fillCurrentBtn">Use Vector RX</button>
-
-
-<button class="greyonclick" style="margin-top:5px; background-color:white; border-radius:10px; height:25px; width:180px" onclick="autofillOriginalInputs()">Use Contact Lens Convert</button>
-</th></tr>
 
 <!-- OD -->
 
 <tr>
-  <td>Right</td>
+  <td>Specs Right</td>
   <td>Sph : <input type="number" step="0.25" id="od_origS"></td>
   <td>Cyl : <input type="number" step="0.25" id="od_origC"></td>
   <td>Axis : <input type="number" step="5" min="0" max="180" id="od_origA"></td>
 </tr>
 <tr>
-  <td>Left</td>
+  <td>Specs Left</td>
   <td>Sph : <input type="number" step="0.25" id="os_origS"></td>
   <td>Cyl : <input type="number" step="0.25" id="os_origC"></td>
   <td>Axis : <input type="number" step="5" min="0" max="180" id="os_origA"></td>
@@ -519,7 +604,7 @@ option {
 <span style="margin-left:2%" id="addComment"><i>Key in age to see normal add</i></span></td>
 </tr>
 
-<tr><td colspan="4"><span>Overcorrection status : </span><span id="overcorrectionComment"> - </td>
+<tr><td colspan="4"><span>Overcorrection Predictor : </span><span id="overcorrectionComment"> - </td>
 </tr>
 
 
@@ -1640,6 +1725,7 @@ function resetRx(){
 </td></tr>
 
 </table>
+<div style="height:500px"></div>
 
 
 
@@ -4040,7 +4126,7 @@ fanImg.src = `https://raw.githubusercontent.com/kiaraoptometrypx/Trainer/main/${
 
 
 
-    const axisFC  = (axis + 90) % 180;
+    const axisFC  = (axis) % 180;
     const fcShift = (deltaSE > 0) ? 90 : 0;
     outer.style.transform = `scaleX(-1) rotate(${-(axisFC + fcShift)}deg)`;
   }
