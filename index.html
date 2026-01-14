@@ -14,6 +14,43 @@ html, body, table, th, td, input, button, select, option, a, b, label {
   padding: 0;
 }
 
+.vectorhelper-row{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+
+.vectorhelper-rx{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.vectorhelper-rx span{
+  margin-bottom: 6px;
+  font-weight: 400;
+}
+
+  #HEW_img-container {
+    width: 520px;
+    max-width: 100%;
+    height: 380px;
+    margin: 0 auto 10px;
+    position: relative;
+  }
+
+  #HEW_img-container img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: contain;
+  transition: opacity 1s linear, transform 0.2s ease;
+  }
+
 th.red, td.red {
   background: #E0E0E0;
   color: black;
@@ -75,7 +112,6 @@ th:nth-child(4) {
     align-items: center;
   }
 
-
   table {
     border-collapse: collapse;
     width: 100%;
@@ -94,8 +130,6 @@ th:nth-child(4) {
   td {
     border-bottom: 1px solid #aaa;
     border-top: 1px solid #aaa;
-    background: #f5f5f5;
-
     padding: 10px;
     text-align: center;
   }
@@ -177,8 +211,8 @@ body, table, th, td, input, button {
 /* Sections */
 .section {
   max-height: 900px;
-  margin-bottom: 750px;
-  margin-top: 70px;
+  margin-bottom: 200px;
+  margin-top: 500px;
 }
 
 .updateAllBtn {
@@ -224,8 +258,6 @@ body, table, th, td, input, button {
 .topMenu a:hover {
   text-decoration: underline;
 }
-
-
   .card{ background:#fff; border-radius:10px; padding:20px 10px;
     box-shadow:0 0 10px rgba(0,0,0,.25); display:inline-block; border:1px solid #bbb; margin:8px 0 14px; }
   .row input[type=number]{ width:70px; text-align:center; }
@@ -373,10 +405,11 @@ option {
 
 
 <div id="topBlock">
-<h2> Ready?</h2>
+ <h2> Ready?</h2>
   <nav class="topMenu" style="user-select:none">
       <a data-target="s-1">Intro</a>
     <a data-target="s0">Current Rx</a>
+      <a data-target="s-2">Bino Test</a>
     <a data-target="s2">Vector RX</a>
     <a data-target="s3">Manual RX</a>
     <a data-target="s4">Summary</a>
@@ -384,7 +417,7 @@ option {
     <a data-target="s6">How Eyes Work</a>
     <a data-target="s5">Lenses</a>
 
-  </nav>
+ </nav>
 </div>
 <div style="height:70px"></div>
 
@@ -473,12 +506,11 @@ function copyText() {
     <p style="margin:0% 10% 0% 10%; font-size:12px; color:#6F2218; line-height:18px; text-align:left;">This test helps those who:</p>
 
 <ul style="margin:0% 10%; font-size:12px; color:#6F2218; padding-left:20px; text-align:left;">
-  <li>Are age 35 and above.
+  <li>Are age 35 and above.</li>
   <li>Are dizzy when changing glasses.</li>
   <li>Have unexplained headaches and bluriness.</li>
   <li>Have weaker vision than your peers.</li>
   <li>Wants to see their very best possible.</li>
-
   <li>Appreciates how science creates your best vision.</li>
 
 </ul>
@@ -715,6 +747,9 @@ document.getElementById("nearAdd").addEventListener("input", function() {
 </script>
 
 
+
+
+
 <tr><th class="red" colspan="4">Current Fitting Details - <i>Measure the PD and the NOC (middle of nosepad to optical center)</i></th></tr>
 <tr>
   <td>Right</td>
@@ -795,6 +830,219 @@ function copyRightToLeft(){
 </table>
 </div>
 
+
+
+
+    <div id="s-2" class="section">
+<div style="height:70px"></div>
+<table id="BT_bttTable">
+  <!-- Binocular Test Header -->
+  <tr>
+    <th class="yellow" colspan="4">Binocular Test</th>
+  </tr>
+
+  <!-- Description -->
+  <tr>
+    <td colspan="4">
+      1. Assess tolerance of spherical difference between the eyes.<br>
+      2. Each test is compared with the existing prescription.<br>
+     3.Asses comfort level. Patients must answer within 5 seconds. 
+    </td>
+  </tr>
+
+  <!-- 0 row -->
+ <tr>
+  <td colspan="4">
+    What does the current prescription feel at the start of the day?
+    <select style="margin-left:5%" id="BT_select_0">
+      <option value="">--Select--</option>
+      <option value="normal">Normal</option>
+      <option value="slight-discomfort">Slight Discomfort</option>
+    </select>
+  </td>
+</tr>
+
+  <!-- Table Header for other powers -->
+  <tr>
+    <th>Power</th>
+    <th>Response</th>
+    <th>Power</th>
+    <th>Response</th>
+  </tr>
+
+  <tbody>
+    <!-- +0.25 and -0.25 -->
+    <tr>
+      <td>+0.25</td>
+      <td>
+        <select id="BT_select_025">
+          <option value="">--Select--</option>
+          <option value="improvement">Improvement</option>
+          <option value="no-difference">No Difference</option>
+          <option value="more-discomfort">More Discomfort</option>
+        </select>
+      </td>
+      <td>-0.25</td>
+      <td>
+        <select id="BT_select_-025">
+          <option value="">--Select--</option>
+          <option value="improvement">Improvement</option>
+          <option value="no-difference">No Difference</option>
+          <option value="more-discomfort">More Discomfort</option>
+        </select>
+      </td>
+    </tr>
+
+    <!-- +0.50 and -0.50 -->
+    <tr>
+      <td>+0.50</td>
+      <td>
+        <select id="BT_select_050">
+          <option value="">--Select--</option>
+          <option value="improvement">Improvement</option>
+          <option value="no-difference">No Difference</option>
+          <option value="more-discomfort">More Discomfort</option>
+        </select>
+      </td>
+      <td>-0.50</td>
+      <td>
+        <select id="BT_select_-050">
+          <option value="">--Select--</option>
+          <option value="improvement">Improvement</option>
+          <option value="no-difference">No Difference</option>
+          <option value="more-discomfort">More Discomfort</option>
+        </select>
+      </td>
+    </tr>
+
+    <!-- +0.75 and -0.75 -->
+    <tr>
+      <td>+0.75</td>
+      <td>
+        <select id="BT_select_075">
+          <option value="">--Select--</option>
+          <option value="improvement">Improvement</option>
+          <option value="no-difference">No Difference</option>
+          <option value="more-discomfort">More Discomfort</option>
+        </select>
+      </td>
+      <td>-0.75</td>
+      <td>
+        <select id="BT_select_-075">
+          <option value="">--Select--</option>
+          <option value="improvement">Improvement</option>
+          <option value="no-difference">No Difference</option>
+          <option value="more-discomfort">More Discomfort</option>
+        </select>
+      </td>
+    </tr>
+
+    <!-- +1.00 and -1.00 -->
+    <tr>
+      <td>+1.00</td>
+      <td>
+        <select id="BT_select_100">
+          <option value="">--Select--</option>
+          <option value="improvement">Improvement</option>
+          <option value="no-difference">No Difference</option>
+          <option value="more-discomfort">More Discomfort</option>
+        </select>
+      </td>
+      <td>-1.00</td>
+      <td>
+        <select id="BT_select_-100">
+          <option value="">--Select--</option>
+          <option value="improvement">Improvement</option>
+          <option value="no-difference">No Difference</option>
+          <option value="more-discomfort">More Discomfort</option>
+        </select>
+      </td>
+    </tr>
+  </tbody>
+
+  <!-- Show Results Button and Output -->
+   <tr>
+    <td colspan="4">
+      <button style="display:none" id="BT_showResultsBtn">Show Results</button>
+
+      <div id="BT_results" style="margin-top:15px;">
+        <div class="resultRow">Current Prescription: <span id="BT_nowStatus"></span></div>
+        <div class="resultRow">Comfort improvement: <span id="BT_improvementList"></span></div>
+        <div class="resultRow">No Difference: <span id="BT_noDiffList"></span></div>
+        <div class="resultRow">Comfort Worsening: <span id="BT_slightDisList"></span></div>
+      </div>
+    </td>
+  </tr>
+<tr><th class="red" colspan="4">Please Press Update All! 
+<button style="margin-left:10px; border-radius:10px; height:25px; width:100px" class="updateAllBtn">Update All</button>
+</th></tr>
+
+</table>
+
+<script>
+(function() {
+  const table = document.getElementById('BT_bttTable');
+  const tableRows = table.querySelectorAll('tbody tr');
+  const nowSelect = document.getElementById('BT_select_0'); // directly get 0 select
+  const nowSpan = document.getElementById('BT_nowStatus');
+  const improvementSpan = document.getElementById('BT_improvementList');
+  const noDiffSpan = document.getElementById('BT_noDiffList');
+  const moreDisSpan = document.getElementById('BT_slightDisList');
+
+  function clearResults() {
+    nowSpan.innerHTML = '';
+    improvementSpan.innerHTML = '';
+    noDiffSpan.innerHTML = '';
+    moreDisSpan.innerHTML = '';
+  }
+
+  function appendResult(spanContainer, power) {
+    if (spanContainer.innerHTML !== '') spanContainer.appendChild(document.createTextNode(', '));
+    const span = document.createElement('span');
+    span.innerText = power;
+    span.style.color = power.startsWith('+') ? 'green' : (power.startsWith('-') ? 'red' : 'black');
+    spanContainer.appendChild(span);
+  }
+
+  function BT_aggregateResults() {
+    clearResults();
+
+    // handle 0 separately
+    const value0 = nowSelect.value;
+    if (value0) nowSpan.innerText = value0 === 'normal' ? 'Normal' : 'Slight Discomfort';
+
+    // handle rest of the powers
+    tableRows.forEach(row => {
+      row.querySelectorAll('td').forEach((cell, index) => {
+        const select = cell.querySelector('select');
+        if (!select || select.id === 'BT_select_0') return; // skip 0
+        const power = row.cells[index - 1]?.innerText.trim();
+        if (!power) return;
+        const value = select.value;
+        if (!value) return;
+
+        if (value === 'improvement') appendResult(improvementSpan, power);
+        else if (value === 'no-difference') appendResult(noDiffSpan, power);
+        else if (value === 'more-discomfort') appendResult(moreDisSpan, power);
+      });
+    });
+  }
+
+  document.getElementById('BT_showResultsBtn')
+          .addEventListener('click', BT_aggregateResults);
+})();
+
+</script>
+
+
+
+
+</div>
+
+
+
+
+
     <div id="s2" class="section">
 <div style="height:70px"></div>
 
@@ -803,7 +1051,423 @@ function copyRightToLeft(){
 <!-- Vector Refraction -->
 <tr>
   <th class="yellow" colspan="4">Vector Refraction</th></tr>
-<tr><td colspan="4"><b><i> Instructions to fill FC DC Bal </i></b><br><br>1. Measure and input the amount of sph needed to shift DC to balance.<br>2. Calculate fogging (+1.00 + DC Bal) for FC test.<br>3. Apply fogging, measure and input the amount of cyl and axis needed to balance FC.<br>4. Press USE to transfer details to Vector Changes. </td></tr>
+<tr style="border-bottom:none"><td style="border-bottom:none" colspan="4"><b><i> Instructions to fill FC DC Bal </i></b><br><br>1. Measure and input the amount of sph needed to shift DC to balance.<br>2. Calculate fogging (+1.00 + DC Bal) for FC test.<br>3. Apply fogging, measure and input the amount of cyl and axis needed to balance FC.<br>4. Press USE to transfer details to Vector Changes.<br><br>
+<button style="width:80%" id="toggleBtn">Show / Hide Helper</button>
+ </td></tr>
+
+</table>
+
+
+<div class="hide_show" style="display:none">
+<table>
+<tr style="border:none; height:5px;">
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+</tr>
+<tr><th colspan="4">Use Helper to keep track of your records</th></tr>
+
+<tr style="border-bottom:none"><td style="border-bottom:none">DC Status Both Eye</td>
+<td style="border-bottom:none" colspan="3">
+<div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;width:100%;">
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+1.00 SPH</span>
+    <select class="vectorhelper_duo" data-rx="1.00" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+0.50 SPH</span>
+    <select class="vectorhelper_duo" data-rx="0.50" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>NOW</span>
+    <select class="vectorhelper_duo" data-rx="0.00" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>-0.50 SPH</span>
+    <select class="vectorhelper_duo" data-rx="-0.50" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>-1.00 SPH</span>
+    <select class="vectorhelper_duo" data-rx="-1.00" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+</div>
+</td></tr>
+
+<tr style="border-top:none"><td style="border-top:none">FC Status Both Eye</td>
+<td style="border-top:none"colspan="3">
+
+<div class="fc-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:5%;width:100%;">
+
+  <!-- +0.00 FC -->
+  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>NOW</span>
+    <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
+      <option value="n/a">N/A</option>
+      <option value="bal">Bal</option>
+      <option value="180">3-9 , 9-3</option>
+      <option value="15">3:30-9:30 , 9:30-3:30</option>
+      <option value="30">4-10 , 10-4</option>
+      <option value="45">4:30-10:30 , 10:30-4:30</option>
+      <option value="60">5-11 , 11-5</option>
+      <option value="75">5:30-11:30 , 11:30-5:30</option>
+      <option value="90">6-12 , 12-6</option>
+      <option value="105">6:30-12:30 , 12:30-6:30</option>
+      <option value="120">7-1 , 1-7</option>
+      <option value="135">7:30-1:30 , 1:30-7:30</option>
+      <option value="150">8-2 , 2-8</option>
+      <option value="165">8:30-2:30 , 2:30-8:30</option>
+    </select>
+  </div>
+
+  <!-- +0.50 FC -->
+  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+0.50 CYL</span>
+    <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
+      <option value="n/a">N/A</option>
+      <option value="bal">Bal</option>
+      <option value="180">3-9 , 9-3</option>
+      <option value="15">3:30-9:30 , 9:30-3:30</option>
+      <option value="30">4-10 , 10-4</option>
+      <option value="45">4:30-10:30 , 10:30-4:30</option>
+      <option value="60">5-11 , 11-5</option>
+      <option value="75">5:30-11:30 , 11:30-5:30</option>
+      <option value="90">6-12 , 12-6</option>
+      <option value="105">6:30-12:30 , 12:30-6:30</option>
+      <option value="120">7-1 , 1-7</option>
+      <option value="135">7:30-1:30 , 1:30-7:30</option>
+      <option value="150">8-2 , 2-8</option>
+      <option value="165">8:30-2:30 , 2:30-8:30</option>
+    </select>
+  </div>
+
+  <!-- +1.00 FC -->
+  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+1.00 CYL</span>
+    <select class="fc_duo" data-rx="1.00" style="padding:4px; width:100%;">
+      <option value="n/a">N/A</option>
+      <option value="bal">Bal</option>
+      <option value="180">3-9 , 9-3</option>
+      <option value="15">3:30-9:30 , 9:30-3:30</option>
+      <option value="30">4-10 , 10-4</option>
+      <option value="45">4:30-10:30 , 10:30-4:30</option>
+      <option value="60">5-11 , 11-5</option>
+      <option value="75">5:30-11:30 , 11:30-5:30</option>
+      <option value="90">6-12 , 12-6</option>
+      <option value="105">6:30-12:30 , 12:30-6:30</option>
+      <option value="120">7-1 , 1-7</option>
+      <option value="135">7:30-1:30 , 1:30-7:30</option>
+      <option value="150">8-2 , 2-8</option>
+      <option value="165">8:30-2:30 , 2:30-8:30</option>
+    </select>
+  </div>
+
+</div>
+
+</td></tr>
+
+<tr style="border-bottom:none"><td style="border-bottom:none">DC Status Right Eye</td>
+<td style="border-bottom:none"colspan="3">
+
+<div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;width:100%;">
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+1.00 SPH</span>
+    <select class="vectorhelper_duo" data-rx="1.00" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+0.50 SPH</span>
+    <select class="vectorhelper_duo" data-rx="0.50" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>NOW</span>
+    <select class="vectorhelper_duo" data-rx="0.00" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>-0.50 SPH</span>
+    <select class="vectorhelper_duo" data-rx="-0.50" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>-1.00 SPH</span>
+    <select class="vectorhelper_duo" data-rx="-1.00" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+</div>
+</td></tr>
+
+<tr style="border-top:none"><td style="border-top:none">FC Status Right Eye</td>
+<td style="border-top:none"colspan="3">
+
+<div class="fc-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:5%;width:100%;">
+
+  <!-- +0.00 FC -->
+  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>NOW</span>
+    <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
+      <option value="n/a">N/A</option>
+      <option value="bal">Bal</option>
+      <option value="180">3-9 , 9-3</option>
+      <option value="15">3:30-9:30 , 9:30-3:30</option>
+      <option value="30">4-10 , 10-4</option>
+      <option value="45">4:30-10:30 , 10:30-4:30</option>
+      <option value="60">5-11 , 11-5</option>
+      <option value="75">5:30-11:30 , 11:30-5:30</option>
+      <option value="90">6-12 , 12-6</option>
+      <option value="105">6:30-12:30 , 12:30-6:30</option>
+      <option value="120">7-1 , 1-7</option>
+      <option value="135">7:30-1:30 , 1:30-7:30</option>
+      <option value="150">8-2 , 2-8</option>
+      <option value="165">8:30-2:30 , 2:30-8:30</option>
+    </select>
+  </div>
+
+  <!-- +0.50 FC -->
+  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+0.50 CYL</span>
+    <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
+      <option value="n/a">N/A</option>
+      <option value="bal">Bal</option>
+      <option value="180">3-9 , 9-3</option>
+      <option value="15">3:30-9:30 , 9:30-3:30</option>
+      <option value="30">4-10 , 10-4</option>
+      <option value="45">4:30-10:30 , 10:30-4:30</option>
+      <option value="60">5-11 , 11-5</option>
+      <option value="75">5:30-11:30 , 11:30-5:30</option>
+      <option value="90">6-12 , 12-6</option>
+      <option value="105">6:30-12:30 , 12:30-6:30</option>
+      <option value="120">7-1 , 1-7</option>
+      <option value="135">7:30-1:30 , 1:30-7:30</option>
+      <option value="150">8-2 , 2-8</option>
+      <option value="165">8:30-2:30 , 2:30-8:30</option>
+    </select>
+  </div>
+
+  <!-- +1.00 FC -->
+  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+1.00 CYL</span>
+    <select class="fc_duo" data-rx="1.00" style="padding:4px; width:100%;">
+      <option value="n/a">N/A</option>
+      <option value="bal">Bal</option>
+      <option value="180">3-9 , 9-3</option>
+      <option value="15">3:30-9:30 , 9:30-3:30</option>
+      <option value="30">4-10 , 10-4</option>
+      <option value="45">4:30-10:30 , 10:30-4:30</option>
+      <option value="60">5-11 , 11-5</option>
+      <option value="75">5:30-11:30 , 11:30-5:30</option>
+      <option value="90">6-12 , 12-6</option>
+      <option value="105">6:30-12:30 , 12:30-6:30</option>
+      <option value="120">7-1 , 1-7</option>
+      <option value="135">7:30-1:30 , 1:30-7:30</option>
+      <option value="150">8-2 , 2-8</option>
+      <option value="165">8:30-2:30 , 2:30-8:30</option>
+    </select>
+  </div>
+
+</div>
+</td></tr>
+<tr style="border-bottom:none"><td style="border-bottom:none">DC Status Left Eye</td>
+<td style="border-bottom:none"colspan="3">
+<div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;width:100%;">
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+1.00 SPH</span>
+    <select class="vectorhelper_duo" data-rx="1.00" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+0.50 SPH</span>
+    <select class="vectorhelper_duo" data-rx="0.50" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>NOW</span>
+    <select class="vectorhelper_duo" data-rx="0.00" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>-0.50 SPH</span>
+    <select class="vectorhelper_duo" data-rx="-0.50" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+    </select>
+  </div>
+
+  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>-1.00 SPH</span>
+    <select class="vectorhelper_duo" data-rx="-1.00" style="padding:4px;">
+      <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
+      <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
+      <option value="bal"  style="background:#888;color:#fff;">Bal</option>
+      <option value="red"  style="background:#e53935;color:#fff;">Red</option>
+    </select>
+  </div>
+
+</div>
+</td></tr>
+
+<tr style="border-top:none"><td style="border-top:none">FC Status Left Eye</td>
+<td style="border-top:none"colspan="3">
+
+<div class="fc-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:5%;width:100%;">
+
+  <!-- +0.00 FC -->
+  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>NOW</span>
+    <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
+      <option value="n/a">N/A</option>
+      <option value="bal">Bal</option>
+      <option value="180">3-9 , 9-3</option>
+      <option value="15">3:30-9:30 , 9:30-3:30</option>
+      <option value="30">4-10 , 10-4</option>
+      <option value="45">4:30-10:30 , 10:30-4:30</option>
+      <option value="60">5-11 , 11-5</option>
+      <option value="75">5:30-11:30 , 11:30-5:30</option>
+      <option value="90">6-12 , 12-6</option>
+      <option value="105">6:30-12:30 , 12:30-6:30</option>
+      <option value="120">7-1 , 1-7</option>
+      <option value="135">7:30-1:30 , 1:30-7:30</option>
+      <option value="150">8-2 , 2-8</option>
+      <option value="165">8:30-2:30 , 2:30-8:30</option>
+    </select>
+  </div>
+
+  <!-- +0.50 FC -->
+  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+0.50 CYL</span>
+    <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
+      <option value="n/a">N/A</option>
+      <option value="bal">Bal</option>
+      <option value="180">3-9 , 9-3</option>
+      <option value="15">3:30-9:30 , 9:30-3:30</option>
+      <option value="30">4-10 , 10-4</option>
+      <option value="45">4:30-10:30 , 10:30-4:30</option>
+      <option value="60">5-11 , 11-5</option>
+      <option value="75">5:30-11:30 , 11:30-5:30</option>
+      <option value="90">6-12 , 12-6</option>
+      <option value="105">6:30-12:30 , 12:30-6:30</option>
+      <option value="120">7-1 , 1-7</option>
+      <option value="135">7:30-1:30 , 1:30-7:30</option>
+      <option value="150">8-2 , 2-8</option>
+      <option value="165">8:30-2:30 , 2:30-8:30</option>
+    </select>
+  </div>
+
+  <!-- +1.00 FC -->
+  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <span>+1.00 CYL</span>
+    <select class="fc_duo" data-rx="1.00" style="padding:4px; width:100%;">
+      <option value="n/a">N/A</option>
+      <option value="bal">Bal</option>
+      <option value="180">3-9 , 9-3</option>
+      <option value="15">3:30-9:30 , 9:30-3:30</option>
+      <option value="30">4-10 , 10-4</option>
+      <option value="45">4:30-10:30 , 10:30-4:30</option>
+      <option value="60">5-11 , 11-5</option>
+      <option value="75">5:30-11:30 , 11:30-5:30</option>
+      <option value="90">6-12 , 12-6</option>
+      <option value="105">6:30-12:30 , 12:30-6:30</option>
+      <option value="120">7-1 , 1-7</option>
+      <option value="135">7:30-1:30 , 1:30-7:30</option>
+      <option value="150">8-2 , 2-8</option>
+      <option value="165">8:30-2:30 , 2:30-8:30</option>
+    </select>
+  </div>
+
+</div>
+</td></tr>
+
+
+
+
+
+</table>
+</div>
+
+<table>
+
 <tr>
   <td>FC DC Bal BE<br><div style="margin-top:5px"><button onclick="copyVD_OU_to_ODOS()" style="border-radius:10px; width:70px; height:25px">Use BE</button></div></td>
   <td>
@@ -1738,7 +2402,6 @@ function resetRx(){
 </td></tr>
 
 </table>
-<div style="height:500px"></div>
 
 
 
@@ -1754,6 +2417,25 @@ function resetRx(){
   <td style="border:none; height:1px; padding:0;"></td>
   <td style="border:none; height:1px; padding:0;"></td>
 </tr>
+
+<tr><td colspan="4">
+<div>
+  <button onclick="HEW_setMode('reset')">Reset</button>
+  <button onclick="HEW_setMode('emme')">No power</button>
+  <button onclick="HEW_setMode('hyper')">Far-sighted</button>
+  <button onclick="HEW_setMode('myo')">Near-sighted</button>
+</div><br>
+
+
+<div id="HEW_img-container">
+  <img id="HEW_img" src="" alt="Eye diagram">
+</div>
+
+<div style="margin-top:2%; margin-bottom:2%" class="hew-controls">
+  <button onclick="HEW_prev()">◀ Left</button>
+  <button onclick="HEW_next()">Right ▶</button>
+</div>
+</td></tr>
 
 <tr><th colspan="4">What is Prescription and Why we need them.</th></tr>
 
@@ -1826,7 +2508,7 @@ function resetRx(){
 
   <div style="flex:1; overflow:hidden;">
 
-<img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/How_to_tell_DC.png" style="width:80%; margin-top:-50px; margin-bottom:-20px;"
+<img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/How_to_tell_DC.png" style="width:80%; margin-top:0px; margin-bottom:0px;"
  alt="How DC works">
 
 </div>
@@ -1864,7 +2546,7 @@ function resetRx(){
   <div style="flex:1; overflow:hidden;">
 
 <img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/astig_explained.png"       style="width:80%; margin-top:0px; margin-bottom:0px;"
- alt="Astig Explained">
+ alt="How DC works">
 
 </div>
 
@@ -2311,40 +2993,46 @@ document.getElementById("fillCurrentBtn").addEventListener("click", () => {
 
 
 
-
-
 <script>
 // Export inputs as CSV and open Gmail
 function exportInputs() {
   const out = ["RX_EXPORT_INPUTS_V1"];
 
-  // inputs
+  // Export all input fields by id
   document.querySelectorAll("input[id]").forEach(el => {
     out.push(`${el.id}=${el.value}`);
   });
 
-  // statuses (buttons or selects)
-["statusVector", "statusManual"].forEach(id => {
-  const el = document.getElementById(id);
-  if (el) {
-    const value = el.tagName === "SELECT" 
-                  ? el.options[el.selectedIndex].text 
-                  : el.dataset.value; // button
-    out.push(`${id}=${value}`);
-  }
-});
+  // Export statuses (buttons or selects)
+  ["statusVector", "statusManual"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      const value = el.tagName === "SELECT" 
+                    ? el.options[el.selectedIndex].text 
+                    : el.dataset.value; // button
+      out.push(`${id}=${value}`);
+    }
+  });
 
-
+  // Export specific text elements
   ["od_vcFinalS","od_vcFinalC","od_vcFinalA","os_vcFinalS","os_vcFinalC","os_vcFinalA"].forEach(id => {
     const el = document.getElementById(id);
     if (el) out.push(`${id}=${el.textContent}`);
   });
 
+  // Export all BT selects (Binocular Test)
+  document.querySelectorAll("select[id^='BT_select_']").forEach(el => {
+    const text = el.options[el.selectedIndex]?.text || "";
+    out.push(`${el.id}=${text}`);
+  });
+
+  // Prepare CSV text for export box
   const csvText = out.join(", ");
   document.getElementById("rxExportBox").value = csvText;
 
   const separator = "--------------------------";
 
+  // Summary text (unchanged from your original)
   const summaryText = 
 `Comments Summary:
 Current : ${document.getElementById("current_comments_summary")?.textContent || "-" }
@@ -2396,9 +3084,6 @@ MANUAL (${
 })
 --> Far RX R/L:     ${document.getElementById("od_finalCombined")?.textContent || "-"}     //     ${document.getElementById("os_finalCombined")?.textContent || "-"}
 --> Near RX R/L:     (Add ${document.getElementById("mirrorNearAddFinal")?.textContent || "+0.00"})     ${document.getElementById("od_finalNearCombined_mirror")?.textContent || "-"}     //     ${document.getElementById("os_finalNearCombined_mirror")?.textContent || "-"}
---> CL RX R/L:     ${document.getElementById("CL_od_finalCombined")?.textContent || "-"}     //     ${document.getElementById("CL_os_finalCombined")?.textContent || "-"}
---> Vectorized Right Dominant R/L:     ${document.getElementById("od_vectorDisplay_mirror")?.textContent || "-"}     //     ${document.getElementById("os_vectorDisplay_mirror")?.textContent || "-"}
---> Vectorized Left Dominant R/L:     ${document.getElementById("ODcrossedSpan_mirror")?.textContent || "-"}     //     ${document.getElementById("OScrossedSpan_mirror")?.textContent || "-"}
 --> PD R/L:     ${document.getElementById("od_PD")?.value || "-"} / ${document.getElementById("os_PD")?.value || "-"}
 --> NOC R/L:     ${document.getElementById("od_NOC")?.value || "-"} / ${document.getElementById("os_NOC")?.value || "-"}
 
@@ -2406,10 +3091,8 @@ Gaze Imbalance:     Horizontal: ${document.getElementById("prismH")?.textContent
 ADD:     ${document.getElementById("nearAddFinal")?.value || "0.00"}
 RX Changes R/L:     ${document.getElementById("od_roundCombinedDisplay")?.textContent || "-"}     //     ${document.getElementById("os_roundCombinedDisplay")?.textContent || "-"}
 
-
 --------------------------
 To use this data, copy everything from the top of the body and paste into any inputs in the website.
-
 `;
 
   const emailBody = csvText + "\n\n" + separator + "\n\n" + summaryText;
@@ -2427,7 +3110,7 @@ To use this data, copy everything from the top of the body and paste into any in
   window.open(gmailUrl, "_blank");
 }
 
-// attach all buttons with the class
+// Attach export function to all buttons with class "exportBtn"
 document.querySelectorAll(".exportBtn").forEach(btn => {
   btn.addEventListener("click", exportInputs);
 });
@@ -2457,6 +3140,7 @@ document.addEventListener("paste", e => {
         el.value = val;
       }
     } else if (el.tagName === "SELECT") {
+      // works for BT_select_xx and normal selects
       const option = Array.from(el.options).find(o => o.text === val);
       if (option) el.value = option.value;
     }
@@ -3761,6 +4445,7 @@ document.querySelectorAll(".topMenu a").forEach(link => {
 <script>
 const updateBtns = document.querySelectorAll('.updateAllBtn');
 const numberInputs = document.querySelectorAll('input[type="number"]');
+const showResultsBtn = document.getElementById('BT_showResultsBtn'); // your Show Results button
 
 updateBtns.forEach(btn => btn.dataset.original = btn.innerText);
 
@@ -3789,10 +4474,16 @@ updateBtns.forEach(btn => {
       b.innerText = 'All Updated';
     });
 
+    // Trigger Show Results for ALL update buttons
+    if (showResultsBtn) showResultsBtn.click();
+
     // Trigger the click handler a second time immediately
     btn.click();
+
   };
 });
+
+
 
 
 </script>
@@ -4139,7 +4830,7 @@ fanImg.src = `https://raw.githubusercontent.com/kiaraoptometrypx/Trainer/main/${
 
 
 
-    const axisFC  = (axis) % 180;
+    const axisFC  = (axis + 90) % 180;
     const fcShift = (deltaSE > 0) ? 90 : 0;
     outer.style.transform = `scaleX(-1) rotate(${-(axisFC + fcShift)}deg)`;
   }
@@ -4520,7 +5211,123 @@ slider.addEventListener("input", () => {
 </script>
 
 
+<script>
+const HEW_BASE =
+  "https://raw.githubusercontent.com/kiaraoptometrypx/super_rx/main/How%20eyes%20work/";
 
+const HEW_images = {
+  reset: [ HEW_BASE + "reset.png" ],
+
+  emme: [
+    "Emm1.png","Emm2.png","Emm3.png","Emm4.png",
+    "Emm5.png","Emm6.png","Emm7.png","Emm8.png"
+  ].map(f => HEW_BASE + f),
+
+  hyper: [
+    "Hy1.png","Hy2.png","Hy3.png","Hy4.png","Hy5.png","Hy6.png","Hy7.png","Hy8.png",
+    "Hy9.png","Hy10.png","Hy11.png","Hy12.png","Hy13.png","Hy14.png","Hy15.png","Hy16.png"
+  ].map(f => HEW_BASE + f),
+
+  myo: [
+    "My1.png","My2.png","My3.png","My4.png","My5.png",
+    "My6.png","My7.png","My8.png","My9.png","My10.png","My11.png"
+  ].map(f => HEW_BASE + f)
+};
+
+let HEW_currentSet = HEW_images.reset;
+let HEW_index = 0;
+
+const HEW_img = document.getElementById("HEW_img");
+
+function HEW_setMode(mode) {
+  HEW_currentSet = HEW_images[mode];
+  HEW_index = 0;
+  HEW_img.src = HEW_currentSet[0];
+}
+
+function HEW_swapImage(src) {
+  HEW_img.style.opacity = 0;
+
+  setTimeout(() => {
+    HEW_img.src = src;
+    HEW_img.style.opacity = 1;
+  }, 100); // must match CSS transition
+}
+
+function HEW_next() {
+  if (HEW_currentSet.length <= 1) return;
+  if (HEW_index >= HEW_currentSet.length - 1) return;
+
+  HEW_index++;
+  HEW_swapImage(HEW_currentSet[HEW_index]);
+}
+
+function HEW_prev() {
+  if (HEW_currentSet.length <= 1) return;
+  if (HEW_index <= 0) return;
+
+  HEW_index--;
+  HEW_swapImage(HEW_currentSet[HEW_index]);
+}
+
+// init
+HEW_setMode("reset");
+</script>
+
+<script>
+function HEW_preloadAll() {
+  Object.values(HEW_images).flat().forEach(src => {
+    const img = new Image();
+    img.src = src;
+  });
+}
+
+HEW_preloadAll();
+</script>
+
+
+
+<script>
+document.querySelectorAll('.vectorhelper_duo').forEach(sel=>{
+  const bgMap = {
+    blue:'#1e90ff',
+    bal:'#888',
+    red:'#e53935',
+    na:'#f0f0f0'
+  };
+  const colorMap = {
+    blue:'#fff',
+    bal:'#fff',
+    red:'#fff',
+    na:'#555'
+  };
+
+  function updateBackground(){
+    const val = sel.value;
+    sel.style.background = bgMap[val] || '#fff';
+    sel.style.color = colorMap[val] || '#000';
+    sel.style.fontStyle = (val==='na')?'italic':'normal';
+  }
+
+  sel.addEventListener('change', updateBackground);
+
+  // initialize on load
+  updateBackground();
+});
+</script>
+
+
+<script>
+document.getElementById('toggleBtn').addEventListener('click', ()=>{
+  document.querySelectorAll('.hide_show').forEach(el=>{
+    if(el.style.display === 'none'){
+      el.style.display = 'block';
+    } else {
+      el.style.display = 'none';
+    }
+  });
+});
+</script>
 
 
 
