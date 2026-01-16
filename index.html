@@ -2067,7 +2067,8 @@ PD : <span class="mirror" data-mirror="od_PD">-</span> mm  <span style="margin-l
 PD : <span class="mirror" data-mirror="os_PD">-</span> mm  <span style="margin-left:15%; margin-right:15%"> ; </span> NOC : <span class="mirror" data-mirror="os_NOC">-</span> mm 
 </td></tr>
 
-<tr class="mask4"><td>New Lens Details</td>
+<tr class="mask4"><td>New Lens Details<br><br> <button onclick="openSummary()">Open Lens Site</button>
+</td>
 <td colspan="3">
 <div>
 <input type="text" id="new_lens_details"
@@ -5328,6 +5329,31 @@ document.getElementById('toggleBtn').addEventListener('click', ()=>{
   });
 });
 </script>
+
+
+
+<script>
+function openSummary() {
+  const data = {};
+
+  // collect all spans with IDs on the source page
+  document.querySelectorAll('span[id]').forEach(span => {
+    data[span.id] = span.textContent.trim();
+  });
+
+  // store in localStorage (shared per origin)
+  localStorage.setItem('summaryData', JSON.stringify(data));
+
+  // open OL-selector in new tab
+  window.open('https://kiaraoptometrypx.github.io/OL-selector/', '_blank');
+}
+</script>
+
+
+
+
+
+
 
 
 
