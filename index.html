@@ -1076,7 +1076,8 @@ function copyRightToLeft(){
 </tr>
 <tr><th colspan="4">Use Helper to keep track of your records</th></tr>
 
-<tr style="border-bottom:none"><td style="border-bottom:none">DC Status Both Eye</td>
+<tr style="border-bottom:none"><td style="border-bottom:none">DC Status Both Eye<br><p>Sph Bal :  <span id="balanceBoth"></span></p>
+</td>
 <td style="border-bottom:none" colspan="3">
 <div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;width:100%;">
 
@@ -1135,50 +1136,52 @@ function copyRightToLeft(){
 </div>
 </td></tr>
 
-<tr style="border-top:none"><td style="border-top:none">FC Status Both Eye</td>
+<tr style="border-top:none"><td style="border-top:none">FC Status Both Eye<br>  <span id="perpendicular-axis-ou" style="margin-top:4px;">Over :  N/A</span>
+</td>
 <td style="border-top:none"colspan="3">
 
 <div class="fc-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:5%;width:100%;">
 
   <!-- +0.00 FC -->
-  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div id="fc-block-ou" class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>NOW</span>
     <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
-      <option value="n/a">N/A</option>
-      <option value="bal">Bal</option>
-      <option value="180">3-9 , 9-3</option>
-      <option value="15">3:30-9:30 , 9:30-3:30</option>
-      <option value="30">4-10 , 10-4</option>
-      <option value="45">4:30-10:30 , 10:30-4:30</option>
-      <option value="60">5-11 , 11-5</option>
-      <option value="75">5:30-11:30 , 11:30-5:30</option>
-      <option value="90">6-12 , 12-6</option>
-      <option value="105">6:30-12:30 , 12:30-6:30</option>
-      <option value="120">7-1 , 1-7</option>
-      <option value="135">7:30-1:30 , 1:30-7:30</option>
-      <option value="150">8-2 , 2-8</option>
-      <option value="165">8:30-2:30 , 2:30-8:30</option>
-    </select>
+  <option value="n/a">N/A</option>
+  <option value="bal">Bal</option>
+  <option value="180">3-9 (180)</option>
+  <option value="15">3:30-9:30 (15)</option>
+  <option value="30">4-10 (30)</option>
+  <option value="45">4:30-10:30 (45)</option>
+  <option value="60">5-11 (60)</option>
+  <option value="75">5:30-11:30 (75)</option>
+  <option value="90">6-12 (90)</option>
+  <option value="105">6:30-12:30 (105)</option>
+  <option value="120">7-1 (120)</option>
+  <option value="135">7:30-1:30 (135)</option>
+  <option value="150">8-2 (150)</option>
+  <option value="165">8:30-2:30 (165)</option>
+</select>
+
   </div>
 
   <!-- +0.50 FC -->
   <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+0.50 CYL</span>
     <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
-      <option value="n/a">N/A</option>
-      <option value="bal">Bal</option>
-      <option value="180">3-9 , 9-3</option>
-      <option value="15">3:30-9:30 , 9:30-3:30</option>
-      <option value="30">4-10 , 10-4</option>
-      <option value="45">4:30-10:30 , 10:30-4:30</option>
-      <option value="60">5-11 , 11-5</option>
-      <option value="75">5:30-11:30 , 11:30-5:30</option>
-      <option value="90">6-12 , 12-6</option>
-      <option value="105">6:30-12:30 , 12:30-6:30</option>
-      <option value="120">7-1 , 1-7</option>
-      <option value="135">7:30-1:30 , 1:30-7:30</option>
-      <option value="150">8-2 , 2-8</option>
-      <option value="165">8:30-2:30 , 2:30-8:30</option>
+  <option value="n/a">N/A</option>
+  <option value="bal">Bal</option>
+  <option value="180">3-9 (180)</option>
+  <option value="15">3:30-9:30 (15)</option>
+  <option value="30">4-10 (30)</option>
+  <option value="45">4:30-10:30 (45)</option>
+  <option value="60">5-11 (60)</option>
+  <option value="75">5:30-11:30 (75)</option>
+  <option value="90">6-12 (90)</option>
+  <option value="105">6:30-12:30 (105)</option>
+  <option value="120">7-1 (120)</option>
+  <option value="135">7:30-1:30 (135)</option>
+  <option value="150">8-2 (150)</option>
+  <option value="165">8:30-2:30 (165)</option>
     </select>
   </div>
 
@@ -1186,20 +1189,20 @@ function copyRightToLeft(){
   <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+1.00 CYL</span>
     <select class="fc_duo" data-rx="1.00" style="padding:4px; width:100%;">
-      <option value="n/a">N/A</option>
-      <option value="bal">Bal</option>
-      <option value="180">3-9 , 9-3</option>
-      <option value="15">3:30-9:30 , 9:30-3:30</option>
-      <option value="30">4-10 , 10-4</option>
-      <option value="45">4:30-10:30 , 10:30-4:30</option>
-      <option value="60">5-11 , 11-5</option>
-      <option value="75">5:30-11:30 , 11:30-5:30</option>
-      <option value="90">6-12 , 12-6</option>
-      <option value="105">6:30-12:30 , 12:30-6:30</option>
-      <option value="120">7-1 , 1-7</option>
-      <option value="135">7:30-1:30 , 1:30-7:30</option>
-      <option value="150">8-2 , 2-8</option>
-      <option value="165">8:30-2:30 , 2:30-8:30</option>
+  <option value="n/a">N/A</option>
+  <option value="bal">Bal</option>
+  <option value="180">3-9 (180)</option>
+  <option value="15">3:30-9:30 (15)</option>
+  <option value="30">4-10 (30)</option>
+  <option value="45">4:30-10:30 (45)</option>
+  <option value="60">5-11 (60)</option>
+  <option value="75">5:30-11:30 (75)</option>
+  <option value="90">6-12 (90)</option>
+  <option value="105">6:30-12:30 (105)</option>
+  <option value="120">7-1 (120)</option>
+  <option value="135">7:30-1:30 (135)</option>
+  <option value="150">8-2 (150)</option>
+  <option value="165">8:30-2:30 (165)</option>
     </select>
   </div>
 
@@ -1207,7 +1210,8 @@ function copyRightToLeft(){
 
 </td></tr>
 
-<tr style="border-bottom:none"><td style="border-bottom:none">DC Status Right Eye</td>
+<tr style="border-bottom:none"><td style="border-bottom:none">DC Status Right Eye<br><p>Sph Bal: <span id="balanceRight"></span></p>
+</td>
 <td style="border-bottom:none"colspan="3">
 
 <div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;width:100%;">
@@ -1267,29 +1271,30 @@ function copyRightToLeft(){
 </div>
 </td></tr>
 
-<tr style="border-top:none"><td style="border-top:none">FC Status Right Eye</td>
+<tr style="border-top:none"><td style="border-top:none">FC Status Right Eye<br>  <span id="perpendicular-axis-re" style="margin-top:4px;">Over :  N/A</span>
+</td>
 <td style="border-top:none"colspan="3">
 
 <div class="fc-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:5%;width:100%;">
 
   <!-- +0.00 FC -->
-  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div id="fc-block-re" class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>NOW</span>
     <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
-      <option value="n/a">N/A</option>
-      <option value="bal">Bal</option>
-      <option value="180">3-9 , 9-3</option>
-      <option value="15">3:30-9:30 , 9:30-3:30</option>
-      <option value="30">4-10 , 10-4</option>
-      <option value="45">4:30-10:30 , 10:30-4:30</option>
-      <option value="60">5-11 , 11-5</option>
-      <option value="75">5:30-11:30 , 11:30-5:30</option>
-      <option value="90">6-12 , 12-6</option>
-      <option value="105">6:30-12:30 , 12:30-6:30</option>
-      <option value="120">7-1 , 1-7</option>
-      <option value="135">7:30-1:30 , 1:30-7:30</option>
-      <option value="150">8-2 , 2-8</option>
-      <option value="165">8:30-2:30 , 2:30-8:30</option>
+  <option value="n/a">N/A</option>
+  <option value="bal">Bal</option>
+  <option value="180">3-9 (180)</option>
+  <option value="15">3:30-9:30 (15)</option>
+  <option value="30">4-10 (30)</option>
+  <option value="45">4:30-10:30 (45)</option>
+  <option value="60">5-11 (60)</option>
+  <option value="75">5:30-11:30 (75)</option>
+  <option value="90">6-12 (90)</option>
+  <option value="105">6:30-12:30 (105)</option>
+  <option value="120">7-1 (120)</option>
+  <option value="135">7:30-1:30 (135)</option>
+  <option value="150">8-2 (150)</option>
+  <option value="165">8:30-2:30 (165)</option>
     </select>
   </div>
 
@@ -1297,20 +1302,20 @@ function copyRightToLeft(){
   <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+0.50 CYL</span>
     <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
-      <option value="n/a">N/A</option>
-      <option value="bal">Bal</option>
-      <option value="180">3-9 , 9-3</option>
-      <option value="15">3:30-9:30 , 9:30-3:30</option>
-      <option value="30">4-10 , 10-4</option>
-      <option value="45">4:30-10:30 , 10:30-4:30</option>
-      <option value="60">5-11 , 11-5</option>
-      <option value="75">5:30-11:30 , 11:30-5:30</option>
-      <option value="90">6-12 , 12-6</option>
-      <option value="105">6:30-12:30 , 12:30-6:30</option>
-      <option value="120">7-1 , 1-7</option>
-      <option value="135">7:30-1:30 , 1:30-7:30</option>
-      <option value="150">8-2 , 2-8</option>
-      <option value="165">8:30-2:30 , 2:30-8:30</option>
+  <option value="n/a">N/A</option>
+  <option value="bal">Bal</option>
+  <option value="180">3-9 (180)</option>
+  <option value="15">3:30-9:30 (15)</option>
+  <option value="30">4-10 (30)</option>
+  <option value="45">4:30-10:30 (45)</option>
+  <option value="60">5-11 (60)</option>
+  <option value="75">5:30-11:30 (75)</option>
+  <option value="90">6-12 (90)</option>
+  <option value="105">6:30-12:30 (105)</option>
+  <option value="120">7-1 (120)</option>
+  <option value="135">7:30-1:30 (135)</option>
+  <option value="150">8-2 (150)</option>
+  <option value="165">8:30-2:30 (165)</option>
     </select>
   </div>
 
@@ -1318,26 +1323,27 @@ function copyRightToLeft(){
   <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+1.00 CYL</span>
     <select class="fc_duo" data-rx="1.00" style="padding:4px; width:100%;">
-      <option value="n/a">N/A</option>
-      <option value="bal">Bal</option>
-      <option value="180">3-9 , 9-3</option>
-      <option value="15">3:30-9:30 , 9:30-3:30</option>
-      <option value="30">4-10 , 10-4</option>
-      <option value="45">4:30-10:30 , 10:30-4:30</option>
-      <option value="60">5-11 , 11-5</option>
-      <option value="75">5:30-11:30 , 11:30-5:30</option>
-      <option value="90">6-12 , 12-6</option>
-      <option value="105">6:30-12:30 , 12:30-6:30</option>
-      <option value="120">7-1 , 1-7</option>
-      <option value="135">7:30-1:30 , 1:30-7:30</option>
-      <option value="150">8-2 , 2-8</option>
-      <option value="165">8:30-2:30 , 2:30-8:30</option>
+  <option value="n/a">N/A</option>
+  <option value="bal">Bal</option>
+  <option value="180">3-9 (180)</option>
+  <option value="15">3:30-9:30 (15)</option>
+  <option value="30">4-10 (30)</option>
+  <option value="45">4:30-10:30 (45)</option>
+  <option value="60">5-11 (60)</option>
+  <option value="75">5:30-11:30 (75)</option>
+  <option value="90">6-12 (90)</option>
+  <option value="105">6:30-12:30 (105)</option>
+  <option value="120">7-1 (120)</option>
+  <option value="135">7:30-1:30 (135)</option>
+  <option value="150">8-2 (150)</option>
+  <option value="165">8:30-2:30 (165)</option>
     </select>
   </div>
 
 </div>
 </td></tr>
-<tr style="border-bottom:none"><td style="border-bottom:none">DC Status Left Eye</td>
+<tr style="border-bottom:none"><td style="border-bottom:none">DC Status Left Eye<br><p>Sph Bal: <span id="balanceLeft"></span></p>
+</td>
 <td style="border-bottom:none"colspan="3">
 <div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;width:100%;">
 
@@ -1396,29 +1402,30 @@ function copyRightToLeft(){
 </div>
 </td></tr>
 
-<tr style="border-top:none"><td style="border-top:none">FC Status Left Eye</td>
+<tr style="border-top:none"><td style="border-top:none">FC Status Left Eye<br>  <span id="perpendicular-axis-le" style="margin-top:4px;">Over :  N/A</span>
+</td>
 <td style="border-top:none"colspan="3">
 
 <div class="fc-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:5%;width:100%;">
 
   <!-- +0.00 FC -->
-  <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div id="fc-block-le" class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>NOW</span>
     <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
-      <option value="n/a">N/A</option>
-      <option value="bal">Bal</option>
-      <option value="180">3-9 , 9-3</option>
-      <option value="15">3:30-9:30 , 9:30-3:30</option>
-      <option value="30">4-10 , 10-4</option>
-      <option value="45">4:30-10:30 , 10:30-4:30</option>
-      <option value="60">5-11 , 11-5</option>
-      <option value="75">5:30-11:30 , 11:30-5:30</option>
-      <option value="90">6-12 , 12-6</option>
-      <option value="105">6:30-12:30 , 12:30-6:30</option>
-      <option value="120">7-1 , 1-7</option>
-      <option value="135">7:30-1:30 , 1:30-7:30</option>
-      <option value="150">8-2 , 2-8</option>
-      <option value="165">8:30-2:30 , 2:30-8:30</option>
+  <option value="n/a">N/A</option>
+  <option value="bal">Bal</option>
+  <option value="180">3-9 (180)</option>
+  <option value="15">3:30-9:30 (15)</option>
+  <option value="30">4-10 (30)</option>
+  <option value="45">4:30-10:30 (45)</option>
+  <option value="60">5-11 (60)</option>
+  <option value="75">5:30-11:30 (75)</option>
+  <option value="90">6-12 (90)</option>
+  <option value="105">6:30-12:30 (105)</option>
+  <option value="120">7-1 (120)</option>
+  <option value="135">7:30-1:30 (135)</option>
+  <option value="150">8-2 (150)</option>
+  <option value="165">8:30-2:30 (165)</option>
     </select>
   </div>
 
@@ -1426,20 +1433,20 @@ function copyRightToLeft(){
   <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+0.50 CYL</span>
     <select class="fc_duo" data-rx="0.50" style="padding:4px; width:100%;">
-      <option value="n/a">N/A</option>
-      <option value="bal">Bal</option>
-      <option value="180">3-9 , 9-3</option>
-      <option value="15">3:30-9:30 , 9:30-3:30</option>
-      <option value="30">4-10 , 10-4</option>
-      <option value="45">4:30-10:30 , 10:30-4:30</option>
-      <option value="60">5-11 , 11-5</option>
-      <option value="75">5:30-11:30 , 11:30-5:30</option>
-      <option value="90">6-12 , 12-6</option>
-      <option value="105">6:30-12:30 , 12:30-6:30</option>
-      <option value="120">7-1 , 1-7</option>
-      <option value="135">7:30-1:30 , 1:30-7:30</option>
-      <option value="150">8-2 , 2-8</option>
-      <option value="165">8:30-2:30 , 2:30-8:30</option>
+  <option value="n/a">N/A</option>
+  <option value="bal">Bal</option>
+  <option value="180">3-9 (180)</option>
+  <option value="15">3:30-9:30 (15)</option>
+  <option value="30">4-10 (30)</option>
+  <option value="45">4:30-10:30 (45)</option>
+  <option value="60">5-11 (60)</option>
+  <option value="75">5:30-11:30 (75)</option>
+  <option value="90">6-12 (90)</option>
+  <option value="105">6:30-12:30 (105)</option>
+  <option value="120">7-1 (120)</option>
+  <option value="135">7:30-1:30 (135)</option>
+  <option value="150">8-2 (150)</option>
+  <option value="165">8:30-2:30 (165)</option>
     </select>
   </div>
 
@@ -1447,20 +1454,20 @@ function copyRightToLeft(){
   <div class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+1.00 CYL</span>
     <select class="fc_duo" data-rx="1.00" style="padding:4px; width:100%;">
-      <option value="n/a">N/A</option>
-      <option value="bal">Bal</option>
-      <option value="180">3-9 , 9-3</option>
-      <option value="15">3:30-9:30 , 9:30-3:30</option>
-      <option value="30">4-10 , 10-4</option>
-      <option value="45">4:30-10:30 , 10:30-4:30</option>
-      <option value="60">5-11 , 11-5</option>
-      <option value="75">5:30-11:30 , 11:30-5:30</option>
-      <option value="90">6-12 , 12-6</option>
-      <option value="105">6:30-12:30 , 12:30-6:30</option>
-      <option value="120">7-1 , 1-7</option>
-      <option value="135">7:30-1:30 , 1:30-7:30</option>
-      <option value="150">8-2 , 2-8</option>
-      <option value="165">8:30-2:30 , 2:30-8:30</option>
+  <option value="n/a">N/A</option>
+  <option value="bal">Bal</option>
+  <option value="180">3-9 (180)</option>
+  <option value="15">3:30-9:30 (15)</option>
+  <option value="30">4-10 (30)</option>
+  <option value="45">4:30-10:30 (45)</option>
+  <option value="60">5-11 (60)</option>
+  <option value="75">5:30-11:30 (75)</option>
+  <option value="90">6-12 (90)</option>
+  <option value="105">6:30-12:30 (105)</option>
+  <option value="120">7-1 (120)</option>
+  <option value="135">7:30-1:30 (135)</option>
+  <option value="150">8-2 (150)</option>
+  <option value="165">8:30-2:30 (165)</option>
     </select>
   </div>
 
@@ -1469,6 +1476,106 @@ function copyRightToLeft(){
 
 
 
+<script>
+function snapToQuarter(value) {
+  return Math.round(value * 4) / 4; // rounds to nearest 0.25
+}
+
+function calculateBalance(segmentSelector, resultSpanId) {
+  const segment = document.querySelectorAll(segmentSelector + " select.vectorhelper_duo");
+  let redValues = [];
+  let blueValues = [];
+
+  // Collect all red and blue values
+  segment.forEach(sel => {
+    const val = parseFloat(sel.dataset.rx);
+    if (sel.value === "red") redValues.push(val);
+    else if (sel.value === "blue") blueValues.push(val);
+  });
+
+  let balance = null;
+
+  if (redValues.length > 0 && blueValues.length > 0) {
+    // Find nearest red-blue pair
+    let nearestDistance = Infinity;
+    redValues.forEach(r => {
+      blueValues.forEach(b => {
+        const dist = Math.abs(r - b);
+        if (dist < nearestDistance) {
+          nearestDistance = dist;
+          balance = (r + b) / 2; // balance to make sum zero
+        }
+      });
+    });
+
+    balance = snapToQuarter(balance); // snap to nearest 0.25
+  }
+
+  document.getElementById(resultSpanId).innerText = balance !== null ? balance.toFixed(2) + " SPH" : "N/A";
+}
+
+// Trigger calculation whenever a dropdown changes
+document.querySelectorAll(".vectorhelper_duo").forEach(sel => {
+  sel.addEventListener("change", () => {
+    calculateBalance("tr:nth-child(3) .vectorhelper-row", "balanceBoth"); // Both Eyes
+    calculateBalance("tr:nth-child(5) .vectorhelper-row", "balanceRight"); // Right Eye
+    calculateBalance("tr:nth-child(7) .vectorhelper-row", "balanceLeft");  // Left Eye
+  });
+});
+
+// Initial calculation on page load
+calculateBalance("tr:nth-child(3) .vectorhelper-row", "balanceBoth");
+calculateBalance("tr:nth-child(5) .vectorhelper-row", "balanceRight");
+calculateBalance("tr:nth-child(7) .vectorhelper-row", "balanceLeft");
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+const clockMap = {
+  "180": "3-9 (180)",
+  "15": "3:30-9:30 (15)",
+  "30": "4-10 (30)",
+  "45": "4:30-10:30 (45)",
+  "60": "5-11 (60)",
+  "75": "5:30-11:30 (75)",
+  "90": "6-12 (90)",
+  "105": "6:30-12:30 (105)",
+  "120": "7-1 (120)",
+  "135": "7:30-1:30 (135)",
+  "150": "8-2 (150)",
+  "165": "8:30-2:30 (165)"
+};
+
+
+  // sides you use in IDs
+  const sides = ['ou', 're', 'le'];
+
+  sides.forEach(side => {
+    const sel = document.querySelector(`#fc-block-${side} select.fc_duo`);
+    const span = document.getElementById(`perpendicular-axis-${side}`);
+    if (!sel || !span) {
+      console.warn(`Missing elements for fc-block-${side}`, { sel, span });
+      return;
+    }
+
+    const update = () => {
+      const val = sel.value;
+      if (val in clockMap) {
+        let deg = (parseInt(val, 10) + 90) % 180;
+        if (deg === 0) deg = 180;
+        span.innerText = 'Over : ' + clockMap[deg];
+      } else {
+        span.innerText = 'Over : N/A';
+      }
+    };
+
+    sel.addEventListener('change', update);
+
+    // set initial display based on current select value
+    update();
+  });
+});
+</script>
 
 
 </table>
