@@ -4625,8 +4625,11 @@ function convertOne(S, C, A){
   const rawCyl = convT - convS;
 
   if(Math.abs(rawCyl) < 0.75){
-    return fmt(convS); // just sphere
-  }
+if (Math.abs(convS) > 6){
+  return fmt(Math.round((convS + Number.EPSILON)/0.50)*0.50);
+} else {
+  return fmt(r025(convS));
+}  }
 
   const rS = r025(convS);
   const rClipC = nearest(CL_CYL_STEPS, rawCyl);
