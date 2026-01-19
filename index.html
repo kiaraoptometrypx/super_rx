@@ -695,12 +695,12 @@ function analyzeAgeAdd() {
 
   document.getElementById("addComment").innerText = add;
 
-  const nearAddVal = parseFloat(document.getElementById("nearAdd").value);
-  if (nearAddVal) {
-    checkOvercorrection(add);
-  } else {
-    document.getElementById("overcorrectionComment").innerText = "";
-  }
+const nearAddVal = document.getElementById("nearAdd").value;
+if (nearAddVal !== "") {
+  checkOvercorrection(add);
+} else {
+  document.getElementById("overcorrectionComment").innerText = "";
+}
 }
 
 function parseNormalAdd(normalAddStr) {
@@ -715,9 +715,10 @@ function checkOvercorrection(normalAddStr) {
   const nearAdd = parseFloat(document.getElementById("nearAdd").value);
   const commentEl = document.getElementById("overcorrectionComment");
 
-  if (!nearAdd) {
-    commentEl.innerText = "";
-  } 
+if (nearAdd === "" || nearAdd === null || isNaN(nearAdd)) {
+  commentEl.innerText = "";
+  return;
+}
   // Overcorrection
   else if (nearAdd > normalAdd.max) {
     const diffMin = (nearAdd - normalAdd.max).toFixed(2);
