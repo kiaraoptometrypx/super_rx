@@ -1069,7 +1069,7 @@ function copyRightToLeft(){
 <div class="hide_show" style="display:none">
 <table>
 <tr style="border:none; height:5px;">
-  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0; width:30%"></td>
   <td style="border:none; height:1px; padding:0;"></td>
   <td style="border:none; height:1px; padding:0;"></td>
   <td style="border:none; height:1px; padding:0;"></td>
@@ -1136,7 +1136,7 @@ function copyRightToLeft(){
 </div>
 </td></tr>
 
-<tr style="border-top:none"><td style="border-top:none">FC Status Both Eye<br>  <span id="perpendicular-axis-ou" style="margin-top:4px;">Over :  N/A</span>
+<tr style="border-top:none"><td style="border-top:none">FC Status Both Eye<br><br><span id="foggingBoth">Fogging : N/A</span><br><br><span id="perpendicular-axis-ou" style="margin-top:4px;">Over :  N/A</span>
 </td>
 <td style="border-top:none"colspan="3">
 
@@ -1271,7 +1271,7 @@ function copyRightToLeft(){
 </div>
 </td></tr>
 
-<tr style="border-top:none"><td style="border-top:none">FC Status Right Eye<br>  <span id="perpendicular-axis-re" style="margin-top:4px;">Over :  N/A</span>
+<tr style="border-top:none"><td style="border-top:none">FC Status Right Eye<br><br><span id="foggingRight">Fogging : N/A</span><br><br>  <span id="perpendicular-axis-re" style="margin-top:4px;">Over :  N/A</span>
 </td>
 <td style="border-top:none"colspan="3">
 
@@ -1402,7 +1402,8 @@ function copyRightToLeft(){
 </div>
 </td></tr>
 
-<tr style="border-top:none"><td style="border-top:none">FC Status Left Eye<br>  <span id="perpendicular-axis-le" style="margin-top:4px;">Over :  N/A</span>
+<tr style="border-top:none"><td style="border-top:none">FC Status Left Eye<br><br><span id="foggingLeft">Fogging : N/A</span><br>
+<br>  <span id="perpendicular-axis-le" style="margin-top:4px;">Over :  N/A</span>
 </td>
 <td style="border-top:none"colspan="3">
 
@@ -1511,7 +1512,13 @@ function calculateBalance(segmentSelector, resultSpanId) {
     balance = snapToQuarter(balance); // snap to nearest 0.25
   }
 
-  document.getElementById(resultSpanId).innerText = balance !== null ? balance.toFixed(2) + " SPH" : "N/A";
+if (balance !== null) {
+  const sign = balance > 0 ? "+" : "";
+  document.getElementById(resultSpanId).innerText =
+    sign + balance.toFixed(2) + " SPH";
+} else {
+  document.getElementById(resultSpanId).innerText = "N/A";
+}
 }
 
 // Trigger calculation whenever a dropdown changes
@@ -1527,6 +1534,54 @@ document.querySelectorAll(".vectorhelper_duo").forEach(sel => {
 calculateBalance("tr:nth-child(3) .vectorhelper-row", "balanceBoth");
 calculateBalance("tr:nth-child(5) .vectorhelper-row", "balanceRight");
 calculateBalance("tr:nth-child(7) .vectorhelper-row", "balanceLeft");
+
+function snapToQuarter(value) {
+  return Math.round(value * 4) / 4;
+}
+
+function updateFogging(balanceSpanId, foggingSpanId) {
+  const balanceSpan = document.getElementById(balanceSpanId);
+  const foggingSpan = document.getElementById(foggingSpanId);
+
+  if (!balanceSpan || !foggingSpan) return;
+
+  const text = balanceSpan.innerText;
+
+  // If balance is N/A, mirror it
+  if (text === "N/A") {
+    foggingSpan.innerText = "Fogging : N/A";
+    return;
+  }
+
+  // Extract numeric value from "X.XX SPH"
+  const balanceValue = parseFloat(text);
+  if (isNaN(balanceValue)) {
+    foggingSpan.innerText = "Fogging : N/A";
+    return;
+  }
+
+  const foggingValue = snapToQuarter(balanceValue + 0.75);
+const sign = foggingValue > 0 ? "+" : "";
+foggingSpan.innerText = "Fogging : " + sign + foggingValue.toFixed(2) + " SPH";
+}
+
+// Recalculate fogging whenever vectorhelper changes
+document.querySelectorAll(".vectorhelper_duo").forEach(sel => {
+  sel.addEventListener("change", () => {
+    updateFogging("balanceBoth", "foggingBoth");
+    updateFogging("balanceRight", "foggingRight");
+    updateFogging("balanceLeft", "foggingLeft");
+  });
+});
+
+// Initial fogging calculation on load
+updateFogging("balanceBoth", "foggingBoth");
+updateFogging("balanceRight", "foggingRight");
+updateFogging("balanceLeft", "foggingLeft");
+
+
+
+
 </script>
 
 <script>
