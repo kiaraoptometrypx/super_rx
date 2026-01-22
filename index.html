@@ -1032,15 +1032,11 @@ function copyRightToLeft(){
   <td style="border:none; height:1px; padding:0;"></td>
   <td style="border:none; height:1px; padding:0;"></td>
 </tr>
-<tr><th colspan="4">Use Helper to keep track of your records</th></tr>
 
-
-<tr style="border-bottom:none"><td style="border-bottom:none">DC Status Both Eye<p>Sph Bal : <span id="balanceBoth"></span></p>
-</td>
-
-
-<td style="border-bottom:none" colspan="3">
-<div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;width:100%;">
+<tr><th colspan="4">FC DC Status Both Eye</th></tr>
+<tr data-eye="both" style="border-bottom:none">
+<td style="border-bottom:none" colspan="4">
+<div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(9,1fr);gap:5px;width:100%;">
 
   <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+2.00 SPH</span>
@@ -1140,11 +1136,15 @@ function copyRightToLeft(){
 </div>
 </td></tr>
 
-<tr style="border-top:none"><td style="border-top:none">FC Status Both Eye<br><br><span id="foggingBoth">Fogging : N/A</span><br><br><span id="perpendicular-axis-ou" style="margin-top:4px;">Over :  N/A</span>
-</td>
-<td style="border-top:none"colspan="3">
+<tr style="border-top:none; border-bottom:none"><td style="border-top:none; border-bottom:none" colspan="4">Duochrome Sph Bal : <span id="balanceBoth"></span><br>
+<span id="foggingBoth"></span> ; <span id="perpendicular-axis-ou"></span>
+</td></tr>
 
-<div class="fc-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:5%;width:100%;">
+
+<tr style="border-top:none">
+<td style="border-top:none"colspan="4">
+
+<div class="fc-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:5%;width:100%;">
 
   <!-- +0.00 FC -->
   <div id="fc-block-ou" class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
@@ -1254,14 +1254,18 @@ function copyRightToLeft(){
 
 
 </div>
-
+<br><br>
 </td></tr>
 
-<tr style="border-bottom:none"><td style="border-bottom:none">DC Status Right Eye<br><p>Sph Bal: <span id="balanceRight"></span></p>
-</td>
-<td style="border-bottom:none"colspan="3">
 
-<div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;width:100%;">
+
+<tr><th colspan="4">FC DC Status Right Eye</th></tr>
+
+
+<tr data-eye="right" style="border-bottom:none">
+<td style="border-bottom:none"colspan="4">
+
+<div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(9,1fr);gap:5px;width:100%;">
 
 <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+2.00 SPH</span>
@@ -1363,11 +1367,14 @@ function copyRightToLeft(){
 </div>
 </td></tr>
 
-<tr style="border-top:none"><td style="border-top:none">FC Status Right Eye<br><br><span id="foggingRight">Fogging : N/A</span><br><br>  <span id="perpendicular-axis-re" style="margin-top:4px;">Over :  N/A</span>
-</td>
-<td style="border-top:none"colspan="3">
+<tr style="border-top:none; border-bottom:none"><td style="border-top:none; border-bottom:none" colspan="4">Duochrome Sph Bal : <span id="balanceRight"></span><br>
+<span id="foggingRight"></span> ; <span id="perpendicular-axis-re"></span>
+</td></tr>
 
-<div class="fc-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:5%;width:100%;">
+<tr style="border-top:none">
+<td style="border-top:none"colspan="4">
+
+<div class="fc-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:5%;width:100%;">
 
   <!-- +0.00 FC -->
   <div id="fc-block-re" class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
@@ -1477,11 +1484,13 @@ function copyRightToLeft(){
 
 
 </div>
+<br><br>
 </td></tr>
-<tr style="border-bottom:none"><td style="border-bottom:none">DC Status Left Eye<br><p>Sph Bal: <span id="balanceLeft"></span></p>
-</td>
-<td style="border-bottom:none"colspan="3">
-<div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;width:100%;">
+
+<tr><th colspan="4">FC DC Status Left Eye</th></tr>
+<tr data-eye="left" style="border-bottom:none">
+<td style="border-bottom:none"colspan="4">
+<div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(9,1fr);gap:5px;width:100%;">
 
 <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+2.00 SPH</span>
@@ -1582,12 +1591,15 @@ function copyRightToLeft(){
 </div>
 </td></tr>
 
-<tr style="border-top:none"><td style="border-top:none">FC Status Left Eye<br><br><span id="foggingLeft">Fogging : N/A</span><br>
-<br>  <span id="perpendicular-axis-le" style="margin-top:4px;">Over :  N/A</span>
-</td>
-<td style="border-top:none"colspan="3">
+<tr style="border-top:none; border-bottom:none"><td style="border-top:none; border-bottom:none" colspan="4">Duochrome Sph Bal : <span id="balanceLeft"></span><br>
+<span id="foggingLeft"></span> ; <span id="perpendicular-axis-le"></span>
+</td></tr>
 
-<div class="fc-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:5%;width:100%;">
+
+<tr style="border-top:none">
+<td style="border-top:none"colspan="4">
+
+<div class="fc-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:5%;width:100%;">
 
   <!-- +0.00 FC -->
   <div id="fc-block-le" class="fc-block" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
@@ -1697,115 +1709,88 @@ function copyRightToLeft(){
 
 
 </div>
+<br><br>
+
 </td></tr>
 
-
-
 <script>
-function snapToQuarter(value) {
-  return Math.round(value * 4) / 4; // rounds to nearest 0.25
+function snapToQuarter(v) {
+  return Math.round(v * 4) / 4;
 }
 
-function calculateBalance(segmentSelector, resultSpanId) {
-  const segment = document.querySelectorAll(segmentSelector + " select.vectorhelper_duo");
-  let redValues = [];
-  let blueValues = [];
+function calculateBalanceByEye(eye, resultSpanId) {
+  const row = document.querySelector(`tr[data-eye="${eye}"]`);
+  if (!row) return;
 
-  // Collect all red and blue values
-  segment.forEach(sel => {
-    const val = parseFloat(sel.dataset.rx);
-    if (sel.value === "red") redValues.push(val);
-    else if (sel.value === "blue") blueValues.push(val);
+  const selects = row.querySelectorAll("select.vectorhelper_duo");
+  let reds = [], blues = [];
+
+  selects.forEach(sel => {
+    const rx = parseFloat(sel.dataset.rx);
+    if (sel.value === "red")  reds.push(rx);
+    if (sel.value === "blue") blues.push(rx);
   });
 
   let balance = null;
 
-  if (redValues.length > 0 && blueValues.length > 0) {
-    // Find nearest red-blue pair
-    let nearestDistance = Infinity;
-    redValues.forEach(r => {
-      blueValues.forEach(b => {
-        const dist = Math.abs(r - b);
-        if (dist < nearestDistance) {
-          nearestDistance = dist;
-          balance = (r + b) / 2; // balance to make sum zero
+  if (reds.length && blues.length) {
+    let nearest = Infinity;
+    reds.forEach(r => {
+      blues.forEach(b => {
+        const d = Math.abs(r - b);
+        if (d < nearest) {
+          nearest = d;
+          balance = (r + b) / 2;
         }
       });
     });
-
-    balance = snapToQuarter(balance); // snap to nearest 0.25
+    balance = snapToQuarter(balance);
   }
 
-if (balance !== null) {
-  const sign = balance > 0 ? "+" : "";
-  document.getElementById(resultSpanId).innerText =
-    sign + balance.toFixed(2) + " SPH";
-} else {
-  document.getElementById(resultSpanId).innerText = "N/A";
-}
-}
+  const span = document.getElementById(resultSpanId);
+  if (!span) return;
 
-// Trigger calculation whenever a dropdown changes
-document.querySelectorAll(".vectorhelper_duo").forEach(sel => {
-  sel.addEventListener("change", () => {
-    calculateBalance("tr:nth-child(3) .vectorhelper-row", "balanceBoth"); // Both Eyes
-    calculateBalance("tr:nth-child(5) .vectorhelper-row", "balanceRight"); // Right Eye
-    calculateBalance("tr:nth-child(7) .vectorhelper-row", "balanceLeft");  // Left Eye
-  });
-});
-
-// Initial calculation on page load
-calculateBalance("tr:nth-child(3) .vectorhelper-row", "balanceBoth");
-calculateBalance("tr:nth-child(5) .vectorhelper-row", "balanceRight");
-calculateBalance("tr:nth-child(7) .vectorhelper-row", "balanceLeft");
-
-function snapToQuarter(value) {
-  return Math.round(value * 4) / 4;
+  span.innerText = balance === null
+    ? "N/A"
+    : (balance > 0 ? "+" : "") + balance.toFixed(2) + " SPH";
 }
 
-function updateFogging(balanceSpanId, foggingSpanId) {
-  const balanceSpan = document.getElementById(balanceSpanId);
-  const foggingSpan = document.getElementById(foggingSpanId);
+function updateFogging(balanceId, foggingId) {
+  const b = document.getElementById(balanceId);
+  const f = document.getElementById(foggingId);
+  if (!b || !f) return;
 
-  if (!balanceSpan || !foggingSpan) return;
-
-  const text = balanceSpan.innerText;
-
-  // If balance is N/A, mirror it
-  if (text === "N/A") {
-    foggingSpan.innerText = "Fogging : N/A";
+  if (b.innerText === "N/A") {
+    f.innerText = "Fogging : N/A";
     return;
   }
 
-  // Extract numeric value from "X.XX SPH"
-  const balanceValue = parseFloat(text);
-  if (isNaN(balanceValue)) {
-    foggingSpan.innerText = "Fogging : N/A";
+  const v = parseFloat(b.innerText);
+  if (isNaN(v)) {
+    f.innerText = "Fogging : N/A";
     return;
   }
 
-  const foggingValue = snapToQuarter(balanceValue + 0.75);
-const sign = foggingValue > 0 ? "+" : "";
-foggingSpan.innerText = "Fogging : " + sign + foggingValue.toFixed(2) + " SPH";
+  const fog = snapToQuarter(v + 0.75);
+  f.innerText =
+    "Fogging : " + (fog > 0 ? "+" : "") + fog.toFixed(2) + " SPH";
 }
 
-// Recalculate fogging whenever vectorhelper changes
+function recalcAll() {
+  calculateBalanceByEye("both",  "balanceBoth");
+  calculateBalanceByEye("right", "balanceRight");
+  calculateBalanceByEye("left",  "balanceLeft");
+
+  updateFogging("balanceBoth",  "foggingBoth");
+  updateFogging("balanceRight", "foggingRight");
+  updateFogging("balanceLeft",  "foggingLeft");
+}
+
 document.querySelectorAll(".vectorhelper_duo").forEach(sel => {
-  sel.addEventListener("change", () => {
-    updateFogging("balanceBoth", "foggingBoth");
-    updateFogging("balanceRight", "foggingRight");
-    updateFogging("balanceLeft", "foggingLeft");
-  });
+  sel.addEventListener("change", recalcAll);
 });
 
-// Initial fogging calculation on load
-updateFogging("balanceBoth", "foggingBoth");
-updateFogging("balanceRight", "foggingRight");
-updateFogging("balanceLeft", "foggingLeft");
-
-
-
-
+recalcAll();
 </script>
 
 <script>
