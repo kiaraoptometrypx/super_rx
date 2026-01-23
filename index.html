@@ -167,6 +167,12 @@ body, table, th, td, input, button {
   align-items: flex-start;
 }
 
+/* Sections */
+.sectiontop {
+  max-height: 900px;
+  margin-bottom: 200px;
+  margin-top: 50px;
+}
 
 /* Sections */
 .section {
@@ -386,70 +392,13 @@ option {
   </div>
 </nav>
 </div>
-<div style="height:70px"></div>
-
-<div>
-<button type="button" onclick="screener()">Toggle Screener</button> 
-<button id="copyBtn"  onclick="copyText()">Copy</button>
-
-</div>
 
 
-<script>
-function screener() {
-  const el = document.getElementById("screenerPanel");
-  el.style.display = (el.style.display === "none" || el.style.display === "")
-    ? "block"
-    : "none";
-}
-
-function copyText() {
-  const text = document.getElementById("screenerText").innerText;
-  navigator.clipboard.writeText(text);
-  document.getElementById("copyBtn").innerText = "Copied";
-}
-</script>
 
 <div class="layout">
   <main id="content" class="content">
 
-
-<div id="screenerPanel" style="display:none;">
-<table>
-  <tr>
-    <td id="screenerText" style="text-align:left; line-height:1.6;">
-      1. Calculate: +0.25 + (-0.75)<br>
-      2. Calculate: -1.25 + 0.50<br>
-      3. Calculate: +2.00 − 0.75<br>
-      4. Calculate: -0.50 − 0.25<br>
-      5. Calculate: +1.75 + (-2.25)<br>
-      6. Calculate: Start at -1.00. Add +0.25 three times.<br>
-      7. Calculate: Start at +0.50. Subtract +0.25, then subtract +0.50.<br>
-      8. Calculate: Start at +0.75. Increase by -0.25 four times.<br>
-      9. Which is bigger: -0.25 or -0.75?<br>
-      10. Which is lower: +0.50 or -0.75?<br>
-      11. Which is closer to zero: +0.50 or -0.25?<br>
-      12. Complete the sequence: -1.00, -0.75, -0.50, ?<br>
-      13. Complete the sequence: +0.25, +0.50, ?, +1.00<br>
-      14. Calculate: Start at -0.50, increase by +0.25, then decrease by -0.75.<br>
-      15. If blue is add, red is subtract, what do you do when +1.00 is red? +1.25 or +0.75?<br>
-      16. If blue is add, red is subtract, what do you get when +1.00 is blue 3 times? +0.25 or +1.75?<br>
-      17. Using a logic of a clock, 3 o'clock and 9 o'clock is the same axis, right or wrong?<br>
-      18. Using a logic of a clock, 3 o'clock and 12 o'clock is the same axis, right or wrong?<br>
-      19. Using a logic of a clock, what is the perpendicular value of 10:30 o'clock?<br>
-      20. The middle between +0.25 and +0.75 is +0.50. What is the middle between -1.00 and -2.00?<br>
-      21. The middle between +0.25 and +0.75 is +0.50. What is the middle between +0.50 and -1.00?<br>
-      22. What is -1.50 divided by 2, then added to -4.00?<br>
-      23. Using a logic of a clock, if -1.00 is 3 o'clock, -1.50 is 12 o'clock, what is -1.25?<br>
-    </td>
-  </tr>
-</table>
-
-</div>
-
-
-
-    <div id="s-1" class="section">
+    <div id="s-1" class="sectiontop">
 <div style="height:70px"></div>
 
 <table>
@@ -2430,45 +2379,6 @@ L : <span id="CL_os_origCombined">OS -</span>
   <td style="border:none; height:1px; padding:0;"></td>
 </tr>
 
-
-<tr class="mask4"><th colspan="4">New Fitting Details</th></tr>
-
-<tr class="mask4"><td>Right</td>
-
-<td colspan="3">
-
-PD : <span class="mirror" data-mirror="od_PD">-</span> mm  <span style="margin-left:15%; margin-right:15%"> ; </span> NOC : <span class="mirror" data-mirror="od_NOC">-</span> mm 
-</td></tr>
-<tr class="mask4"><td>Left</td>
-
-<td colspan="3">
-
-PD : <span class="mirror" data-mirror="os_PD">-</span> mm  <span style="margin-left:15%; margin-right:15%"> ; </span> NOC : <span class="mirror" data-mirror="os_NOC">-</span> mm 
-</td></tr>
-
-<tr class="mask4"><td>New Lens Details<br><br> <button onclick="openSummary()">Open Lens Site</button>
-</td>
-<td colspan="3">
-<div>
-<input type="text" id="new_lens_details"
-  style="text-align:left; width:95%; height:20px"
-  placeholder="Index , Type of Vision , Purpose of Vision, Corridor">
-</div>
-<div style="text-align:left; margin-left:2%; margin-top:1%;">
-<span>1. Index : 1.56 , 1.61 , 1.67 , 1.74</span><br> 
-<span>2. Vision Type : SV , MF , Relax , Office</span><br>
-<span>3. Purpose : See Far, See Near, See Intermediate, See everything</span><br>
-<span>4. Corridor (for MF only) : Short, Medium, Long</span>
-
-</div>
-</td>
-</tr>
-<tr style="border:none; height:10px;">
-  <td style="border:none; height:1px; padding:0;"></td>
-  <td style="border:none; height:1px; padding:0;"></td>
-  <td style="border:none; height:1px; padding:0;"></td>
-  <td style="border:none; height:1px; padding:0;"></td>
-</tr>
 <tr><th colspan="4">Comments</th></tr>
 <tr class="mask2">
 <td class="red">Current</td><td colspan="3" class="red"><span id="current_comments_summary"></span>
@@ -2488,6 +2398,290 @@ PD : <span class="mirror" data-mirror="os_PD">-</span> mm  <span style="margin-l
   <td style="border:none; height:1px; padding:0;"></td>
   <td style="border:none; height:1px; padding:0;"></td>
 </tr>
+
+
+<tr class="mask4"><th colspan="4">Fitting Details</th></tr>
+
+<tr class="mask4"><td>Current</td>
+
+<td colspan="3">
+
+PD : <span style="margin-left:3%; margin-right:3%" class="mirror" data-mirror="od_PD">-</span> / <span style="margin-left:3%; margin-right:3%" class="mirror" data-mirror="os_PD">-</span> mm  <span style="margin-left:15%; margin-right:15%"> ; </span> NOC : <span style="margin-left:3%; margin-right:3%" class="mirror" data-mirror="od_NOC">-</span> / <span style="margin-left:3%; margin-right:3%" class="mirror" data-mirror="os_NOC">-</span> mm 
+</td></tr>
+
+
+
+<tr class="mask4"><td>New</td>
+
+<td colspan="3">
+PD :
+<input class="mirror" data-mirror="od_newPD" type="text" value="" style="width:30px;">  
+ / 
+<input class="mirror" data-mirror="os_newPD" type="text" value="" style="width:30px;"> 
+ mm
+
+<span style="margin-left:15%; margin-right:15%"> ; </span>
+
+NOC :
+<input class="mirror" data-mirror="od_newNOC" type="text" value="" style="width:30px;">
+ /
+<input class="mirror" data-mirror="os_newNOC" type="text" value="" style="width:30px;">
+ mm
+
+
+
+</td></tr>
+
+
+<tr style="border:none; height:10px;">
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+</tr>
+
+<tr><th colspan="4">Lenses</th></tr>
+
+
+<tr class="mask4"><td>New Lens Details<br><br> <button style="display:none" onclick="openSummary()">Open Lens Site</button>
+</td>
+<td colspan="3">
+<div>
+<input type="text" id="new_lens_details"
+  style="text-align:left; width:95%; height:20px"
+  placeholder="Index , Type of Vision , Purpose of Vision, Corridor">
+</div>
+<div style="text-align:left; margin-left:2%; margin-top:1%;">
+<span>1. Index : 1.56 , 1.61 , 1.67 , 1.74</span><br> 
+<span>2. Vision Type : SV , MF , Relax , Office</span><br>
+<span>3. Purpose : See Far, See Near, See Intermediate, See everything</span><br>
+<span>4. Corridor (for MF only) : Short, Medium, Long</span>
+
+</div>
+</td>
+</tr>
+
+
+
+
+<tr><td colspan="4">
+
+
+<span><b>Calculator</b></span>
+<input style="margin-left:5% ; margin-right:5%; width:25%" id="priceInput" type="number" placeholder="RM">
+
+<button class="normal" onclick="calculateStandardDiscount()">Discount</button>
+<button style="display:none" class="normal" onclick="calculateNoExamDiscount()">No Eye Exam Price</button>
+
+<button class="normal" style="background-color:maroon" id="rCodeBtn" onclick="applyRCode()">R-Code</button>
+
+
+<div id="output" style="font-weight:bold; margin-top:2%"><i>Price : Awaiting..</i></div><br>
+
+<div id="dateOutput" style="font-weight:bold;"></div><br>
+
+
+
+<script>
+// Public holidays (Selangor + KL 2025–2026)
+const PUBLIC_HOLIDAYS = new Set([
+  "2025-01-01","2025-01-29","2025-01-30","2025-02-01","2025-02-03",
+  "2025-02-11","2025-03-18","2025-03-31","2025-04-01","2025-05-01",
+  "2025-05-12","2025-06-02","2025-06-07","2025-06-27","2025-08-31",
+  "2025-09-01","2025-09-05","2025-09-15","2025-09-16","2025-10-20",
+  "2025-12-11","2025-12-25","2026-01-01","2026-02-01","2026-02-02",
+  "2026-02-17","2026-02-18","2026-03-07","2026-03-21","2026-03-22",
+  "2026-03-23","2026-05-01","2026-05-27","2026-05-31","2026-06-01",
+  "2026-06-17","2026-08-25","2026-08-31","2026-09-16","2026-11-08",
+  "2026-11-09","2026-12-11","2026-12-25"
+]);
+
+const DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+function getOrdinal(n) {
+  let s=["th","st","nd","rd"], v=n%100;
+  return n + (s[(v-20)%10]||s[v]||s[0]);
+}
+
+function addWorkingDays(date, days) {
+  let result = new Date(date);
+  while (days > 0) {
+    result.setDate(result.getDate() + 1);
+    let day = result.getDay();
+    let dateStr = result.toISOString().split('T')[0];
+    if (day !== 0 && day !== 6 && !PUBLIC_HOLIDAYS.has(dateStr)) {
+      days--;
+    }
+  }
+  return result;
+}
+
+function formatDateWithDay(d) {
+  const months = ["January","February","March","April","May","June",
+                  "July","August","September","October","November","December"];
+  return `${getOrdinal(d.getDate())} ${months[d.getMonth()]} ${DAYS[d.getDay()]}`;
+}
+
+function calculateWorkingDays() {
+  let today = new Date();
+  let threeDays = addWorkingDays(today, 3);
+  let sevenDays = addWorkingDays(today, 7+1);
+
+  // Express option: 3 working days → 2 working days
+  let expressThree = addWorkingDays(today, 2);
+
+  document.getElementById('dateOutput').innerHTML = `
+    Today is ${formatDateWithDay(today)} , 
+     Completion Estimated ${formatDateWithDay(sevenDays)}.
+  `;
+}
+
+// Auto-calculate on page load
+calculateWorkingDays();
+</script>
+
+
+
+<script>
+function formatRM(amount) {
+  return 'RM ' + Math.round(amount).toLocaleString();
+}
+
+function calculateStandardDiscount() {
+  let p1 = parseFloat(document.getElementById('priceInput').value) || 0;
+  let p2 = parseFloat(document.getElementById('input2').value) || 0;
+  let p3 = parseFloat(document.getElementById('input3').value) || 0;
+
+  let price = p1 + p2 + p3;
+
+  if (price <= 0) {
+    document.getElementById('output').innerHTML = '<em>Please enter price.</em>';
+    return;
+  }
+
+let discount = 0;
+if (price <= 249) discount = 0;
+else if (price <= 299) discount = 10;
+else if (price <= 699) discount = 15;
+else discount = 20;
+
+
+  let netPrice = price * (1 - discount / 100);
+
+document.getElementById('output').innerHTML = `
+  Original Price : ${formatRM(price)}<br>
+  Net Price : ${formatRM(netPrice)}<br>
+  ${discount > 0 ? `Description : ${discount}% off until March 2026!<br>` : ``}
+`;
+
+}
+
+function calculateNoExamDiscount() {
+  let p1 = parseFloat(document.getElementById('priceInput').value) || 0;
+  let p2 = parseFloat(document.getElementById('input2').value) || 0;
+  let p3 = parseFloat(document.getElementById('input3').value) || 0;
+
+  let price = p1 + p2 + p3;
+
+  if (price <= 0) {
+    document.getElementById('output').innerHTML = '<br><em>Please enter price.</em>';
+    return;
+  }
+
+  let discount = 30;
+  let netPrice = price * (1 - discount / 100);
+  if (netPrice < 200) netPrice = 200;
+
+  document.getElementById('output').innerHTML = `<br>
+    Original Price : ${formatRM(price)}<br>
+    No-Eye-Exam Net Price : ${formatRM(netPrice)}<br>
+  `;
+}
+
+function applyRCode() {
+  // Sum all 3 inputs
+  let p1 = parseFloat(document.getElementById('priceInput').value) || 0;
+  let p2 = parseFloat(document.getElementById('input2').value) || 0;
+  let p3 = parseFloat(document.getElementById('input3').value) || 0;
+  let price = p1 + p2 + p3;
+
+  if (price <= 0) {
+    document.getElementById('output').innerHTML = '<em>Please enter price.</em>';
+    return;
+  }
+
+  // Base discount logic
+  let discount = 0;
+  if (price <= 249) discount = 0;
+  else if (price <= 299) discount = 10;
+  else if (price <= 699) discount = 15;
+  else discount = 20;
+
+  // Extra 5% R-Code
+  discount += 5;
+
+  let netPrice = price * (1 - discount / 100);
+
+  document.getElementById('output').innerHTML = `
+    Original Price : ${formatRM(price)}<br>
+    Net Price : ${formatRM(netPrice)}<br>
+${discount > 0 ? `Description : ${discount}% off (<span style="color:red; font-weight:bold;">R-Code!</span>)<br>` : ``}
+  `;
+}
+
+</script>
+
+
+
+
+
+  <div style="margin-top:20px; flex:1; overflow:hidden;">
+<!-- BUTTONS -->
+<div style="margin-bottom:8px;">
+  <button onclick="showImg(1)">Meyer Lens List</button>
+  <button onclick="showImg(2)">Compensated Error</button>
+  <button onclick="showImg(5)">Top Tier Single Vision</button>
+  <button onclick="showImg(8)">Mid Tier Single Vision</button>
+
+<br>
+<div style="height:10px"></div>
+  <button onclick="showImg(3)">Top Tier Prog</button>
+  <button onclick="showImg(4)">Upper Mid Tier Prog</button>
+  <button onclick="showImg(6)">Lower Mid Tier Prog</button>
+  <button onclick="showImg(7)">Entry Tier Prog</button><br>
+
+
+
+</div>
+
+<tr>
+<td colspan="4">
+  <div style="flex:1; overflow:hidden;">
+    <img
+      id="meyImage"
+      src="https://raw.githubusercontent.com/kiaraoptometrypx/super_rx/main/mey1.jpeg"
+      style="width:100%;"
+      alt="MEY Image"
+    >
+  </div>
+</td>
+</tr>
+
+<script>
+function showImg(n){
+  document.getElementById('meyImage').src =
+    "https://raw.githubusercontent.com/kiaraoptometrypx/super_rx/main/mey" + n + ".jpeg";
+}
+</script>
+
+
+
+
+  </div>
+</td></tr>
+
+
+
 
 </table>
 
@@ -3006,6 +3200,7 @@ function resetRx(){
 <div style="height:750px"></div>
 <div style="height:750px"></div>
 <div style="height:750px"></div>
+<div style="height:750px"></div>
 
 
 
@@ -3017,28 +3212,70 @@ function resetRx(){
     <div id="s5" class="section">
 <div style="height:70px"></div>
 <table>
-<tr><th colspan="4">MEYER German Tech Lenses</th></tr>
-
-<tr><td colspan="4">
-  <div style="flex:1; overflow:hidden;">
-<img src="https://raw.githubusercontent.com/kiaraoptometrypx/super_rx/main/Hyper1.png" alt="Hyper1" style="width:100%;"alt="Hyper1">
-  </div>
-
-</td></tr>
-<tr><td colspan="4">
-  <div style="flex:1; overflow:hidden;">
-<img src="https://raw.githubusercontent.com/kiaraoptometrypx/super_rx/main/Hyper2.png" alt="Hyper2" style="width:100%;"alt="Hyper2">
-  </div>
-</td></tr>
-<tr><td colspan="4">
-  <div style="flex:1; overflow:hidden;">
-<img src="https://raw.githubusercontent.com/kiaraoptometrypx/super_rx/main/Hyper3.png" alt="Hyper3" style="width:100%;"alt="Hyper3">
-  </div>
-</td></tr>
 
 
 </table>
-<div style="height: 200px"></div>
+<div style="height: 50px"></div>
+
+
+<div>
+<button type="button" onclick="screener()">Toggle Screener</button> 
+<button id="copyBtn"  onclick="copyText()">Copy</button>
+
+</div>
+<script>
+function screener() {
+  const el = document.getElementById("screenerPanel");
+  el.style.display = (el.style.display === "none" || el.style.display === "")
+    ? "block"
+    : "none";
+}
+
+function copyText() {
+  const text = document.getElementById("screenerText").innerText;
+  navigator.clipboard.writeText(text);
+  document.getElementById("copyBtn").innerText = "Copied";
+}
+</script>
+
+
+
+
+<div id="screenerPanel" style="display:none;">
+<table>
+  <tr>
+    <td id="screenerText" style="text-align:left; line-height:1.6;">
+      1. Calculate: +0.25 + (-0.75)<br>
+      2. Calculate: -1.25 + 0.50<br>
+      3. Calculate: +2.00 − 0.75<br>
+      4. Calculate: -0.50 − 0.25<br>
+      5. Calculate: +1.75 + (-2.25)<br>
+      6. Calculate: Start at -1.00. Add +0.25 three times.<br>
+      7. Calculate: Start at +0.50. Subtract +0.25, then subtract +0.50.<br>
+      8. Calculate: Start at +0.75. Increase by -0.25 four times.<br>
+      9. Which is bigger: -0.25 or -0.75?<br>
+      10. Which is lower: +0.50 or -0.75?<br>
+      11. Which is closer to zero: +0.50 or -0.25?<br>
+      12. Complete the sequence: -1.00, -0.75, -0.50, ?<br>
+      13. Complete the sequence: +0.25, +0.50, ?, +1.00<br>
+      14. Calculate: Start at -0.50, increase by +0.25, then decrease by -0.75.<br>
+      15. If blue is add, red is subtract, what do you do when +1.00 is red? +1.25 or +0.75?<br>
+      16. If blue is add, red is subtract, what do you get when +1.00 is blue 3 times? +0.25 or +1.75?<br>
+      17. Using a logic of a clock, 3 o'clock and 9 o'clock is the same axis, right or wrong?<br>
+      18. Using a logic of a clock, 3 o'clock and 12 o'clock is the same axis, right or wrong?<br>
+      19. Using a logic of a clock, what is the perpendicular value of 10:30 o'clock?<br>
+      20. The middle between +0.25 and +0.75 is +0.50. What is the middle between -1.00 and -2.00?<br>
+      21. The middle between +0.25 and +0.75 is +0.50. What is the middle between +0.50 and -1.00?<br>
+      22. What is -1.50 divided by 2, then added to -4.00?<br>
+      23. Using a logic of a clock, if -1.00 is 3 o'clock, -1.50 is 12 o'clock, what is -1.25?<br>
+    </td>
+  </tr>
+</table>
+
+</div>
+
+
+<div style="height: 150px"></div>
 
 
 
