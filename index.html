@@ -13,7 +13,10 @@ html, body, table, th, td, input, button, select, option, b, label {
   margin: 0;
   padding: 0;
 }
-
+  #meyImage {
+    transition: opacity 0.3s ease;
+    opacity: 1;
+  }
 .vectorhelper-row{
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -2672,8 +2675,8 @@ ${discount > 0 ? `Description : ${discount}% off (<span style="color:red; font-w
   <div style="flex:1; overflow:hidden;">
     <img
       id="meyImage"
-      src="https://raw.githubusercontent.com/kiaraoptometrypx/super_rx/main/mey1.jpeg"
-      style="width:100%;"
+      src="https://raw.githubusercontent.com/kiaraoptometrypx/super_rx/main/mey1.jpg"
+      style="width:90%;"
       alt="MEY Image"
     >
   </div>
@@ -2681,19 +2684,25 @@ ${discount > 0 ? `Description : ${discount}% off (<span style="color:red; font-w
 </tr>
 
 <script>
-const TOTAL_IMAGES = 8; // adjust if needed
+const TOTAL_IMAGES = 8;
 const BASE_URL = "https://raw.githubusercontent.com/kiaraoptometrypx/super_rx/main/";
 
 (function preloadImages() {
   for (let i = 1; i <= TOTAL_IMAGES; i++) {
     const img = new Image();
-    img.src = BASE_URL + "mey" + i + ".jpeg";
+    img.src = BASE_URL + "mey" + i + ".jpg";
   }
 })();
 
 function showImg(n){
-  document.getElementById('meyImage').src =
-    BASE_URL + "mey" + n + ".jpeg";
+  const img = document.getElementById('meyImage');
+
+  img.style.opacity = 0;
+
+  setTimeout(() => {
+    img.src = BASE_URL + "mey" + n + ".jpg";
+    img.style.opacity = 1;
+  }, 150); // half of transition time
 }
 </script>
 
