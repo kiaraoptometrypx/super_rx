@@ -2405,7 +2405,11 @@ L : <span id="CL_os_origCombined">OS -</span>
 
 <td colspan="3">
 
-PD : <span style="margin-left:3%; margin-right:3%" class="mirror" data-mirror="od_PD">-</span> / <span style="margin-left:3%; margin-right:3%" class="mirror" data-mirror="os_PD">-</span> mm  <span style="margin-left:15%; margin-right:15%"> ; </span> NOC : <span style="margin-left:3%; margin-right:3%" class="mirror" data-mirror="od_NOC">-</span> / <span style="margin-left:3%; margin-right:3%" class="mirror" data-mirror="os_NOC">-</span> mm 
+PD : <span style="margin-left:2%; margin-right:2%" class="mirror" data-mirror="od_PD">-</span> / <span style="margin-left:2%; margin-right:2%" class="mirror" data-mirror="os_PD">-</span> mm  
+
+<span style="margin-left:10%; margin-right:10%"> ; </span> 
+
+NOC : <span style="margin-left:3%; margin-right:3%" class="mirror" data-mirror="od_NOC">-</span> / <span style="margin-left:3%; margin-right:3%" class="mirror" data-mirror="os_NOC">-</span> mm 
 </td></tr>
 
 
@@ -2419,7 +2423,7 @@ PD :
 <input class="mirror" data-mirror="os_newPD" type="text" value="" style="width:30px;"> 
  mm
 
-<span style="margin-left:15%; margin-right:15%"> ; </span>
+<span style="margin-left:10%; margin-right:10%"> ; </span>
 
 NOC :
 <input class="mirror" data-mirror="od_newNOC" type="text" value="" style="width:30px;">
@@ -2634,24 +2638,34 @@ ${discount > 0 ? `Description : ${discount}% off (<span style="color:red; font-w
 
 
 
-  <div style="margin-top:20px; flex:1; overflow:hidden;">
-<!-- BUTTONS -->
-<div style="margin-bottom:8px;">
-  <button onclick="showImg(1)">Meyer Lens List</button>
-  <button onclick="showImg(2)">Compensated Error</button>
-  <button onclick="showImg(5)">Top Tier Single Vision</button>
-  <button onclick="showImg(8)">Mid Tier Single Vision</button>
+<div style="margin-top:20px; flex:1; overflow:hidden; text-align:left;">
 
-<br>
-<div style="height:10px"></div>
-  <button onclick="showImg(3)">Top Tier Prog</button>
-  <button onclick="showImg(4)">Upper Mid Tier Prog</button>
-  <button onclick="showImg(6)">Lower Mid Tier Prog</button>
-  <button onclick="showImg(7)">Entry Tier Prog</button><br>
+  <!-- INTRO -->
+  <div style="margin-bottom:8px;">
+    <span style="font-weight:bold; margin-right:6px;">Intro :</span>
+    <button onclick="showImg(1)">Meyer Lens List</button>
+    <button onclick="showImg(2)">Compensated Error</button>
+  </div>
 
+  <!-- SINGLE VISION -->
+  <div style="margin-bottom:8px;">
+    <span style="font-weight:bold; margin-right:6px;">Single Vision :</span>
+    <button onclick="showImg(5)">Frame Optimized</button>
+    <button onclick="showImg(8)">Normal</button>
+  </div>
 
+  <!-- PROGRESSIVES -->
+  <div style="margin-bottom:8px;">
+    <span style="font-weight:bold; margin-right:6px;">Progressives :</span>
+    <button onclick="showImg(3)">Frame Optimized</button>
+    <button onclick="showImg(4)">Frame Semi-Optimized</button>
+    <button onclick="showImg(6)">Far Or Near Wide</button>
+    <button onclick="showImg(7)">Normal</button>
+  </div>
 
 </div>
+
+
 
 <tr>
 <td colspan="4">
@@ -2667,11 +2681,22 @@ ${discount > 0 ? `Description : ${discount}% off (<span style="color:red; font-w
 </tr>
 
 <script>
+const TOTAL_IMAGES = 8; // adjust if needed
+const BASE_URL = "https://raw.githubusercontent.com/kiaraoptometrypx/super_rx/main/";
+
+(function preloadImages() {
+  for (let i = 1; i <= TOTAL_IMAGES; i++) {
+    const img = new Image();
+    img.src = BASE_URL + "mey" + i + ".jpeg";
+  }
+})();
+
 function showImg(n){
   document.getElementById('meyImage').src =
-    "https://raw.githubusercontent.com/kiaraoptometrypx/super_rx/main/mey" + n + ".jpeg";
+    BASE_URL + "mey" + n + ".jpeg";
 }
 </script>
+
 
 
 
