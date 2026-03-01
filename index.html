@@ -368,6 +368,27 @@ option {
   margin-bottom: 10px;
 }
 
+
+
+:root {
+  /* Circle colors */
+  --circle1-color: black;
+  --circle2-color: blue;
+  --circle3-color: red;
+  --plano-color: green;
+}
+
+canvas {
+  border: var(--canvas-border);
+  margin-top: 0px;
+}
+
+button.active {
+  background: black;
+  color: white;
+}
+
+
 </style>
 
 </head>
@@ -1955,7 +1976,221 @@ function toggleStatusVector() {
     Save
   </button>
 </th></tr>
+<tr><td colspan="4">
 
+
+
+
+<div class="controls">
+  <b>Current RX</b><br>
+  S: <input type="number" id="visual_s1" step="0.25" value="0">
+  C: <input type="number" id="visual_c1" step="0.25" value="0">
+  A: <input type="number" id="visual_a1" step="1" value="180" min="0" max="180"><br><br>
+
+  <b>Vector Changes</b><br>
+  S: <input type="number" id="visual_s2" step="0.25" value="0">
+  C: <input type="number" id="visual_c2" step="0.25" value="0">
+  A: <input type="number" id="visual_a2" step="1" value="90" min="0" max="180"><br><br>
+<span id="visual_combinedSpan">0.00 0.00 x 0</span>
+<br><br>
+
+  <b>Final RX</b><br>
+  S: <input type="number" id="visual_s3" step="0.25" value="0">
+  C: <input type="number" id="visual_c3" step="0.25" value="0">
+  A: <input type="number" id="visual_a3" step="1" value="45" min="0" max="180">
+</div>
+
+<div class="controls"><br>
+  Effect: 
+  <button id="visual_fullBtn" class="active">Full</button>
+  <button id="visual_halfBtn">Half</button>
+</div>
+
+<div class="controls">
+  Toggle Circles:
+  <button id="visual_planoToggle">Plano</button>
+  <button id="visual_toggle2" class="active">Vector Changes</button>
+  <button id="visual_toggle1" class="active">Current RX</button>
+  <button id="visual_toggle3" class="active">Final RX</button>
+</div>
+
+<canvas id="visual_canvas" width="400" height="300"></canvas>
+
+<br>
+
+<button id="visual_saveRight">Save Right Eye</button>
+<button id="visual_saveLeft">Save Left Eye</button>
+<div id="visual_savedRows"></div>
+
+<script>
+const canvas = document.getElementById("visual_canvas");
+const ctx = canvas.getContext("2d");
+const cx = canvas.width/2, cy = canvas.height/2;
+const planoRadius = 70, baseScaleFactor = 15;
+
+// Inputs
+const s1=document.getElementById("visual_s1"), c1=document.getElementById("visual_c1"), a1=document.getElementById("visual_a1");
+const s2=document.getElementById("visual_s2"), c2=document.getElementById("visual_c2"), a2=document.getElementById("visual_a2");
+const s3=document.getElementById("visual_s3"), c3=document.getElementById("visual_c3"), a3=document.getElementById("visual_a3");
+
+// State
+let effectScale=1;
+let showPlano=false, show1=true, show2=true, show3=true;
+
+// Buttons
+const fullBtn=document.getElementById("visual_fullBtn"), halfBtn=document.getElementById("visual_halfBtn");
+const planoToggle=document.getElementById("visual_planoToggle");
+const toggle1=document.getElementById("visual_toggle1"), toggle2=document.getElementById("visual_toggle2"), toggle3=document.getElementById("visual_toggle3");
+
+// Effect buttons
+fullBtn.onclick = () => {effectScale=1; fullBtn.classList.add("active"); halfBtn.classList.remove("active"); draw();}
+halfBtn.onclick = () => {effectScale=0.5; halfBtn.classList.add("active"); fullBtn.classList.remove("active"); draw();}
+
+// Plano toggle
+planoToggle.onclick = () => {showPlano=!showPlano; planoToggle.classList.toggle("active"); draw();}
+
+// Circle toggles
+const circleToggles = [
+  {btn: toggle1, get: ()=>show1, set: v=>show1=v, color: getComputedStyle(document.documentElement).getPropertyValue('--circle1-color')},
+  {btn: toggle2, get: ()=>show2, set: v=>show2=v, color: getComputedStyle(document.documentElement).getPropertyValue('--circle2-color')},
+  {btn: toggle3, get: ()=>show3, set: v=>show3=v, color: getComputedStyle(document.documentElement).getPropertyValue('--circle3-color')}
+];
+circleToggles.forEach(c=>{
+  c.btn.onclick = ()=>{
+    const newState = !c.get();
+    c.set(newState);
+    c.btn.classList.toggle("active", newState);
+    draw();
+  }
+});
+
+// Snap inputs and color coding
+[s1, c1, s2, c2, s3, c3].forEach(inp => {
+  inp.addEventListener("input", () => { 
+    colorInput(inp);   // live color feedback
+    draw();            // live redraw
+  });
+
+  inp.addEventListener("change", () => {
+    // round only after user finishes typing
+    inp.value = (Math.round(parseFloat(inp.value) * 4) / 4).toFixed(2);
+    colorInput(inp);
+    draw();
+  });
+});
+
+// Axis inputs: only whole numbers
+[a1,a2,a3].forEach(inp=>{
+  inp.addEventListener("input", ()=>{ inp.value = Math.round(parseFloat(inp.value)); draw(); });
+  inp.addEventListener("change", ()=>{ inp.value = Math.round(parseFloat(inp.value)); draw(); });
+});
+
+// Color input function
+function colorInput(inp){
+  if(parseFloat(inp.value) < 0) inp.style.color="red";
+  else inp.style.color="darkblue";
+}
+
+// Initial coloring
+[s1,c1,s2,c2,s3,c3].forEach(inp=>colorInput(inp));
+
+// Draw plano
+function drawPlano(){
+  ctx.beginPath();
+  ctx.arc(cx, cy, planoRadius, 0, 2*Math.PI);
+  ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--plano-color');
+  ctx.lineWidth = 2;
+  ctx.stroke();
+}
+
+// Draw ellipse
+function drawEllipse(S, C, A, color){
+  const rAxis = planoRadius - (S * baseScaleFactor * effectScale);
+  const rPerp = planoRadius - ((S + C) * baseScaleFactor * effectScale);
+
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(A*Math.PI/180);
+
+  ctx.beginPath();
+  ctx.ellipse(0,0,rAxis,rPerp,0,0,2*Math.PI);
+  ctx.strokeStyle=color;
+  ctx.lineWidth=2;
+  ctx.stroke();
+
+  if(C !== 0){
+    const lineLength = (rAxis + rPerp)/2;
+    ctx.setLineDash([5,5]);
+    ctx.beginPath();
+    ctx.moveTo(-lineLength,0);
+    ctx.lineTo(lineLength,0);
+    ctx.strokeStyle=color;
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  ctx.restore();
+}
+
+// Combine prescription (circle 1+2 only)
+function combinePrescriptions(){
+  const circles = [
+    {S: parseFloat(s1.value), C: parseFloat(c1.value), A: parseFloat(a1.value)},
+    {S: parseFloat(s2.value), C: parseFloat(c2.value), A: parseFloat(a2.value)}
+  ];
+
+  let M_total=0,J0_total=0,J45_total=0;
+  circles.forEach(c=>{
+    const rad=c.A*Math.PI/180;
+    const M=c.S + c.C/2;
+    const J0=-(c.C/2)*Math.cos(2*rad);
+    const J45=-(c.C/2)*Math.sin(2*rad);
+    M_total += M;
+    J0_total += J0;
+    J45_total += J45;
+  });
+
+  const C_total=-2*Math.sqrt(J0_total**2 + J45_total**2);
+  let axis_total=0.5*Math.atan2(J45_total,J0_total)*180/Math.PI;
+  if(axis_total<0) axis_total+=180;
+  const S_total=M_total - C_total/2;
+
+  const S_rounded=(Math.round(S_total*4)/4).toFixed(2);
+  const C_rounded=(Math.round(C_total*4)/4).toFixed(2);
+  const axis_rounded=Math.round(axis_total);
+
+  const prescString=`${S_rounded} ${C_rounded} x ${axis_rounded}`;
+  const span=document.getElementById("visual_combinedSpan");
+  span.innerText=prescString;
+
+  if(parseFloat(S_rounded)<0 || parseFloat(C_rounded)<0) span.style.color="red";
+  else span.style.color="darkblue";
+
+  return prescString;
+}
+
+// Draw all
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(showPlano) drawPlano();
+  if(show1) drawEllipse(parseFloat(s1.value),parseFloat(c1.value),parseFloat(a1.value),circleToggles[0].color);
+  if(show2) drawEllipse(parseFloat(s2.value),parseFloat(c2.value),parseFloat(a2.value),circleToggles[1].color);
+  if(show3) drawEllipse(parseFloat(s3.value),parseFloat(c3.value),parseFloat(a3.value),circleToggles[2].color);
+  combinePrescriptions();
+}
+
+// Save
+let savedData=[];
+document.getElementById("visual_saveRight").onclick=()=>{savedData.push({eye:"Right", presc:combinePrescriptions()}); updateSaved();}
+document.getElementById("visual_saveLeft").onclick=()=>{savedData.push({eye:"Left", presc:combinePrescriptions()}); updateSaved();}
+function updateSaved(){ document.getElementById("visual_savedRows").innerHTML = savedData.map(d=>`${d.eye}: ${d.presc}`).join("<br>"); }
+
+draw();
+</script>
+
+
+
+</td></tr>
 
 
 
@@ -1991,7 +2226,7 @@ function toggleStatusVector() {
 
 </table>
 </div>
-<div style="height:50px"></div>
+<div style="height:1000px"></div>
 
 
     <div id="s3" class="section">
@@ -5997,6 +6232,11 @@ function openSummary() {
   window.open('https://kiaraoptometrypx.github.io/OL-selector/', '_blank');
 }
 </script>
+
+
+
+
+
 
 
 
