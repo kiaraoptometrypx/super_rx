@@ -1943,6 +1943,399 @@ L: <span id="os_vcFinalS">0.00</span> / <span id="os_vcFinalC">0.00</span> x <sp
 </tr>
 
 
+
+
+<tr><td colspan="4">
+
+
+
+
+<div class="controls">
+<div style="margin-top:10px; display:flex; gap:7%; align-items:flex-start; justify-content:center">
+
+  <div>
+    <b>Current RX</b><br><br>
+
+    
+    <button type="button" onclick="adjust('visual_s1', -1)">− −</button>
+    <button type="button" onclick="adjust('visual_s1', 1)">+ +</button>
+ S: 
+    <input type="number" id="visual_s1" step="0.25" value="0">
+    <button type="button" onclick="adjust('visual_s1', -0.25)">−</button>
+    <button type="button" onclick="adjust('visual_s1', 0.25)">+</button>
+
+<br><br>
+
+
+    <button type="button" onclick="adjust('visual_c1', -1)">− −</button>
+    <button type="button" onclick="adjust('visual_c1', 1)">+ +</button>
+     C: 
+    <input type="number" id="visual_c1" step="0.25" value="0">
+    <button type="button" onclick="adjust('visual_c1', -0.25)">−</button>
+    <button type="button" onclick="adjust('visual_c1', 0.25)">+</button>
+
+
+<br><br>
+
+    <button type="button" onclick="adjust('visual_a1', -15)">− −</button>
+    <button type="button" onclick="adjust('visual_a1', 15)">+ +</button>
+     A: 
+    <input type="number" id="visual_a1" step="1" value="180" min="0" max="180">
+    <button type="button" onclick="adjust('visual_a1', -1)">−</button>
+    <button type="button" onclick="adjust('visual_a1', 1)">+</button>
+
+
+
+
+  </div>
+
+
+  <div>
+    <b>Vector Changes</b><br><br>
+
+    <button type="button" onclick="adjust('visual_s2', -1)">− −</button>
+    <button type="button" onclick="adjust('visual_s2', 1)">+ +</button>
+     S: 
+    <input type="number" id="visual_s2" step="0.25" value="0">
+    <button type="button" onclick="adjust('visual_s2', -0.25)">−</button>
+    <button type="button" onclick="adjust('visual_s2', 0.25)">+</button>
+
+
+<br><br>
+
+    <button type="button" onclick="adjust('visual_c2', -1)">− −</button>
+    <button type="button" onclick="adjust('visual_c2', 1)">+ +</button>
+     C: 
+    <input type="number" id="visual_c2" step="0.25" value="0">
+    <button type="button" onclick="adjust('visual_c2', -0.25)">−</button>
+    <button type="button" onclick="adjust('visual_c2', 0.25)">+</button>
+
+
+<br><br>
+
+    <button type="button" onclick="adjust('visual_a2', -15)">− −</button>
+    <button type="button" onclick="adjust('visual_a2', 15)">+ +</button>
+     A: 
+    <input type="number" id="visual_a2" step="1" value="180" min="0" max="180">
+    <button type="button" onclick="adjust('visual_a2', -1)">−</button>
+    <button type="button" onclick="adjust('visual_a2', 5)">+</button>
+
+
+
+  </div>
+
+
+</div>
+
+<div style="margin-top:20px; display:flex; gap:7%; align-items:flex-start; justify-content:center">
+
+<div><br>
+  <b>Final RX</b>
+
+  <span id="visual_combinedSpan">0.00 0.00 x 0</span>
+  <button style="display:none" id="visual_lockCombined">Lock Final RX</button>
+  <br><br>
+
+
+<div style="display:none">
+  Toggle Circles:<br><br>
+  <button id="visual_toggle1" class="active">Current RX</button><br>
+  <button id="visual_toggle3" class="active">Final RX</button><br>
+</div>
+</div>
+
+</div>
+
+<div>
+<button id="toggleBaseScale">Demo Scale</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+  Zoom:
+  <button id="zoomOut">−</button>
+  <button id="zoomIn">+</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+  <span style="color:black;">— Current RX</span> &nbsp;&nbsp;&nbsp;
+  <span style="color:red;">— New RX</span> &nbsp;&nbsp;&nbsp;
+    <span style="color:black;">⋯⋯ Zero RX</span><br><br>
+<span> A zero powered eye is roughly 24mm. Every 3.00 diopters of correction is roughyly 1mm difference from baseline. </span>
+
+<div style="display:none">
+  <b>Final RX</b><br>
+  S: <input type="number" id="visual_s3" step="0.25" value="0">
+  C: <input type="number" id="visual_c3" step="0.25" value="0">
+  A: <input type="number" id="visual_a3" step="1" value="45" min="0" max="180">
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<script>
+function adjust(id, delta){
+  const input = document.getElementById(id);
+  let newValue = parseFloat(input.value || 0) + delta;
+
+  // Only apply to axis inputs
+  if(id.includes('_a')){
+    // Wrap around 1–180
+    newValue = ((newValue - 1 + 180) % 180) + 1;
+  }
+
+  // Round to step
+  const step = parseFloat(input.step) || 1;
+  newValue = Math.round(newValue / step) * step;
+
+  input.value = newValue;
+
+  // Trigger redraw/color update
+  input.dispatchEvent(new Event('input'));
+  input.dispatchEvent(new Event('change'));
+}
+</script>
+
+
+<canvas id="visual_canvas" width="500" height="500"></canvas>
+
+
+
+
+<br>
+
+<button style="display:none" id="visual_saveRight">Save Right Eye</button>
+<button style="display:none" id="visual_saveLeft">Save Left Eye</button>
+<div id="visual_savedRows"></div>
+
+
+<script>
+const canvas = document.getElementById("visual_canvas");
+const ctx = canvas.getContext("2d");
+
+const cy = canvas.height/2;
+const cx = canvas.width/2;
+
+const planoRadius = 120;
+let actualScale = false;
+
+const BASE_SCALE_ACTUAL = 1.666;   // your current real scale
+const BASE_SCALE_VISUAL = 16.6;   // half scale visualiser
+
+const toggleBaseScaleBtn = document.getElementById("toggleBaseScale");
+
+toggleBaseScaleBtn.onclick = () => {
+  actualScale = !actualScale;
+
+  toggleBaseScaleBtn.innerText = actualScale 
+    ? "Actual Scale" 
+    : "Demo Scale";
+
+  draw();
+};
+
+
+/* ===== Inputs ===== */
+const s1 = document.getElementById("visual_s1");
+const c1 = document.getElementById("visual_c1");
+const a1 = document.getElementById("visual_a1");
+
+const s2 = document.getElementById("visual_s2");
+const c2 = document.getElementById("visual_c2");
+const a2 = document.getElementById("visual_a2");
+
+const s3 = document.getElementById("visual_s3");
+const c3 = document.getElementById("visual_c3");
+const a3 = document.getElementById("visual_a3");
+
+/* ===== State ===== */
+let zoomLevel = 1;
+let showCurrent = true;
+let showFinal = true;
+let circlelockFinal = true;
+
+/* ===== Buttons ===== */
+const toggle1 = document.getElementById("visual_toggle1");
+const toggle3 = document.getElementById("visual_toggle3");
+const circlelockBtn = document.getElementById("visual_lockCombined");
+
+/* ===== Real Zoom ===== */
+document.getElementById("zoomIn").onclick = () => {
+  zoomLevel *= 1.2;
+  draw();
+};
+
+document.getElementById("zoomOut").onclick = () => {
+  zoomLevel /= 1.2;
+  draw();
+};
+
+/* ===== Lock Final ===== */
+circlelockBtn.classList.add("active");
+circlelockBtn.innerText = "Unlock Final RX";
+
+circlelockBtn.onclick = () => {
+  circlelockFinal = !lockFinal;
+  circlelockBtn.classList.toggle("active", lockFinal);
+  circlelockBtn.innerText = circlelockFinal ? "Unlock Final RX" : "Lock Final RX";
+  draw();
+};
+
+/* ===== Toggle Circles ===== */
+toggle1.onclick = () => {
+  showCurrent = !showCurrent;
+  toggle1.classList.toggle("active", showCurrent);
+  draw();
+};
+
+toggle3.onclick = () => {
+  showFinal = !showFinal;
+  toggle3.classList.toggle("active", showFinal);
+  draw();
+};
+
+/* ===== Snap + Color ===== */
+function colorInput(inp){
+  inp.style.color = parseFloat(inp.value) < 0 ? "red" : "darkblue";
+}
+
+[s1,c1,s2,c2,s3,c3].forEach(inp=>{
+  inp.addEventListener("input", ()=>{ colorInput(inp); draw(); });
+  inp.addEventListener("change", ()=>{
+    inp.value = (Math.round(parseFloat(inp.value)*4)/4).toFixed(2);
+    colorInput(inp);
+    draw();
+  });
+});
+
+[a1,a2,a3].forEach(inp=>{
+  inp.addEventListener("input", ()=>{ inp.value = Math.round(parseFloat(inp.value)); draw(); });
+  inp.addEventListener("change", ()=>{ inp.value = Math.round(parseFloat(inp.value)); draw(); });
+});
+
+[s1,c1,s2,c2,s3,c3].forEach(colorInput);
+
+function drawPlanoBaseline(){
+  ctx.save();
+  ctx.translate(cx, cy);
+
+  ctx.beginPath();
+  ctx.arc(0, 0, planoRadius * zoomLevel, 0, 2 * Math.PI);
+  ctx.strokeStyle = "black";
+  ctx.lineWidth = 1;
+  ctx.setLineDash([3,3]);     // dashed to differentiate
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  ctx.restore();
+}
+
+/* ===== Draw Ellipse ===== */
+function drawEllipse(S,C,A,color){
+const scale = actualScale ? BASE_SCALE_ACTUAL : BASE_SCALE_VISUAL;
+
+const rAxis = (planoRadius - (S * scale)) * zoomLevel;
+const rPerp = (planoRadius - ((S + C) * scale)) * zoomLevel;
+
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(A*Math.PI/180);
+
+  ctx.beginPath();
+  ctx.ellipse(0,0,rAxis,rPerp,0,0,2*Math.PI);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1;   // thinner lines
+  ctx.stroke();
+
+  if(C !== 0){
+    const lineLength = (rAxis + rPerp)/2;
+    ctx.setLineDash([4,4]);
+    ctx.beginPath();
+    ctx.moveTo(0,-lineLength);
+    ctx.lineTo(0,lineLength);
+    ctx.strokeStyle = color;
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  ctx.restore();
+}
+
+/* ===== Combine Prescriptions ===== */
+function combinePrescriptions(){
+  const circles = [
+    {S:+s1.value, C:+c1.value, A:+a1.value},
+    {S:+s2.value, C:+c2.value, A:+a2.value}
+  ];
+
+  let M=0,J0=0,J45=0;
+
+  circles.forEach(c=>{
+    const rad = c.A*Math.PI/180;
+    M += c.S + c.C/2;
+    J0 += -(c.C/2)*Math.cos(2*rad);
+    J45 += -(c.C/2)*Math.sin(2*rad);
+  });
+
+  const Ctotal = -2*Math.sqrt(J0**2 + J45**2);
+  let axis = 0.5*Math.atan2(J45,J0)*180/Math.PI;
+  if(axis<0) axis+=180;
+
+  const Stotal = M - Ctotal/2;
+
+  const Sr = (Math.round(Stotal*4)/4).toFixed(2);
+  const Cr = (Math.round(Ctotal*4)/4).toFixed(2);
+  const Ar = Math.round(axis);
+
+  const span = document.getElementById("visual_combinedSpan");
+  span.innerText = ` = ${Sr} / ${Cr} x ${Ar}`;
+  span.style.color = "black";
+
+  if(circlelockFinal){
+    s3.value = Sr;
+    c3.value = Cr;
+    a3.value = Ar;
+    colorInput(s3);
+    colorInput(c3);
+  }
+
+  return `${Sr} ${Cr} x ${Ar}`;
+}
+
+/* ===== Draw ===== */
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  drawPlanoBaseline();   // <-- baseline first
+
+
+  if(showCurrent)
+    drawEllipse(+s1.value,+c1.value,+a1.value,"black");
+
+  if(showFinal)
+    drawEllipse(+s3.value,+c3.value,+a3.value,"red");
+
+  combinePrescriptions();
+}
+
+draw();
+</script>
+
+
+</td></tr>
+
+
+
+
+
+
+
+
+
 <tr><th class="yellow" colspan="4">Please Press Update All! 
 <button style="margin-left:10px; border-radius:10px; height:25px; width:100px" class="updateAllBtn">Update All</button>
 <br><br>
@@ -1976,221 +2369,6 @@ function toggleStatusVector() {
     Save
   </button>
 </th></tr>
-<tr><td colspan="4">
-
-
-
-
-<div class="controls">
-  <b>Current RX</b><br>
-  S: <input type="number" id="visual_s1" step="0.25" value="0">
-  C: <input type="number" id="visual_c1" step="0.25" value="0">
-  A: <input type="number" id="visual_a1" step="1" value="180" min="0" max="180"><br><br>
-
-  <b>Vector Changes</b><br>
-  S: <input type="number" id="visual_s2" step="0.25" value="0">
-  C: <input type="number" id="visual_c2" step="0.25" value="0">
-  A: <input type="number" id="visual_a2" step="1" value="90" min="0" max="180"><br><br>
-<span id="visual_combinedSpan">0.00 0.00 x 0</span>
-<br><br>
-
-  <b>Final RX</b><br>
-  S: <input type="number" id="visual_s3" step="0.25" value="0">
-  C: <input type="number" id="visual_c3" step="0.25" value="0">
-  A: <input type="number" id="visual_a3" step="1" value="45" min="0" max="180">
-</div>
-
-<div class="controls"><br>
-  Effect: 
-  <button id="visual_fullBtn" class="active">Full</button>
-  <button id="visual_halfBtn">Half</button>
-</div>
-
-<div class="controls">
-  Toggle Circles:
-  <button id="visual_planoToggle">Plano</button>
-  <button id="visual_toggle2" class="active">Vector Changes</button>
-  <button id="visual_toggle1" class="active">Current RX</button>
-  <button id="visual_toggle3" class="active">Final RX</button>
-</div>
-
-<canvas id="visual_canvas" width="400" height="300"></canvas>
-
-<br>
-
-<button id="visual_saveRight">Save Right Eye</button>
-<button id="visual_saveLeft">Save Left Eye</button>
-<div id="visual_savedRows"></div>
-
-<script>
-const canvas = document.getElementById("visual_canvas");
-const ctx = canvas.getContext("2d");
-const cx = canvas.width/2, cy = canvas.height/2;
-const planoRadius = 70, baseScaleFactor = 15;
-
-// Inputs
-const s1=document.getElementById("visual_s1"), c1=document.getElementById("visual_c1"), a1=document.getElementById("visual_a1");
-const s2=document.getElementById("visual_s2"), c2=document.getElementById("visual_c2"), a2=document.getElementById("visual_a2");
-const s3=document.getElementById("visual_s3"), c3=document.getElementById("visual_c3"), a3=document.getElementById("visual_a3");
-
-// State
-let effectScale=1;
-let showPlano=false, show1=true, show2=true, show3=true;
-
-// Buttons
-const fullBtn=document.getElementById("visual_fullBtn"), halfBtn=document.getElementById("visual_halfBtn");
-const planoToggle=document.getElementById("visual_planoToggle");
-const toggle1=document.getElementById("visual_toggle1"), toggle2=document.getElementById("visual_toggle2"), toggle3=document.getElementById("visual_toggle3");
-
-// Effect buttons
-fullBtn.onclick = () => {effectScale=1; fullBtn.classList.add("active"); halfBtn.classList.remove("active"); draw();}
-halfBtn.onclick = () => {effectScale=0.5; halfBtn.classList.add("active"); fullBtn.classList.remove("active"); draw();}
-
-// Plano toggle
-planoToggle.onclick = () => {showPlano=!showPlano; planoToggle.classList.toggle("active"); draw();}
-
-// Circle toggles
-const circleToggles = [
-  {btn: toggle1, get: ()=>show1, set: v=>show1=v, color: getComputedStyle(document.documentElement).getPropertyValue('--circle1-color')},
-  {btn: toggle2, get: ()=>show2, set: v=>show2=v, color: getComputedStyle(document.documentElement).getPropertyValue('--circle2-color')},
-  {btn: toggle3, get: ()=>show3, set: v=>show3=v, color: getComputedStyle(document.documentElement).getPropertyValue('--circle3-color')}
-];
-circleToggles.forEach(c=>{
-  c.btn.onclick = ()=>{
-    const newState = !c.get();
-    c.set(newState);
-    c.btn.classList.toggle("active", newState);
-    draw();
-  }
-});
-
-// Snap inputs and color coding
-[s1, c1, s2, c2, s3, c3].forEach(inp => {
-  inp.addEventListener("input", () => { 
-    colorInput(inp);   // live color feedback
-    draw();            // live redraw
-  });
-
-  inp.addEventListener("change", () => {
-    // round only after user finishes typing
-    inp.value = (Math.round(parseFloat(inp.value) * 4) / 4).toFixed(2);
-    colorInput(inp);
-    draw();
-  });
-});
-
-// Axis inputs: only whole numbers
-[a1,a2,a3].forEach(inp=>{
-  inp.addEventListener("input", ()=>{ inp.value = Math.round(parseFloat(inp.value)); draw(); });
-  inp.addEventListener("change", ()=>{ inp.value = Math.round(parseFloat(inp.value)); draw(); });
-});
-
-// Color input function
-function colorInput(inp){
-  if(parseFloat(inp.value) < 0) inp.style.color="red";
-  else inp.style.color="darkblue";
-}
-
-// Initial coloring
-[s1,c1,s2,c2,s3,c3].forEach(inp=>colorInput(inp));
-
-// Draw plano
-function drawPlano(){
-  ctx.beginPath();
-  ctx.arc(cx, cy, planoRadius, 0, 2*Math.PI);
-  ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--plano-color');
-  ctx.lineWidth = 2;
-  ctx.stroke();
-}
-
-// Draw ellipse
-function drawEllipse(S, C, A, color){
-  const rAxis = planoRadius - (S * baseScaleFactor * effectScale);
-  const rPerp = planoRadius - ((S + C) * baseScaleFactor * effectScale);
-
-  ctx.save();
-  ctx.translate(cx, cy);
-  ctx.rotate(A*Math.PI/180);
-
-  ctx.beginPath();
-  ctx.ellipse(0,0,rAxis,rPerp,0,0,2*Math.PI);
-  ctx.strokeStyle=color;
-  ctx.lineWidth=2;
-  ctx.stroke();
-
-  if(C !== 0){
-    const lineLength = (rAxis + rPerp)/2;
-    ctx.setLineDash([5,5]);
-    ctx.beginPath();
-    ctx.moveTo(-lineLength,0);
-    ctx.lineTo(lineLength,0);
-    ctx.strokeStyle=color;
-    ctx.stroke();
-    ctx.setLineDash([]);
-  }
-
-  ctx.restore();
-}
-
-// Combine prescription (circle 1+2 only)
-function combinePrescriptions(){
-  const circles = [
-    {S: parseFloat(s1.value), C: parseFloat(c1.value), A: parseFloat(a1.value)},
-    {S: parseFloat(s2.value), C: parseFloat(c2.value), A: parseFloat(a2.value)}
-  ];
-
-  let M_total=0,J0_total=0,J45_total=0;
-  circles.forEach(c=>{
-    const rad=c.A*Math.PI/180;
-    const M=c.S + c.C/2;
-    const J0=-(c.C/2)*Math.cos(2*rad);
-    const J45=-(c.C/2)*Math.sin(2*rad);
-    M_total += M;
-    J0_total += J0;
-    J45_total += J45;
-  });
-
-  const C_total=-2*Math.sqrt(J0_total**2 + J45_total**2);
-  let axis_total=0.5*Math.atan2(J45_total,J0_total)*180/Math.PI;
-  if(axis_total<0) axis_total+=180;
-  const S_total=M_total - C_total/2;
-
-  const S_rounded=(Math.round(S_total*4)/4).toFixed(2);
-  const C_rounded=(Math.round(C_total*4)/4).toFixed(2);
-  const axis_rounded=Math.round(axis_total);
-
-  const prescString=`${S_rounded} ${C_rounded} x ${axis_rounded}`;
-  const span=document.getElementById("visual_combinedSpan");
-  span.innerText=prescString;
-
-  if(parseFloat(S_rounded)<0 || parseFloat(C_rounded)<0) span.style.color="red";
-  else span.style.color="darkblue";
-
-  return prescString;
-}
-
-// Draw all
-function draw(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  if(showPlano) drawPlano();
-  if(show1) drawEllipse(parseFloat(s1.value),parseFloat(c1.value),parseFloat(a1.value),circleToggles[0].color);
-  if(show2) drawEllipse(parseFloat(s2.value),parseFloat(c2.value),parseFloat(a2.value),circleToggles[1].color);
-  if(show3) drawEllipse(parseFloat(s3.value),parseFloat(c3.value),parseFloat(a3.value),circleToggles[2].color);
-  combinePrescriptions();
-}
-
-// Save
-let savedData=[];
-document.getElementById("visual_saveRight").onclick=()=>{savedData.push({eye:"Right", presc:combinePrescriptions()}); updateSaved();}
-document.getElementById("visual_saveLeft").onclick=()=>{savedData.push({eye:"Left", presc:combinePrescriptions()}); updateSaved();}
-function updateSaved(){ document.getElementById("visual_savedRows").innerHTML = savedData.map(d=>`${d.eye}: ${d.presc}`).join("<br>"); }
-
-draw();
-</script>
-
-
-
-</td></tr>
 
 
 
@@ -5498,12 +5676,17 @@ function convertOne(S, C, A){
   const convT = glassesToCL(total);
   const rawCyl = convT - convS;
 
-  if(Math.abs(rawCyl) < 0.75){
-if (Math.abs(convS) > 6){
-  return fmt(Math.round((convS + Number.EPSILON)/0.50)*0.50);
-} else {
-  return fmt(r025(convS));
-}  }
+const nearestCyl = nearest(CL_CYL_STEPS, rawCyl);
+
+// Decide whether to keep cyl or drop it
+if (Math.abs(rawCyl) < Math.abs(nearestCyl - rawCyl)) {
+  // Closer to 0 → sphere only
+  if (Math.abs(convS) > 6){
+    return fmt(Math.round((convS + Number.EPSILON)/0.50)*0.50);
+  } else {
+    return fmt(r025(convS));
+  }
+}
 
   const rS = r025(convS);
   const rClipC = nearest(CL_CYL_STEPS, rawCyl);
