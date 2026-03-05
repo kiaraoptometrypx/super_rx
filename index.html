@@ -2027,12 +2027,15 @@ L: <span id="os_vcFinalS">0.00</span> / <span id="os_vcFinalC">0.00</span> x <sp
 
 </div>
 
-<div style="margin-top:20px; display:flex; gap:7%; align-items:flex-start; justify-content:center">
+<div style="margin-top:10px; margin-bottom:5px; display:flex; gap:7%; align-items:flex-start; justify-content:center">
 
 <div><br>
-  <b>Final RX</b>
+  <span style="font-size:20px; font-weight:400">Final RX
 
-  <span id="visual_combinedSpan">0.00 0.00 x 0</span>
+  &nbsp;&nbsp;&nbsp;<span id="visual_combinedSpan">0.00 0.00 x 0</span>
+  </span>
+
+
   <button style="display:none" id="visual_lockCombined">Lock Final RX</button>
   <br><br>
 
@@ -2073,7 +2076,7 @@ L: <span id="os_vcFinalS">0.00</span> / <span id="os_vcFinalC">0.00</span> x <sp
 
 
 
-
+<div style="margin-bottom:20px"></div>
 
 
 
@@ -2101,7 +2104,7 @@ function adjust(id, delta){
 </script>
 
 
-<canvas id="visual_canvas" width="500" height="500"></canvas>
+<canvas id="visual_canvas" width="500" height="450"></canvas>
 
 
 
@@ -2114,10 +2117,12 @@ function adjust(id, delta){
 
 
 <script>
+const bgImage = new Image();
+bgImage.src = "https://raw.githubusercontent.com/kiaraoptometrypx/trainer_light/main/FCBG.jpg";
 const canvas = document.getElementById("visual_canvas");
 const ctx = canvas.getContext("2d");
 
-const cy = canvas.height/2;
+const cy = canvas.height/2+20;
 const cx = canvas.width/2;
 
 const planoRadius = 120;
@@ -2153,7 +2158,7 @@ const c3 = document.getElementById("visual_c3");
 const a3 = document.getElementById("visual_a3");
 
 /* ===== State ===== */
-let zoomLevel = 1;
+let zoomLevel = 0.8;
 let showCurrent = true;
 let showFinal = true;
 let circlelockFinal = true;
@@ -2165,12 +2170,12 @@ const circlelockBtn = document.getElementById("visual_lockCombined");
 
 /* ===== Real Zoom ===== */
 document.getElementById("zoomIn").onclick = () => {
-  zoomLevel *= 1.2;
+  zoomLevel *= 1.05;
   draw();
 };
 
 document.getElementById("zoomOut").onclick = () => {
-  zoomLevel /= 1.2;
+  zoomLevel /= 1.05;
   draw();
 };
 
@@ -2288,11 +2293,12 @@ function combinePrescriptions(){
   const Stotal = M - Ctotal/2;
 
   const Sr = (Math.round(Stotal*4)/4).toFixed(2);
+  const SrDis = (Sr > 0 ? "+" : "") + Sr;
   const Cr = (Math.round(Ctotal*4)/4).toFixed(2);
   const Ar = Math.round(axis);
 
   const span = document.getElementById("visual_combinedSpan");
-  span.innerText = ` = ${Sr} / ${Cr} x ${Ar}`;
+  span.innerText = ` ${SrDis} / ${Cr} x ${Ar}`;
   span.style.color = "black";
 
   if(circlelockFinal){
@@ -2310,8 +2316,45 @@ function combinePrescriptions(){
 function draw(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
-  drawPlanoBaseline();   // <-- baseline first
 
+
+if(bgImage.complete){
+  const imgRatio = bgImage.width / bgImage.height;
+  const canvasRatio = canvas.width / canvas.height;
+
+  let sx, sy, sWidth, sHeight;
+
+  if(canvasRatio > imgRatio){
+    // Canvas is wider → crop top & bottom
+    sWidth = bgImage.width;
+    sHeight = bgImage.width / canvasRatio;
+    sx = 0;
+    sy = (bgImage.height - sHeight)/2;
+  } else {
+    // Canvas is taller → crop left & right
+    sHeight = bgImage.height;
+    sWidth = bgImage.height * canvasRatio;
+    sx = (bgImage.width - sWidth)/2;
+    sy = 0;
+  }
+
+  ctx.drawImage(bgImage, sx, sy, sWidth, sHeight, 0, 0, canvas.width, canvas.height);
+} else {
+  bgImage.onload = () => draw();
+}
+
+  ctx.save();
+
+  // Move origin to center
+  ctx.translate(cx, cy);
+
+  // Rotate canvas 90 degrees clockwise
+  ctx.rotate(Math.PI / 2);
+
+  // Move back origin so drawEllipse still works with 0,0 center
+  ctx.translate(-cx, -cy);
+
+  drawPlanoBaseline();   // baseline first
 
   if(showCurrent)
     drawEllipse(+s1.value,+c1.value,+a1.value,"black");
@@ -2320,6 +2363,8 @@ function draw(){
     drawEllipse(+s3.value,+c3.value,+a3.value,"red");
 
   combinePrescriptions();
+
+  ctx.restore();
 }
 
 draw();
