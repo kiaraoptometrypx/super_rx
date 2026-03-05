@@ -31,6 +31,7 @@ html, body, table, th, td, input, button, select, option, b, label {
   text-align: center;
 }
 
+
 .vectorhelper-rx span{
   margin-bottom: 6px;
   font-weight: 400;
@@ -159,6 +160,13 @@ th:nth-child(4) {
 button {
 border: 1px dotted;
 }
+
+
+.vbtn {
+padding:2px;
+width:25px;
+}
+
 
 body, table, th, td, input, button {
   font-size: 11px;
@@ -1957,32 +1965,32 @@ L: <span id="os_vcFinalS">0.00</span> / <span id="os_vcFinalC">0.00</span> x <sp
     <b>Current RX</b><br><br>
 
     
-    <button type="button" onclick="adjust('visual_s1', -1)">− −</button>
-    <button type="button" onclick="adjust('visual_s1', 1)">+ +</button>
+    <button class="vbtn" type="button" onclick="adjust('visual_s1', -1)">--</button>
+    <button class="vbtn" type="button" onclick="adjust('visual_s1', 1)">++</button>
  S: 
-    <input type="number" id="visual_s1" step="0.25" value="0">
-    <button type="button" onclick="adjust('visual_s1', -0.25)">−</button>
-    <button type="button" onclick="adjust('visual_s1', 0.25)">+</button>
+    <input style="width:60px" type="number" id="visual_s1" step="0.25" value="0">
+    <button class="vbtn" type="button" onclick="adjust('visual_s1', -0.25)">−</button>
+    <button class="vbtn" type="button" onclick="adjust('visual_s1', 0.25)">+</button>
 
 <br><br>
 
 
-    <button type="button" onclick="adjust('visual_c1', -1)">− −</button>
-    <button type="button" onclick="adjust('visual_c1', 1)">+ +</button>
+    <button class="vbtn" type="button" onclick="adjust('visual_c1', -1)">− −</button>
+    <button class="vbtn" type="button" onclick="adjust('visual_c1', 1)">+ +</button>
      C: 
-    <input type="number" id="visual_c1" step="0.25" value="0">
-    <button type="button" onclick="adjust('visual_c1', -0.25)">−</button>
-    <button type="button" onclick="adjust('visual_c1', 0.25)">+</button>
+    <input style="width:60px" type="number" id="visual_c1" step="0.25" value="0">
+    <button  class="vbtn" type="button" onclick="adjust('visual_c1', -0.25)">−</button>
+    <button  class="vbtn" type="button" onclick="adjust('visual_c1', 0.25)">+</button>
 
 
 <br><br>
 
-    <button type="button" onclick="adjust('visual_a1', -15)">− −</button>
-    <button type="button" onclick="adjust('visual_a1', 15)">+ +</button>
+    <button class="vbtn"  type="button" onclick="adjust('visual_a1', -15)">− −</button>
+    <button class="vbtn"  type="button" onclick="adjust('visual_a1', 15)">+ +</button>
      A: 
-    <input type="number" id="visual_a1" step="1" value="180" min="0" max="180">
-    <button type="button" onclick="adjust('visual_a1', -1)">−</button>
-    <button type="button" onclick="adjust('visual_a1', 1)">+</button>
+    <input style="width:60px" type="number" id="visual_a1" step="1" value="180" min="0" max="180">
+    <button class="vbtn"  type="button" onclick="adjust('visual_a1', -1)">−</button>
+    <button class="vbtn"  type="button" onclick="adjust('visual_a1', 1)">+</button>
 
 
 
@@ -1993,32 +2001,26 @@ L: <span id="os_vcFinalS">0.00</span> / <span id="os_vcFinalC">0.00</span> x <sp
   <div>
     <b>Vector Changes</b><br><br>
 
-    <button type="button" onclick="adjust('visual_s2', -1)">− −</button>
-    <button type="button" onclick="adjust('visual_s2', 1)">+ +</button>
      S: 
-    <input type="number" id="visual_s2" step="0.25" value="0">
-    <button type="button" onclick="adjust('visual_s2', -0.25)">−</button>
-    <button type="button" onclick="adjust('visual_s2', 0.25)">+</button>
+    <input style="width:60px" type="number" id="visual_s2" step="0.25" value="0">
+    <button class="vbtn"  type="button" onclick="adjust('visual_s2', -0.25)">−</button>
+    <button class="vbtn"  type="button" onclick="adjust('visual_s2', 0.25)">+</button>
 
 
 <br><br>
 
-    <button type="button" onclick="adjust('visual_c2', -1)">− −</button>
-    <button type="button" onclick="adjust('visual_c2', 1)">+ +</button>
      C: 
-    <input type="number" id="visual_c2" step="0.25" value="0">
-    <button type="button" onclick="adjust('visual_c2', -0.25)">−</button>
-    <button type="button" onclick="adjust('visual_c2', 0.25)">+</button>
+    <input style="width:60px" type="number" id="visual_c2" step="0.25" value="0">
+    <button class="vbtn"  type="button" onclick="adjust('visual_c2', -0.25)">−</button>
+    <button class="vbtn"  type="button" onclick="adjust('visual_c2', 0.25)">+</button>
 
 
 <br><br>
 
-    <button type="button" onclick="adjust('visual_a2', -15)">− −</button>
-    <button type="button" onclick="adjust('visual_a2', 15)">+ +</button>
      A: 
-    <input type="number" id="visual_a2" step="1" value="180" min="0" max="180">
-    <button type="button" onclick="adjust('visual_a2', -1)">−</button>
-    <button type="button" onclick="adjust('visual_a2', 5)">+</button>
+    <input style="width:60px" type="number" id="visual_a2" step="1" value="180" min="0" max="180">
+    <button class="vbtn"  type="button" onclick="adjust('visual_a2', -15)">−</button>
+    <button class="vbtn"  type="button" onclick="adjust('visual_a2', 15)">+</button>
 
 
 
