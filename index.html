@@ -2052,7 +2052,11 @@ L: <span id="os_vcFinalS">0.00</span> / <span id="os_vcFinalC">0.00</span> x <sp
 </div>
 
 <div>
-<button id="toggleBaseScale">Demo Scale</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button id="toggleBaseScale">Demo</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button id="togglePlano">Plano</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button id="toggleAxis">Axis</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
 
   Zoom:
   <button id="zoomOut">−</button>
@@ -2064,6 +2068,9 @@ L: <span id="os_vcFinalS">0.00</span> / <span id="os_vcFinalC">0.00</span> x <sp
   <span style="color:black;">— Current RX</span> &nbsp;&nbsp;&nbsp;
   <span style="color:red;">— New RX</span> &nbsp;&nbsp;&nbsp;
     <span style="color:black;">⋯⋯ Zero RX</span><br><br>
+
+
+
 <span> A zero powered eye is roughly 24mm. Every 1.00 diopters of correction is roughyly 0.33mm difference from baseline. </span>
 
 <div style="display:none">
@@ -2106,7 +2113,7 @@ function adjust(id, delta){
 </script>
 
 
-<canvas id="visual_canvas" width="500" height="450"></canvas>
+<canvas id="visual_canvas" width="570" height="500"></canvas>
 
 
 
@@ -2118,11 +2125,36 @@ function adjust(id, delta){
 <div id="visual_savedRows"></div>
 
 
+
+
+
+
+
+
 <script>
 const bgImage = new Image();
 bgImage.src = "https://raw.githubusercontent.com/kiaraoptometrypx/trainer_light/main/FCBG.jpg";
 const canvas = document.getElementById("visual_canvas");
 const ctx = canvas.getContext("2d");
+
+let showPlanoCircle = false;
+let showAxisLines = false;
+
+const togglePlanoBtn = document.getElementById("togglePlano");
+const toggleAxisBtn = document.getElementById("toggleAxis");
+
+togglePlanoBtn.onclick = () => {
+  showPlanoCircle = !showPlanoCircle;
+  togglePlanoBtn.innerText = showPlanoCircle ? "Plano" : "Plano ";
+  draw();
+};
+
+toggleAxisBtn.onclick = () => {
+  showAxisLines = !showAxisLines;
+  toggleAxisBtn.innerText = showAxisLines ? "Axis" : "Axis";
+  draw();
+};
+
 
 const cy = canvas.height/2+20;
 const cx = canvas.width/2;
@@ -2131,7 +2163,7 @@ const planoRadius = 120;
 let actualScale = false;
 
 const BASE_SCALE_ACTUAL = 1.666;   // your current real scale
-const BASE_SCALE_VISUAL = 16.6;   // half scale visualiser
+const BASE_SCALE_VISUAL = 16;   // half scale visualiser
 
 const toggleBaseScaleBtn = document.getElementById("toggleBaseScale");
 
@@ -2139,8 +2171,8 @@ toggleBaseScaleBtn.onclick = () => {
   actualScale = !actualScale;
 
   toggleBaseScaleBtn.innerText = actualScale 
-    ? "Actual Scale" 
-    : "Demo Scale";
+    ? "Actual" 
+    : "Demo";
 
   draw();
 };
@@ -2172,12 +2204,12 @@ const circlelockBtn = document.getElementById("visual_lockCombined");
 
 /* ===== Real Zoom ===== */
 document.getElementById("zoomIn").onclick = () => {
-  zoomLevel *= 1.05;
+  zoomLevel *= 1.2;
   draw();
 };
 
 document.getElementById("zoomOut").onclick = () => {
-  zoomLevel /= 1.05;
+  zoomLevel /= 1.2;
   draw();
 };
 
@@ -2227,6 +2259,8 @@ function colorInput(inp){
 [s1,c1,s2,c2,s3,c3].forEach(colorInput);
 
 function drawPlanoBaseline(){
+  if(!showPlanoCircle) return;
+
   ctx.save();
   ctx.translate(cx, cy);
 
@@ -2234,7 +2268,7 @@ function drawPlanoBaseline(){
   ctx.arc(0, 0, planoRadius * zoomLevel, 0, 2 * Math.PI);
   ctx.strokeStyle = "black";
   ctx.lineWidth = 1;
-  ctx.setLineDash([3,3]);     // dashed to differentiate
+  ctx.setLineDash([3,3]);
   ctx.stroke();
   ctx.setLineDash([]);
 
@@ -2243,34 +2277,38 @@ function drawPlanoBaseline(){
 
 /* ===== Draw Ellipse ===== */
 function drawEllipse(S,C,A,color){
+
 const scale = actualScale ? BASE_SCALE_ACTUAL : BASE_SCALE_VISUAL;
 
 const rAxis = (planoRadius - (S * scale)) * zoomLevel;
 const rPerp = (planoRadius - ((S + C) * scale)) * zoomLevel;
 
-  ctx.save();
-  ctx.translate(cx, cy);
-  ctx.rotate(A*Math.PI/180);
+ctx.save();
+ctx.translate(cx, cy);
+ctx.rotate(A*Math.PI/180);
 
+ctx.beginPath();
+ctx.ellipse(0,0,rAxis,rPerp,0,0,2*Math.PI);
+ctx.strokeStyle = color;
+ctx.lineWidth = 1;
+ctx.stroke();
+
+/* Axis guide line */
+if(C !== 0 && showAxisLines){
+  const lineLength = (rAxis + rPerp)/2;
+
+  ctx.setLineDash([4,4]);
   ctx.beginPath();
-  ctx.ellipse(0,0,rAxis,rPerp,0,0,2*Math.PI);
+  ctx.moveTo(0,-lineLength);
+  ctx.lineTo(0,lineLength);
   ctx.strokeStyle = color;
-  ctx.lineWidth = 1;   // thinner lines
   ctx.stroke();
-
-  if(C !== 0){
-    const lineLength = (rAxis + rPerp)/2;
-    ctx.setLineDash([4,4]);
-    ctx.beginPath();
-    ctx.moveTo(0,-lineLength);
-    ctx.lineTo(0,lineLength);
-    ctx.strokeStyle = color;
-    ctx.stroke();
-    ctx.setLineDash([]);
-  }
-
-  ctx.restore();
+  ctx.setLineDash([]);
 }
+
+ctx.restore();
+}
+
 
 /* ===== Combine Prescriptions ===== */
 function combinePrescriptions(){
@@ -2371,6 +2409,19 @@ if(bgImage.complete){
 
 draw();
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </td></tr>
