@@ -1116,13 +1116,14 @@ function copyRightToLeft(){
 </div>
 </td></tr>
 
-<tr style="border-top:none; border-bottom:none"><td style="border-top:none; border-bottom:none" colspan="4">Duochrome Sph Bal : <span id="balanceBoth"></span>
+<tr style="border-top:none; border-bottom:none"><td style="border-top:none; border-bottom:none" colspan="4">DC SPH: <span id="balanceBoth"></span>
+
 </td></tr>
 
 
 <tr style="border-top:1px dotted lightgrey">
 <td style="border-top:none"colspan="4">
-<span id="foggingBoth"></span> . <span id="perpendicular-axis-ou"></span><br><br>
+<span id="foggingBoth"></span><span id="perpendicular-axis-ou"></span><br><br>FC CYL: <span id="balance-ou"></span><br><br>
 
 <div class="fc-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:5%;width:100%;">
 
@@ -1239,10 +1240,11 @@ function copyRightToLeft(){
 
 
 
-<tr><th colspan="4">FC DC Status Right Eye</th></tr>
+<tr><th colspan="4">FC DC Status Right Eye <button onclick="toggleRE()">Show / Hide</button>
+</th></tr>
 
 
-<tr data-eye="right" style="border-bottom:none">
+<tr class="re-row" data-eye="right" style="display:none; border-bottom:none">
 <td style="border-bottom:none"colspan="4">
 
 <div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(9,1fr);gap:5px;width:100%;">
@@ -1347,13 +1349,14 @@ function copyRightToLeft(){
 </div>
 </td></tr>
 
-<tr style="border-top:none; border-bottom:none"><td style="border-top:none; border-bottom:none" colspan="4">Duochrome Sph Bal : <span id="balanceRight"></span>
+<tr class="re-row" style="display:none; border-top:none; border-bottom:none"><td style="border-top:none; border-bottom:none" colspan="4">DC SPH: <span id="balanceRight"></span>
+
 </td></tr>
 
 
 <tr style="border-top:1px dotted lightgrey">
-<td style="border-top:none"colspan="4">
-<span id="foggingRight"></span> . <span id="perpendicular-axis-re"></span><br><br>
+<td class="re-row" style="display:none; border-top:none"colspan="4">
+<span id="foggingRight"></span><span id="perpendicular-axis-re"></span><br><br>FC CYL: <span id="balance-re"></span><br><br>
 
 <div class="fc-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:5%;width:100%;">
 
@@ -1468,8 +1471,9 @@ function copyRightToLeft(){
 <br><br>
 </td></tr>
 
-<tr><th colspan="4">FC DC Status Left Eye</th></tr>
-<tr data-eye="left" style="border-bottom:none">
+<tr><th colspan="4">FC DC Status Left Eye <button onclick="toggleLE()"> Show / Hide </button>
+</th></tr>
+<tr class="le-row" data-eye="left" style="display:none; border-bottom:none">
 <td style="border-bottom:none"colspan="4">
 <div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(9,1fr);gap:5px;width:100%;">
 
@@ -1572,13 +1576,14 @@ function copyRightToLeft(){
 </div>
 </td></tr>
 
-<tr style="border-top:none; border-bottom:none"><td style="border-top:none; border-bottom:none" colspan="4">Duochrome Sph Bal : <span id="balanceLeft"></span>
+<tr class="le-row" style="display:none; border-top:none; border-bottom:none"><td style="border-top:none; border-bottom:none" colspan="4">DC SPH: <span id="balanceLeft"></span>
 </td></tr>
 
 
 <tr style="border-top:1px dotted lightgrey">
-<td style="border-top:none"colspan="4">
-<span id="foggingLeft"></span> . <span id="perpendicular-axis-le"></span><br><br>
+<td class="le-row" style="display:none; border-top:none"colspan="4">
+<span id="foggingLeft"></span><span id="perpendicular-axis-le"></span><br><br>FC CYL: <span id="balance-le"></span><br><br>
+
 
 <div class="fc-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:5%;width:100%;">
 
@@ -1695,6 +1700,127 @@ function copyRightToLeft(){
 </td></tr>
 
 <script>
+function toggleRE(){
+  document.querySelectorAll(".re-row").forEach(r=>{
+    r.style.display = r.style.display === "none" ? "" : "none";
+  });
+}
+
+function toggleLE(){
+  document.querySelectorAll(".le-row").forEach(r=>{
+    r.style.display = r.style.display === "none" ? "" : "none";
+  });
+}
+</script>
+
+<script>
+function getPerpendicular(axis){
+  return (parseInt(axis) + 90) % 180;
+}
+
+function axisDiff(a,b){
+  let d = Math.abs(a-b);
+  return Math.min(d,180-d);
+}
+
+function updateFC(blockId, spanId){
+
+  const block = document.getElementById(blockId);
+  if(!block) return;
+
+  const nowSelect = block.querySelector(".fc_duo");
+  const nowAxis = nowSelect.value;
+
+  const allSelects = block.parentElement.querySelectorAll(".fc_duo");
+
+  // reset all styles
+  allSelects.forEach(sel=>{
+    sel.style.backgroundColor = "";
+    sel.querySelectorAll("option").forEach(opt=>{
+      opt.style.backgroundColor = "";
+    });
+  });
+
+  if(nowAxis === "n/a"){
+    document.getElementById(spanId).textContent = "";
+    return;
+  }
+
+  // If NOW is Bal, show 0 × 0
+  if(nowAxis === "bal"){
+    document.getElementById(spanId).textContent = " 0 × 0";
+    return;
+  }
+
+  const perp = getPerpendicular(nowAxis);
+
+  let balPower = null;
+  let perpPower = null;
+
+  allSelects.forEach(sel => {
+
+    const rx = parseFloat(sel.dataset.rx);
+
+    sel.querySelectorAll("option").forEach(opt=>{
+
+      const val = opt.value;
+
+      if(val === "bal"){
+        if(sel.value === "bal") balPower = rx;
+        return;
+      }
+
+      if(!isNaN(val)){
+        const axis = parseInt(val);
+
+        if(axisDiff(axis, perp) <= 15){
+          opt.style.backgroundColor = "orange";
+
+          if(sel.value == val){
+            sel.style.backgroundColor = "orange";
+            perpPower = rx;
+          }
+        }
+      }
+
+    });
+
+  });
+
+  let result = null;
+
+  if(balPower !== null && perpPower !== null){
+    result = Math.min(balPower, perpPower);
+  } 
+  else if(balPower !== null){
+    result = balPower;
+  } 
+  else if(perpPower !== null){
+    result = perpPower;
+  }
+
+  if(result !== null){
+    result = result - 0.25;
+    const power = (result > 0 ? "+" : "") + result.toFixed(2);
+    document.getElementById(spanId).textContent = power + " AXIS: " + nowAxis;
+  } else {
+    document.getElementById(spanId).textContent = "";
+  }
+}
+
+document.querySelectorAll(".fc_duo").forEach(sel=>{
+  sel.addEventListener("change", ()=>{
+    updateFC("fc-block-le","balance-le");
+    updateFC("fc-block-re","balance-re");
+    updateFC("fc-block-ou","balance-ou");
+  });
+});
+</script>
+
+
+
+
+<script>
 function snapToQuarter(v) {
   return Math.round(v * 4) / 4;
 }
@@ -1733,7 +1859,7 @@ function calculateBalanceByEye(eye, resultSpanId) {
 
   span.innerText = balance === null
     ? "N/A"
-    : (balance > 0 ? "+" : "") + balance.toFixed(2) + " SPH";
+    : (balance > 0 ? "+" : "") + balance.toFixed(2);
 }
 
 function updateFogging(balanceId, foggingId) {
@@ -1742,13 +1868,13 @@ function updateFogging(balanceId, foggingId) {
   if (!b || !f) return;
 
   if (b.innerText === "N/A") {
-    f.innerText = "Fogging N/A";
+    f.innerText = "Fogging N/A.";
     return;
   }
 
   const v = parseFloat(b.innerText);
   if (isNaN(v)) {
-    f.innerText = "Fogging N/A";
+    f.innerText = "Fogging N/A.";
     return;
   }
 
@@ -1773,6 +1899,7 @@ document.querySelectorAll(".vectorhelper_duo").forEach(sel => {
 
 recalcAll();
 </script>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -1808,9 +1935,9 @@ const clockMap = {
       if (val in clockMap) {
         let deg = (parseInt(val, 10) + 90) % 180;
         if (deg === 0) deg = 180;
-        span.innerText = 'Stop when ' + clockMap[deg] + ' is darker.';
+        span.innerText = ' Stop when ' + clockMap[deg] + ' is darker.';
       } else {
-        span.innerText = 'Over CYL N/A';
+        span.innerText = ' Over CYL N/A';
       }
     };
 
@@ -1821,6 +1948,8 @@ const clockMap = {
   });
 });
 </script>
+
+
 
 
 </table>
@@ -4558,8 +4687,24 @@ function calcVD(side) {
   const C = Number(document.getElementById(`vd_${side}C`).value) || 0;
   const A = Number(document.getElementById(`vd_${side}A`).value) || 0;
 
-  const sphAdj = -(C / 2);
-  const outS = S + sphAdj;
+function roundDownQuarter(num){
+  if(num >= 0){
+    return Math.floor(num * 4) / 4;
+  } else {
+    return Math.floor(num * 4) / 4; // negative already rounds down
+  }
+}
+
+// Example usage
+const sphAdj = -(C / 2);
+let outS = S + sphAdj;
+
+// Round outS down to nearest 0.25
+outS = roundDownQuarter(outS);
+
+
+
+
   const outC = C;
   const outA = A;
 
