@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2549,12 +2550,12 @@ Prescription comes in many types of errors; whether it's myopia, hyperopia or as
     <!-- AXIS -->
     <div style="text-align:center;">
       <label><b>AXIS</b></label><br>
-      <input type="number" id="axis" min="0" step="1" value="180" class="rx-input"><br>
+      <input type="number" id="axis" min="0" step="15" value="0" class="rx-input"><br>
       <div>
-        <button onclick="adj('axis', -1)"  class="btn-minus">−1</button>
-        <button onclick="adj('axis',  1)"  class="btn-plus">+1</button><br>        
-	<button onclick="adj('axis', -10)"  class="btn-minus">−10</button>
-        <button onclick="adj('axis',  10)"  class="btn-plus">+10</button><br>
+        <button onclick="adj('axis', -15)"  class="btn-minus">−15</button>
+        <button onclick="adj('axis',  15)"  class="btn-plus">+15</button><br>        
+	<button onclick="adj('axis', -30)"  class="btn-minus">−30</button>
+        <button onclick="adj('axis',  30)"  class="btn-plus">+30</button><br>
       </div>
     </div>
   </div>
@@ -2888,17 +2889,20 @@ Prescription comes in many types of errors; whether it's myopia, hyperopia or as
 
 
 
-// ---- SCRIPT STARTS HERE ---- //
-// ---- SCRIPT STARTS HERE ---- //
-// ---- SCRIPT STARTS HERE ---- //
-// ---- SCRIPT STARTS HERE ---- //
-// ---- SCRIPT STARTS HERE ---- //
-// ---- SCRIPT STARTS HERE ---- //
-// ---- SCRIPT STARTS HERE ---- //
+
 
 
 
 <script>
+
+// ---- SCRIPT STARTS HERE ---- //
+// ---- SCRIPT STARTS HERE ---- //
+// ---- SCRIPT STARTS HERE ---- //
+// ---- SCRIPT STARTS HERE ---- //
+// ---- SCRIPT STARTS HERE ---- //
+// ---- SCRIPT STARTS HERE ---- //
+// ---- SCRIPT STARTS HERE ---- //
+
 (function () {
   const d = new Date();
   const formatted = d.toLocaleDateString("en-GB", {
@@ -4974,11 +4978,11 @@ function parseText(txt){
     if(!el) return;
     let v = parseFloat(el.value) || 0;
     v += step;
-    if(type === 'axis'){
-      if(v < 1) v = 180;
-      if(v > 180) v = 1;
-      el.value = Math.round(v);
-    } else {
+if(type === 'axis'){
+  v = ((v - 1 + 180) % 180) + 1;  // keeps the overflow
+  el.value = Math.round(v);
+} 
+else {
       el.value = v.toFixed(2);
     }
     el.dispatchEvent(new Event('input',{bubbles:true}));
@@ -5602,9 +5606,11 @@ function openSummary() {
 
 
 
-// ----- FOR FC DC STATUS HELPER --- //
 
 <script>
+
+// ----- FOR FC DC STATUS HELPER --- //
+
 function toggleRE(){
   document.querySelectorAll(".re-row").forEach(r=>{
     r.style.display = r.style.display === "none" ? "" : "none";
@@ -5867,9 +5873,11 @@ const clockMap = {
 
 
 
-// ---- Age Add Analysis ---- //
 
 <script>
+
+// ---- Age Add Analysis ---- //
+
 function analyzeAgeAdd() {
   const age = parseInt(document.getElementById("age").value);
   let add = "";
