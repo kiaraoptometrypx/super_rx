@@ -1184,8 +1184,8 @@ RX Profile for <span class="customerName_summary">...</span> , Whatsapp <span cl
 </td></tr>
 
 <tr class="be-row yellow" style="border-top:none; border-bottom:none"><td rowspan="2" style="border-top:none; border-bottom:none" colspan="1">FC DC Bal BE<br>
-<button style="margin:5px 0; border-radius:10px; width:70px; height:25px" id="fillBalance">Auto-Fill</button>
-<div><button onclick="copyVD_OU_to_ODOS()" style="border-radius:10px; width:70px; height:25px">Use BE</button></div>
+<button style="margin:5px 0; border-radius:10px; width:50px; height:25px" id="fillBalance">Fill</button>
+<button onclick="copyVD_OU_to_ODOS()" style="border-radius:10px; width:50px; height:25px">Use</button>
 </td>
 <td style="border-top:none; border-bottom:none" colspan="3">
 DC SPH: <span style="margin-right:30px" id="balanceBoth"></span>FC CYL: <span id="balance-ou"></span>
@@ -1471,8 +1471,8 @@ document.getElementById("fillBalance").addEventListener("click", () => {
 
 
 <tr class="re-row purp" style="display:none; border-top:none; border-bottom:none"><td rowspan="2" style="border-top:none; border-bottom:none" colspan="1">FC DC Bal RE<br>
-<button style="margin:5px 0; border-radius:10px; width:70px; height:25px" id="fillBalanceRE">Auto-Fill</button>
-<div><button onclick="opyVD_OD()" style="border-radius:10px; width:70px; height:25px">Use RE</button></div>
+<button style="margin:5px 0; border-radius:10px; width:50px; height:25px" id="fillBalanceRE">Fill</button>
+<button onclick="opyVD_OD()" style="border-radius:10px; width:50px; height:25px">Use</button>
 </td>
 <td style="border-top:none; border-bottom:none" colspan="3">
 DC SPH: <span style="margin-right:30px" id="balanceRight"></span>FC CYL: <span id="balance-re"></span>
@@ -1747,8 +1747,8 @@ document.getElementById("fillBalanceRE").addEventListener("click", () => {
 </div>
 
 <tr class="le-row turq" style="display:none; border-top:none; border-bottom:none"><td rowspan="2" style="border-top:none; border-bottom:none" colspan="1">FC DC Bal LE<br>
-<button style="margin:5px 0; border-radius:10px; width:70px; height:25px" id="fillBalanceLE">Auto-Fill</button>
-<div><button onclick="copyVD_OS()" style="border-radius:10px; width:70px; height:25px">Use LE</button></div>
+<button style="margin:5px 0; border-radius:10px; width:70px; height:25px" id="fillBalanceLE">Fill</button>
+<button onclick="copyVD_OS()" style="border-radius:10px; width:70px; height:25px">Use</button>
 </td>
 <td style="border-top:none; border-bottom:none" colspan="3">
 DC SPH: <span style="margin-right:30px" id="balanceLeft"></span>FC CYL: <span id="balance-le"></span>
@@ -3637,19 +3637,67 @@ function exportInputs() {
   // PREFILL URL
   const prefillUrl = `https://sp-rx.github.io/super_rx/?data=${encodeURIComponent(csvText)}`;
 
+
+
   // EMAIL
 const odVC = document.getElementById("od_vcCombined")?.textContent || "-";
 const osVC = document.getElementById("os_vcCombined")?.textContent || "-";
+const addVC = document.getElementById("nearAddVector")?.textContent || "-";
 
 const customerName = document.getElementById("customerName")?.value.trim() || "Unnamed";
 const whatsapp = document.getElementById("customerWhatsapp")?.value.trim() || "";
 
 // Add RX to the subject
 const subject = encodeURIComponent(
-  `${customerName}${whatsapp ? " - " + whatsapp : ""} - R: ${odVC} // L: ${osVC}`
+  `${customerName}${whatsapp ? " - " + whatsapp : ""} - New Rx ${odVC} // ${osVC} // A: ${addVC}`
 );
 
-const body = encodeURIComponent(`Open Records:\n${prefillUrl}`);
+const body = encodeURIComponent(`CURRENT:
+1. Far RX R/L:     ${document.getElementById("od_origCombined")?.textContent || "-"}     //     ${document.getElementById("os_origCombined")?.textContent || "-"}     ADD:     ${document.getElementById("nearAdd")?.value || "0.00"}
+ 
+2. Near RX R/L:    ${document.getElementById("od_nearCombined")?.textContent || "-"}     //     ${document.getElementById("os_nearCombined")?.textContent || "-"}
+
+3. PD R/L:     ${document.getElementById("od_PD")?.value || "-"} / ${document.getElementById("os_PD")?.value || "-"}
+4. NOC R/L:     ${document.getElementById("od_NOC")?.value || "-"} / ${document.getElementById("os_NOC")?.value || "-"}
+
+5. Comments : ${document.getElementById("current_comments_summary")?.textContent || "-" }
+--------------------------
+VECTOR (${document.getElementById("statusVector")?.tagName === "SELECT"
+  ? document.getElementById("statusVector").options[document.getElementById("statusVector").selectedIndex]?.text || "-"
+  : document.getElementById("statusVector")?.dataset.value || "-"})
+1. Far RX R/L:     ${document.getElementById("od_vcCombined")?.textContent || "-"}     //     ${document.getElementById("os_vcCombined")?.textContent || "-"}     ADD:     ${document.getElementById("nearAddVector")?.value || "0.00"} 
+2. Far CL RX R/L:     ${document.getElementById("CL_od_vcCombined")?.textContent || "-"}     //     ${document.getElementById("CL_os_vcCombined")?.textContent || "-"}  
+
+3. Near RX R/L:     (Add ${document.getElementById("mirrorNearAddVector")?.textContent || "+0.00"})     ${document.getElementById("od_vcNearCombined_mirror")?.textContent || "-"}     //     ${document.getElementById("os_vcNearCombined_mirror")?.textContent || "-"}
+
+4. PD R/L:     ${document.getElementById("od_PD")?.value || "-"} / ${document.getElementById("os_PD")?.value || "-"}
+5. NOC R/L:     ${document.getElementById("od_NOC")?.value || "-"} / ${document.getElementById("os_NOC")?.value || "-"}
+
+6. FC DC Bal Both Eye:     ${document.getElementById("vd_ouSummary")?.textContent || "-"}  
+7. FC DC BAL R/L:     ${document.getElementById("vd_odSummary")?.textContent || "-"}     //     ${document.getElementById("vd_osSummary")?.textContent || "-"}  
+
+8. RX Changes R/L:          ${document.getElementById("vc_odSummary")?.textContent || "-"}     //     ${document.getElementById("vc_osSummary")?.textContent || "-"}
+
+9. Comments : ${document.getElementById("vector_comments_summary")?.textContent || "-" }
+--------------------------
+MANUAL (${document.getElementById("statusManual")?.tagName === "SELECT"
+  ? document.getElementById("statusManual").options[document.getElementById("statusManual").selectedIndex]?.text || "-"
+  : document.getElementById("statusManual")?.dataset.value || "-"})
+1. Far RX R/L:     ${document.getElementById("od_finalCombined")?.textContent || "-"}     //     ${document.getElementById("os_finalCombined")?.textContent || "-"}     ADD:     ${document.getElementById("nearAddFinal")?.value || "0.00"}
+
+2. Near RX R/L:     (Add ${document.getElementById("mirrorNearAddFinal")?.textContent || "+0.00"})     ${document.getElementById("od_finalNearCombined_mirror")?.textContent || "-"}     //     ${document.getElementById("os_finalNearCombined_mirror")?.textContent || "-"}
+
+3. PD R/L:     ${document.getElementById("od_PD")?.value || "-"} / ${document.getElementById("os_PD")?.value || "-"}
+4. NOC R/L:     ${document.getElementById("od_NOC")?.value || "-"} / ${document.getElementById("os_NOC")?.value || "-"}
+
+5. RX Changes R/L:     ${document.getElementById("od_roundCombinedDisplay")?.textContent || "-"}     //     ${document.getElementById("os_roundCombinedDisplay")?.textContent || "-"}
+
+6. Comments : ${document.getElementById("manual_comments_summary")?.textContent || "-" }
+--------------------------
+- The End -
+
+Open Records:\n${prefillUrl}
+`);
 
   const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=kiara.optometry.px@gmail.com&su=${subject}&body=${body}`;
   window.open(gmailUrl, "_blank");
