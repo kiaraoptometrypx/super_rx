@@ -3638,11 +3638,18 @@ function exportInputs() {
   const prefillUrl = `https://sp-rx.github.io/super_rx/?data=${encodeURIComponent(csvText)}`;
 
   // EMAIL
-  const customerName = document.getElementById("customerName")?.value.trim() || "Unnamed";
-  const whatsappNumber = document.getElementById("customerWhatsapp")?.value.trim() || "";
+const odVC = document.getElementById("od_vcCombined")?.textContent || "-";
+const osVC = document.getElementById("os_vcCombined")?.textContent || "-";
 
-  const subject = encodeURIComponent(`${customerName}${whatsappNumber ? " - " + whatsappNumber : ""}`);
-  const body = encodeURIComponent(`Click to open & prefill:\n${prefillUrl}`);
+const customerName = document.getElementById("customerName")?.value.trim() || "Unnamed";
+const whatsapp = document.getElementById("customerWhatsapp")?.value.trim() || "";
+
+// Add RX to the subject
+const subject = encodeURIComponent(
+  `${customerName}${whatsapp ? " - " + whatsapp : ""} - R: ${odVC} // L: ${osVC}`
+);
+
+const body = encodeURIComponent(`Open Records:\n${prefillUrl}`);
 
   const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=kiara.optometry.px@gmail.com&su=${subject}&body=${body}`;
   window.open(gmailUrl, "_blank");
