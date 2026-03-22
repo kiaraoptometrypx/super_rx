@@ -3541,7 +3541,7 @@ function shouldInclude(val) {
 
 // ===== CORE PARSER =====
 function applyCSV(csvText) {
-  if (!csvText.startsWith("RX_EXPORT_INPUTS")) return;
+  if (!csvText.startsWith("RXI")) return;
 
   const parts = csvText.split(",").slice(1);
 
@@ -3583,7 +3583,7 @@ function applyCSV(csvText) {
 
 // ===== EXPORT =====
 function exportInputs() {
-  const out = ["RX_EXPORT_INPUTS"];
+  const out = ["RXI"];
   const omitIds = ["user","pass"];
 
   // INPUTS
@@ -3685,7 +3685,7 @@ window.addEventListener("load", () => {
 // ===== PASTE =====
 document.addEventListener("paste", e => {
   const text = e.clipboardData.getData("text").trim();
-  if (!text.startsWith("RX_EXPORT_INPUTS")) return;
+  if (!text.startsWith("RXI")) return;
 
   e.preventDefault();
   applyCSV(text);
