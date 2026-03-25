@@ -19,14 +19,14 @@ font-weight:300 !important;
     transition: opacity 0.3s ease;
     opacity: 1;
   }
-.vectorhelper-row{
+.SPhelper-row{
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 12px;
   width: 100%;
 }
 
-.vectorhelper-rx{
+.SPhelper-rx{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,7 +34,7 @@ font-weight:300 !important;
 }
 
 
-.vectorhelper-rx span{
+.SPhelper-rx span{
   margin-bottom: 6px;
   font-weight: 400;
 }
@@ -425,7 +425,7 @@ button.active {
   <div style="display:flex; gap:10px; justify-content:flex-start; margin-bottom:5px;">
     <a data-target="s-1">Intro</a>
     <a data-target="s0">Current Rx</a>
-    <a data-target="s2">Vector RX</a>
+    <a data-target="s2">SP RX</a>
     <a style="opacity:0.1;" data-target="s-2">Bino Test</a>
     <a style="opacity:0.1;" data-target="s3">Manual RX</a>
   </div>
@@ -585,7 +585,7 @@ Exam Date : <input style="height:20px; width:35%" type="text" id="dateInput">
 
 <tr><th class="red" colspan="4"><i>Load a file by copying everything and pasting in any input, press this button to use latest RX. </i><br>
 
-<button style="margin-top:5px; margin-right:15px; background-color:white; border-radius:10px; height:25px; width:180px" id="fillCurrentBtn">Use Vector RX</button>
+<button style="margin-top:5px; margin-right:15px; background-color:white; border-radius:10px; height:25px; width:180px" id="fillCurrentBtn">Use SP RX</button>
 
 </th></tr>
 
@@ -888,9 +888,9 @@ Exam Date : <input style="height:20px; width:35%" type="text" id="dateInput">
 
 
 <table>
-<!-- Vector Refraction -->
+<!-- SP Refraction -->
 <tr>
-  <th class="yellow" colspan="4">Vector Refraction</th></tr>
+  <th class="yellow" colspan="4">SP Refraction</th></tr>
 <tr style="border-bottom:none"><td style="border-bottom:none" colspan="4">1. Measure and input the amount of sph needed to shift DC to balance.<br>2. Apply fogging, measure and input the amount of cyl and axis needed to balance FC.<br><br>
 
 <button style="width:80%" id="toggleBtn">Show / Hide Helper</button>
@@ -917,11 +917,11 @@ RX Profile for <span class="customerName_summary">...</span> , Whatsapp <span cl
 <tr><th class="yellow" colspan="4">FC DC Status Both Eye</th></tr>
 <tr class="yellow" data-eye="both" style="border-bottom:none">
 <td style="border-bottom:none" colspan="4">
-<div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(9,1fr);gap:5px;width:100%;">
+<div class="SPhelper-row" style="display:grid;grid-template-columns:repeat(9,1fr);gap:5px;width:100%;">
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+2.00 SPH</span>
-    <select id="dc_200_ou" class="vectorhelper_duo" data-rx="2.00" style="padding:4px;">
+    <select id="dc_200_ou" class="SPhelper_duo" data-rx="2.00" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
 
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
@@ -930,9 +930,9 @@ RX Profile for <span class="customerName_summary">...</span> , Whatsapp <span cl
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+1.50 SPH</span>
-    <select  id="dc_150_ou" class="vectorhelper_duo" data-rx="1.50" style="padding:4px;">
+    <select  id="dc_150_ou" class="SPhelper_duo" data-rx="1.50" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
 
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
@@ -941,9 +941,9 @@ RX Profile for <span class="customerName_summary">...</span> , Whatsapp <span cl
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+1.00 SPH</span>
-    <select  id="dc_100_ou" class="vectorhelper_duo" data-rx="1.00" style="padding:4px;">
+    <select  id="dc_100_ou" class="SPhelper_duo" data-rx="1.00" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
 
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
@@ -952,9 +952,9 @@ RX Profile for <span class="customerName_summary">...</span> , Whatsapp <span cl
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+0.50 SPH</span>
-    <select  id="dc_050_ou" class="vectorhelper_duo" data-rx="0.50" style="padding:4px;">
+    <select  id="dc_050_ou" class="SPhelper_duo" data-rx="0.50" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
       <option value="bal"  style="background:#888;color:#fff;">Bal</option>
@@ -962,9 +962,9 @@ RX Profile for <span class="customerName_summary">...</span> , Whatsapp <span cl
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>NOW</span>
-    <select  id="dc_00_ou" class="vectorhelper_duo" data-rx="0.00" style="padding:4px;">
+    <select  id="dc_00_ou" class="SPhelper_duo" data-rx="0.00" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
       <option value="bal"  style="background:#888;color:#fff;">Bal</option>
@@ -972,9 +972,9 @@ RX Profile for <span class="customerName_summary">...</span> , Whatsapp <span cl
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>-0.50 SPH</span>
-    <select  id="dc_-050_ou" class="vectorhelper_duo" data-rx="-0.50" style="padding:4px;">
+    <select  id="dc_-050_ou" class="SPhelper_duo" data-rx="-0.50" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
       <option value="bal"  style="background:#888;color:#fff;">Bal</option>
@@ -983,9 +983,9 @@ RX Profile for <span class="customerName_summary">...</span> , Whatsapp <span cl
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>-1.00 SPH</span>
-    <select  id="dc_-100_ou" class="vectorhelper_duo" data-rx="-1.00" style="padding:4px;">
+    <select  id="dc_-100_ou" class="SPhelper_duo" data-rx="-1.00" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
       <option value="bal"  style="background:#888;color:#fff;">Bal</option>
@@ -993,9 +993,9 @@ RX Profile for <span class="customerName_summary">...</span> , Whatsapp <span cl
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>-1.50 SPH</span>
-    <select id="dc_-150_ou"  class="vectorhelper_duo" data-rx="-1.50" style="padding:4px;">
+    <select id="dc_-150_ou"  class="SPhelper_duo" data-rx="-1.50" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
       <option value="bal"  style="background:#888;color:#fff;">Bal</option>
@@ -1003,9 +1003,9 @@ RX Profile for <span class="customerName_summary">...</span> , Whatsapp <span cl
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>-2.00 SPH</span>
-    <select id="dc_-200_ou" class="vectorhelper_duo" data-rx="-2.00" style="padding:4px;">
+    <select id="dc_-200_ou" class="SPhelper_duo" data-rx="-2.00" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
       <option value="bal"  style="background:#888;color:#fff;">Bal</option>
@@ -1200,11 +1200,11 @@ document.getElementById("fillBalance").addEventListener("click", () => {
 <tr class="re-row purp" data-eye="right" style="display:none; border-bottom:none">
 <td style="border-bottom:none"colspan="4">
 
-<div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(9,1fr);gap:5px;width:100%;">
+<div class="SPhelper-row" style="display:grid;grid-template-columns:repeat(9,1fr);gap:5px;width:100%;">
 
-<div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+<div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+2.00 SPH</span>
-    <select id="dc_200_od" class="vectorhelper_duo" data-rx="2.00" style="padding:4px;">
+    <select id="dc_200_od" class="SPhelper_duo" data-rx="2.00" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
 
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
@@ -1213,9 +1213,9 @@ document.getElementById("fillBalance").addEventListener("click", () => {
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+1.50 SPH</span>
-    <select id="dc_150_od" class="vectorhelper_duo" data-rx="1.50" style="padding:4px;">
+    <select id="dc_150_od" class="SPhelper_duo" data-rx="1.50" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
 
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
@@ -1225,9 +1225,9 @@ document.getElementById("fillBalance").addEventListener("click", () => {
   </div>
 
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+1.00 SPH</span>
-    <select id="dc_100_od" class="vectorhelper_duo" data-rx="1.00" style="padding:4px;">
+    <select id="dc_100_od" class="SPhelper_duo" data-rx="1.00" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
 
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
@@ -1236,9 +1236,9 @@ document.getElementById("fillBalance").addEventListener("click", () => {
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+0.50 SPH</span>
-    <select id="dc_050_od" class="vectorhelper_duo" data-rx="0.50" style="padding:4px;">
+    <select id="dc_050_od" class="SPhelper_duo" data-rx="0.50" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
       <option value="bal"  style="background:#888;color:#fff;">Bal</option>
@@ -1246,9 +1246,9 @@ document.getElementById("fillBalance").addEventListener("click", () => {
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>NOW</span>
-    <select id="dc_000_od" class="vectorhelper_duo" data-rx="0.00" style="padding:4px;">
+    <select id="dc_000_od" class="SPhelper_duo" data-rx="0.00" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
       <option value="bal"  style="background:#888;color:#fff;">Bal</option>
@@ -1256,9 +1256,9 @@ document.getElementById("fillBalance").addEventListener("click", () => {
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>-0.50 SPH</span>
-    <select id="dc_-050_od" class="vectorhelper_duo" data-rx="-0.50" style="padding:4px;">
+    <select id="dc_-050_od" class="SPhelper_duo" data-rx="-0.50" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
       <option value="bal"  style="background:#888;color:#fff;">Bal</option>
@@ -1267,9 +1267,9 @@ document.getElementById("fillBalance").addEventListener("click", () => {
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>-1.00 SPH</span>
-    <select id="dc_-100_od" class="vectorhelper_duo" data-rx="-1.00" style="padding:4px;">
+    <select id="dc_-100_od" class="SPhelper_duo" data-rx="-1.00" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
       <option value="bal"  style="background:#888;color:#fff;">Bal</option>
@@ -1277,9 +1277,9 @@ document.getElementById("fillBalance").addEventListener("click", () => {
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>-1.50 SPH</span>
-    <select  id="dc_-150_od" class="vectorhelper_duo" data-rx="-1.50" style="padding:4px;">
+    <select  id="dc_-150_od" class="SPhelper_duo" data-rx="-1.50" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
       <option value="bal"  style="background:#888;color:#fff;">Bal</option>
@@ -1287,9 +1287,9 @@ document.getElementById("fillBalance").addEventListener("click", () => {
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>-2.00 SPH</span>
-    <select id="dc_-200_od"  class="vectorhelper_duo" data-rx="-2.00" style="padding:4px;">
+    <select id="dc_-200_od"  class="SPhelper_duo" data-rx="-2.00" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
       <option value="bal"  style="background:#888;color:#fff;">Bal</option>
@@ -1482,11 +1482,11 @@ document.getElementById("fillBalanceRE").addEventListener("click", () => {
 </th></tr>
 <tr class="le-row turq" data-eye="left" style="display:none; border-bottom:none">
 <td style="border-bottom:none"colspan="4">
-<div class="vectorhelper-row" style="display:grid;grid-template-columns:repeat(9,1fr);gap:5px;width:100%;">
+<div class="SPhelper-row" style="display:grid;grid-template-columns:repeat(9,1fr);gap:5px;width:100%;">
 
-<div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+<div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+2.00 SPH</span>
-    <select  id="dc_200_os" class="vectorhelper_duo" data-rx="2.00" style="padding:4px;">
+    <select  id="dc_200_os" class="SPhelper_duo" data-rx="2.00" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
 
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
@@ -1495,9 +1495,9 @@ document.getElementById("fillBalanceRE").addEventListener("click", () => {
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+1.50 SPH</span>
-    <select  id="dc_150_os" class="vectorhelper_duo" data-rx="1.50" style="padding:4px;">
+    <select  id="dc_150_os" class="SPhelper_duo" data-rx="1.50" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
 
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
@@ -1507,9 +1507,9 @@ document.getElementById("fillBalanceRE").addEventListener("click", () => {
   </div>
 
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+1.00 SPH</span>
-    <select  id="dc_100_os" class="vectorhelper_duo" data-rx="1.00" style="padding:4px;">
+    <select  id="dc_100_os" class="SPhelper_duo" data-rx="1.00" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
 
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
@@ -1518,9 +1518,9 @@ document.getElementById("fillBalanceRE").addEventListener("click", () => {
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+0.50 SPH</span>
-    <select  id="dc_050_os"class="vectorhelper_duo" data-rx="0.50" style="padding:4px;">
+    <select  id="dc_050_os"class="SPhelper_duo" data-rx="0.50" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
       <option value="bal"  style="background:#888;color:#fff;">Bal</option>
@@ -1528,9 +1528,9 @@ document.getElementById("fillBalanceRE").addEventListener("click", () => {
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>NOW</span>
-    <select id="dc_000_os" class="vectorhelper_duo" data-rx="0.00" style="padding:4px;">
+    <select id="dc_000_os" class="SPhelper_duo" data-rx="0.00" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
       <option value="bal"  style="background:#888;color:#fff;">Bal</option>
@@ -1538,9 +1538,9 @@ document.getElementById("fillBalanceRE").addEventListener("click", () => {
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>-0.50 SPH</span>
-    <select id="dc_-050_os" class="vectorhelper_duo" data-rx="-0.50" style="padding:4px;">
+    <select id="dc_-050_os" class="SPhelper_duo" data-rx="-0.50" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
       <option value="bal"  style="background:#888;color:#fff;">Bal</option>
@@ -1549,9 +1549,9 @@ document.getElementById("fillBalanceRE").addEventListener("click", () => {
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>-1.00 SPH</span>
-    <select id="dc_-100_os" class="vectorhelper_duo" data-rx="-1.00" style="padding:4px;">
+    <select id="dc_-100_os" class="SPhelper_duo" data-rx="-1.00" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
       <option value="bal"  style="background:#888;color:#fff;">Bal</option>
@@ -1559,9 +1559,9 @@ document.getElementById("fillBalanceRE").addEventListener("click", () => {
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>-1.50 SPH</span>
-    <select id="dc_-150_os" class="vectorhelper_duo" data-rx="-1.50" style="padding:4px;">
+    <select id="dc_-150_os" class="SPhelper_duo" data-rx="-1.50" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
       <option value="bal"  style="background:#888;color:#fff;">Bal</option>
@@ -1569,9 +1569,9 @@ document.getElementById("fillBalanceRE").addEventListener("click", () => {
     </select>
   </div>
 
-  <div class="vectorhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>-2.00 SPH</span>
-    <select id="dc_-200_os" class="vectorhelper_duo" data-rx="-2.00" style="padding:4px;">
+    <select id="dc_-200_os" class="SPhelper_duo" data-rx="-2.00" style="padding:4px;">
       <option value="na"   style="background:#f0f0f0;color:#555;font-style:italic;">N/A</option>
       <option value="blue" style="background:#1e90ff;color:#fff;">Blue</option>
       <option value="bal"  style="background:#888;color:#fff;">Bal</option>
@@ -1759,7 +1759,7 @@ document.getElementById("fillBalanceLE").addEventListener("click", () => {
 <table>
 
 <tr>
-  <td>Vector Changes R<br>
+  <td>SP Changes R<br>
 <button style="border-radius:10px; margin-right:5%; color:green" type="button" onclick="adjustValue('vc_odS', 0.25)">+0.25</button>
 <button style="border-radius:10px; color:red" type="button" onclick="adjustValue('vc_odS', -0.25)">-0.25</button>
 
@@ -1769,7 +1769,7 @@ document.getElementById("fillBalanceLE").addEventListener("click", () => {
   <td><input type="number" step="5" min="0" max="180" id="vc_odA"></td>
 </tr>
 <tr>
-  <td>Vector Changes L<br>
+  <td>SP Changes L<br>
 <button style="border-radius:10px; color:green; margin-right:5%" type="button" onclick="adjustValue('vc_osS', 0.25)">+0.25</button>
 <button style="border-radius:10px; color:red" type="button" onclick="adjustValue('vc_osS', -0.25)">-0.25</button>
 
@@ -1800,7 +1800,7 @@ L: <span class="os_summary">+0.00 / +0.00 × 0</span>
 </td>
 </tr>
 <tr style="display:">
-  <td class="yellow">Vector RX</td>
+  <td class="yellow">SP RX</td>
   <td class="yellow" colspan="3">
 R: <span id="od_vcFinalS">0.00</span> / <span id="od_vcFinalC">0.00</span> x <span id="od_vcFinalA">-</span><span style="margin-left:80px"></span>
 L: <span id="os_vcFinalS">0.00</span> / <span id="os_vcFinalC">0.00</span> x <span id="os_vcFinalA">-</span>
@@ -1810,7 +1810,7 @@ L: <span id="os_vcFinalS">0.00</span> / <span id="os_vcFinalC">0.00</span> x <sp
 
 
 <tr>
-<td class="yellow">Add : <input style="width:60px" type="number" step="0.25" min="0" max="5" id="nearAddVector"
+<td class="yellow">Add : <input style="width:60px" type="number" step="0.25" min="0" max="5" id="nearAddSP"
 </td>
 
 
@@ -1875,7 +1875,7 @@ L: <span id="os_vcFinalS">0.00</span> / <span id="os_vcFinalC">0.00</span> x <sp
   </div>
 
   <div>
-    <b>Vector Changes</b><br>(Reset) <button class="vbtn" type="button" onclick="resetValue('visual_s2')">S</button> <button class="vbtn" type="button" onclick="resetValue('visual_c2')">C</button> <button class="vbtn" type="button" onclick="resetValue('visual_a2')">A</button><br><br>
+    <b>SP Changes</b><br>(Reset) <button class="vbtn" type="button" onclick="resetValue('visual_s2')">S</button> <button class="vbtn" type="button" onclick="resetValue('visual_c2')">C</button> <button class="vbtn" type="button" onclick="resetValue('visual_a2')">A</button><br><br>
 
 
      S: 
@@ -1966,10 +1966,10 @@ L: <span id="os_vcFinalS">0.00</span> / <span id="os_vcFinalC">0.00</span> x <sp
 <tr><th class="yellow" colspan="4">Please Press Update All! 
 <button style="margin-left:10px; border-radius:10px; height:25px; width:100px" class="updateAllBtn">Update All</button>
 <br><br>
-Status : <button id="statusVector"
+Status : <button id="statusSP"
         data-value="Not Done - Invalid"
         style="font-size:11px; border-radius:10px; height:25px; margin-left:2px; width:120px"
-        onclick="toggleStatusVector()">
+        onclick="toggleStatusSP()">
   Not Done - Invalid
 </button>
 
@@ -1985,28 +1985,28 @@ Status : <button id="statusVector"
 <tr>
 <td colspan="1">Comments:</td>
 <td colspan="3">
-<input type="text" id="vector_comments1"
+<input type="text" id="SP_comments1"
   style="text-align:left; width:95%; height:20px"
   placeholder="Purpose of prescription; Far? Near? Contact lens? etc"
-  oninput="updateVectorSummary()">
+  oninput="updateSPSummary()">
 <div style="height:5px"></div>
 
-<input type="text" id="vector_comments2"
+<input type="text" id="SP_comments2"
   style="text-align:left; width:95%; height:20px"
   placeholder="Any special plan for this prescription?"
-  oninput="updateVectorSummary()">
+  oninput="updateSPSummary()">
 <div style="height:5px"></div>
 
-<input type="text" id="vector_comments3"
+<input type="text" id="SP_comments3"
   style="text-align:left; width:95%; height:20px"
   placeholder="Leave empty if not used"
-  oninput="updateVectorSummary()">
+  oninput="updateSPSummary()">
 <div style="height:5px"></div>
 
-<input type="text" id="vector_comments4"
+<input type="text" id="SP_comments4"
   style="text-align:left; width:95%; height:20px"
   placeholder="Leave empty if not used"
-  oninput="updateVectorSummary()">
+  oninput="updateSPSummary()">
 <div style="height:5px"></div>
 
 
@@ -2159,7 +2159,7 @@ Use this to know what RX to fit next based on patient's response.
   <td style="border:none; height:1px; padding:0;"></td>
   <td style="border:none; height:1px; padding:0;"></td>
 </tr>
-<tr><th class="red" colspan="4"> Vectorized Corrected </th></tr>
+<tr><th class="red" colspan="4"> SPized Corrected </th></tr>
 <tr class="">
 <td class="red">Current Rx</td>
 <td class="red" colspan="3">
@@ -2170,7 +2170,7 @@ L: <span class="os_summary">+0.00 / +0.00 × 0</span>
 <tr class="">
   <td>Right Dominant</td>
   <td colspan="3">
-R: <span id="od_vectorDisplay" style="margin-right: 80px;">- / - × -</span>
+R: <span id="od_SPDisplay" style="margin-right: 80px;">- / - × -</span>
 L: <span id="OScrossedSpan">- / - × -</span>
 
 </td>
@@ -2180,7 +2180,7 @@ L: <span id="OScrossedSpan">- / - × -</span>
   <td>Left Dominant</td>
   <td colspan="3">
 R: <span id="ODcrossedSpan" style="margin-right: 80px;">- / - × -</span>
-L: <span id="os_vectorDisplay">- / - × -</span>
+L: <span id="os_SPDisplay">- / - × -</span>
 
 </td>
 </tr>
@@ -2257,7 +2257,7 @@ Status : <button id="statusManual"
   </button>
 
 <button class="yellow toggleMask2" style="border-radius:10px; height:25px; width:70px">
-  Vector
+  SP
 </button>
 
 <button class="toggleMask4" style="border-radius:10px; height:25px; width:70px">
@@ -2316,7 +2316,7 @@ L : <span id="CL_os_origCombined">OS -</span>
 </tr>
 
 <tr class="mask2">
-  <td class="yellow">Vector Rx</td>
+  <td class="yellow">SP Rx</td>
   <td class="yellow" colspan="3">
     R : <span id="od_vcCombined" style="margin-right: 100px;">-</span>
     L : <span id="os_vcCombined">-</span>
@@ -2324,7 +2324,7 @@ L : <span id="CL_os_origCombined">OS -</span>
 </tr>
 
 <tr class="mask2">
-  <td class="yellow">Vector Near +<span id="mirrorNearAddVector"></span>
+  <td class="yellow">SP Near +<span id="mirrorNearAddSP"></span>
 </td>
   <td style="text-align:middle" class="yellow" colspan="3">
     R: <span id="od_vcNearCombined_mirror" style="margin-right: 100px;">0.00 / 0.00 x 0</span>
@@ -2333,7 +2333,7 @@ L : <span id="CL_os_origCombined">OS -</span>
 </tr>
 
 <tr class="mask2">
-  <td class="yellow">Vector CL Rx</td>
+  <td class="yellow">SP CL Rx</td>
   <td class="yellow" colspan="3">
     R : <span id="CL_od_vcCombined" style="margin-right: 100px;">-</span>
     L : <span id="CL_os_vcCombined">-</span>
@@ -2348,15 +2348,15 @@ L : <span id="CL_os_origCombined">OS -</span>
   </td>
 </tr>
 <tr class="mirror1 mask1">
-  <td class="blue">Vectorized RE Dom</td>
+  <td class="blue">SPized RE Dom</td>
   <td class="blue" colspan="3">
-    R: <span id="od_vectorDisplay_mirror" style="margin-right: 80px;">- / - × -</span>
-    L: <span id="os_vectorDisplay_mirror">- / - × -</span>
+    R: <span id="od_SPDisplay_mirror" style="margin-right: 80px;">- / - × -</span>
+    L: <span id="os_SPDisplay_mirror">- / - × -</span>
   </td>
 </tr>
 
 <tr class="mirror2 mask1">
-  <td class="blue">Vectorized LE Dom</td>
+  <td class="blue">SPized LE Dom</td>
   <td class="blue" colspan="3">
     R: <span id="ODcrossedSpan_mirror" style="margin-right: 80px;">- / - × -</span>
     L: <span id="OScrossedSpan_mirror">- / - × -</span>
@@ -2394,7 +2394,7 @@ L : <span id="CL_os_origCombined">OS -</span>
 </td></tr>
 
 <tr class="mask2">
-<td class="yellow">Vector</td><td colspan="3" class="yellow"><span id="vector_comments_summary"></span>
+<td class="yellow">SP</td><td colspan="3" class="yellow"><span id="SP_comments_summary"></span>
 </td></tr>
 
 <tr class="mask1">
@@ -2571,7 +2571,7 @@ NOC :
   </button>
 
 <button class="yellow toggleMask2" style="border-radius:10px; height:25px; width:70px">
-  Vector
+  SP
 </button>
 
 <button class="toggleMask4" style="border-radius:10px; height:25px; width:70px">
@@ -2610,7 +2610,7 @@ NOC :
 </tr>
 
 <tr class="mask2">
-  <td class="yellow">Vector Change</td>
+  <td class="yellow">SP Change</td>
   <td colspan="3" class="yellow">
     R: <span id="vc_odSummary" style="margin-right: 100px;">-</span>
     L: <span id="vc_osSummary">-</span>
@@ -2657,7 +2657,7 @@ NOC :
 
 
 <tr class="mask2">
-  <td class="yellow">Vector Gaze</td>
+  <td class="yellow">SP Gaze</td>
   <td class="yellow" colspan="3">
     Horizontal : <span id="prismH_vc" style="margin-right: 50px;">-</span>
     Vertical : <span id="prismV_vc" style="margin-right: 50px;">-</span>
@@ -3387,13 +3387,13 @@ function updateCurrentSummary() {
 
 
 <script>
-function updateVectorSummary() {
+function updateSPSummary() {
   const fields = [
-    { id: "vector_comments1", label: "" },
-    { id: "vector_comments2", label: "" },
-    { id: "vector_comments3", label: "" },
-    { id: "vector_comments4", label: "" },
-    { id: "vector_comments5", label: "" }
+    { id: "SP_comments1", label: "" },
+    { id: "SP_comments2", label: "" },
+    { id: "SP_comments3", label: "" },
+    { id: "SP_comments4", label: "" },
+    { id: "SP_comments5", label: "" }
   ];
 
   const parts = [];
@@ -3403,7 +3403,7 @@ function updateVectorSummary() {
     if (v) parts.push(v);
   });
 
-  document.getElementById("vector_comments_summary").textContent =
+  document.getElementById("SP_comments_summary").textContent =
     parts.length ? parts.join(". ") + "." : "";
 }
 </script>
@@ -3439,7 +3439,7 @@ function updateManualSummary() {
 
 <script>
 document.getElementById("fillCurrentBtn").addEventListener("click", () => {
-  // Map Vector spans to Current RX input IDs
+  // Map SP spans to Current RX input IDs
   const mapping = [
     { span: "od_vcFinalS", input: "od_origS" },
     { span: "od_vcFinalC", input: "od_origC" },
@@ -3479,7 +3479,7 @@ document.getElementById("fillCurrentBtn").addEventListener("click", () => {
   const btn = document.getElementById("fillCurrentBtn");
   btn.style.backgroundColor = "#d8c7c5";  // red
   btn.style.color = "black";               // text black
-  btn.textContent = "Latest Vector Rx";             // change label
+  btn.textContent = "Latest SP Rx";             // change label
 });
 
 </script>
@@ -3562,7 +3562,7 @@ function exportInputs() {
   });
 
   // STATUS
-  ["statusVector","statusManual"].forEach(id => {
+  ["statusSP","statusManual"].forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
 
@@ -3588,7 +3588,7 @@ function exportInputs() {
     });
 
   // SELECTS (BT + FC + DC)
-  document.querySelectorAll("select[id^='BT_select_'], select.fc_duo, select.vectorhelper_duo")
+  document.querySelectorAll("select[id^='BT_select_'], select.fc_duo, select.SPhelper_duo")
     .forEach(el => {
       const val = el.options[el.selectedIndex]?.text || "";
       if (shouldInclude(val)) {
@@ -3608,7 +3608,7 @@ function exportInputs() {
   // EMAIL
 const odVC = document.getElementById("od_vcCombined")?.textContent || "-";
 const osVC = document.getElementById("os_vcCombined")?.textContent || "-";
-const addVC = document.getElementById("nearAddVector")?.textContent || "-";
+const addVC = document.getElementById("nearAddSP")?.textContent || "-";
 
 const customerName = document.getElementById("customerName")?.value.trim() || "Unnamed";
 const whatsapp = document.getElementById("customerWhatsapp")?.value.trim() || "";
@@ -3628,10 +3628,10 @@ const body = encodeURIComponent(`CURRENT:
 
 5. Comments : ${document.getElementById("current_comments_summary")?.textContent || "-" }
 --------------------------
-VECTOR (${document.getElementById("statusVector")?.tagName === "SELECT"
-  ? document.getElementById("statusVector").options[document.getElementById("statusVector").selectedIndex]?.text || "-"
-  : document.getElementById("statusVector")?.dataset.value || "-"})
-1. Far RX R/L:     ${document.getElementById("od_vcCombined")?.textContent || "-"}     //     ${document.getElementById("os_vcCombined")?.textContent || "-"}     ADD:     ${document.getElementById("nearAddVector")?.value || "0.00"} 
+SP (${document.getElementById("statusSP")?.tagName === "SELECT"
+  ? document.getElementById("statusSP").options[document.getElementById("statusSP").selectedIndex]?.text || "-"
+  : document.getElementById("statusSP")?.dataset.value || "-"})
+1. Far RX R/L:     ${document.getElementById("od_vcCombined")?.textContent || "-"}     //     ${document.getElementById("os_vcCombined")?.textContent || "-"}     ADD:     ${document.getElementById("nearAddSP")?.value || "0.00"} 
 2. Far CL RX R/L:     ${document.getElementById("CL_od_vcCombined")?.textContent || "-"}     //     ${document.getElementById("CL_os_vcCombined")?.textContent || "-"}  
 
 3. Near RX R/L:     ${document.getElementById("od_vcNearCombined_mirror")?.textContent || "-"}     //     ${document.getElementById("os_vcNearCombined_mirror")?.textContent || "-"}
@@ -3644,7 +3644,7 @@ VECTOR (${document.getElementById("statusVector")?.tagName === "SELECT"
 
 8. RX Changes R/L:          ${document.getElementById("vc_odSummary")?.textContent || "-"}     //     ${document.getElementById("vc_osSummary")?.textContent || "-"}
 
-9. Comments : ${document.getElementById("vector_comments_summary")?.textContent || "-" }
+9. Comments : ${document.getElementById("SP_comments_summary")?.textContent || "-" }
 --------------------------
 MANUAL (${document.getElementById("statusManual")?.tagName === "SELECT"
   ? document.getElementById("statusManual").options[document.getElementById("statusManual").selectedIndex]?.text || "-"
@@ -3727,7 +3727,7 @@ document.addEventListener("input", e => {
 <script>
   const fields = [
     { input: 'nearAdd', span: 'mirrorNearAdd' },
-    { input: 'nearAddVector', span: 'mirrorNearAddVector' },
+    { input: 'nearAddSP', span: 'mirrorNearAddSP' },
     { input: 'nearAddFinal', span: 'mirrorNearAddFinal' }
   ];
 
@@ -3745,7 +3745,7 @@ document.addEventListener("input", e => {
 
 <script>
 
-function updateVectorized() {
+function updateSPized() {
   ["od","os"].forEach(eye => {
     const sEl = document.getElementById(eye + "_finalS");
     const cEl = document.getElementById(eye + "_finalC");
@@ -3763,18 +3763,18 @@ function updateVectorized() {
     const C = formatPower(parseFloat(cEl.value) || 0);
     const A = parseInt(aEl.value) || 0;
 
-    document.getElementById(eye + "_vectorDisplay").textContent = `${S} / ${C} × ${A}`;
+    document.getElementById(eye + "_SPDisplay").textContent = `${S} / ${C} × ${A}`;
   });
 }
 
 ["od_finalS","od_finalC","od_finalA","os_finalS","os_finalC","os_finalA"].forEach(id => {
   const el = document.getElementById(id);
   if (!el) return;
-  el.addEventListener("input", updateVectorized);
-  el.addEventListener("change", updateVectorized);
+  el.addEventListener("input", updateSPized);
+  el.addEventListener("change", updateSPized);
 });
 
-updateVectorized();
+updateSPized();
 
 
 </script>
@@ -3894,12 +3894,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
 window.addEventListener("DOMContentLoaded", () => {
-  const addInput = document.getElementById("nearAddVector");
+  const addInput = document.getElementById("nearAddSP");
 
   function updateVcNearRx() {
     const add = parseFloat(addInput.value) || 0;
 
-    // Get far vector Rx values
+    // Get far SP Rx values
     const odS = parseFloat(document.getElementById("od_vcFinalS").textContent) || 0;
     const odC = parseFloat(document.getElementById("od_vcFinalC").textContent) || 0;
     const odA = parseInt(document.getElementById("od_vcFinalA").textContent) || 0;
@@ -3924,7 +3924,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // Update on Add input change
   addInput.addEventListener("input", updateVcNearRx);
 
-  // Live update when far vector Rx changes
+  // Live update when far SP Rx changes
   ["od_vcFinalS","od_vcFinalC","od_vcFinalA","os_vcFinalS","os_vcFinalC","os_vcFinalA"].forEach(id => {
     const el = document.getElementById(id);
     if(el) {
@@ -4026,7 +4026,7 @@ function fmtPlus(v){
 
 function calcDecentration(angleDeg, vertexMM){ return (vertexMM / 10) * Math.tan(angleDeg * Math.PI/180); }
 
-/* ===== Vector & lens math (unchanged) ===== */
+/* ===== SP & lens math (unchanged) ===== */
 function calcBackwardsLens(orig, final){
   const rx1 = normalizeMinus(orig), rxF = normalizeMinus(final);
   const M1 = rx1.S + rx1.C/2;
@@ -4061,8 +4061,8 @@ function chooseBestDiff(diff1, diff2){
 }
 
 
-function reverseVectorChange(orig, vector){
-  const rxOrig = normalizeMinus(orig), rxVec = normalizeMinus(vector);
+function reverseSPChange(orig, SP){
+  const rxOrig = normalizeMinus(orig), rxVec = normalizeMinus(SP);
   const M1 = rxOrig.S + rxOrig.C/2;
   const J01 = -rxOrig.C/2 * Math.cos(2*deg2rad(rxOrig.A));
   const J451 = -rxOrig.C/2 * Math.sin(2*deg2rad(rxOrig.A));
@@ -4171,7 +4171,7 @@ const diffS = Number.parseFloat(diffS_text) || 0;
 const diffC = Number.parseFloat(diffC_text) || 0;
 const diffA = Number.parseFloat(diffA_text) || 0;
 
-// Vector calculations (diffCross format)
+// SP calculations (diffCross format)
 const A_diff_rad = deg2rad(diffA);
 const M_diff = diffS + diffC / 2;
 const J0_diff = -diffC / 2 * Math.cos(2 * A_diff_rad);
@@ -4228,16 +4228,16 @@ const prismD = Math.max(prism45, prism135);
   if(elD_vc){ elD_vc.textContent = prismD_vc.toFixed(2); colorPrism(elD_vc, prismD_vc, "D"); }
 }
 
-/* ===== Reverse vector -> final (keeps existing behavior) ===== */
-function updateFinalFromVector(){
+/* ===== Reverse SP -> final (keeps existing behavior) ===== */
+function updateFinalFromSP(){
   const origOD = { S:+document.getElementById('od_origS')?.value || 0, C:+document.getElementById('od_origC')?.value || 0, A:+document.getElementById('od_origA')?.value || 0 };
   const origOS = { S:+document.getElementById('os_origS')?.value || 0, C:+document.getElementById('os_origC')?.value || 0, A:+document.getElementById('os_origA')?.value || 0 };
 
   const vcOD = { S:+document.getElementById('vc_odS')?.value || 0, C:+document.getElementById('vc_odC')?.value || 0, A:+document.getElementById('vc_odA')?.value || 0 };
   const vcOS = { S:+document.getElementById('vc_osS')?.value || 0, C:+document.getElementById('vc_osC')?.value || 0, A:+document.getElementById('vc_osA')?.value || 0 };
 
-  const finalOD = reverseVectorChange(origOD, vcOD);
-  const finalOS = reverseVectorChange(origOS, vcOS);
+  const finalOD = reverseSPChange(origOD, vcOD);
+  const finalOS = reverseSPChange(origOS, vcOS);
 
   const setIf = (id, val)=> { const el = document.getElementById(id); if(el) el.textContent = val; };
   setIf('od_vcFinalS', roundQuarter(finalOD.S));
@@ -4261,10 +4261,10 @@ setIf('vc_crossA', fmtAxis(bestVCCrossPlus.A));
 
 /* ===== Listeners attach after DOM ready ===== */
 window.addEventListener("DOMContentLoaded", ()=>{
-  // attach vector listeners (if elements exist)
+  // attach SP listeners (if elements exist)
   ['vc_odS','vc_odC','vc_odA','vc_osS','vc_osC','vc_osA','vc_ouS', 'vc_ouC','vc_ouA'].forEach(id=>{
     const el = document.getElementById(id);
-    if(el) el.addEventListener('input', updateFinalFromVector);
+    if(el) el.addEventListener('input', updateFinalFromSP);
   });
 
 
@@ -4284,7 +4284,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
   'od_rectS', 'od_rectC',  
   'os_rectS', 'os_rectC',
   'cl-sph-re','cl-cyl-re','cl-sph-le','cl-cyl-le',
- 'nearAddVector','nearAddFinal','nearAdd','TS_sph','TS_cyl'
+ 'nearAddSP','nearAddFinal','nearAdd','TS_sph','TS_cyl'
   
 ];
 
@@ -4331,7 +4331,7 @@ function copyVD_OU() {
 
   fireInputEvents(["vc_ouS", "vc_ouC", "vc_ouA"]);
 
-  if (typeof updateFinalFromVector === "function") updateFinalFromVector();
+  if (typeof updateFinalFromSP === "function") updateFinalFromSP();
 }
 
 function copyVD_OD() {
@@ -4345,7 +4345,7 @@ function copyVD_OD() {
 
   fireInputEvents(["vc_odS", "vc_odC", "vc_odA"]);
 
-  if (typeof updateFinalFromVector === "function") updateFinalFromVector();
+  if (typeof updateFinalFromSP === "function") updateFinalFromSP();
 }
 
 function copyVD_OS() {
@@ -4359,7 +4359,7 @@ function copyVD_OS() {
 
   fireInputEvents(["vc_osS", "vc_osC", "vc_osA"]);
 
-  if (typeof updateFinalFromVector === "function") updateFinalFromVector();
+  if (typeof updateFinalFromSP === "function") updateFinalFromSP();
 }
 
 
@@ -4498,7 +4498,7 @@ window.copyVD_OU = function(){
     if(!isNaN(c) && document.getElementById("vc_ouC")) document.getElementById("vc_ouC").value = c.toFixed(2);
     if(!isNaN(a) && document.getElementById("vc_ouA")) document.getElementById("vc_ouA").value = (isNaN(a)?'':a);
 
-    if(typeof updateFinalFromVector === "function") updateFinalFromVector();
+    if(typeof updateFinalFromSP === "function") updateFinalFromSP();
 };
 
 
@@ -4515,7 +4515,7 @@ window.copyVD_OU = function(){
     if(!isNaN(c) && document.getElementById("vc_odC")) document.getElementById("vc_odC").value = c.toFixed(2);
     if(!isNaN(a) && document.getElementById("vc_odA")) document.getElementById("vc_odA").value = (isNaN(a)?'':a);
 
-    if(typeof updateFinalFromVector === "function") updateFinalFromVector();
+    if(typeof updateFinalFromSP === "function") updateFinalFromSP();
   };
 
   window.copyVD_OS = function(){
@@ -4531,7 +4531,7 @@ window.copyVD_OU = function(){
     if(!isNaN(c) && document.getElementById("vc_osC")) document.getElementById("vc_osC").value = c.toFixed(2);
     if(!isNaN(a) && document.getElementById("vc_osA")) document.getElementById("vc_osA").value = (isNaN(a)?'':a);
 
-    if(typeof updateFinalFromVector === "function") updateFinalFromVector();
+    if(typeof updateFinalFromSP === "function") updateFinalFromSP();
   };
 
 
@@ -4570,8 +4570,8 @@ function copyVD(eye){
     }
   });
 
-  // Update final vector calculation
-  if(typeof updateFinalFromVector === "function") updateFinalFromVector();
+  // Update final SP calculation
+  if(typeof updateFinalFromSP === "function") updateFinalFromSP();
 
   updateCombinedRound(); // existing combined display updater
 }
@@ -4606,8 +4606,8 @@ function copyVD_OU_to_ODOS() {
     });
   });
 
-  // Update final vector display if function exists
-  if(typeof updateFinalFromVector === "function") updateFinalFromVector();
+  // Update final SP display if function exists
+  if(typeof updateFinalFromSP === "function") updateFinalFromSP();
 
   // Update OU summary display
   const vdOU = "DC " + fmtPlus(s) + " ; FC " + fmtPlus(c) + " × " + fmtAxis(a);
@@ -4732,7 +4732,7 @@ updateCombinedOriginal();
 
   // Attach when DOM ready
   window.addEventListener("DOMContentLoaded", ()=>{
-    // observe vcFinal spans so combined VC updates when updateFinalFromVector writes to them
+    // observe vcFinal spans so combined VC updates when updateFinalFromSP writes to them
     _observeIfExists(["od_vcFinalS","od_vcFinalC","od_vcFinalA","os_vcFinalS","os_vcFinalC","os_vcFinalA"], updateCombinedVC);
     // initial run
     updateCombinedVC();
@@ -4962,8 +4962,8 @@ function capturePart() {
       });
     });
 
-    try{ if(typeof window.updateFinalFromVector==="function") window.updateFinalFromVector(); }
-    catch(e){ console.warn("updateFinalFromVector threw",e); }
+    try{ if(typeof window.updateFinalFromSP==="function") window.updateFinalFromSP(); }
+    catch(e){ console.warn("updateFinalFromSP threw",e); }
 
     // Update summaries
     const vdOU = "DC "+fmtPlusLocal(sRaw)+" ; FC "+fmtPlusLocal(cRaw)+" × "+fmtAxisLocal(aRaw);
@@ -4988,7 +4988,7 @@ function fireAllInputs() {
 
   // optionally trigger any other update functions directly
   if (typeof updateCrossedLens === "function") updateCrossedLens();
-  if (typeof updateFinalFromVector === "function") updateFinalFromVector();
+  if (typeof updateFinalFromSP === "function") updateFinalFromSP();
   if (typeof updateVDVCSummary === "function") updateVDVCSummary();
   if (typeof updateVDVCOUSummary === "function") updateVDVCOUSummary();
 }
@@ -5283,10 +5283,10 @@ function parseText(txt){
   }
 
   const mappings = [
-    ['od_vectorDisplay', 'od_vectorDisplay_mirror'],
-    ['OScrossedSpan', 'os_vectorDisplay_mirror'],
+    ['od_SPDisplay', 'od_SPDisplay_mirror'],
+    ['OScrossedSpan', 'os_SPDisplay_mirror'],
     ['ODcrossedSpan', 'ODcrossedSpan_mirror'],
-    ['os_vectorDisplay', 'OScrossedSpan_mirror']
+    ['os_SPDisplay', 'OScrossedSpan_mirror']
   ];
 
   function updateMirrors(){
@@ -5501,7 +5501,7 @@ populateAxisDarker();
 document.getElementById("fanchart").addEventListener("change", populateAxisDarker);
 
 
-/* =================== Cylinder / Vector Math =================== */
+/* =================== Cylinder / SP Math =================== */
 function toMinusCyl(cyl, axis){
   cyl=Number(cyl)||0; axis=Number(axis)||0;
   if(cyl>0){
@@ -5882,7 +5882,7 @@ HEW_preloadAll();
 
 
 <script>
-document.querySelectorAll('.vectorhelper_duo').forEach(sel=>{
+document.querySelectorAll('.SPhelper_duo').forEach(sel=>{
   const bgMap = {
     blue:'#1e90ff',
     bal:'#888',
@@ -6092,7 +6092,7 @@ function calculateBalanceByEye(eye, resultSpanId) {
   const row = document.querySelector(`tr[data-eye="${eye}"]`);
   if (!row) return;
 
-  const selects = row.querySelectorAll("select.vectorhelper_duo");
+  const selects = row.querySelectorAll("select.SPhelper_duo");
   let reds = [], blues = [];
 
   selects.forEach(sel => {
@@ -6156,7 +6156,7 @@ function recalcAll() {
   updateFogging("balanceLeft",  "foggingLeft");
 }
 
-document.querySelectorAll(".vectorhelper_duo").forEach(sel => {
+document.querySelectorAll(".SPhelper_duo").forEach(sel => {
   sel.addEventListener("change", recalcAll);
 });
 
@@ -6778,8 +6778,8 @@ draw();
 
 
 <script>
-function toggleStatusVector() {
-  const btn = document.getElementById("statusVector");
+function toggleStatusSP() {
+  const btn = document.getElementById("statusSP");
 
   if (btn.dataset.value === "Not Done - Invalid") {
     btn.dataset.value = "done";
