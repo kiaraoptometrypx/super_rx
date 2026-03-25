@@ -7,31 +7,23 @@
 <meta charset="UTF-8">
 <title>Super Position Rx</title>
 <style>
-html, body, table, th, td, input, button, select, option, b, label, span {
+html, body, table, {
   font-size: 11px !important;
-font-weight:300 !important;
   font-family: 'Manrope', sans-serif;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+
 }
   #meyImage {
     transition: opacity 0.3s ease;
     opacity: 1;
   }
-.SPhelper-row{
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
-  width: 100%;
+
+.fc-row{
+max-width:570px;
 }
 
-.SPhelper-rx{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
 
 
 .SPhelper-rx span{
@@ -914,10 +906,12 @@ RX Profile for <span class="customerName_summary">...</span> , Whatsapp <span cl
 
 </th></tr>
 
-<tr><th class="yellow" colspan="4">FC DC Status Both Eye</th></tr>
-<tr class="yellow" data-eye="both" style="border-bottom:none">
+<tr><th class="yellow" colspan="4">FC DC Status Both Eye <button class="vtbn" onclick="toggleBE()">Show / Hide</button>
+</th></tr>
+<tr class="yellow be-row" data-eye="both" style="border-bottom:none">
 <td style="border-bottom:none" colspan="4">
-<div class="SPhelper-row" style="display:grid;grid-template-columns:repeat(9,1fr);gap:5px;width:100%;">
+
+<div class="SPhelper-row" style="display:grid;grid-template-columns:repeat(9,1fr);gap:5px;max-width:100%;">
 
   <div class="SPhelper-rx" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
     <span>+2.00 SPH</span>
@@ -1018,7 +1012,7 @@ RX Profile for <span class="customerName_summary">...</span> , Whatsapp <span cl
 </td></tr>
 
 
-<tr class="yellow" style="border-top:1px dotted lightgrey">
+<tr class="yellow be-row" style="border-top:1px dotted lightgrey">
 <td style="border-top:none"colspan="4">
 <span id="foggingBoth"></span><span id="perpendicular-axis-ou"></span><br><br>
 
@@ -1130,20 +1124,26 @@ RX Profile for <span class="customerName_summary">...</span> , Whatsapp <span cl
     </select>
   </div>
 
-
 </div>
+<br>
+<button style="margin:5px 0; border-radius:10px; width:100px; height:25px" id="fillBalance">FC DC RX</button>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button style="margin:5px 0; border-radius:10px; width:100px; height:25px"  onclick="toggleBEfinal()">Analysis</button>
+
 </td></tr>
 
-<tr class="be-row yellow" style="border-top:none; border-bottom:none"><td rowspan="2" style="border-top:none; border-bottom:none" colspan="1">FC DC Bal BE<br>
-<button style="margin:5px 0; border-radius:10px; width:50px; height:25px" id="fillBalance">Fill</button>
-<button onclick="copyVD_OU_to_ODOS()" style="border-radius:10px; width:50px; height:25px">Use</button>
+
+
+
+<tr class="befinal-row yellow" style="display:none; border-top:none; border-bottom:none"><td rowspan="2" style="border-top:none; border-bottom:none" colspan="1">FC DC Bal BE<br> 
+
 </td>
 <td style="border-top:none; border-bottom:none" colspan="3">
 DC SPH: <span style="margin-right:30px" id="balanceBoth"></span>FC CYL: <span id="balance-ou"></span>
 
 </td></tr>
 
-<tr style="border-top:none;" class="be-row yellow">
+<tr style="border-top:none; display:none" class="yellow befinal-row">
    <td style="border-top:none;">
      Sph : <input type="number" step="0.25" id="vd_ouS"><br>
   </td>
@@ -1154,14 +1154,21 @@ DC SPH: <span style="margin-right:30px" id="balanceBoth"></span>FC CYL: <span id
     Axis : <input type="number" step="5" min="0" max="180" id="vd_ouA"><br>
   </td>
 </tr>
-<tr>
-<td style="font-weight:600" class="be-row yellow" colspan="4"> Use this lens over Both Eyes  
+<tr class="be-row">
+<td style="font-weight:600;" class="yellow" colspan="4">
+ Use this lens over Both Eyes  
     <span style="margin:0 15px" id="vd_out_ouS">-</span> / 
     <span style="margin:0 15px" id="vd_out_ouC">-</span> x 
     <span style="margin:0 15px" id="vd_out_ouA">-</span>
+
 </td>
 </tr>
-
+<tr style="border:none; height:10px;">
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+  <td style="border:none; height:1px; padding:0;"></td>
+</tr>
 
 
 <script>
@@ -1420,17 +1427,22 @@ document.getElementById("fillBalance").addEventListener("click", () => {
 
 </div>
 
+<br>
+<button style="margin:5px 0; border-radius:10px; width:100px; height:25px" id="fillBalanceRE">FC DC RX</button>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button style="margin:5px 0; border-radius:10px; width:100px; height:25px"  onclick="toggleREfinal()">Analysis</button>
 
-<tr class="re-row purp" style="display:none; border-top:none; border-bottom:none"><td rowspan="2" style="border-top:none; border-bottom:none" colspan="1">FC DC Bal RE<br>
-<button style="margin:5px 0; border-radius:10px; width:50px; height:25px" id="fillBalanceRE">Fill</button>
-<button onclick="opyVD_OD()" style="border-radius:10px; width:50px; height:25px">Use</button>
+</td></tr>
+
+<tr class="refinal-row purp" style="display:none; border-top:none; border-bottom:none"><td rowspan="2" style="border-top:none; border-bottom:none" colspan="1">FC DC Bal RE<br>
+
 </td>
 <td style="border-top:none; border-bottom:none" colspan="3">
 DC SPH: <span style="margin-right:30px" id="balanceRight"></span>FC CYL: <span id="balance-re"></span>
 
 </td></tr>
 
-<tr style="border-top:none; display:none" class="re-row purp">
+<tr style="border-top:none; display:none" class="refinal-row purp">
    <td style="border-top:none;">
      Sph : <input type="number" step="0.25" id="vd_odS"><br>
   </td>
@@ -1696,17 +1708,21 @@ document.getElementById("fillBalanceRE").addEventListener("click", () => {
   </div>
 
 </div>
+<br>
+<button style="margin:5px 0; border-radius:10px; width:100px; height:25px" id="fillBalanceLE">FC DC RX</button>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button style="margin:5px 0; border-radius:10px; width:100px; height:25px"  onclick="toggleLEfinal()">Analysis</button>
 
-<tr class="le-row turq" style="display:none; border-top:none; border-bottom:none"><td rowspan="2" style="border-top:none; border-bottom:none" colspan="1">FC DC Bal LE<br>
-<button style="margin:5px 0; border-radius:10px; width:70px; height:25px" id="fillBalanceLE">Fill</button>
-<button onclick="copyVD_OS()" style="border-radius:10px; width:70px; height:25px">Use</button>
+</td></tr>
+
+<tr class="lefinal-row turq" style="display:none; border-top:none; border-bottom:none"><td rowspan="2" style="border-top:none; border-bottom:none" colspan="1">FC DC Bal LE<br>
 </td>
 <td style="border-top:none; border-bottom:none" colspan="3">
 DC SPH: <span style="margin-right:30px" id="balanceLeft"></span>FC CYL: <span id="balance-le"></span>
 
 </td></tr>
 
-<tr style="border-top:none; display:none" class="le-row turq">
+<tr style="border-top:none; display:none" class="lefinal-row turq">
    <td style="border-top:none;">
      Sph : <input type="number" step="0.25" id="vd_osS"><br>
   </td>
@@ -1757,8 +1773,18 @@ document.getElementById("fillBalanceLE").addEventListener("click", () => {
 </div>
 
 <table>
+<tr><td colspan="4"><b>Calculate Final Using : </b>&nbsp;&nbsp;
+<button class="yellow" onclick="copyVD_OU_to_ODOS()" style="border-radius:10px; width:50px; height:25px"> BE</button>&nbsp;&nbsp;
 
-<tr>
+<button class="purp" onclick="copyVD_OD()" style="border-radius:10px; width:50px; height:25px">RE</button>&nbsp;&nbsp;
+<button class="turq" onclick="copyVD_OS()" style="border-radius:10px; width:50px; height:25px">LE</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+<button class="vtbn" onclick="toggleSPChanges()">SP Delta</button>
+</td></tr>
+
+
+<tr class="SPChanges" style="display:none">
   <td>SP Changes R<br>
 <button style="border-radius:10px; margin-right:5%; color:green" type="button" onclick="adjustValue('vc_odS', 0.25)">+0.25</button>
 <button style="border-radius:10px; color:red" type="button" onclick="adjustValue('vc_odS', -0.25)">-0.25</button>
@@ -1768,7 +1794,7 @@ document.getElementById("fillBalanceLE").addEventListener("click", () => {
   <td><input type="number" step="0.25" id="vc_odC"></td>
   <td><input type="number" step="5" min="0" max="180" id="vc_odA"></td>
 </tr>
-<tr>
+<tr class="SPChanges" style="display:none">
   <td>SP Changes L<br>
 <button style="border-radius:10px; color:green; margin-right:5%" type="button" onclick="adjustValue('vc_osS', 0.25)">+0.25</button>
 <button style="border-radius:10px; color:red" type="button" onclick="adjustValue('vc_osS', -0.25)">-0.25</button>
@@ -1778,7 +1804,7 @@ document.getElementById("fillBalanceLE").addEventListener("click", () => {
   <td><input type="number" step="0.25" id="vc_osC"></td>
   <td><input type="number" step="5" min="0" max="180" id="vc_osA"></td>
 </tr>
-<tr >
+<tr class="SPChanges" style="display:none" >
   <td>Bino Imbalance</td>
   <td id="vc_crossS">-</td>
   <td id="vc_crossC">-</td>
@@ -3057,7 +3083,6 @@ Prescription comes in many types of errors; whether it's myopia, hyperopia or as
 </div>
 </div>
   </main>
-
 
 
 
@@ -5949,14 +5974,44 @@ function openSummary() {
 
 // ----- FOR FC DC STATUS HELPER --- //
 
+function toggleSPChanges(){
+  document.querySelectorAll(".SPChanges").forEach(r=>{
+    r.style.display = r.style.display === "none" ? "" : "none";
+  });
+}
+
+function toggleBE(){
+  document.querySelectorAll(".be-row").forEach(r=>{
+    r.style.display = r.style.display === "none" ? "" : "none";
+  });
+}
+
+function toggleBEfinal(){
+  document.querySelectorAll(".befinal-row").forEach(r=>{
+    r.style.display = r.style.display === "none" ? "" : "none";
+  });
+}
+
 function toggleRE(){
   document.querySelectorAll(".re-row").forEach(r=>{
     r.style.display = r.style.display === "none" ? "" : "none";
   });
 }
 
+function toggleREfinal(){
+  document.querySelectorAll(".refinal-row").forEach(r=>{
+    r.style.display = r.style.display === "none" ? "" : "none";
+  });
+}
+
 function toggleLE(){
   document.querySelectorAll(".le-row").forEach(r=>{
+    r.style.display = r.style.display === "none" ? "" : "none";
+  });
+}
+
+function toggleLEfinal(){
+  document.querySelectorAll(".lefinal-row").forEach(r=>{
     r.style.display = r.style.display === "none" ? "" : "none";
   });
 }
